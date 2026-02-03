@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "build": "rollup -c rollup.config.mjs",
+    "dev": "rollup -c rollup.config.mjs -w",
     "test": "vitest run",
     "test:watch": "vitest"
   },
