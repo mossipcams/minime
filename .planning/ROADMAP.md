@@ -45,10 +45,11 @@ Plans:
   3. Card validates configuration and displays clear error messages for invalid configs
   4. Card respects Home Assistant theme colors in both light and dark modes
   5. Card properly cleans up resources when removed from dashboard
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] 02-01: TBD
+- [ ] 02-01-PLAN.md -- Card shell with types, config validation, lifecycle methods, and registration
+- [ ] 02-02-PLAN.md -- Bermuda entity integration, error states, and theme-aware styling
 
 ### Phase 3: Static Visual Display
 **Goal**: Display pixel art room backgrounds and avatar with visual configuration editor
@@ -88,6 +89,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Project Setup | 2/2 | Complete | 2026-02-03 |
-| 2. Card Foundation | 0/TBD | Not started | - |
+| 2. Card Foundation | 0/2 | Not started | - |
 | 3. Static Visual Display | 0/TBD | Not started | - |
 | 4. Animation System | 0/TBD | Not started | - |
