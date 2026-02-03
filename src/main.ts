@@ -1,5 +1,5 @@
 // MiniMe Card - Entry Point
-// Card registration will go here in Phase 2
+import { MiniMeCard } from './minime-card';
 
 const CARD_VERSION = '0.1.0';
 
@@ -8,3 +8,14 @@ console.info(
   'color: white; background: #555; font-weight: bold;',
   'color: white; background: #007acc;'
 );
+
+// Register custom element
+customElements.define('minime-card', MiniMeCard);
+
+// Register with Home Assistant card picker
+(window as any).customCards = (window as any).customCards || [];
+(window as any).customCards.push({
+  type: 'minime-card',
+  name: 'MiniMe Card',
+  description: 'Animated pixel art avatar showing your room presence',
+});
