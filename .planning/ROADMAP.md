@@ -61,10 +61,12 @@ Plans:
   3. Card switches room backgrounds immediately when Bermuda detects room change
   4. Visual editor allows selection of Bermuda device and Home Assistant areas to track
   5. Card layout is responsive and works on mobile devices
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
-- [ ] 03-01: TBD
+- [ ] 03-01-PLAN.md -- Pixel art assets (room backgrounds and avatar sprite as inline SVGs)
+- [ ] 03-02-PLAN.md -- Visual configuration editor (entity picker and area selector)
+- [ ] 03-03-PLAN.md -- Room display integration (wire assets into card rendering with responsive layout)
 
 ### Phase 4: Animation System
 **Goal**: Bring avatar to life with room-specific idle animations and smooth walking transitions
@@ -90,5 +92,5 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 |-------|----------------|--------|-----------|
 | 1. Project Setup | 2/2 | Complete | 2026-02-03 |
 | 2. Card Foundation | 2/2 | Complete | 2026-02-03 |
-| 3. Static Visual Display | 0/TBD | Not started | - |
+| 3. Static Visual Display | 0/3 | Not started | - |
 | 4. Animation System | 0/TBD | Not started | - |
