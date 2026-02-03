@@ -29,10 +29,11 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. HACS validation passes with correct file structure and metadata
   4. Dev environment runs with working watch mode and hot reload
   5. Vitest test framework runs successfully with sample test passing
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] 01-01: TBD
+- [ ] 01-01-PLAN.md -- Project initialization, TypeScript, Rollup build, HACS metadata
+- [ ] 01-02-PLAN.md -- Vitest testing framework and dev watch mode
 
 ### Phase 2: Card Foundation
 **Goal**: Implement LitElement card with Home Assistant integration and proper lifecycle
@@ -86,7 +87,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Project Setup | 0/TBD | Not started | - |
+| 1. Project Setup | 0/2 | Planning complete | - |
 | 2. Card Foundation | 0/TBD | Not started | - |
 | 3. Static Visual Display | 0/TBD | Not started | - |
 | 4. Animation System | 0/TBD | Not started | - |
