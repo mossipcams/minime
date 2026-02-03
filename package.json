@@ -1,0 +1,25 @@
+{
+  "name": "minime-card",
+  "version": "0.1.0",
+  "description": "Animated pixel art Home Assistant avatar card",
+  "type": "module",
+  "scripts": {
+    "build": "rollup -c rollup.config.mjs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "custom-card-helpers": "^1.9.0",
+    "lit": "^3.3.2"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^29.0.0",
+    "@rollup/plugin-node-resolve": "^16.0.3",
+    "@rollup/plugin-terser": "^0.4.4",
+    "@rollup/plugin-typescript": "^12.3.0",
+    "rollup": "^4.57.1",
+    "tslib": "^2.8.1",
+    "typescript": "^5.9.3"
+  }
+}

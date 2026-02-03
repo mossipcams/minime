@@ -1,0 +1,7 @@
+{
+  "name": "MiniMe Card",
+  "content_in_root": false,
+  "filename": "minime-card.js",
+  "render_readme": true,
+  "homeassistant": "2025.1.0"
+}
