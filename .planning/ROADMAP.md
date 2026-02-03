@@ -13,7 +13,7 @@ This roadmap transforms Bermuda BLE presence detection into a delightful animate
 Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Project Setup** - Build infrastructure and development environment
-- [ ] **Phase 2: Card Foundation** - Core LitElement implementation with entity integration
+- [x] **Phase 2: Card Foundation** - Core LitElement implementation with entity integration
 - [ ] **Phase 3: Static Visual Display** - Room backgrounds, avatar, and visual editor
 - [ ] **Phase 4: Animation System** - Idle animations and room transitions
 
@@ -48,8 +48,8 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-- [ ] 02-01-PLAN.md -- Card shell with types, config validation, lifecycle methods, and registration
-- [ ] 02-02-PLAN.md -- Bermuda entity integration, error states, and theme-aware styling
+- [x] 02-01-PLAN.md -- Card shell with types, config validation, lifecycle methods, and registration
+- [x] 02-02-PLAN.md -- Bermuda entity integration, error states, and theme-aware styling
 
 ### Phase 3: Static Visual Display
 **Goal**: Display pixel art room backgrounds and avatar with visual configuration editor
@@ -89,6 +89,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Project Setup | 2/2 | Complete | 2026-02-03 |
-| 2. Card Foundation | 0/2 | Not started | - |
+| 2. Card Foundation | 2/2 | Complete | 2026-02-03 |
 | 3. Static Visual Display | 0/TBD | Not started | - |
 | 4. Animation System | 0/TBD | Not started | - |
