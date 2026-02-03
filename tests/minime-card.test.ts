@@ -105,4 +105,19 @@ describe('MiniMeCard', () => {
       expect((card as any)._entityState).toBe(firstState);
     });
   });
+
+  describe('Editor integration', () => {
+    it('getConfigElement returns editor element', () => {
+      const element = MiniMeCard.getConfigElement();
+      expect(element.tagName.toLowerCase()).toBe('minime-card-editor');
+    });
+
+    it('getStubConfig returns default configuration', () => {
+      const config = MiniMeCard.getStubConfig();
+      expect(config.type).toBe('minime-card');
+      expect(config.entity).toBe('');
+      expect(config.name).toBe('MiniMe');
+      expect(config.areas).toEqual(['office', 'kitchen', 'living_room', 'bedroom']);
+    });
+  });
 });

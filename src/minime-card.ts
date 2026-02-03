@@ -91,6 +91,28 @@ export class MiniMeCard extends LitElement {
   }
 
   /**
+   * Get the configuration editor element
+   * Returns the editor custom element for Home Assistant UI
+   */
+  public static getConfigElement(): HTMLElement {
+    return document.createElement('minime-card-editor');
+  }
+
+  /**
+   * Get default stub configuration for card picker
+   * Provides sensible defaults when adding card to dashboard
+   */
+  public static getStubConfig(): MiniMeConfig {
+    return {
+      type: 'minime-card',
+      entity: '',
+      name: 'MiniMe',
+      areas: ['office', 'kitchen', 'living_room', 'bedroom'],
+    };
+  }
+
+
+  /**
    * Render the card
    */
   protected render() {

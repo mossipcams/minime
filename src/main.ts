@@ -1,5 +1,6 @@
 // MiniMe Card - Entry Point
 import { MiniMeCard } from './minime-card';
+import { MiniMeCardEditor } from './minime-card-editor';
 
 const CARD_VERSION = '0.1.0';
 
@@ -11,6 +12,7 @@ console.info(
 
 // Register custom element
 customElements.define('minime-card', MiniMeCard);
+customElements.define('minime-card-editor', MiniMeCardEditor);
 
 // Register with Home Assistant card picker
 (window as any).customCards = (window as any).customCards || [];
