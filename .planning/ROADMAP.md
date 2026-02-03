@@ -12,7 +12,7 @@ This roadmap transforms Bermuda BLE presence detection into a delightful animate
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Project Setup** - Build infrastructure and development environment
+- [x] **Phase 1: Project Setup** - Build infrastructure and development environment
 - [ ] **Phase 2: Card Foundation** - Core LitElement implementation with entity integration
 - [ ] **Phase 3: Static Visual Display** - Room backgrounds, avatar, and visual editor
 - [ ] **Phase 4: Animation System** - Idle animations and room transitions
@@ -32,8 +32,8 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Plans**: 2 plans
 
 Plans:
-- [ ] 01-01-PLAN.md -- Project initialization, TypeScript, Rollup build, HACS metadata
-- [ ] 01-02-PLAN.md -- Vitest testing framework and dev watch mode
+- [x] 01-01-PLAN.md -- Project initialization, TypeScript, Rollup build, HACS metadata
+- [x] 01-02-PLAN.md -- Vitest testing framework and dev watch mode
 
 ### Phase 2: Card Foundation
 **Goal**: Implement LitElement card with Home Assistant integration and proper lifecycle
@@ -87,7 +87,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Project Setup | 0/2 | Planning complete | - |
+| 1. Project Setup | 2/2 | Complete | 2026-02-03 |
 | 2. Card Foundation | 0/TBD | Not started | - |
 | 3. Static Visual Display | 0/TBD | Not started | - |
 | 4. Animation System | 0/TBD | Not started | - |
