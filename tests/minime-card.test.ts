@@ -1,6 +1,23 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { MiniMeCard } from '../src/minime-card';
 
+/**
+ * Helper to create a mock HomeAssistant object
+ */
+function mockHass(states: Record<string, { state: string; attributes?: Record<string, unknown> }>): any {
+  const fullStates: Record<string, any> = {};
+  for (const [id, s] of Object.entries(states)) {
+    fullStates[id] = {
+      entity_id: id,
+      state: s.state,
+      attributes: s.attributes || {},
+      last_changed: new Date().toISOString(),
+      last_updated: new Date().toISOString(),
+    };
+  }
+  return { states: fullStates, themes: { darkMode: false } };
+}
+
 describe('MiniMeCard', () => {
   let card: MiniMeCard;
 
@@ -34,38 +51,58 @@ describe('MiniMeCard', () => {
     });
   });
 
-  describe('Hass setter', () => {
+  describe('Hass setter - Basic functionality', () => {
     beforeEach(() => {
       card.setConfig({ type: 'custom:minime-card', entity: 'device_tracker.bermuda_phone' });
     });
 
-    it('extracts entity state from hass', () => {
-      const mockHass = {
-        states: {
-          'device_tracker.bermuda_phone': {
-            state: 'living_room',
-            attributes: {},
-            entity_id: 'device_tracker.bermuda_phone',
-            last_changed: '2024-01-01',
-            last_updated: '2024-01-01',
-          },
-        },
-        themes: { darkMode: false },
-      };
-
-      card.hass = mockHass as any;
-      expect((card as any)._entityState).toBe('living_room');
+    it('extracts area name from entity state', () => {
+      card.hass = mockHass({ 'device_tracker.bermuda_phone': { state: 'office' } });
+      expect((card as any)._entityState).toBe('office');
       expect((card as any)._error).toBeUndefined();
     });
 
     it('sets error when entity not found', () => {
-      const mockHass = {
-        states: {},
-        themes: { darkMode: false },
-      };
-
-      card.hass = mockHass as any;
+      card.hass = mockHass({});
       expect((card as any)._error).toContain('Entity not found');
+    });
+  });
+
+  describe('Hass setter - Error states', () => {
+    beforeEach(() => {
+      card.setConfig({ type: 'custom:minime-card', entity: 'device_tracker.bermuda_phone' });
+    });
+
+    it('shows error when entity state is unavailable', () => {
+      card.hass = mockHass({ 'device_tracker.bermuda_phone': { state: 'unavailable' } });
+      expect((card as any)._error).toContain('unavailable');
+      expect((card as any)._error).toContain('Bermuda');
+    });
+
+    it('shows error when entity does not exist in hass', () => {
+      card.hass = mockHass({});
+      expect((card as any)._error).toContain('not found');
+    });
+
+    it('shows not detected when entity state is unknown', () => {
+      card.hass = mockHass({ 'device_tracker.bermuda_phone': { state: 'unknown' } });
+      expect((card as any)._entityState).toBe('Not detected');
+      expect((card as any)._error).toBeUndefined();
+    });
+  });
+
+  describe('Hass setter - Re-render optimization', () => {
+    beforeEach(() => {
+      card.setConfig({ type: 'custom:minime-card', entity: 'device_tracker.bermuda_phone' });
+    });
+
+    it('does not update state when entity value unchanged', () => {
+      card.hass = mockHass({ 'device_tracker.bermuda_phone': { state: 'office' } });
+      const firstState = (card as any)._entityState;
+      // Set hass again with same entity state
+      card.hass = mockHass({ 'device_tracker.bermuda_phone': { state: 'office' } });
+      // State value should be unchanged
+      expect((card as any)._entityState).toBe(firstState);
     });
   });
 });
