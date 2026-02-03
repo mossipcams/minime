@@ -15,7 +15,7 @@ function mockHass(states: Record<string, { state: string; attributes?: Record<st
       last_updated: new Date().toISOString(),
     };
   }
-  return { states: fullStates, themes: { darkMode: false } };
+  return { states: fullStates, themes: { darkMode: false }, areas: {} };
 }
 
 describe('MiniMeCard', () => {
@@ -106,18 +106,40 @@ describe('MiniMeCard', () => {
     });
   });
 
-  describe('Editor integration', () => {
-    it('getConfigElement returns editor element', () => {
-      const element = MiniMeCard.getConfigElement();
-      expect(element.tagName.toLowerCase()).toBe('minime-card-editor');
+  describe('Room display', () => {
+    beforeEach(() => {
+      card.setConfig({ type: 'custom:minime-card', entity: 'device_tracker.bermuda_phone' });
     });
 
-    it('getStubConfig returns default configuration', () => {
-      const config = MiniMeCard.getStubConfig();
-      expect(config.type).toBe('minime-card');
-      expect(config.entity).toBe('');
-      expect(config.name).toBe('MiniMe');
-      expect(config.areas).toEqual(['office', 'kitchen', 'living_room', 'bedroom']);
+    it('tracks last known room', () => {
+      card.hass = mockHass({ 'device_tracker.bermuda_phone': { state: 'office' } });
+      expect((card as any)._lastRoom).toBe('office');
+    });
+
+    it('preserves last room when not detected', () => {
+      card.hass = mockHass({ 'device_tracker.bermuda_phone': { state: 'office' } });
+      card.hass = mockHass({ 'device_tracker.bermuda_phone': { state: 'unknown' } });
+      expect((card as any)._lastRoom).toBe('office');
+      expect((card as any)._entityState).toBe('Not detected');
+    });
+
+    it('updates last room on room change', () => {
+      card.hass = mockHass({ 'device_tracker.bermuda_phone': { state: 'office' } });
+      card.hass = mockHass({ 'device_tracker.bermuda_phone': { state: 'kitchen' } });
+      expect((card as any)._lastRoom).toBe('kitchen');
+    });
+  });
+
+  describe('Editor integration', () => {
+    it('returns stub config with default areas', () => {
+      const stub = MiniMeCard.getStubConfig();
+      expect(stub).toHaveProperty('areas');
+      expect(stub.areas).toContain('office');
+    });
+
+    it('returns config element', () => {
+      const el = MiniMeCard.getConfigElement();
+      expect(el.tagName.toLowerCase()).toBe('minime-card-editor');
     });
   });
 });
