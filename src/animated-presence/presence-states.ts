@@ -33,7 +33,7 @@ export function createInitialState(room?: string) {
     currentRoom,
     targetRoom: null as string | null,
     avatarX: DEFAULT_X,
-    lottieAnimation: getRoomAnimation(currentRoom),
+    animation: getRoomAnimation(currentRoom),
     crossfadeProgress: 0,
     outgoingRoom: null as string | null,
     visible: true,
@@ -64,7 +64,7 @@ export function changeRoom(state: PresenceState, room: string): PresenceState {
     targetRoom: room,
     phase: PresencePhase.WALKING_OUT,
     outgoingRoom: state.currentRoom,
-    lottieAnimation: 'walking',
+    animation: 'walking',
   };
 }
 
@@ -102,7 +102,7 @@ export function tick(state: PresenceState, deltaMs: number): PresenceState {
         crossfadeProgress: 1,
         avatarX: ENTER_EDGE,
         visible: true,
-        lottieAnimation: 'walking',
+        animation: 'walking',
       };
     }
     return { ...state, crossfadeProgress: newCrossfade };
@@ -118,7 +118,7 @@ export function tick(state: PresenceState, deltaMs: number): PresenceState {
         avatarX: DEFAULT_X,
         targetRoom: null,
         outgoingRoom: null,
-        lottieAnimation: getRoomAnimation(state.currentRoom),
+        animation: getRoomAnimation(state.currentRoom),
       };
       if (state.targetRoom && state.targetRoom !== state.currentRoom) {
         return changeRoom(result, state.targetRoom);

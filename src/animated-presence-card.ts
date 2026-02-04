@@ -1,26 +1,20 @@
-import { LitElement, html, css } from 'lit';
+import { LitElement, html, css, unsafeCSS } from 'lit';
 import { state } from 'lit/decorators.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import type { AnimatedPresenceConfig, HomeAssistant } from './types';
 import { lofiRoomBackgrounds } from './animated-presence/lofi-rooms';
 import { PresenceEngine } from './animated-presence/presence-engine';
 import { PresencePhase, type PresenceState } from './animated-presence/presence-states';
-import { loadLottie } from './animated-presence/lottie-loader';
-import { bundledAnimations } from './animated-presence/bundled-animations';
-import type { LottiePlayer, LottieAnimationItem } from './animated-presence/lottie-types';
+import { getTotemSvg, totemStyles } from './animated-presence/totem-avatar';
 
 export class AnimatedPresenceCard extends LitElement {
   private _config?: AnimatedPresenceConfig;
   private _hass?: HomeAssistant;
   private _engine?: PresenceEngine;
-  private _lottiePlayer?: LottiePlayer;
-  private _lottieAnim?: LottieAnimationItem;
-  private _currentLottieFile?: string;
 
   @state() private _entityState?: string;
   @state() private _error?: string;
   @state() private _presenceState?: PresenceState;
-  @state() private _lottieReady = false;
 
   public setConfig(config: AnimatedPresenceConfig): void {
     if (!config.entity) {
@@ -89,61 +83,14 @@ export class AnimatedPresenceCard extends LitElement {
     super.connectedCallback();
     this._engine = new PresenceEngine((presenceState) => {
       this._presenceState = presenceState;
-      this._syncLottieAnimation(presenceState);
     });
     this._engine.start();
-    this._initLottie();
   }
 
   public disconnectedCallback(): void {
     super.disconnectedCallback();
     if (this._engine) {
       this._engine.stop();
-    }
-    if (this._lottieAnim) {
-      this._lottieAnim.destroy();
-      this._lottieAnim = undefined;
-    }
-  }
-
-  private async _initLottie(): Promise<void> {
-    try {
-      this._lottiePlayer = await loadLottie();
-      this._lottieReady = true;
-    } catch {
-      this._lottieReady = false;
-    }
-  }
-
-  private _syncLottieAnimation(presenceState: PresenceState): void {
-    if (!this._lottiePlayer || !this._lottieReady) return;
-
-    const animFile = presenceState.lottieAnimation;
-    if (animFile === this._currentLottieFile) return;
-
-    if (this._lottieAnim) {
-      this._lottieAnim.destroy();
-      this._lottieAnim = undefined;
-    }
-
-    this._currentLottieFile = animFile;
-
-    const container = this.shadowRoot?.querySelector(".lottie-container") as HTMLElement | null;
-    if (!container) return;
-
-    const animationData = bundledAnimations[animFile];
-    if (!animationData) return;
-
-    try {
-      this._lottieAnim = this._lottiePlayer.loadAnimation({
-        container,
-        renderer: "svg",
-        loop: true,
-        autoplay: true,
-        animationData,
-      });
-    } catch {
-      this._currentLottieFile = undefined;
     }
   }
 
@@ -177,6 +124,7 @@ export class AnimatedPresenceCard extends LitElement {
     const crossfadeOpacity = anim ? 1 - anim.crossfadeProgress : 1;
     const showAvatar = anim?.visible ?? false;
     const avatarX = anim?.avatarX ?? 50;
+    const activity = anim?.animation ?? 'idle';
     const displayName = this._config.name || this._entityState?.replace(/_/g, " ") || "Unknown";
 
     return html`
@@ -205,7 +153,7 @@ export class AnimatedPresenceCard extends LitElement {
           ${showAvatar
             ? html`
                 <div class="avatar" style="left: ${avatarX}%">
-                  <div class="lottie-container"></div>
+                  ${unsafeHTML(getTotemSvg(activity))}
                 </div>
               `
             : ""}
@@ -286,17 +234,6 @@ export class AnimatedPresenceCard extends LitElement {
       z-index: 2;
     }
 
-    .lottie-container {
-      width: 100%;
-      height: auto;
-    }
-
-    .lottie-container svg {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
-
     .room-label {
       position: absolute;
       bottom: 4px;
@@ -344,6 +281,8 @@ export class AnimatedPresenceCard extends LitElement {
       font-size: 0.9em;
       line-height: 1.3;
     }
+
+    ${unsafeCSS(totemStyles)}
 
     @media (min-width: 600px) {
       .scene-container {
