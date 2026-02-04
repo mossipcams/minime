@@ -194,6 +194,14 @@ describe('MiniMeCard', () => {
     });
   });
 
+  describe('Smooth vector rendering', () => {
+    it('should not use pixelated image-rendering in styles', () => {
+      const styles = (MiniMeCard as any).styles;
+      const cssText = styles.cssText || styles.toString();
+      expect(cssText).not.toContain('image-rendering: pixelated');
+    });
+  });
+
   describe('Editor integration', () => {
     it('returns stub config with default areas', () => {
       const stub = MiniMeCard.getStubConfig();

@@ -16,6 +16,27 @@ describe('Avatar Sprite', () => {
     expect(typeof avatarSprite.height).toBe('number');
   });
 
+  it('should use smooth vector viewBox (64x96) instead of pixel art (32x48)', () => {
+    expect(avatarSprite.width).toBe(64);
+    expect(avatarSprite.height).toBe(96);
+    expect(avatarSprite.idle).toContain('viewBox="0 0 64 96"');
+  });
+
+  it('should use smooth shapes (circles, rounded rects) instead of pixel rects', () => {
+    const idleFrame = avatarSprite.idle;
+    // Smooth vector art uses circles/ellipses for head and eyes
+    expect(idleFrame).toMatch(/<circle\s/);
+    // Uses rounded rects (rx attribute) for body parts
+    expect(idleFrame).toMatch(/\brx="/);
+  });
+
+  it('should not use crispEdges shape-rendering', () => {
+    const allFrames = Object.values(avatarFrames).flat();
+    for (const frame of allFrames) {
+      expect(frame).not.toContain('crispEdges');
+    }
+  });
+
   it('should export avatarFrames with all required animation sets', () => {
     const requiredSets = [
       'idle', 'walkRight', 'walkLeft',

@@ -19,5 +19,5 @@ customElements.define('minime-card-editor', MiniMeCardEditor);
 (window as any).customCards.push({
   type: 'minime-card',
   name: 'MiniMe Card',
-  description: 'Animated pixel art avatar showing your room presence',
+  description: 'Animated avatar showing your room presence',
 });

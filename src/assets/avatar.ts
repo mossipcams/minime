@@ -1,106 +1,109 @@
 /**
- * Avatar sprite pixel art asset
+ * Avatar sprite smooth vector art asset
  * Inline SVG strings for self-contained bundle (avoids HACS resource loading)
  */
 
-const SVG_OPEN = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 48" shape-rendering="crispEdges">';
+const SVG_OPEN = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 96">';
 const SVG_CLOSE = '</svg>';
-const SHADOW = '<ellipse cx="16" cy="46" rx="10" ry="2" fill="#00000033"/>';
+const SHADOW = '<ellipse cx="32" cy="92" rx="18" ry="4" fill="#00000033"/>';
+
+// --- Shared body part constants (default standing pose) ---
 const HEAD = `
-  <rect x="13" y="14" width="6" height="4" fill="#FFA07A"/>
-  <rect x="11" y="6" width="10" height="8" fill="#FFA07A"/>
-  <rect x="11" y="4" width="10" height="2" fill="#654321"/>
-  <rect x="10" y="6" width="1" height="4" fill="#654321"/>
-  <rect x="21" y="6" width="1" height="4" fill="#654321"/>
-  <rect x="13" y="9" width="2" height="2" fill="#000000"/>
-  <rect x="17" y="9" width="2" height="2" fill="#000000"/>
-  <rect x="14" y="12" width="1" height="1" fill="#000000"/>
-  <rect x="15" y="13" width="2" height="1" fill="#000000"/>
-  <rect x="17" y="12" width="1" height="1" fill="#000000"/>`;
-const TORSO = '<rect x="9" y="18" width="14" height="14" fill="#DC143C"/>';
+  <ellipse cx="32" cy="20" rx="12" ry="13" fill="#FFCC99"/>
+  <path d="M20 17 Q20 6 32 6 Q44 6 44 17 L44 14 Q44 4 32 4 Q20 4 20 14 Z" fill="#5C4033"/>
+  <path d="M18 17 Q18 12 20 14 L20 20 Q18 20 18 17Z" fill="#5C4033"/>
+  <path d="M46 17 Q46 12 44 14 L44 20 Q46 20 46 17Z" fill="#5C4033"/>
+  <circle cx="27" cy="20" r="2" fill="#333333"/>
+  <circle cx="37" cy="20" r="2" fill="#333333"/>
+  <path d="M29 26 Q32 29 35 26" stroke="#333333" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <rect x="22" y="30" width="20" height="8" rx="4" fill="#FFCC99"/>`;
+
+const TORSO = '<rect x="18" y="36" width="28" height="24" rx="6" fill="#FF6B6B"/>';
+
 const ARMS_DOWN = `
-  <rect x="6" y="20" width="3" height="10" fill="#FFD700"/>
-  <rect x="23" y="20" width="3" height="10" fill="#FFD700"/>
-  <rect x="6" y="30" width="3" height="2" fill="#FFA07A"/>
-  <rect x="23" y="30" width="3" height="2" fill="#FFA07A"/>`;
+  <rect x="8" y="38" width="10" height="20" rx="5" fill="#FFB84D"/>
+  <rect x="46" y="38" width="10" height="20" rx="5" fill="#FFB84D"/>
+  <circle cx="13" cy="60" r="4" fill="#FFCC99"/>
+  <circle cx="51" cy="60" r="4" fill="#FFCC99"/>`;
+
 const LEGS_STAND = `
-  <rect x="10" y="32" width="5" height="12" fill="#4169E1"/>
-  <rect x="17" y="32" width="5" height="12" fill="#4169E1"/>
-  <rect x="10" y="44" width="5" height="2" fill="#2F4F4F"/>
-  <rect x="17" y="44" width="5" height="2" fill="#2F4F4F"/>`;
+  <rect x="20" y="60" width="10" height="24" rx="4" fill="#5B8DEF"/>
+  <rect x="34" y="60" width="10" height="24" rx="4" fill="#5B8DEF"/>
+  <rect x="18" y="82" width="14" height="6" rx="3" fill="#3D3D3D"/>
+  <rect x="32" y="82" width="14" height="6" rx="3" fill="#3D3D3D"/>`;
 
 function frame(...parts: string[]): string {
   return SVG_OPEN + parts.join('') + SVG_CLOSE;
 }
 
+// --- Head shifted up 2px for breathing bob ---
+const HEAD_UP = `
+  <ellipse cx="32" cy="18" rx="12" ry="13" fill="#FFCC99"/>
+  <path d="M20 15 Q20 4 32 4 Q44 4 44 15 L44 12 Q44 2 32 2 Q20 2 20 12 Z" fill="#5C4033"/>
+  <path d="M18 15 Q18 10 20 12 L20 18 Q18 18 18 15Z" fill="#5C4033"/>
+  <path d="M46 15 Q46 10 44 12 L44 18 Q46 18 46 15Z" fill="#5C4033"/>
+  <circle cx="27" cy="18" r="2" fill="#333333"/>
+  <circle cx="37" cy="18" r="2" fill="#333333"/>
+  <path d="M29 24 Q32 27 35 24" stroke="#333333" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <rect x="22" y="28" width="20" height="8" rx="4" fill="#FFCC99"/>`;
+
+// --- Closed eyes head (sleeping) ---
+const CLOSED_EYES_HEAD = `
+  <ellipse cx="32" cy="20" rx="12" ry="13" fill="#FFCC99"/>
+  <path d="M20 17 Q20 6 32 6 Q44 6 44 17 L44 14 Q44 4 32 4 Q20 4 20 14 Z" fill="#5C4033"/>
+  <path d="M18 17 Q18 12 20 14 L20 20 Q18 20 18 17Z" fill="#5C4033"/>
+  <path d="M46 17 Q46 12 44 14 L44 20 Q46 20 46 17Z" fill="#5C4033"/>
+  <line x1="25" y1="20" x2="29" y2="20" stroke="#333333" stroke-width="2" stroke-linecap="round"/>
+  <line x1="35" y1="20" x2="39" y2="20" stroke="#333333" stroke-width="2" stroke-linecap="round"/>
+  <rect x="22" y="30" width="20" height="8" rx="4" fill="#FFCC99"/>`;
+
 // --- Idle: breathing bob (2 frames) ---
 const idle0 = frame(SHADOW, LEGS_STAND, TORSO, ARMS_DOWN, HEAD);
-// Frame 2: slight upward bob (-1px on upper body)
-const idle1 = frame(
-  SHADOW, LEGS_STAND, TORSO,
-  ARMS_DOWN,
-  `<rect x="13" y="13" width="6" height="4" fill="#FFA07A"/>
-  <rect x="11" y="5" width="10" height="8" fill="#FFA07A"/>
-  <rect x="11" y="3" width="10" height="2" fill="#654321"/>
-  <rect x="10" y="5" width="1" height="4" fill="#654321"/>
-  <rect x="21" y="5" width="1" height="4" fill="#654321"/>
-  <rect x="13" y="8" width="2" height="2" fill="#000000"/>
-  <rect x="17" y="8" width="2" height="2" fill="#000000"/>
-  <rect x="14" y="11" width="1" height="1" fill="#000000"/>
-  <rect x="15" y="12" width="2" height="1" fill="#000000"/>
-  <rect x="17" y="11" width="1" height="1" fill="#000000"/>`,
-);
+const idle1 = frame(SHADOW, LEGS_STAND, TORSO, ARMS_DOWN, HEAD_UP);
 
 // --- Walk Right (4 frames) ---
 // Frame 0: right leg forward
 const walkR0 = frame(SHADOW,
-  `<rect x="10" y="32" width="5" height="12" fill="#4169E1"/>
-  <rect x="19" y="34" width="5" height="10" fill="#4169E1"/>
-  <rect x="10" y="44" width="5" height="2" fill="#2F4F4F"/>
-  <rect x="19" y="44" width="5" height="2" fill="#2F4F4F"/>`,
+  `<rect x="20" y="60" width="10" height="24" rx="4" fill="#5B8DEF"/>
+  <rect x="38" y="64" width="10" height="20" rx="4" fill="#5B8DEF"/>
+  <rect x="18" y="82" width="14" height="6" rx="3" fill="#3D3D3D"/>
+  <rect x="36" y="82" width="14" height="6" rx="3" fill="#3D3D3D"/>`,
   TORSO,
-  `<rect x="6" y="19" width="3" height="10" fill="#FFD700"/>
-  <rect x="23" y="21" width="3" height="10" fill="#FFD700"/>
-  <rect x="6" y="29" width="3" height="2" fill="#FFA07A"/>
-  <rect x="23" y="31" width="3" height="2" fill="#FFA07A"/>`,
+  `<rect x="8" y="36" width="10" height="20" rx="5" fill="#FFB84D"/>
+  <rect x="46" y="40" width="10" height="20" rx="5" fill="#FFB84D"/>
+  <circle cx="13" cy="58" r="4" fill="#FFCC99"/>
+  <circle cx="51" cy="62" r="4" fill="#FFCC99"/>`,
   HEAD);
+
 // Frame 1: passing (legs together, body up)
 const walkR1 = frame(SHADOW,
-  `<rect x="12" y="32" width="5" height="12" fill="#4169E1"/>
-  <rect x="15" y="32" width="5" height="12" fill="#4169E1"/>
-  <rect x="12" y="44" width="5" height="2" fill="#2F4F4F"/>
-  <rect x="15" y="44" width="5" height="2" fill="#2F4F4F"/>`,
-  TORSO, ARMS_DOWN,
-  `<rect x="13" y="13" width="6" height="4" fill="#FFA07A"/>
-  <rect x="11" y="5" width="10" height="8" fill="#FFA07A"/>
-  <rect x="11" y="3" width="10" height="2" fill="#654321"/>
-  <rect x="10" y="5" width="1" height="4" fill="#654321"/>
-  <rect x="21" y="5" width="1" height="4" fill="#654321"/>
-  <rect x="13" y="8" width="2" height="2" fill="#000000"/>
-  <rect x="17" y="8" width="2" height="2" fill="#000000"/>
-  <rect x="14" y="11" width="1" height="1" fill="#000000"/>
-  <rect x="15" y="12" width="2" height="1" fill="#000000"/>
-  <rect x="17" y="11" width="1" height="1" fill="#000000"/>`);
+  `<rect x="24" y="60" width="10" height="24" rx="4" fill="#5B8DEF"/>
+  <rect x="30" y="60" width="10" height="24" rx="4" fill="#5B8DEF"/>
+  <rect x="22" y="82" width="14" height="6" rx="3" fill="#3D3D3D"/>
+  <rect x="28" y="82" width="14" height="6" rx="3" fill="#3D3D3D"/>`,
+  TORSO, ARMS_DOWN, HEAD_UP);
+
 // Frame 2: left leg forward
 const walkR2 = frame(SHADOW,
-  `<rect x="8" y="34" width="5" height="10" fill="#4169E1"/>
-  <rect x="17" y="32" width="5" height="12" fill="#4169E1"/>
-  <rect x="8" y="44" width="5" height="2" fill="#2F4F4F"/>
-  <rect x="17" y="44" width="5" height="2" fill="#2F4F4F"/>`,
+  `<rect x="16" y="64" width="10" height="20" rx="4" fill="#5B8DEF"/>
+  <rect x="34" y="60" width="10" height="24" rx="4" fill="#5B8DEF"/>
+  <rect x="14" y="82" width="14" height="6" rx="3" fill="#3D3D3D"/>
+  <rect x="32" y="82" width="14" height="6" rx="3" fill="#3D3D3D"/>`,
   TORSO,
-  `<rect x="6" y="21" width="3" height="10" fill="#FFD700"/>
-  <rect x="23" y="19" width="3" height="10" fill="#FFD700"/>
-  <rect x="6" y="31" width="3" height="2" fill="#FFA07A"/>
-  <rect x="23" y="29" width="3" height="2" fill="#FFA07A"/>`,
+  `<rect x="8" y="40" width="10" height="20" rx="5" fill="#FFB84D"/>
+  <rect x="46" y="36" width="10" height="20" rx="5" fill="#FFB84D"/>
+  <circle cx="13" cy="62" r="4" fill="#FFCC99"/>
+  <circle cx="51" cy="58" r="4" fill="#FFCC99"/>`,
   HEAD);
+
 // Frame 3: passing again
 const walkR3 = walkR1;
 
-// --- Walk Left (mirrored: flip viewBox approach via transform) ---
+// --- Walk Left (mirrored via scaleX) ---
 function mirrorFrame(svgStr: string): string {
   return svgStr.replace(
-    'viewBox="0 0 32 48"',
-    'viewBox="0 0 32 48" style="transform: scaleX(-1)"',
+    'viewBox="0 0 64 96"',
+    'viewBox="0 0 64 96" style="transform: scaleX(-1)"',
   );
 }
 const walkL0 = mirrorFrame(walkR0);
@@ -110,105 +113,89 @@ const walkL3 = mirrorFrame(walkR3);
 
 // --- Office Idle: typing at desk (3 frames) ---
 const officeIdle0 = frame(SHADOW, LEGS_STAND, TORSO,
-  `<rect x="6" y="20" width="3" height="8" fill="#FFD700"/>
-  <rect x="23" y="20" width="3" height="8" fill="#FFD700"/>
-  <rect x="6" y="28" width="3" height="2" fill="#FFA07A"/>
-  <rect x="23" y="28" width="3" height="2" fill="#FFA07A"/>`,
+  `<rect x="8" y="38" width="10" height="16" rx="5" fill="#FFB84D"/>
+  <rect x="46" y="38" width="10" height="16" rx="5" fill="#FFB84D"/>
+  <circle cx="13" cy="56" r="4" fill="#FFCC99"/>
+  <circle cx="51" cy="56" r="4" fill="#FFCC99"/>`,
   HEAD);
+
 // Typing frame: left hand up
 const officeIdle1 = frame(SHADOW, LEGS_STAND, TORSO,
-  `<rect x="5" y="19" width="3" height="8" fill="#FFD700"/>
-  <rect x="23" y="20" width="3" height="8" fill="#FFD700"/>
-  <rect x="5" y="27" width="3" height="2" fill="#FFA07A"/>
-  <rect x="23" y="28" width="3" height="2" fill="#FFA07A"/>`,
+  `<rect x="6" y="36" width="10" height="16" rx="5" fill="#FFB84D"/>
+  <rect x="46" y="38" width="10" height="16" rx="5" fill="#FFB84D"/>
+  <circle cx="11" cy="54" r="4" fill="#FFCC99"/>
+  <circle cx="51" cy="56" r="4" fill="#FFCC99"/>`,
   HEAD);
+
 // Typing frame: right hand up
 const officeIdle2 = frame(SHADOW, LEGS_STAND, TORSO,
-  `<rect x="6" y="20" width="3" height="8" fill="#FFD700"/>
-  <rect x="24" y="19" width="3" height="8" fill="#FFD700"/>
-  <rect x="6" y="28" width="3" height="2" fill="#FFA07A"/>
-  <rect x="24" y="27" width="3" height="2" fill="#FFA07A"/>`,
+  `<rect x="8" y="38" width="10" height="16" rx="5" fill="#FFB84D"/>
+  <rect x="48" y="36" width="10" height="16" rx="5" fill="#FFB84D"/>
+  <circle cx="13" cy="56" r="4" fill="#FFCC99"/>
+  <circle cx="53" cy="54" r="4" fill="#FFCC99"/>`,
   HEAD);
 
 // --- Kitchen Idle: stirring at counter (3 frames) ---
-// Arm extended right, holding spoon
 const kitchenIdle0 = frame(SHADOW, LEGS_STAND, TORSO,
-  `<rect x="6" y="20" width="3" height="10" fill="#FFD700"/>
-  <rect x="6" y="30" width="3" height="2" fill="#FFA07A"/>
-  <rect x="23" y="18" width="3" height="8" fill="#FFD700"/>
-  <rect x="23" y="26" width="3" height="2" fill="#FFA07A"/>
-  <rect x="26" y="24" width="2" height="6" fill="#808080"/>`,
+  `<rect x="8" y="38" width="10" height="20" rx="5" fill="#FFB84D"/>
+  <circle cx="13" cy="60" r="4" fill="#FFCC99"/>
+  <rect x="46" y="34" width="10" height="16" rx="5" fill="#FFB84D"/>
+  <circle cx="51" cy="52" r="4" fill="#FFCC99"/>
+  <rect x="53" y="48" width="3" height="14" rx="1.5" fill="#808080"/>`,
   HEAD);
-// Stirring position 2
+
 const kitchenIdle1 = frame(SHADOW, LEGS_STAND, TORSO,
-  `<rect x="6" y="20" width="3" height="10" fill="#FFD700"/>
-  <rect x="6" y="30" width="3" height="2" fill="#FFA07A"/>
-  <rect x="23" y="19" width="3" height="8" fill="#FFD700"/>
-  <rect x="23" y="27" width="3" height="2" fill="#FFA07A"/>
-  <rect x="27" y="25" width="2" height="6" fill="#808080"/>`,
+  `<rect x="8" y="38" width="10" height="20" rx="5" fill="#FFB84D"/>
+  <circle cx="13" cy="60" r="4" fill="#FFCC99"/>
+  <rect x="46" y="36" width="10" height="16" rx="5" fill="#FFB84D"/>
+  <circle cx="51" cy="54" r="4" fill="#FFCC99"/>
+  <rect x="55" y="50" width="3" height="14" rx="1.5" fill="#808080"/>`,
   HEAD);
-// Stirring position 3
+
 const kitchenIdle2 = frame(SHADOW, LEGS_STAND, TORSO,
-  `<rect x="6" y="20" width="3" height="10" fill="#FFD700"/>
-  <rect x="6" y="30" width="3" height="2" fill="#FFA07A"/>
-  <rect x="23" y="18" width="3" height="8" fill="#FFD700"/>
-  <rect x="23" y="26" width="3" height="2" fill="#FFA07A"/>
-  <rect x="25" y="23" width="2" height="6" fill="#808080"/>`,
+  `<rect x="8" y="38" width="10" height="20" rx="5" fill="#FFB84D"/>
+  <circle cx="13" cy="60" r="4" fill="#FFCC99"/>
+  <rect x="46" y="34" width="10" height="16" rx="5" fill="#FFB84D"/>
+  <circle cx="51" cy="52" r="4" fill="#FFCC99"/>
+  <rect x="51" y="46" width="3" height="14" rx="1.5" fill="#808080"/>`,
   HEAD);
 
 // --- Living Room Idle: relaxing on couch (2 frames) ---
-// Seated pose
 const LEGS_SEATED = `
-  <rect x="10" y="32" width="5" height="8" fill="#4169E1"/>
-  <rect x="17" y="32" width="5" height="8" fill="#4169E1"/>
-  <rect x="8" y="40" width="7" height="4" fill="#4169E1"/>
-  <rect x="17" y="40" width="7" height="4" fill="#4169E1"/>
-  <rect x="8" y="44" width="7" height="2" fill="#2F4F4F"/>
-  <rect x="17" y="44" width="7" height="2" fill="#2F4F4F"/>`;
+  <rect x="20" y="60" width="10" height="16" rx="4" fill="#5B8DEF"/>
+  <rect x="34" y="60" width="10" height="16" rx="4" fill="#5B8DEF"/>
+  <rect x="16" y="76" width="14" height="8" rx="4" fill="#5B8DEF"/>
+  <rect x="34" y="76" width="14" height="8" rx="4" fill="#5B8DEF"/>
+  <rect x="14" y="82" width="16" height="6" rx="3" fill="#3D3D3D"/>
+  <rect x="34" y="82" width="16" height="6" rx="3" fill="#3D3D3D"/>`;
+
 const livingIdle0 = frame(SHADOW, LEGS_SEATED, TORSO,
-  `<rect x="5" y="20" width="4" height="8" fill="#FFD700"/>
-  <rect x="23" y="20" width="4" height="8" fill="#FFD700"/>
-  <rect x="5" y="28" width="4" height="2" fill="#FFA07A"/>
-  <rect x="23" y="28" width="4" height="2" fill="#FFA07A"/>`,
+  `<rect x="6" y="38" width="12" height="16" rx="5" fill="#FFB84D"/>
+  <rect x="46" y="38" width="12" height="16" rx="5" fill="#FFB84D"/>
+  <circle cx="12" cy="56" r="4" fill="#FFCC99"/>
+  <circle cx="52" cy="56" r="4" fill="#FFCC99"/>`,
   HEAD);
+
 // Slight lean
 const livingIdle1 = frame(SHADOW, LEGS_SEATED, TORSO,
-  `<rect x="4" y="21" width="4" height="8" fill="#FFD700"/>
-  <rect x="24" y="21" width="4" height="8" fill="#FFD700"/>
-  <rect x="4" y="29" width="4" height="2" fill="#FFA07A"/>
-  <rect x="24" y="29" width="4" height="2" fill="#FFA07A"/>`,
-  `<rect x="13" y="13" width="6" height="4" fill="#FFA07A"/>
-  <rect x="11" y="5" width="10" height="8" fill="#FFA07A"/>
-  <rect x="11" y="3" width="10" height="2" fill="#654321"/>
-  <rect x="10" y="5" width="1" height="4" fill="#654321"/>
-  <rect x="21" y="5" width="1" height="4" fill="#654321"/>
-  <rect x="13" y="8" width="2" height="2" fill="#000000"/>
-  <rect x="17" y="8" width="2" height="2" fill="#000000"/>
-  <rect x="14" y="11" width="1" height="1" fill="#000000"/>
-  <rect x="15" y="12" width="2" height="1" fill="#000000"/>
-  <rect x="17" y="11" width="1" height="1" fill="#000000"/>`);
+  `<rect x="4" y="40" width="12" height="16" rx="5" fill="#FFB84D"/>
+  <rect x="48" y="40" width="12" height="16" rx="5" fill="#FFB84D"/>
+  <circle cx="10" cy="58" r="4" fill="#FFCC99"/>
+  <circle cx="54" cy="58" r="4" fill="#FFCC99"/>`,
+  HEAD_UP);
 
 // --- Bedroom Idle: sleeping with Zzz (2 frames) ---
-// Lying down / sleeping pose (eyes closed)
-const CLOSED_EYES_HEAD = `
-  <rect x="13" y="14" width="6" height="4" fill="#FFA07A"/>
-  <rect x="11" y="6" width="10" height="8" fill="#FFA07A"/>
-  <rect x="11" y="4" width="10" height="2" fill="#654321"/>
-  <rect x="10" y="6" width="1" height="4" fill="#654321"/>
-  <rect x="21" y="6" width="1" height="4" fill="#654321"/>
-  <rect x="13" y="9" width="2" height="1" fill="#000000"/>
-  <rect x="17" y="9" width="2" height="1" fill="#000000"/>`;
 const bedroomIdle0 = frame(SHADOW, LEGS_STAND, TORSO, ARMS_DOWN, CLOSED_EYES_HEAD,
-  `<text x="24" y="6" font-size="5" fill="#4169E1" font-family="monospace">Z</text>`);
+  '<text x="48" y="12" font-size="10" fill="#5B8DEF" font-family="sans-serif" font-weight="bold">Z</text>');
 const bedroomIdle1 = frame(SHADOW, LEGS_STAND, TORSO, ARMS_DOWN, CLOSED_EYES_HEAD,
-  `<text x="25" y="4" font-size="4" fill="#4169E1" font-family="monospace">z</text>
-  <text x="22" y="8" font-size="5" fill="#4169E1" font-family="monospace">Z</text>`);
+  `<text x="50" y="8" font-size="8" fill="#5B8DEF" font-family="sans-serif" font-weight="bold">z</text>
+  <text x="44" y="16" font-size="10" fill="#5B8DEF" font-family="sans-serif" font-weight="bold">Z</text>`);
 
 // --- Legacy export (backwards compatible) ---
 export const avatarSprite = {
   idle: idle0,
-  width: 32,
-  height: 48,
+  width: 64,
+  height: 96,
 };
 
 // --- Full animation frame sets ---

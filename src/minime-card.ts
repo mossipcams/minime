@@ -285,7 +285,7 @@ export class MiniMeCard extends LitElement {
     .scene-container {
       position: relative;
       width: 100%;
-      /* 16:10 aspect ratio for pixel art scene */
+      /* 16:10 aspect ratio for scene */
       padding-bottom: 62.5%;
       overflow: hidden;
     }
@@ -338,7 +338,6 @@ export class MiniMeCard extends LitElement {
       width: 100%;
       height: auto;
       display: block;
-      image-rendering: pixelated;
     }
 
     .room-label {

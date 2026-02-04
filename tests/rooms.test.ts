@@ -7,6 +7,12 @@ describe('Room Backgrounds', () => {
     expect(typeof roomBackgrounds).toBe('object');
   });
 
+  it('should not use crispEdges shape-rendering', () => {
+    for (const svg of Object.values(roomBackgrounds)) {
+      expect(svg).not.toContain('crispEdges');
+    }
+  });
+
   it('should have all four required rooms', () => {
     expect(roomBackgrounds).toHaveProperty('office');
     expect(roomBackgrounds).toHaveProperty('kitchen');
