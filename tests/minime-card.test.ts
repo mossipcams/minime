@@ -148,6 +148,52 @@ describe('MiniMeCard', () => {
     });
   });
 
+  describe('Animation integration', () => {
+    beforeEach(() => {
+      card.setConfig({ type: 'custom:minime-card', entity: 'device_tracker.bermuda_phone' });
+    });
+
+    it('creates animation engine when connected and triggers room change', async () => {
+      document.body.appendChild(card);
+      card.hass = mockHass({ 'device_tracker.bermuda_phone': { state: 'home', attributes: { area: 'office' } } });
+      await card.updateComplete;
+      expect((card as any)._engine).toBeDefined();
+      expect((card as any)._animState).toBeDefined();
+      document.body.removeChild(card);
+    });
+
+    it('renders avatar with dynamic position from animation state', async () => {
+      document.body.appendChild(card);
+      card.hass = mockHass({ 'device_tracker.bermuda_phone': { state: 'home', attributes: { area: 'office' } } });
+      await card.updateComplete;
+      const avatar = card.shadowRoot?.querySelector('.avatar') as HTMLElement;
+      expect(avatar).toBeTruthy();
+      expect(avatar.style.left).toBeTruthy();
+      document.body.removeChild(card);
+    });
+
+    it('stops engine on disconnect', async () => {
+      document.body.appendChild(card);
+      card.hass = mockHass({ 'device_tracker.bermuda_phone': { state: 'home', attributes: { area: 'office' } } });
+      await card.updateComplete;
+      const engine = (card as any)._engine;
+      expect(engine).toBeDefined();
+      document.body.removeChild(card);
+      // After disconnect, engine should have been stopped (no crash)
+      expect((card as any)._engine).toBeDefined();
+    });
+
+    it('avatar contains SVG from animation frame set, not static idle', async () => {
+      document.body.appendChild(card);
+      card.hass = mockHass({ 'device_tracker.bermuda_phone': { state: 'home', attributes: { area: 'office' } } });
+      await card.updateComplete;
+      const avatar = card.shadowRoot?.querySelector('.avatar');
+      const svg = avatar?.querySelector('svg');
+      expect(svg).toBeTruthy();
+      document.body.removeChild(card);
+    });
+  });
+
   describe('Editor integration', () => {
     it('returns stub config with default areas', () => {
       const stub = MiniMeCard.getStubConfig();

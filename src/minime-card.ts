@@ -3,16 +3,27 @@ import { state } from 'lit/decorators.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import type { MiniMeConfig, HomeAssistant } from './types';
 import { roomBackgrounds } from './assets/rooms';
-import { avatarSprite } from './assets/avatar';
+import { avatarFrames } from './assets/avatar';
+import { AnimationEngine } from './animation/engine';
+import { AnimationPhase, type AnimState } from './animation/states';
+
+const ROOM_IDLE_ANIMS: Record<string, keyof typeof avatarFrames> = {
+  office: 'officeIdle',
+  kitchen: 'kitchenIdle',
+  living_room: 'livingRoomIdle',
+  bedroom: 'bedroomIdle',
+};
 
 export class MiniMeCard extends LitElement {
   // Internal config and hass storage (NOT reactive)
   private _config?: MiniMeConfig;
   private _hass?: HomeAssistant;
+  private _engine?: AnimationEngine;
 
   // Reactive state for rendering
   @state() private _entityState?: string;
   @state() private _error?: string;
+  @state() private _animState?: AnimState;
   
   // Track last known room for "not detected" state
   private _lastRoom?: string;
@@ -94,6 +105,11 @@ export class MiniMeCard extends LitElement {
       this._error = undefined;
     }
     if (this._entityState !== (entity.attributes?.area as string)) {
+      // Drive animation engine with normalized room key
+      if (entity.attributes?.area && this._engine) {
+        const roomKey = (entity.attributes.area as string).toLowerCase().replace(/\s+/g, '_');
+        this._engine.changeRoom(roomKey);
+      }
       this._entityState = entity.attributes?.area as string;
     }
   }
@@ -127,9 +143,23 @@ export class MiniMeCard extends LitElement {
   }
 
 
-  /**
-   * Render the card
-   */
+  private _getCurrentFrame(): string {
+    const anim = this._animState;
+    if (!anim) return avatarFrames.idle[0];
+    const room = anim.currentRoom;
+    if (anim.phase === AnimationPhase.EXIT_WALK || anim.phase === AnimationPhase.ENTER_WALK) {
+      return avatarFrames.walkRight[anim.frameIndex % avatarFrames.walkRight.length];
+    }
+    if (room) {
+      const animName = ROOM_IDLE_ANIMS[room];
+      if (animName && avatarFrames[animName]) {
+        const frames = avatarFrames[animName];
+        return frames[anim.frameIndex % frames.length];
+      }
+    }
+    return avatarFrames.idle[anim.frameIndex % avatarFrames.idle.length];
+  }
+
   protected render() {
     if (!this._config) {
       return html``;
@@ -198,8 +228,8 @@ export class MiniMeCard extends LitElement {
           
           ${!isNotDetected && roomSvg
             ? html`
-                <div class="avatar">
-                  ${unsafeHTML(avatarSprite.idle)}
+                <div class="avatar" style="left: ${this._animState ? this._animState.avatarX : 50}%">
+                  ${unsafeHTML(this._getCurrentFrame())}
                 </div>
               `
             : ''}
@@ -221,9 +251,19 @@ export class MiniMeCard extends LitElement {
   /**
    * Cleanup when card is removed
    */
+  public connectedCallback(): void {
+    super.connectedCallback();
+    this._engine = new AnimationEngine((animState) => {
+      this._animState = animState;
+    });
+    this._engine.start();
+  }
+
   public disconnectedCallback(): void {
     super.disconnectedCallback();
-    // Future cleanup: animation frames, timers (Phase 4)
+    if (this._engine) {
+      this._engine.stop();
+    }
   }
 
   static styles = css`
@@ -290,10 +330,8 @@ export class MiniMeCard extends LitElement {
     .avatar {
       position: absolute;
       bottom: 15%;
-      left: 50%;
       transform: translateX(-50%);
       width: 15%;
-      /* Avatar scales proportionally */
     }
 
     .avatar svg {
