@@ -1,4 +1,4 @@
 node_modules/
-dist/
 *.js.map
 .DS_Store
+# Note: dist/ is tracked for HACS compatibility

@@ -4,6 +4,7 @@ export interface MiniMeConfig {
   type: string;
   entity: string;
   name?: string;
+  areas?: string[];
 }
 
 export interface HassEntity {
@@ -14,9 +15,16 @@ export interface HassEntity {
   last_updated: string;
 }
 
+export interface HassArea {
+  area_id: string;
+  name: string;
+  picture?: string | null;
+}
+
 export interface HomeAssistant {
   states: Record<string, HassEntity>;
   themes: {
     darkMode: boolean;
   };
+  areas: Record<string, HassArea>;
 }
