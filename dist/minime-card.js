@@ -51,12 +51,12 @@ function dt(t){return function(t){return(e,i)=>"object"==typeof i?at(t,e,i):((t,
             </div>
           </div>
         </ha-card>
-      `;const t=this._entityState,e="Not detected"===t;let i,n,r=!1;return e?this._lastRoom&&ut[this._lastRoom]?(i=ut[this._lastRoom],n=this._lastRoom,r=!0):n="Not detected":t&&ut[t]?(i=ut[t],n=t):n=t||"Unknown",I`
+      `;const t=this._entityState,e=t=>t.toLowerCase().replace(/\s+/g,"_"),i="Not detected"===t;let n,r,s=!1;if(i){const t=this._lastRoom?e(this._lastRoom):void 0;t&&ut[t]?(n=ut[t],r=this._lastRoom,s=!0):r="Not detected"}else t&&ut[e(t)]?(n=ut[e(t)],r=t):r=t||"Unknown";return I`
       <ha-card>
         <div class="scene-container">
-          ${i?I`
-                <div class="room-background ${r?"faded":""}">
-                  ${yt(i)}
+          ${n?I`
+                <div class="room-background ${s?"faded":""}">
+                  ${yt(n)}
                 </div>
               `:I`
                 <div class="no-room-background">
@@ -64,19 +64,19 @@ function dt(t){return function(t){return(e,i)=>"object"==typeof i?at(t,e,i):((t,
                 </div>
               `}
           
-          ${!e&&i?I`
+          ${!i&&n?I`
                 <div class="avatar">
                   ${yt(xt.idle)}
                 </div>
               `:""}
           
-          ${e&&!i?I`
+          ${i&&!n?I`
                 <div class="not-detected">
                   <div>Not detected</div>
                 </div>
               `:""}
           
-          <div class="room-label">${n.replace(/_/g," ")}</div>
+          <div class="room-label">${r.replace(/_/g," ")}</div>
         </div>
       </ha-card>
     `}disconnectedCallback(){super.disconnectedCallback()}}wt.styles=h`

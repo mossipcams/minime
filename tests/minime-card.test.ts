@@ -128,6 +128,24 @@ describe('MiniMeCard', () => {
       card.hass = mockHass({ 'device_tracker.bermuda_phone': { state: 'kitchen' } });
       expect((card as any)._lastRoom).toBe('kitchen');
     });
+
+    it('matches room background when Bermuda reports display name', async () => {
+      document.body.appendChild(card);
+      card.hass = mockHass({ 'device_tracker.bermuda_phone': { state: 'Bedroom' } });
+      await card.updateComplete;
+      const bg = card.shadowRoot?.querySelector('.room-background');
+      expect(bg).toBeTruthy();
+      document.body.removeChild(card);
+    });
+
+    it('matches room background when name has spaces', async () => {
+      document.body.appendChild(card);
+      card.hass = mockHass({ 'device_tracker.bermuda_phone': { state: 'Living Room' } });
+      await card.updateComplete;
+      const bg = card.shadowRoot?.querySelector('.room-background');
+      expect(bg).toBeTruthy();
+      document.body.removeChild(card);
+    });
   });
 
   describe('Editor integration', () => {

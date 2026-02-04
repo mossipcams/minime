@@ -151,6 +151,8 @@ export class MiniMeCard extends LitElement {
 
     // Determine which room to display
     const currentRoom = this._entityState;
+    // Normalize room name to match background keys (e.g. "Living Room" → "living_room")
+    const toKey = (name: string) => name.toLowerCase().replace(/\s+/g, '_');
     const isNotDetected = currentRoom === 'Not detected';
     
     // Get room background
@@ -160,16 +162,17 @@ export class MiniMeCard extends LitElement {
 
     if (isNotDetected) {
       // Show last known room faded, or show "not detected" message if no last room
-      if (this._lastRoom && roomBackgrounds[this._lastRoom]) {
-        roomSvg = roomBackgrounds[this._lastRoom];
-        roomName = this._lastRoom;
+      const lastKey = this._lastRoom ? toKey(this._lastRoom) : undefined;
+      if (lastKey && roomBackgrounds[lastKey]) {
+        roomSvg = roomBackgrounds[lastKey];
+        roomName = this._lastRoom!;
         isFaded = true;
       } else {
         roomName = 'Not detected';
       }
-    } else if (currentRoom && roomBackgrounds[currentRoom]) {
+    } else if (currentRoom && roomBackgrounds[toKey(currentRoom)]) {
       // Room background exists
-      roomSvg = roomBackgrounds[currentRoom];
+      roomSvg = roomBackgrounds[toKey(currentRoom)];
       roomName = currentRoom;
     } else if (currentRoom) {
       // Room doesn't have a background - show with placeholder
