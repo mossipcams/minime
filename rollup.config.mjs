@@ -13,9 +13,12 @@ export default {
     sourcemap: dev,
   },
   plugins: [
-    typescript(),
-    resolve(),
+    resolve({
+      browser: true,
+      preferBuiltins: false,
+    }),
     commonjs(),
+    typescript(),
     !dev && terser(),
   ],
 };
