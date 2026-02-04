@@ -56,9 +56,9 @@ describe('MiniMeCard', () => {
       card.setConfig({ type: 'custom:minime-card', entity: 'device_tracker.bermuda_phone' });
     });
 
-    it('extracts area name from entity state', () => {
-      card.hass = mockHass({ 'device_tracker.bermuda_phone': { state: 'office' } });
-      expect((card as any)._entityState).toBe('office');
+    it('extracts area from Bermuda entity attributes', () => {
+      card.hass = mockHass({ 'device_tracker.bermuda_phone': { state: 'home', attributes: { area: 'Bedroom' } } });
+      expect((card as any)._entityState).toBe('Bedroom');
       expect((card as any)._error).toBeUndefined();
     });
 
@@ -84,8 +84,8 @@ describe('MiniMeCard', () => {
       expect((card as any)._error).toContain('not found');
     });
 
-    it('shows not detected when entity state is unknown', () => {
-      card.hass = mockHass({ 'device_tracker.bermuda_phone': { state: 'unknown' } });
+    it('shows not detected when entity state is not_home', () => {
+      card.hass = mockHass({ 'device_tracker.bermuda_phone': { state: 'not_home' } });
       expect((card as any)._entityState).toBe('Not detected');
       expect((card as any)._error).toBeUndefined();
     });
@@ -97,10 +97,10 @@ describe('MiniMeCard', () => {
     });
 
     it('does not update state when entity value unchanged', () => {
-      card.hass = mockHass({ 'device_tracker.bermuda_phone': { state: 'office' } });
+      card.hass = mockHass({ 'device_tracker.bermuda_phone': { state: 'home', attributes: { area: 'office' } } });
       const firstState = (card as any)._entityState;
       // Set hass again with same entity state
-      card.hass = mockHass({ 'device_tracker.bermuda_phone': { state: 'office' } });
+      card.hass = mockHass({ 'device_tracker.bermuda_phone': { state: 'home', attributes: { area: 'office' } } });
       // State value should be unchanged
       expect((card as any)._entityState).toBe(firstState);
     });
@@ -112,26 +112,26 @@ describe('MiniMeCard', () => {
     });
 
     it('tracks last known room', () => {
-      card.hass = mockHass({ 'device_tracker.bermuda_phone': { state: 'office' } });
+      card.hass = mockHass({ 'device_tracker.bermuda_phone': { state: 'home', attributes: { area: 'office' } } });
       expect((card as any)._lastRoom).toBe('office');
     });
 
     it('preserves last room when not detected', () => {
-      card.hass = mockHass({ 'device_tracker.bermuda_phone': { state: 'office' } });
-      card.hass = mockHass({ 'device_tracker.bermuda_phone': { state: 'unknown' } });
+      card.hass = mockHass({ 'device_tracker.bermuda_phone': { state: 'home', attributes: { area: 'office' } } });
+      card.hass = mockHass({ 'device_tracker.bermuda_phone': { state: 'not_home' } });
       expect((card as any)._lastRoom).toBe('office');
       expect((card as any)._entityState).toBe('Not detected');
     });
 
     it('updates last room on room change', () => {
-      card.hass = mockHass({ 'device_tracker.bermuda_phone': { state: 'office' } });
-      card.hass = mockHass({ 'device_tracker.bermuda_phone': { state: 'kitchen' } });
+      card.hass = mockHass({ 'device_tracker.bermuda_phone': { state: 'home', attributes: { area: 'office' } } });
+      card.hass = mockHass({ 'device_tracker.bermuda_phone': { state: 'home', attributes: { area: 'kitchen' } } });
       expect((card as any)._lastRoom).toBe('kitchen');
     });
 
     it('matches room background when Bermuda reports display name', async () => {
       document.body.appendChild(card);
-      card.hass = mockHass({ 'device_tracker.bermuda_phone': { state: 'Bedroom' } });
+      card.hass = mockHass({ 'device_tracker.bermuda_phone': { state: 'home', attributes: { area: 'Bedroom' } } });
       await card.updateComplete;
       const bg = card.shadowRoot?.querySelector('.room-background');
       expect(bg).toBeTruthy();
@@ -140,7 +140,7 @@ describe('MiniMeCard', () => {
 
     it('matches room background when name has spaces', async () => {
       document.body.appendChild(card);
-      card.hass = mockHass({ 'device_tracker.bermuda_phone': { state: 'Living Room' } });
+      card.hass = mockHass({ 'device_tracker.bermuda_phone': { state: 'home', attributes: { area: 'Living Room' } } });
       await card.updateComplete;
       const bg = card.shadowRoot?.querySelector('.room-background');
       expect(bg).toBeTruthy();

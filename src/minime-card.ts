@@ -69,7 +69,7 @@ export class MiniMeCard extends LitElement {
     }
 
     // Entity state is 'unknown' (Bermuda running but device not detected in any area)
-    if (entity.state === 'unknown') {
+    if (entity.state === "not_home") {
       // Save last room before switching to "Not detected"
       if (this._entityState && this._entityState !== 'Not detected') {
         this._lastRoom = this._entityState;
@@ -86,15 +86,15 @@ export class MiniMeCard extends LitElement {
 
     // Normal case: entity state is a valid area name
     // Save as last room
-    if (entity.state !== 'Not detected') {
-      this._lastRoom = entity.state;
+    if (entity.attributes?.area) {
+      this._lastRoom = entity.attributes?.area as string;
     }
     
     if (this._error !== undefined) {
       this._error = undefined;
     }
-    if (this._entityState !== entity.state) {
-      this._entityState = entity.state;
+    if (this._entityState !== (entity.attributes?.area as string)) {
+      this._entityState = entity.attributes?.area as string;
     }
   }
 
