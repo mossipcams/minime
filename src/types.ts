@@ -28,3 +28,11 @@ export interface HomeAssistant {
   };
   areas: Record<string, HassArea>;
 }
+
+export interface AnimatedPresenceConfig {
+  type: string;
+  entity: string;
+  name?: string;
+  animation_path?: string;
+  transition_duration?: number;
+}
