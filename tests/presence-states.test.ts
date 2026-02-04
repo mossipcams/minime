@@ -9,7 +9,7 @@ describe('Presence State Machine', () => {
     expect(state.targetRoom).toBeNull();
     expect(state.visible).toBe(true);
     expect(state.avatarX).toBe(50);
-    expect(state.lottieAnimation).toBe('idle.json');
+    expect(state.lottieAnimation).toBe('idle');
     expect(state.crossfadeProgress).toBe(0);
     expect(state.outgoingRoom).toBeNull();
   });
@@ -17,7 +17,7 @@ describe('Presence State Machine', () => {
   it('creates state with initial room and room-specific animation', () => {
     const state = createInitialState('office');
     expect(state.currentRoom).toBe('office');
-    expect(state.lottieAnimation).toBe('studying.json');
+    expect(state.lottieAnimation).toBe('studying');
   });
 
   it('changeRoom does nothing when target is same as current room', () => {
@@ -83,7 +83,7 @@ describe('Presence State Machine', () => {
       state = tick(state, 16);
     }
     expect(state.currentRoom).toBe('kitchen');
-    expect(state.lottieAnimation).toBe('cooking.json');
+    expect(state.lottieAnimation).toBe('cooking');
     expect(state.targetRoom).toBeNull();
   });
 
@@ -109,6 +109,6 @@ describe('Presence State Machine', () => {
   it('uses walking.json animation during walk phases', () => {
     let state = createInitialState('office');
     state = changeRoom(state, 'kitchen');
-    expect(state.lottieAnimation).toBe('walking.json');
+    expect(state.lottieAnimation).toBe('walking');
   });
 });

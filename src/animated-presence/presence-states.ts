@@ -6,10 +6,10 @@ export enum PresencePhase {
 }
 
 const ROOM_ANIMATIONS: Record<string, string> = {
-  office: 'studying.json',
-  kitchen: 'cooking.json',
-  bedroom: 'sleeping.json',
-  living_room: 'idle.json',
+  office: 'studying',
+  kitchen: 'cooking',
+  bedroom: 'sleeping',
+  living_room: 'idle',
 };
 
 const WALK_SPEED = 0.06;
@@ -20,8 +20,8 @@ const MAX_DELTA = 200;
 const DEFAULT_X = 50;
 
 function getRoomAnimation(room: string | null): string {
-  if (!room) return 'idle.json';
-  return ROOM_ANIMATIONS[room] ?? 'idle.json';
+  if (!room) return 'idle';
+  return ROOM_ANIMATIONS[room] ?? 'idle';
 }
 
 export type PresenceState = ReturnType<typeof createInitialState>;
@@ -64,7 +64,7 @@ export function changeRoom(state: PresenceState, room: string): PresenceState {
     targetRoom: room,
     phase: PresencePhase.WALKING_OUT,
     outgoingRoom: state.currentRoom,
-    lottieAnimation: 'walking.json',
+    lottieAnimation: 'walking',
   };
 }
 
@@ -102,7 +102,7 @@ export function tick(state: PresenceState, deltaMs: number): PresenceState {
         crossfadeProgress: 1,
         avatarX: ENTER_EDGE,
         visible: true,
-        lottieAnimation: 'walking.json',
+        lottieAnimation: 'walking',
       };
     }
     return { ...state, crossfadeProgress: newCrossfade };

@@ -73,23 +73,6 @@ export class AnimatedPresenceCardEditor extends LitElement {
           </label>
         </div>
 
-        <div class="editor-row">
-          <label>
-            Animation Path
-            <input
-              type="text"
-              .value=${this._config.animation_path || '/local/animations/'}
-              @input=${(ev: Event) => {
-                const target = ev.target as HTMLInputElement;
-                const newConfig = {
-                  ...this._config!,
-                  animation_path: target.value,
-                };
-                this._dispatchConfigChanged(newConfig);
-              }}
-            />
-          </label>
-        </div>
       </div>
     `;
   }

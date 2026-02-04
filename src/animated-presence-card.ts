@@ -6,6 +6,7 @@ import { lofiRoomBackgrounds } from './animated-presence/lofi-rooms';
 import { PresenceEngine } from './animated-presence/presence-engine';
 import { PresencePhase, type PresenceState } from './animated-presence/presence-states';
 import { loadLottie } from './animated-presence/lottie-loader';
+import { bundledAnimations } from './animated-presence/bundled-animations';
 import type { LottiePlayer, LottieAnimationItem } from './animated-presence/lottie-types';
 
 export class AnimatedPresenceCard extends LitElement {
@@ -81,7 +82,6 @@ export class AnimatedPresenceCard extends LitElement {
     return {
       entity: "",
       name: "Presence",
-      animation_path: "/local/animations/",
     };
   }
 
@@ -131,8 +131,8 @@ export class AnimatedPresenceCard extends LitElement {
     const container = this.shadowRoot?.querySelector(".lottie-container") as HTMLElement | null;
     if (!container) return;
 
-    const animPath = this._config?.animation_path ?? "/local/animations/";
-    const path = `${animPath}${animFile}`;
+    const animationData = bundledAnimations[animFile];
+    if (!animationData) return;
 
     try {
       this._lottieAnim = this._lottiePlayer.loadAnimation({
@@ -140,7 +140,7 @@ export class AnimatedPresenceCard extends LitElement {
         renderer: "svg",
         loop: true,
         autoplay: true,
-        path,
+        animationData,
       });
     } catch {
       this._currentLottieFile = undefined;

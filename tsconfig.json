@@ -6,11 +6,12 @@
     "strict": true,
     "experimentalDecorators": true,
     "useDefineForClassFields": false,
+    "resolveJsonModule": true,
     "declaration": false,
     "sourceMap": true,
     "outDir": "./dist",
     "rootDir": "./src",
     "lib": ["ES2021", "DOM", "DOM.Iterable"]
   },
-  "include": ["src/**/*.ts"]
+  "include": ["src/**/*.ts", "animations/**/*.json"]
 }

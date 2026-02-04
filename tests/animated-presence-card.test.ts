@@ -71,7 +71,6 @@ describe('AnimatedPresenceCard', () => {
     const stub = AnimatedPresenceCard.getStubConfig();
     expect(stub).not.toHaveProperty('type');
     expect(stub).toHaveProperty('entity');
-    expect(stub).toHaveProperty('animation_path');
   });
 
   it('returns config element', () => {
