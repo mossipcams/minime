@@ -137,6 +137,11 @@ describe('MiniMeCard', () => {
       expect(stub.areas).toContain('office');
     });
 
+    it('stub config must not include type (HA sets custom: prefix)', () => {
+      const stub = MiniMeCard.getStubConfig();
+      expect(stub).not.toHaveProperty('type');
+    });
+
     it('returns config element', () => {
       const el = MiniMeCard.getConfigElement();
       expect(el.tagName.toLowerCase()).toBe('minime-card-editor');

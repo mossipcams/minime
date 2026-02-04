@@ -118,9 +118,8 @@ export class MiniMeCard extends LitElement {
    * Get default stub configuration for card picker
    * Provides sensible defaults when adding card to dashboard
    */
-  public static getStubConfig(): MiniMeConfig {
+  public static getStubConfig(): Omit<MiniMeConfig, 'type'> {
     return {
-      type: 'minime-card',
       entity: '',
       name: 'MiniMe',
       areas: ['office', 'kitchen', 'living_room', 'bedroom'],
