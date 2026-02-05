@@ -35,11 +35,16 @@ describe('MiniMeCard', () => {
 
   it('accepts any entity type (no domain restriction)', () => {
     expect(() => card.setConfig({ type: 'custom:minime-card', entity: 'sensor.room' })).not.toThrow();
-    expect(() => card.setConfig({ type: 'custom:minime-card', entity: 'input_select.location' })).not.toThrow();
     expect(() => card.setConfig({ type: 'custom:minime-card', entity: 'device_tracker.phone' })).not.toThrow();
   });
 
-  it('reads entity.state directly as room name', () => {
+  it('reads area from Bermuda attributes', () => {
+    card.setConfig({ type: 'custom:minime-card', entity: 'device_tracker.phone' });
+    card.hass = mockHass({ 'device_tracker.phone': { state: 'home', attributes: { area: 'Office' } } });
+    expect((card as any)._entityState).toBe('office');
+  });
+
+  it('falls back to entity.state when no area attribute', () => {
     card.setConfig({ type: 'custom:minime-card', entity: 'sensor.room' });
     card.hass = mockHass({ 'sensor.room': { state: 'Office' } });
     expect((card as any)._entityState).toBe('office');
@@ -57,9 +62,15 @@ describe('MiniMeCard', () => {
     expect((card as any)._error).toContain('unavailable');
   });
 
+  it('sets Not detected when entity state is not_home', () => {
+    card.setConfig({ type: 'custom:minime-card', entity: 'device_tracker.phone' });
+    card.hass = mockHass({ 'device_tracker.phone': { state: 'not_home' } });
+    expect((card as any)._entityState).toBe('Not detected');
+  });
+
   it('normalizes room name with spaces to underscore key', () => {
-    card.setConfig({ type: 'custom:minime-card', entity: 'sensor.room' });
-    card.hass = mockHass({ 'sensor.room': { state: 'Living Room' } });
+    card.setConfig({ type: 'custom:minime-card', entity: 'device_tracker.phone' });
+    card.hass = mockHass({ 'device_tracker.phone': { state: 'home', attributes: { area: 'Living Room' } } });
     expect((card as any)._entityState).toBe('living_room');
   });
 

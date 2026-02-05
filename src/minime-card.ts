@@ -50,11 +50,24 @@ export class MiniMeCard extends LitElement {
       return;
     }
 
+    // Bermuda device_tracker: state is home/not_home, area is in attributes
+    if (entity.state === "not_home") {
+      if (this._entityState !== "Not detected") {
+        this._entityState = "Not detected";
+      }
+      if (this._error !== undefined) {
+        this._error = undefined;
+      }
+      return;
+    }
+
     if (this._error !== undefined) {
       this._error = undefined;
     }
 
-    const roomKey = entity.state.toLowerCase().replace(/\s+/g, "_");
+    // Read area from attributes (Bermuda BLE) with fallback to entity state
+    const areaName = (entity.attributes?.area as string) || entity.state;
+    const roomKey = areaName.toLowerCase().replace(/\s+/g, "_");
 
     if (this._entityState !== roomKey) {
       this._entityState = roomKey;
