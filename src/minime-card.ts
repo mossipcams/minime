@@ -141,7 +141,6 @@ export class MiniMeCard extends LitElement {
     const avatarX = anim?.avatarX ?? 50;
     const activity = anim?.animation ?? 'idle';
     const displayName = this._config.name || this._entityState?.replace(/_/g, " ") || "Unknown";
-    const roomName = currentRoom?.replace(/_/g, " ") || this._entityState?.replace(/_/g, " ") || "";
 
     return html`
       <ha-card>
@@ -163,7 +162,6 @@ export class MiniMeCard extends LitElement {
             </div>
             <div class="info">
               <div class="name">${displayName}</div>
-              <div class="room">${roomName}</div>
             </div>
           </div>
         </div>
@@ -201,16 +199,15 @@ export class MiniMeCard extends LitElement {
 
     .room-bg {
       position: absolute;
-      top: 50%;
+      top: 0;
       left: 0;
       width: 100%;
-      transform: translateY(-50%);
-      opacity: 0.4;
+      height: 100%;
     }
 
     .room-bg svg {
       width: 100%;
-      height: auto;
+      height: 100%;
       display: block;
     }
 
@@ -239,7 +236,7 @@ export class MiniMeCard extends LitElement {
       height: 100%;
       padding: 0 16px;
       gap: 12px;
-      background: linear-gradient(90deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.3) 40%, transparent 100%);
+      background: linear-gradient(90deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.2) 40%, transparent 100%);
     }
 
     .avatar-zone {
@@ -269,16 +266,6 @@ export class MiniMeCard extends LitElement {
       font-weight: 600;
       color: white;
       text-shadow: 0 1px 3px rgba(0,0,0,0.5);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .room {
-      font-size: 0.8em;
-      color: rgba(255,255,255,0.7);
-      text-transform: capitalize;
-      text-shadow: 0 1px 2px rgba(0,0,0,0.5);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
