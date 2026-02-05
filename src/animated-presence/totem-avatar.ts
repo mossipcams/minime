@@ -5,7 +5,7 @@ const P = 3;
 const W = 16 * P;
 const H = 24 * P;
 
-// Detailed character palette
+// Character palette
 const HAIR = '#4A3728';
 const HAIR_DARK = '#362618';
 const HAIR_HI = '#5E4A38';
@@ -16,6 +16,7 @@ const EYES = '#2D2D2D';
 const EYE_WHITE = '#E8E8E8';
 const BROW = '#3A2A1A';
 const MOUTH = '#C48868';
+const MOUTH_SLEEP = '#B08070';
 const HOODIE = '#5B8DBE';
 const HOODIE_DARK = '#3D6A94';
 const HOODIE_HI = '#78A8D4';
@@ -29,19 +30,36 @@ const SHOES_SOLE = '#3A2A1A';
 const LACE = '#D0D0D0';
 const WHITE = '#F5F5F0';
 
+// Prop palettes
+const PAN = '#808090';
+const PAN_DARK = '#606070';
+const PAN_HANDLE = '#6A5030';
+const FOOD_EGG = '#F0E060';
+const FOOD_YLK = '#E8A030';
+const LAPTOP_FRAME = '#2A2A3E';
+const LAPTOP_SCREEN = '#3A5A8A';
+const LAPTOP_GLOW = '#5A8ABE';
+const LAPTOP_KEY = '#4A4A5E';
+const PHONE_BODY = '#2A2A3E';
+const PHONE_SCREEN = '#5A8ABE';
+const PILLOW_FILL = '#E8D8C0';
+const PILLOW_SHADE = '#D0C0A0';
+const BLANKET = '#7B6AAE';
+const BLANKET_DARK = '#6A5A9E';
+const BLANKET_HI = '#8C7ABE';
+const EYELID = '#C8A880';
+
 function r(x: number, y: number, fill: string): string {
   return `<rect x="${x * P}" y="${y * P}" width="${P}" height="${P}" fill="${fill}"/>`;
 }
 
+// ===== SHARED HEAD =====
+
 function headPixels(): string {
   const rows: string[] = [];
-  // Hair top with highlight
   rows.push(r(5, 0, HAIR_DARK), r(6, 0, HAIR), r(7, 0, HAIR_HI), r(8, 0, HAIR_HI), r(9, 0, HAIR), r(10, 0, HAIR_DARK));
-  // Hair row 1 — fuller with fringe
   rows.push(r(4, 1, HAIR_DARK), r(5, 1, HAIR), r(6, 1, HAIR_HI), r(7, 1, HAIR), r(8, 1, HAIR), r(9, 1, HAIR_HI), r(10, 1, HAIR), r(11, 1, HAIR_DARK));
-  // Hair row 2 — sides frame face
   rows.push(r(3, 2, HAIR_DARK), r(4, 2, HAIR), r(5, 2, HAIR), r(6, 2, HAIR), r(7, 2, HAIR), r(8, 2, HAIR), r(9, 2, HAIR), r(10, 2, HAIR), r(11, 2, HAIR), r(12, 2, HAIR_DARK));
-  // Forehead — skin shows under hair
   rows.push(r(3, 3, HAIR_DARK), r(4, 3, HAIR), r(5, 3, SKIN_HI), r(6, 3, SKIN_HI), r(7, 3, SKIN), r(8, 3, SKIN), r(9, 3, SKIN_HI), r(10, 3, SKIN_HI), r(11, 3, HAIR), r(12, 3, HAIR_DARK));
   // Eyebrows
   rows.push(r(3, 4, HAIR_DARK), r(4, 4, SKIN_SHADOW));
@@ -49,7 +67,7 @@ function headPixels(): string {
   rows.push(r(7, 4, SKIN), r(8, 4, SKIN));
   rows.push(r(9, 4, BROW), r(10, 4, BROW));
   rows.push(r(11, 4, SKIN_SHADOW), r(12, 4, HAIR_DARK));
-  // Eyes row
+  // Open eyes
   rows.push(r(3, 5, HAIR_DARK), r(4, 5, SKIN_SHADOW));
   rows.push(r(5, 5, EYE_WHITE), r(6, 5, EYES));
   rows.push(r(7, 5, SKIN), r(8, 5, SKIN));
@@ -61,25 +79,55 @@ function headPixels(): string {
   rows.push(r(7, 6, SKIN_SHADOW), r(8, 6, SKIN_SHADOW));
   rows.push(r(9, 6, SKIN), r(10, 6, SKIN));
   rows.push(r(11, 6, SKIN_SHADOW), r(12, 6, HAIR_DARK));
-  // Mouth/chin
+  // Mouth
   rows.push(r(4, 7, SKIN_SHADOW), r(5, 7, SKIN_SHADOW));
   rows.push(r(6, 7, SKIN), r(7, 7, MOUTH), r(8, 7, MOUTH), r(9, 7, SKIN));
   rows.push(r(10, 7, SKIN_SHADOW), r(11, 7, SKIN_SHADOW));
   return rows.join('');
 }
 
+function sleepingHeadPixels(): string {
+  const rows: string[] = [];
+  // Same hair
+  rows.push(r(5, 0, HAIR_DARK), r(6, 0, HAIR), r(7, 0, HAIR_HI), r(8, 0, HAIR_HI), r(9, 0, HAIR), r(10, 0, HAIR_DARK));
+  rows.push(r(4, 1, HAIR_DARK), r(5, 1, HAIR), r(6, 1, HAIR_HI), r(7, 1, HAIR), r(8, 1, HAIR), r(9, 1, HAIR_HI), r(10, 1, HAIR), r(11, 1, HAIR_DARK));
+  rows.push(r(3, 2, HAIR_DARK), r(4, 2, HAIR), r(5, 2, HAIR), r(6, 2, HAIR), r(7, 2, HAIR), r(8, 2, HAIR), r(9, 2, HAIR), r(10, 2, HAIR), r(11, 2, HAIR), r(12, 2, HAIR_DARK));
+  rows.push(r(3, 3, HAIR_DARK), r(4, 3, HAIR), r(5, 3, SKIN_HI), r(6, 3, SKIN_HI), r(7, 3, SKIN), r(8, 3, SKIN), r(9, 3, SKIN_HI), r(10, 3, SKIN_HI), r(11, 3, HAIR), r(12, 3, HAIR_DARK));
+  // Relaxed brows
+  rows.push(r(3, 4, HAIR_DARK), r(4, 4, SKIN_SHADOW));
+  rows.push(r(5, 4, SKIN), r(6, 4, SKIN));
+  rows.push(r(7, 4, SKIN), r(8, 4, SKIN));
+  rows.push(r(9, 4, SKIN), r(10, 4, SKIN));
+  rows.push(r(11, 4, SKIN_SHADOW), r(12, 4, HAIR_DARK));
+  // Closed eyes — eyelid lines
+  rows.push(r(3, 5, HAIR_DARK), r(4, 5, SKIN_SHADOW));
+  rows.push(r(5, 5, SKIN), r(6, 5, EYELID));
+  rows.push(r(7, 5, SKIN), r(8, 5, SKIN));
+  rows.push(r(9, 5, SKIN), r(10, 5, EYELID));
+  rows.push(r(11, 5, SKIN_SHADOW), r(12, 5, HAIR_DARK));
+  // Nose/cheeks — same
+  rows.push(r(3, 6, HAIR_DARK), r(4, 6, SKIN_SHADOW));
+  rows.push(r(5, 6, SKIN), r(6, 6, SKIN));
+  rows.push(r(7, 6, SKIN_SHADOW), r(8, 6, SKIN_SHADOW));
+  rows.push(r(9, 6, SKIN), r(10, 6, SKIN));
+  rows.push(r(11, 6, SKIN_SHADOW), r(12, 6, HAIR_DARK));
+  // Peaceful mouth — slight smile
+  rows.push(r(4, 7, SKIN_SHADOW), r(5, 7, SKIN_SHADOW));
+  rows.push(r(6, 7, SKIN), r(7, 7, MOUTH_SLEEP), r(8, 7, MOUTH_SLEEP), r(9, 7, SKIN));
+  rows.push(r(10, 7, SKIN_SHADOW), r(11, 7, SKIN_SHADOW));
+  return rows.join('');
+}
+
 function blinkOverlay(): string {
-  // Skin-colored rects that cover eyes during blink animation
   return `<g class="totem-blink">${r(5, 5, SKIN)}${r(6, 5, SKIN)}${r(9, 5, SKIN)}${r(10, 5, SKIN)}</g>`;
 }
 
+// ===== BODY =====
+
 function bodyPixels(): string {
   const rows: string[] = [];
-  // Neck
   rows.push(r(6, 8, SKIN_SHADOW), r(7, 8, SKIN), r(8, 8, SKIN), r(9, 8, SKIN_SHADOW));
-  // Hoodie collar
   rows.push(r(5, 9, HOODIE_DARK), r(6, 9, HOODIE_HI), r(7, 9, HOODIE_DARK), r(8, 9, HOODIE_DARK), r(9, 9, HOODIE_HI), r(10, 9, HOODIE_DARK));
-  // Torso with detail
   for (let y = 10; y <= 14; y++) {
     rows.push(r(5, y, HOODIE_DARK));
     rows.push(r(6, y, HOODIE));
@@ -88,70 +136,146 @@ function bodyPixels(): string {
     rows.push(r(9, y, HOODIE));
     rows.push(r(10, y, HOODIE_DARK));
   }
-  // Hoodie logo/emblem
   rows.push(r(7, 12, HOODIE_LOGO), r(8, 12, HOODIE_LOGO));
-  // Belt/waistband
   rows.push(r(5, 15, PANTS_DARK), r(6, 15, PANTS_DARK), r(7, 15, PANTS_HI), r(8, 15, PANTS_HI), r(9, 15, PANTS_DARK), r(10, 15, PANTS_DARK));
   return rows.join('');
 }
 
+// ===== ARMS =====
+
 function leftArmPixels(): string {
   const rows: string[] = [];
-  // Shoulder
   rows.push(r(4, 9, HOODIE_DARK));
-  // Upper arm
   rows.push(r(3, 10, HOODIE_DARK), r(4, 10, HOODIE));
   rows.push(r(3, 11, HOODIE_DARK), r(4, 11, HOODIE_HI));
   rows.push(r(3, 12, HOODIE_DARK), r(4, 12, HOODIE));
-  // Wrist
   rows.push(r(3, 13, HOODIE_DARK), r(4, 13, HOODIE_DARK));
-  // Hand with detail
   rows.push(r(3, 14, SKIN_SHADOW), r(4, 14, SKIN));
   return rows.join('');
 }
 
 function rightArmPixels(): string {
   const rows: string[] = [];
-  // Shoulder
   rows.push(r(11, 9, HOODIE_DARK));
-  // Upper arm
   rows.push(r(11, 10, HOODIE), r(12, 10, HOODIE_DARK));
   rows.push(r(11, 11, HOODIE_HI), r(12, 11, HOODIE_DARK));
   rows.push(r(11, 12, HOODIE), r(12, 12, HOODIE_DARK));
-  // Wrist
   rows.push(r(11, 13, HOODIE_DARK), r(12, 13, HOODIE_DARK));
-  // Hand
   rows.push(r(11, 14, SKIN), r(12, 14, SKIN_SHADOW));
   return rows.join('');
 }
 
+function rightArmWithPanPixels(): string {
+  const rows: string[] = [];
+  // Standard arm
+  rows.push(r(11, 9, HOODIE_DARK));
+  rows.push(r(11, 10, HOODIE), r(12, 10, HOODIE_DARK));
+  rows.push(r(11, 11, HOODIE_HI), r(12, 11, HOODIE_DARK));
+  rows.push(r(11, 12, HOODIE), r(12, 12, HOODIE_DARK));
+  rows.push(r(11, 13, HOODIE_DARK), r(12, 13, HOODIE_DARK));
+  rows.push(r(11, 14, SKIN), r(12, 14, SKIN_SHADOW));
+  // Frying pan — attached to hand, rotates with stir animation
+  rows.push(r(13, 11, PAN_DARK), r(14, 11, PAN));
+  rows.push(r(13, 12, PAN), r(14, 12, FOOD_EGG));
+  rows.push(r(13, 13, PAN), r(14, 13, FOOD_YLK));
+  rows.push(r(13, 14, PAN_DARK), r(14, 14, PAN));
+  // Pan handle
+  rows.push(r(15, 12, PAN_HANDLE), r(15, 13, PAN_HANDLE));
+  return rows.join('');
+}
+
+function leftArmWithSpatulaPixels(): string {
+  const rows: string[] = [];
+  // Standard arm
+  rows.push(r(4, 9, HOODIE_DARK));
+  rows.push(r(3, 10, HOODIE_DARK), r(4, 10, HOODIE));
+  rows.push(r(3, 11, HOODIE_DARK), r(4, 11, HOODIE_HI));
+  rows.push(r(3, 12, HOODIE_DARK), r(4, 12, HOODIE));
+  rows.push(r(3, 13, HOODIE_DARK), r(4, 13, HOODIE_DARK));
+  rows.push(r(3, 14, SKIN_SHADOW), r(4, 14, SKIN));
+  // Spatula — handle + flat end
+  rows.push(r(2, 13, PAN_HANDLE));
+  rows.push(r(2, 12, PAN_HANDLE));
+  rows.push(r(1, 11, PAN), r(2, 11, PAN));
+  return rows.join('');
+}
+
+// ===== LEGS =====
+
 function leftLegPixels(): string {
   const rows: string[] = [];
-  // Upper leg
   rows.push(r(6, 16, PANTS_DARK), r(7, 16, PANTS));
   rows.push(r(6, 17, PANTS_DARK), r(7, 17, PANTS_HI));
-  // Lower leg
   rows.push(r(6, 18, PANTS_DARK), r(7, 18, PANTS));
   rows.push(r(6, 19, PANTS_DARK), r(7, 19, PANTS));
-  // Shoe with detail
   rows.push(r(5, 20, SHOES_DARK), r(6, 20, SHOES), r(7, 20, SHOES));
-  rows.push(r(6, 20, LACE)); // lace accent
+  rows.push(r(6, 20, LACE));
   rows.push(r(5, 21, SHOES_SOLE), r(6, 21, SHOES_SOLE), r(7, 21, SHOES_SOLE));
   return rows.join('');
 }
 
 function rightLegPixels(): string {
   const rows: string[] = [];
-  // Upper leg
   rows.push(r(8, 16, PANTS), r(9, 16, PANTS_DARK));
   rows.push(r(8, 17, PANTS_HI), r(9, 17, PANTS_DARK));
-  // Lower leg
   rows.push(r(8, 18, PANTS), r(9, 18, PANTS_DARK));
   rows.push(r(8, 19, PANTS), r(9, 19, PANTS_DARK));
-  // Shoe with detail
   rows.push(r(8, 20, SHOES), r(9, 20, SHOES), r(10, 20, SHOES_DARK));
-  rows.push(r(9, 20, LACE)); // lace accent
+  rows.push(r(9, 20, LACE));
   rows.push(r(8, 21, SHOES_SOLE), r(9, 21, SHOES_SOLE), r(10, 21, SHOES_SOLE));
+  return rows.join('');
+}
+
+// ===== PROPS =====
+
+function phoneProp(): string {
+  // Phone held by right hand — small screen glow
+  const rows: string[] = [];
+  rows.push(r(12, 15, PHONE_BODY), r(13, 15, PHONE_BODY));
+  rows.push(r(12, 16, PHONE_SCREEN), r(13, 16, PHONE_SCREEN));
+  rows.push(r(12, 17, PHONE_BODY), r(13, 17, PHONE_BODY));
+  // Screen glow animation
+  rows.push(`<rect x="${12*P}" y="${16*P}" width="${2*P}" height="${P}" fill="${PHONE_SCREEN}" opacity="0.2"><animate attributeName="opacity" values="0.15;0.3;0.18;0.25;0.15" dur="3s" repeatCount="indefinite"/></rect>`);
+  return `<g class="totem-prop">${rows.join('')}</g>`;
+}
+
+function laptopProp(): string {
+  // Laptop in front of body — screen + keyboard
+  const rows: string[] = [];
+  // Screen (bright, stands out against hoodie)
+  rows.push(r(4, 12, LAPTOP_FRAME));
+  rows.push(r(5, 12, LAPTOP_GLOW), r(6, 12, LAPTOP_SCREEN), r(7, 12, LAPTOP_GLOW), r(8, 12, LAPTOP_SCREEN), r(9, 12, LAPTOP_GLOW), r(10, 12, LAPTOP_SCREEN));
+  rows.push(r(11, 12, LAPTOP_FRAME));
+  rows.push(r(4, 13, LAPTOP_FRAME));
+  rows.push(r(5, 13, LAPTOP_SCREEN), r(6, 13, LAPTOP_GLOW), r(7, 13, LAPTOP_SCREEN), r(8, 13, LAPTOP_GLOW), r(9, 13, LAPTOP_SCREEN), r(10, 13, LAPTOP_GLOW));
+  rows.push(r(11, 13, LAPTOP_FRAME));
+  // Keyboard
+  rows.push(r(4, 14, LAPTOP_FRAME), r(5, 14, LAPTOP_KEY), r(6, 14, LAPTOP_KEY), r(7, 14, LAPTOP_KEY), r(8, 14, LAPTOP_KEY), r(9, 14, LAPTOP_KEY), r(10, 14, LAPTOP_KEY), r(11, 14, LAPTOP_FRAME));
+  // Screen glow effect
+  rows.push(`<rect x="${5*P}" y="${12*P}" width="${6*P}" height="${2*P}" fill="${LAPTOP_GLOW}" opacity="0.12"><animate attributeName="opacity" values="0.08;0.18;0.1;0.15;0.08" dur="3s" repeatCount="indefinite"/></rect>`);
+  return `<g class="totem-prop">${rows.join('')}</g>`;
+}
+
+function pillowProp(): string {
+  // Wide pillow behind head — visible on sides when character overlays
+  const rows: string[] = [];
+  rows.push(r(2, 7, PILLOW_SHADE), r(3, 7, PILLOW_FILL), r(4, 7, PILLOW_FILL), r(5, 7, PILLOW_FILL), r(6, 7, PILLOW_FILL), r(7, 7, PILLOW_FILL), r(8, 7, PILLOW_FILL), r(9, 7, PILLOW_FILL), r(10, 7, PILLOW_FILL), r(11, 7, PILLOW_FILL), r(12, 7, PILLOW_FILL), r(13, 7, PILLOW_SHADE));
+  rows.push(r(3, 8, PILLOW_SHADE), r(4, 8, PILLOW_FILL), r(5, 8, PILLOW_FILL), r(6, 8, PILLOW_FILL), r(7, 8, PILLOW_FILL), r(8, 8, PILLOW_FILL), r(9, 8, PILLOW_FILL), r(10, 8, PILLOW_FILL), r(11, 8, PILLOW_FILL), r(12, 8, PILLOW_SHADE));
+  return rows.join('');
+}
+
+function blanketProp(): string {
+  // Blanket covering body from mid-torso to ankles
+  const rows: string[] = [];
+  for (let y = 11; y <= 19; y++) {
+    rows.push(r(4, y, BLANKET_DARK));
+    for (let x = 5; x <= 10; x++) {
+      rows.push(r(x, y, (x + y) % 3 === 0 ? BLANKET_HI : BLANKET));
+    }
+    rows.push(r(11, y, BLANKET_DARK));
+  }
+  // Top edge highlight
+  rows.push(r(5, 11, BLANKET_HI), r(6, 11, BLANKET_HI), r(7, 11, BLANKET_HI), r(8, 11, BLANKET_HI), r(9, 11, BLANKET_HI), r(10, 11, BLANKET_HI));
   return rows.join('');
 }
 
@@ -167,20 +291,60 @@ function sleepingZzz(): string {
   </g>`;
 }
 
+// ===== MAIN EXPORT =====
+
 export function getTotemSvg(activity: string): string {
   const act = (ACTIVITIES.includes(activity as Activity) ? activity : 'idle') as Activity;
 
-  const parts = [
-    groundShadow(),
-    `<g class="totem-character">`,
-    `<g class="totem-left-leg">${leftLegPixels()}</g>`,
-    `<g class="totem-right-leg">${rightLegPixels()}</g>`,
-    `<g class="totem-body">${bodyPixels()}</g>`,
-    `<g class="totem-left-arm">${leftArmPixels()}</g>`,
-    `<g class="totem-right-arm">${rightArmPixels()}</g>`,
-    `<g class="totem-head">${headPixels()}${act !== 'sleeping' ? blinkOverlay() : ''}</g>`,
-    `</g>`,
-  ];
+  const parts: string[] = [groundShadow(), `<g class="totem-character">`];
+
+  if (act === 'sleeping') {
+    // Pillow behind character
+    parts.push(pillowProp());
+    parts.push(`<g class="totem-left-leg">${leftLegPixels()}</g>`);
+    parts.push(`<g class="totem-right-leg">${rightLegPixels()}</g>`);
+    parts.push(`<g class="totem-body">${bodyPixels()}</g>`);
+    parts.push(`<g class="totem-left-arm">${leftArmPixels()}</g>`);
+    parts.push(`<g class="totem-right-arm">${rightArmPixels()}</g>`);
+    parts.push(`<g class="totem-head">${sleepingHeadPixels()}</g>`);
+    // Blanket over body (on top of everything)
+    parts.push(`<g class="totem-blanket">${blanketProp()}</g>`);
+  } else if (act === 'cooking') {
+    parts.push(`<g class="totem-left-leg">${leftLegPixels()}</g>`);
+    parts.push(`<g class="totem-right-leg">${rightLegPixels()}</g>`);
+    parts.push(`<g class="totem-body">${bodyPixels()}</g>`);
+    parts.push(`<g class="totem-left-arm">${leftArmWithSpatulaPixels()}</g>`);
+    parts.push(`<g class="totem-right-arm">${rightArmWithPanPixels()}</g>`);
+    parts.push(`<g class="totem-head">${headPixels()}${blinkOverlay()}</g>`);
+  } else if (act === 'studying') {
+    parts.push(`<g class="totem-left-leg">${leftLegPixels()}</g>`);
+    parts.push(`<g class="totem-right-leg">${rightLegPixels()}</g>`);
+    parts.push(`<g class="totem-body">${bodyPixels()}</g>`);
+    // Laptop between body and arms — screen visible, arms type on top
+    parts.push(laptopProp());
+    parts.push(`<g class="totem-left-arm">${leftArmPixels()}</g>`);
+    parts.push(`<g class="totem-right-arm">${rightArmPixels()}</g>`);
+    parts.push(`<g class="totem-head">${headPixels()}${blinkOverlay()}</g>`);
+  } else if (act === 'idle') {
+    parts.push(`<g class="totem-left-leg">${leftLegPixels()}</g>`);
+    parts.push(`<g class="totem-right-leg">${rightLegPixels()}</g>`);
+    parts.push(`<g class="totem-body">${bodyPixels()}</g>`);
+    parts.push(`<g class="totem-left-arm">${leftArmPixels()}</g>`);
+    parts.push(`<g class="totem-right-arm">${rightArmPixels()}</g>`);
+    parts.push(`<g class="totem-head">${headPixels()}${blinkOverlay()}</g>`);
+    // Phone in hand
+    parts.push(phoneProp());
+  } else {
+    // walking — clean character, animation does the rest
+    parts.push(`<g class="totem-left-leg">${leftLegPixels()}</g>`);
+    parts.push(`<g class="totem-right-leg">${rightLegPixels()}</g>`);
+    parts.push(`<g class="totem-body">${bodyPixels()}</g>`);
+    parts.push(`<g class="totem-left-arm">${leftArmPixels()}</g>`);
+    parts.push(`<g class="totem-right-arm">${rightArmPixels()}</g>`);
+    parts.push(`<g class="totem-head">${headPixels()}${blinkOverlay()}</g>`);
+  }
+
+  parts.push(`</g>`);
 
   if (act === 'sleeping') {
     parts.push(sleepingZzz());
@@ -320,7 +484,7 @@ export const totemStyles = `
     50% { transform: scaleX(0.8); opacity: 0.08; }
   }
 
-  /* ===== STUDYING — seated, typing ===== */
+  /* ===== STUDYING — seated, typing on laptop ===== */
   .totem-studying .totem-left-leg {
     transform: rotate(80deg);
     transform-origin: ${6.5 * P}px ${16 * P}px;
@@ -375,7 +539,7 @@ export const totemStyles = `
     100% { transform: rotate(-4deg) translateY(-${P}px); }
   }
 
-  /* ===== COOKING — stir + hold + sway ===== */
+  /* ===== COOKING — stir pan + hold spatula ===== */
   .totem-cooking .totem-character {
     animation: totem-cook-sway 1.5s ease-in-out infinite;
   }
@@ -419,13 +583,17 @@ export const totemStyles = `
     50% { transform: rotate(-6deg) translateY(-${Math.round(P * 0.5)}px); }
   }
 
-  /* ===== SLEEPING — lay down + breathe + zzz ===== */
+  /* ===== SLEEPING — lay down + pillow + blanket + zzz ===== */
   .totem-sleeping {
     transform: rotate(90deg) scale(0.8);
     transform-origin: center center;
   }
   .totem-sleeping .totem-shadow {
     opacity: 0;
+  }
+  .totem-sleeping .totem-blanket {
+    animation: totem-sleep-breathe 3s ease-in-out infinite;
+    transform-origin: ${8 * P}px ${15 * P}px;
   }
   .totem-sleeping .totem-body {
     animation: totem-sleep-breathe 3s ease-in-out infinite;
