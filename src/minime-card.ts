@@ -98,6 +98,10 @@ export class MiniMeCard extends LitElement {
       this._presenceState = presenceState;
     });
     this._engine.start();
+    // hass is set before connectedCallback, so sync the engine with current room
+    if (this._entityState && this._entityState !== "Not detected") {
+      this._engine.changeRoom(this._entityState);
+    }
   }
 
   public disconnectedCallback(): void {
