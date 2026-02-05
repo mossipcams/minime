@@ -23,4 +23,11 @@ describe('Lofi Room Backgrounds', () => {
       }
     }
   });
+
+  it('should have floor line at y=85 for proper avatar alignment', () => {
+    for (const [room, svg] of Object.entries(lofiRoomBackgrounds)) {
+      const hasFloorAt85 = svg.includes('y="85"') || svg.includes('y1="85"');
+      expect(hasFloorAt85, `${room} should have floor at y=85`).toBe(true);
+    }
+  });
 });

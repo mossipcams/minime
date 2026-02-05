@@ -585,7 +585,7 @@ export const totemStyles = `
 
   /* ===== SLEEPING — lay down + pillow + blanket + zzz ===== */
   .totem-sleeping {
-    transform: rotate(90deg) scale(0.8);
+    transform: rotate(-90deg) scale(0.9);
     transform-origin: center center;
   }
   .totem-sleeping .totem-shadow {
