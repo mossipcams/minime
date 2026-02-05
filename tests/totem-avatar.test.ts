@@ -52,11 +52,12 @@ describe('Totem Avatar', () => {
     expect(svg).toContain('totem-idle');
   });
 
-  it('uses pixel art color palette', () => {
+  it('uses pixel art character palette', () => {
     const svg = getTotemSvg('idle');
-    expect(svg).toContain('#E8B84B');
-    expect(svg).toContain('#A67C2E');
-    expect(svg).toContain('#4CAF50');
+    // Skin, hair, hoodie colors
+    expect(svg).toContain('#F0C8A0');
+    expect(svg).toContain('#4A3728');
+    expect(svg).toContain('#5B8DBE');
     expect(svg).toContain('#2D2D2D');
   });
 

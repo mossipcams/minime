@@ -78,7 +78,7 @@ export class MiniMeCard extends LitElement {
   }
 
   public getCardSize(): number {
-    return 3;
+    return 1;
   }
 
   public static getConfigElement(): HTMLElement {
@@ -119,11 +119,9 @@ export class MiniMeCard extends LitElement {
     if (this._error) {
       return html`
         <ha-card>
-          <div class="card-content error-content">
-            <div class="error">
-              <span class="error-icon">!</span>
-              <span class="error-message">${this._error}</span>
-            </div>
+          <div class="header error-header">
+            <span class="error-icon">!</span>
+            <span class="error-message">${this._error}</span>
           </div>
         </ha-card>
       `;
@@ -143,39 +141,31 @@ export class MiniMeCard extends LitElement {
     const avatarX = anim?.avatarX ?? 50;
     const activity = anim?.animation ?? 'idle';
     const displayName = this._config.name || this._entityState?.replace(/_/g, " ") || "Unknown";
+    const roomName = currentRoom?.replace(/_/g, " ") || this._entityState?.replace(/_/g, " ") || "";
 
     return html`
       <ha-card>
-        <div class="scene-container">
-          ${outgoingRoomSvg && isCrossfading
-            ? html`
-                <div class="room-background outgoing" style="opacity: ${crossfadeOpacity}">
-                  ${unsafeHTML(outgoingRoomSvg)}
-                </div>
-              `
-            : ""}
+        <div class="header">
+          <div class="room-bg-wrap">
+            ${outgoingRoomSvg && isCrossfading
+              ? html`<div class="room-bg outgoing" style="opacity: ${crossfadeOpacity}">${unsafeHTML(outgoingRoomSvg)}</div>`
+              : ""}
+            ${currentRoomSvg
+              ? html`<div class="room-bg ${isCrossfading ? "incoming" : ""}">${unsafeHTML(currentRoomSvg)}</div>`
+              : html`<div class="room-bg-fallback"></div>`}
+          </div>
 
-          ${currentRoomSvg
-            ? html`
-                <div class="room-background ${isCrossfading ? "incoming" : ""}">
-                  ${unsafeHTML(currentRoomSvg)}
-                </div>
-              `
-            : html`
-                <div class="no-room-background">
-                  <div class="placeholder-text">No room background</div>
-                </div>
-              `}
-
-          ${showAvatar
-            ? html`
-                <div class="avatar" style="left: ${avatarX}%">
-                  ${unsafeHTML(getTotemSvg(activity))}
-                </div>
-              `
-            : ""}
-
-          <div class="room-label">${displayName}</div>
+          <div class="header-content">
+            <div class="avatar-zone">
+              ${showAvatar
+                ? html`<div class="avatar" style="left: ${avatarX}%">${unsafeHTML(getTotemSvg(activity))}</div>`
+                : ""}
+            </div>
+            <div class="info">
+              <div class="name">${displayName}</div>
+              <div class="room">${roomName}</div>
+            </div>
+          </div>
         </div>
       </ha-card>
     `;
@@ -183,27 +173,25 @@ export class MiniMeCard extends LitElement {
 
   static styles = css`
     :host {
-      --minime-bg: var(--card-background-color, #fff);
-      --minime-text: var(--primary-text-color, #333);
-      --minime-secondary: var(--secondary-text-color, #666);
+      --minime-bg: var(--card-background-color, #1c1c1c);
+      --minime-text: var(--primary-text-color, #fff);
+      --minime-secondary: var(--secondary-text-color, #aaa);
       --minime-error: var(--error-color, #db4437);
     }
 
     ha-card {
-      background: var(--minime-bg);
-      color: var(--minime-text);
       overflow: hidden;
       padding: 0;
+      border: none;
     }
 
-    .scene-container {
+    .header {
       position: relative;
-      width: 100%;
-      padding-bottom: 62.5%;
+      height: 80px;
       overflow: hidden;
     }
 
-    .room-background {
+    .room-bg-wrap {
       position: absolute;
       top: 0;
       left: 0;
@@ -211,102 +199,118 @@ export class MiniMeCard extends LitElement {
       height: 100%;
     }
 
-    .room-background svg {
+    .room-bg {
+      position: absolute;
+      top: 50%;
+      left: 0;
       width: 100%;
-      height: 100%;
+      transform: translateY(-50%);
+      opacity: 0.4;
+    }
+
+    .room-bg svg {
+      width: 100%;
+      height: auto;
       display: block;
     }
 
-    .room-background.outgoing {
-      z-index: 1;
-    }
-
-    .room-background.incoming {
+    .room-bg.outgoing {
       z-index: 0;
     }
 
-    .no-room-background {
+    .room-bg.incoming {
+      z-index: 0;
+    }
+
+    .room-bg-fallback {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: linear-gradient(135deg, #8B7355 0%, #6B5335 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      background: linear-gradient(135deg, #2a2a3e 0%, #1a1a2e 100%);
     }
 
-    .placeholder-text {
-      color: white;
-      font-size: 1.2em;
-      opacity: 0.7;
+    .header-content {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      height: 100%;
+      padding: 0 16px;
+      gap: 12px;
+      background: linear-gradient(90deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.3) 40%, transparent 100%);
+    }
+
+    .avatar-zone {
+      position: relative;
+      width: 48px;
+      height: 64px;
+      flex-shrink: 0;
     }
 
     .avatar {
       position: absolute;
-      bottom: 15%;
+      bottom: 0;
+      width: 100%;
       transform: translateX(-50%);
-      width: 15%;
-      z-index: 2;
+      left: 50%;
     }
 
-    .room-label {
-      position: absolute;
-      bottom: 4px;
-      right: 8px;
-      font-size: 0.75em;
-      text-transform: capitalize;
-      background: rgba(0, 0, 0, 0.3);
-      padding: 2px 6px;
-      border-radius: 3px;
-      color: white;
-      z-index: 3;
-    }
-
-    .card-content.error-content {
-      padding: 16px;
-      min-height: 120px;
+    .info {
       display: flex;
-      align-items: center;
-      justify-content: center;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
     }
 
-    .error {
+    .name {
+      font-size: 1.1em;
+      font-weight: 600;
+      color: white;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .room {
+      font-size: 0.8em;
+      color: rgba(255,255,255,0.7);
+      text-transform: capitalize;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .error-header {
       display: flex;
       align-items: center;
       gap: 8px;
-      color: var(--minime-error);
-      padding: 8px;
+      padding: 0 16px;
+      background: var(--minime-bg);
     }
 
     .error-icon {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 24px;
-      height: 24px;
+      width: 20px;
+      height: 20px;
       border-radius: 50%;
       background: var(--minime-error);
       color: white;
       font-weight: bold;
-      font-size: 14px;
+      font-size: 12px;
       flex-shrink: 0;
     }
 
     .error-message {
-      font-size: 0.9em;
-      line-height: 1.3;
+      font-size: 0.85em;
+      color: var(--minime-error);
     }
 
     ${unsafeCSS(totemStyles)}
-
-    @media (min-width: 600px) {
-      .scene-container {
-        max-height: 300px;
-        padding-bottom: 0;
-        height: 250px;
-      }
-    }
   `;
 }

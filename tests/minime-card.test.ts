@@ -75,7 +75,7 @@ describe('MiniMeCard', () => {
   });
 
   it('returns card size of 3', () => {
-    expect(card.getCardSize()).toBe(3);
+    expect(card.getCardSize()).toBe(1);
   });
 
   it('returns stub config without type', () => {

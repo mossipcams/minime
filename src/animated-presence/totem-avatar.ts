@@ -5,10 +5,17 @@ const P = 3;
 const W = 16 * P;
 const H = 24 * P;
 
-const GOLD = '#E8B84B';
-const DARK_GOLD = '#A67C2E';
-const EMERALD = '#4CAF50';
-const DARK = '#2D2D2D';
+// Character palette — pixel person in totem art style
+const HAIR = '#4A3728';
+const HAIR_DARK = '#362618';
+const SKIN = '#F0C8A0';
+const SKIN_SHADOW = '#D4A878';
+const EYES = '#2D2D2D';
+const HOODIE = '#5B8DBE';
+const HOODIE_DARK = '#3D6A94';
+const PANTS = '#4A4A5E';
+const PANTS_DARK = '#363646';
+const SHOES = '#6B4E37';
 const WHITE = '#F5F5F0';
 
 function r(x: number, y: number, fill: string): string {
@@ -17,65 +24,89 @@ function r(x: number, y: number, fill: string): string {
 
 function headPixels(): string {
   const rows: string[] = [];
-  for (let x = 4; x <= 11; x++) rows.push(r(x, 0, DARK_GOLD));
-  for (let y = 1; y <= 6; y++) {
-    rows.push(r(3, y, DARK_GOLD));
-    rows.push(r(12, y, DARK_GOLD));
-    for (let x = 4; x <= 11; x++) rows.push(r(x, y, GOLD));
+  // Hair top row
+  for (let x = 4; x <= 11; x++) rows.push(r(x, 0, HAIR));
+  // Hair sides + face fill (rows 1-6)
+  for (let y = 1; y <= 2; y++) {
+    rows.push(r(3, y, HAIR_DARK));
+    rows.push(r(12, y, HAIR_DARK));
+    rows.push(r(4, y, HAIR));
+    rows.push(r(11, y, HAIR));
+    for (let x = 5; x <= 10; x++) rows.push(r(x, y, HAIR));
   }
-  for (let x = 4; x <= 11; x++) rows.push(r(x, 7, DARK_GOLD));
-  rows.push(r(5, 3, DARK), r(6, 3, DARK), r(9, 3, DARK), r(10, 3, DARK));
-  rows.push(r(7, 4, DARK_GOLD), r(8, 4, DARK_GOLD));
-  rows.push(r(6, 5, DARK_GOLD), r(9, 5, DARK_GOLD));
-  rows.push(r(7, 1, EMERALD), r(8, 1, EMERALD));
+  // Face rows
+  for (let y = 3; y <= 6; y++) {
+    rows.push(r(3, y, HAIR_DARK));
+    rows.push(r(12, y, HAIR_DARK));
+    rows.push(r(4, y, SKIN_SHADOW));
+    rows.push(r(11, y, SKIN_SHADOW));
+    for (let x = 5; x <= 10; x++) rows.push(r(x, y, SKIN));
+  }
+  // Chin row
+  for (let x = 5; x <= 10; x++) rows.push(r(x, 7, SKIN_SHADOW));
+  rows.push(r(4, 7, HAIR_DARK));
+  rows.push(r(11, 7, HAIR_DARK));
+  // Eyes
+  rows.push(r(6, 4, EYES), r(9, 4, EYES));
+  // Mouth
+  rows.push(r(7, 6, SKIN_SHADOW), r(8, 6, SKIN_SHADOW));
   return rows.join('');
 }
 
 function bodyPixels(): string {
   const rows: string[] = [];
+  // Hoodie torso (rows 8-15)
   for (let y = 8; y <= 15; y++) {
-    rows.push(r(5, y, DARK_GOLD));
-    rows.push(r(10, y, DARK_GOLD));
-    for (let x = 6; x <= 9; x++) rows.push(r(x, y, GOLD));
+    rows.push(r(5, y, HOODIE_DARK));
+    rows.push(r(10, y, HOODIE_DARK));
+    for (let x = 6; x <= 9; x++) rows.push(r(x, y, HOODIE));
   }
-  rows.push(r(7, 9, EMERALD), r(8, 9, EMERALD));
-  rows.push(r(7, 10, EMERALD), r(8, 10, EMERALD));
+  // Hoodie pocket detail
+  rows.push(r(7, 13, HOODIE_DARK), r(8, 13, HOODIE_DARK));
   return rows.join('');
 }
 
 function leftArmPixels(): string {
   const rows: string[] = [];
-  for (let y = 8; y <= 11; y++) {
-    rows.push(r(3, y, DARK_GOLD));
-    rows.push(r(4, y, GOLD));
+  for (let y = 8; y <= 12; y++) {
+    rows.push(r(3, y, HOODIE_DARK));
+    rows.push(r(4, y, HOODIE));
   }
+  // Hand
+  rows.push(r(3, 13, SKIN_SHADOW), r(4, 13, SKIN));
   return rows.join('');
 }
 
 function rightArmPixels(): string {
   const rows: string[] = [];
-  for (let y = 8; y <= 11; y++) {
-    rows.push(r(11, y, GOLD));
-    rows.push(r(12, y, DARK_GOLD));
+  for (let y = 8; y <= 12; y++) {
+    rows.push(r(11, y, HOODIE));
+    rows.push(r(12, y, HOODIE_DARK));
   }
+  // Hand
+  rows.push(r(11, 13, SKIN), r(12, 13, SKIN_SHADOW));
   return rows.join('');
 }
 
 function leftLegPixels(): string {
   const rows: string[] = [];
   for (let y = 16; y <= 19; y++) {
-    rows.push(r(6, y, DARK_GOLD));
-    rows.push(r(7, y, GOLD));
+    rows.push(r(6, y, PANTS_DARK));
+    rows.push(r(7, y, PANTS));
   }
+  // Shoe
+  rows.push(r(5, 20, SHOES), r(6, 20, SHOES), r(7, 20, SHOES));
   return rows.join('');
 }
 
 function rightLegPixels(): string {
   const rows: string[] = [];
   for (let y = 16; y <= 19; y++) {
-    rows.push(r(8, y, GOLD));
-    rows.push(r(9, y, DARK_GOLD));
+    rows.push(r(8, y, PANTS));
+    rows.push(r(9, y, PANTS_DARK));
   }
+  // Shoe
+  rows.push(r(8, 20, SHOES), r(9, 20, SHOES), r(10, 20, SHOES));
   return rows.join('');
 }
 
