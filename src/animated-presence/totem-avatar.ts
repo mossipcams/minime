@@ -5,17 +5,28 @@ const P = 3;
 const W = 16 * P;
 const H = 24 * P;
 
-// Character palette — pixel person in totem art style
+// Detailed character palette
 const HAIR = '#4A3728';
 const HAIR_DARK = '#362618';
+const HAIR_HI = '#5E4A38';
 const SKIN = '#F0C8A0';
 const SKIN_SHADOW = '#D4A878';
+const SKIN_HI = '#FCE0C0';
 const EYES = '#2D2D2D';
+const EYE_WHITE = '#E8E8E8';
+const BROW = '#3A2A1A';
+const MOUTH = '#C48868';
 const HOODIE = '#5B8DBE';
 const HOODIE_DARK = '#3D6A94';
+const HOODIE_HI = '#78A8D4';
+const HOODIE_LOGO = '#F0C040';
 const PANTS = '#4A4A5E';
 const PANTS_DARK = '#363646';
+const PANTS_HI = '#5A5A70';
 const SHOES = '#6B4E37';
+const SHOES_DARK = '#4A3525';
+const SHOES_SOLE = '#3A2A1A';
+const LACE = '#D0D0D0';
 const WHITE = '#F5F5F0';
 
 function r(x: number, y: number, fill: string): string {
@@ -24,89 +35,118 @@ function r(x: number, y: number, fill: string): string {
 
 function headPixels(): string {
   const rows: string[] = [];
-  // Hair top row
-  for (let x = 4; x <= 11; x++) rows.push(r(x, 0, HAIR));
-  // Hair sides + face fill (rows 1-6)
-  for (let y = 1; y <= 2; y++) {
-    rows.push(r(3, y, HAIR_DARK));
-    rows.push(r(12, y, HAIR_DARK));
-    rows.push(r(4, y, HAIR));
-    rows.push(r(11, y, HAIR));
-    for (let x = 5; x <= 10; x++) rows.push(r(x, y, HAIR));
-  }
-  // Face rows
-  for (let y = 3; y <= 6; y++) {
-    rows.push(r(3, y, HAIR_DARK));
-    rows.push(r(12, y, HAIR_DARK));
-    rows.push(r(4, y, SKIN_SHADOW));
-    rows.push(r(11, y, SKIN_SHADOW));
-    for (let x = 5; x <= 10; x++) rows.push(r(x, y, SKIN));
-  }
-  // Chin row
-  for (let x = 5; x <= 10; x++) rows.push(r(x, 7, SKIN_SHADOW));
-  rows.push(r(4, 7, HAIR_DARK));
-  rows.push(r(11, 7, HAIR_DARK));
-  // Eyes
-  rows.push(r(6, 4, EYES), r(9, 4, EYES));
-  // Mouth
+  // Hair top with highlight
+  rows.push(r(5, 0, HAIR_DARK), r(6, 0, HAIR), r(7, 0, HAIR_HI), r(8, 0, HAIR_HI), r(9, 0, HAIR), r(10, 0, HAIR_DARK));
+  // Hair row 1 — fuller with fringe
+  rows.push(r(4, 1, HAIR_DARK), r(5, 1, HAIR), r(6, 1, HAIR_HI), r(7, 1, HAIR), r(8, 1, HAIR), r(9, 1, HAIR_HI), r(10, 1, HAIR), r(11, 1, HAIR_DARK));
+  // Hair row 2 — sides frame face
+  rows.push(r(3, 2, HAIR_DARK), r(4, 2, HAIR), r(5, 2, HAIR), r(6, 2, HAIR), r(7, 2, HAIR), r(8, 2, HAIR), r(9, 2, HAIR), r(10, 2, HAIR), r(11, 2, HAIR), r(12, 2, HAIR_DARK));
+  // Forehead — skin shows under hair
+  rows.push(r(3, 3, HAIR_DARK), r(4, 3, HAIR), r(5, 3, SKIN_HI), r(6, 3, SKIN_HI), r(7, 3, SKIN), r(8, 3, SKIN), r(9, 3, SKIN_HI), r(10, 3, SKIN_HI), r(11, 3, HAIR), r(12, 3, HAIR_DARK));
+  // Eyebrows
+  rows.push(r(3, 4, HAIR_DARK), r(4, 4, SKIN_SHADOW));
+  rows.push(r(5, 4, BROW), r(6, 4, BROW));
+  rows.push(r(7, 4, SKIN), r(8, 4, SKIN));
+  rows.push(r(9, 4, BROW), r(10, 4, BROW));
+  rows.push(r(11, 4, SKIN_SHADOW), r(12, 4, HAIR_DARK));
+  // Eyes row
+  rows.push(r(3, 5, HAIR_DARK), r(4, 5, SKIN_SHADOW));
+  rows.push(r(5, 5, EYE_WHITE), r(6, 5, EYES));
+  rows.push(r(7, 5, SKIN), r(8, 5, SKIN));
+  rows.push(r(9, 5, EYE_WHITE), r(10, 5, EYES));
+  rows.push(r(11, 5, SKIN_SHADOW), r(12, 5, HAIR_DARK));
+  // Nose/cheeks
+  rows.push(r(3, 6, HAIR_DARK), r(4, 6, SKIN_SHADOW));
+  rows.push(r(5, 6, SKIN), r(6, 6, SKIN));
   rows.push(r(7, 6, SKIN_SHADOW), r(8, 6, SKIN_SHADOW));
+  rows.push(r(9, 6, SKIN), r(10, 6, SKIN));
+  rows.push(r(11, 6, SKIN_SHADOW), r(12, 6, HAIR_DARK));
+  // Mouth/chin
+  rows.push(r(4, 7, SKIN_SHADOW), r(5, 7, SKIN_SHADOW));
+  rows.push(r(6, 7, SKIN), r(7, 7, MOUTH), r(8, 7, MOUTH), r(9, 7, SKIN));
+  rows.push(r(10, 7, SKIN_SHADOW), r(11, 7, SKIN_SHADOW));
   return rows.join('');
 }
 
 function bodyPixels(): string {
   const rows: string[] = [];
-  // Hoodie torso (rows 8-15)
-  for (let y = 8; y <= 15; y++) {
+  // Neck
+  rows.push(r(6, 8, SKIN_SHADOW), r(7, 8, SKIN), r(8, 8, SKIN), r(9, 8, SKIN_SHADOW));
+  // Hoodie collar
+  rows.push(r(5, 9, HOODIE_DARK), r(6, 9, HOODIE_HI), r(7, 9, HOODIE_DARK), r(8, 9, HOODIE_DARK), r(9, 9, HOODIE_HI), r(10, 9, HOODIE_DARK));
+  // Torso with detail
+  for (let y = 10; y <= 14; y++) {
     rows.push(r(5, y, HOODIE_DARK));
+    rows.push(r(6, y, HOODIE));
+    rows.push(r(7, y, y === 11 ? HOODIE_HI : HOODIE));
+    rows.push(r(8, y, y === 11 ? HOODIE_HI : HOODIE));
+    rows.push(r(9, y, HOODIE));
     rows.push(r(10, y, HOODIE_DARK));
-    for (let x = 6; x <= 9; x++) rows.push(r(x, y, HOODIE));
   }
-  // Hoodie pocket detail
-  rows.push(r(7, 13, HOODIE_DARK), r(8, 13, HOODIE_DARK));
+  // Hoodie logo/emblem
+  rows.push(r(7, 12, HOODIE_LOGO), r(8, 12, HOODIE_LOGO));
+  // Belt/waistband
+  rows.push(r(5, 15, PANTS_DARK), r(6, 15, PANTS_DARK), r(7, 15, PANTS_HI), r(8, 15, PANTS_HI), r(9, 15, PANTS_DARK), r(10, 15, PANTS_DARK));
   return rows.join('');
 }
 
 function leftArmPixels(): string {
   const rows: string[] = [];
-  for (let y = 8; y <= 12; y++) {
-    rows.push(r(3, y, HOODIE_DARK));
-    rows.push(r(4, y, HOODIE));
-  }
-  // Hand
-  rows.push(r(3, 13, SKIN_SHADOW), r(4, 13, SKIN));
+  // Shoulder
+  rows.push(r(4, 9, HOODIE_DARK));
+  // Upper arm
+  rows.push(r(3, 10, HOODIE_DARK), r(4, 10, HOODIE));
+  rows.push(r(3, 11, HOODIE_DARK), r(4, 11, HOODIE_HI));
+  rows.push(r(3, 12, HOODIE_DARK), r(4, 12, HOODIE));
+  // Wrist
+  rows.push(r(3, 13, HOODIE_DARK), r(4, 13, HOODIE_DARK));
+  // Hand with detail
+  rows.push(r(3, 14, SKIN_SHADOW), r(4, 14, SKIN));
   return rows.join('');
 }
 
 function rightArmPixels(): string {
   const rows: string[] = [];
-  for (let y = 8; y <= 12; y++) {
-    rows.push(r(11, y, HOODIE));
-    rows.push(r(12, y, HOODIE_DARK));
-  }
+  // Shoulder
+  rows.push(r(11, 9, HOODIE_DARK));
+  // Upper arm
+  rows.push(r(11, 10, HOODIE), r(12, 10, HOODIE_DARK));
+  rows.push(r(11, 11, HOODIE_HI), r(12, 11, HOODIE_DARK));
+  rows.push(r(11, 12, HOODIE), r(12, 12, HOODIE_DARK));
+  // Wrist
+  rows.push(r(11, 13, HOODIE_DARK), r(12, 13, HOODIE_DARK));
   // Hand
-  rows.push(r(11, 13, SKIN), r(12, 13, SKIN_SHADOW));
+  rows.push(r(11, 14, SKIN), r(12, 14, SKIN_SHADOW));
   return rows.join('');
 }
 
 function leftLegPixels(): string {
   const rows: string[] = [];
-  for (let y = 16; y <= 19; y++) {
-    rows.push(r(6, y, PANTS_DARK));
-    rows.push(r(7, y, PANTS));
-  }
-  // Shoe
-  rows.push(r(5, 20, SHOES), r(6, 20, SHOES), r(7, 20, SHOES));
+  // Upper leg
+  rows.push(r(6, 16, PANTS_DARK), r(7, 16, PANTS));
+  rows.push(r(6, 17, PANTS_DARK), r(7, 17, PANTS_HI));
+  // Lower leg
+  rows.push(r(6, 18, PANTS_DARK), r(7, 18, PANTS));
+  rows.push(r(6, 19, PANTS_DARK), r(7, 19, PANTS));
+  // Shoe with detail
+  rows.push(r(5, 20, SHOES_DARK), r(6, 20, SHOES), r(7, 20, SHOES));
+  rows.push(r(6, 20, LACE)); // lace accent
+  rows.push(r(5, 21, SHOES_SOLE), r(6, 21, SHOES_SOLE), r(7, 21, SHOES_SOLE));
   return rows.join('');
 }
 
 function rightLegPixels(): string {
   const rows: string[] = [];
-  for (let y = 16; y <= 19; y++) {
-    rows.push(r(8, y, PANTS));
-    rows.push(r(9, y, PANTS_DARK));
-  }
-  // Shoe
-  rows.push(r(8, 20, SHOES), r(9, 20, SHOES), r(10, 20, SHOES));
+  // Upper leg
+  rows.push(r(8, 16, PANTS), r(9, 16, PANTS_DARK));
+  rows.push(r(8, 17, PANTS_HI), r(9, 17, PANTS_DARK));
+  // Lower leg
+  rows.push(r(8, 18, PANTS), r(9, 18, PANTS_DARK));
+  rows.push(r(8, 19, PANTS), r(9, 19, PANTS_DARK));
+  // Shoe with detail
+  rows.push(r(8, 20, SHOES), r(9, 20, SHOES), r(10, 20, SHOES_DARK));
+  rows.push(r(9, 20, LACE)); // lace accent
+  rows.push(r(8, 21, SHOES_SOLE), r(9, 21, SHOES_SOLE), r(10, 21, SHOES_SOLE));
   return rows.join('');
 }
 
@@ -157,11 +197,11 @@ export const totemStyles = `
 
   .totem-walking .totem-left-arm {
     animation: totem-arm-swing-l 0.4s ease-in-out infinite alternate;
-    transform-origin: ${4 * P}px ${8 * P}px;
+    transform-origin: ${4 * P}px ${9 * P}px;
   }
   .totem-walking .totem-right-arm {
     animation: totem-arm-swing-r 0.4s ease-in-out infinite alternate;
-    transform-origin: ${11 * P}px ${8 * P}px;
+    transform-origin: ${11 * P}px ${9 * P}px;
   }
   .totem-walking .totem-left-leg {
     animation: totem-leg-l 0.4s ease-in-out infinite alternate;
@@ -209,7 +249,7 @@ export const totemStyles = `
 
   .totem-cooking .totem-right-arm {
     animation: totem-stir 0.8s ease-in-out infinite;
-    transform-origin: ${11 * P}px ${8 * P}px;
+    transform-origin: ${11 * P}px ${9 * P}px;
   }
   @keyframes totem-stir {
     0%, 100% { transform: rotate(0deg) translateY(-${P}px); }
