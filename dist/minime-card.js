@@ -257,4 +257,4 @@ function pt(t){return function(t){return(e,i)=>"object"==typeof i?dt(t,e,i):((t,
       border-radius: 4px;
       font-size: 14px;
     }
-  `,t([pt()],jt.prototype,"_config",void 0);console.info("%c MINIME-CARD %c v0.2.0 ","color: white; background: #555; font-weight: bold;","color: white; background: #007acc;"),customElements.define("minime-card",Ht),customElements.define("minime-card-editor",jt),window.customCards=window.customCards||[],window.customCards.push({type:"minime-card",name:"MiniMe Card",description:"Animated pixel art avatar showing your room presence"});
+  `,t([pt()],jt.prototype,"_config",void 0);console.info("%c MINIME-CARD %c v0.3.0 ","color: white; background: #555; font-weight: bold;","color: white; background: #007acc;"),customElements.define("minime-card",Ht),customElements.define("minime-card-editor",jt),window.customCards=window.customCards||[],window.customCards.push({type:"minime-card",name:"MiniMe Card",description:"Animated pixel art avatar showing your room presence"});

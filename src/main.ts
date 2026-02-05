@@ -2,7 +2,7 @@
 import { MiniMeCard } from './minime-card';
 import { MiniMeCardEditor } from './minime-card-editor';
 
-const CARD_VERSION = '0.2.0';
+const CARD_VERSION = '0.3.0';
 
 console.info(
   `%c MINIME-CARD %c v${CARD_VERSION} `,

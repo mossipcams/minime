@@ -1,6 +1,6 @@
 {
   "name": "minime-card",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Animated pixel art Home Assistant avatar card",
   "type": "module",
   "scripts": {
