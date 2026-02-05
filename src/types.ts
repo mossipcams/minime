@@ -4,7 +4,7 @@ export interface MiniMeConfig {
   type: string;
   entity: string;
   name?: string;
-  areas?: string[];
+  transition_duration?: number;
 }
 
 export interface HassEntity {
@@ -27,11 +27,4 @@ export interface HomeAssistant {
     darkMode: boolean;
   };
   areas: Record<string, HassArea>;
-}
-
-export interface AnimatedPresenceConfig {
-  type: string;
-  entity: string;
-  name?: string;
-  transition_duration?: number;
 }
