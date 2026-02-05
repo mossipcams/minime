@@ -1,6 +1,6 @@
 /**
- * Detailed pixel-art-style SVG room backgrounds
- * Warm muted palettes with recognizable furniture and wall/floor detail
+ * Detailed pixel-art-style SVG room backgrounds with ambient animations
+ * Warm muted palettes with recognizable furniture and lighting effects
  * Gradient IDs prefixed with 'lofi' to avoid collision
  * ViewBox: 320x200 — card header crops to roughly y=60–140
  */
@@ -13,6 +13,7 @@ export const lofiRoomBackgrounds: Record<string, string> = {
     <radialGradient id="lofiOffG" cx="0.65" cy="0.35" r="0.35"><stop offset="0%" stop-color="#FFF5E0" stop-opacity="0.25"/><stop offset="100%" stop-color="#FFF5E0" stop-opacity="0"/></radialGradient>
     <linearGradient id="lofiOffDesk" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#8B7355"/><stop offset="100%" stop-color="#7A6245"/></linearGradient>
     <linearGradient id="lofiOffScreen" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#3A5A8A"/><stop offset="100%" stop-color="#2A4A6A"/></linearGradient>
+    <radialGradient id="lofiOffLamp" cx="0.5" cy="0.6" r="0.5"><stop offset="0%" stop-color="#FFF5D0" stop-opacity="0.4"/><stop offset="100%" stop-color="#FFF5D0" stop-opacity="0"/></radialGradient>
   </defs>
   <!-- walls & floor -->
   <rect width="320" height="110" fill="url(#lofiOffW)"/>
@@ -23,18 +24,24 @@ export const lofiRoomBackgrounds: Record<string, string> = {
   <line x1="0" y1="170" x2="320" y2="170" stroke="#806848" stroke-width="0.5" opacity="0.3"/>
   <line x1="0" y1="190" x2="320" y2="190" stroke="#806848" stroke-width="0.5" opacity="0.3"/>
   <rect width="320" height="200" fill="url(#lofiOffG)"/>
-  <!-- window -->
+  <!-- window with light rays -->
   <rect x="20" y="15" width="55" height="50" rx="2" fill="#D4C4B0" stroke="#A09080" stroke-width="1.5"/>
   <rect x="23" y="18" width="23" height="44" rx="1" fill="#A8D8EA" opacity="0.5"/>
   <rect x="49" y="18" width="23" height="44" rx="1" fill="#A8D8EA" opacity="0.5"/>
   <line x1="47" y1="18" x2="47" y2="62" stroke="#B0A090" stroke-width="1.5"/>
   <line x1="23" y1="40" x2="72" y2="40" stroke="#B0A090" stroke-width="1"/>
+  <!-- window light beam -->
+  <polygon points="23,62 72,62 100,140 -10,140" fill="#FFF5D0" opacity="0.04">
+    <animate attributeName="opacity" values="0.03;0.06;0.04;0.05;0.03" dur="6s" repeatCount="indefinite"/>
+  </polygon>
   <rect x="15" y="12" width="10" height="56" rx="2" fill="#C87070" opacity="0.35"/>
   <rect x="73" y="12" width="10" height="56" rx="2" fill="#C87070" opacity="0.35"/>
-  <!-- wall clock -->
+  <!-- wall clock with animated hand -->
   <circle cx="110" cy="35" r="12" fill="#D4C4B0" stroke="#8A7A68" stroke-width="1"/>
   <line x1="110" y1="35" x2="110" y2="27" stroke="#4A3A28" stroke-width="1"/>
-  <line x1="110" y1="35" x2="116" y2="35" stroke="#4A3A28" stroke-width="0.8"/>
+  <line x1="110" y1="35" x2="116" y2="35" stroke="#4A3A28" stroke-width="0.8">
+    <animateTransform attributeName="transform" type="rotate" from="0 110 35" to="360 110 35" dur="60s" repeatCount="indefinite"/>
+  </line>
   <circle cx="110" cy="35" r="1.5" fill="#4A3A28"/>
   <!-- bookshelf -->
   <rect x="250" y="20" width="50" height="80" rx="2" fill="#7A6245" stroke="#6A5235" stroke-width="1"/>
@@ -54,22 +61,47 @@ export const lofiRoomBackgrounds: Record<string, string> = {
   <rect x="275" y="44" width="5" height="11" rx="0.5" fill="#5B8D5E" opacity="0.7"/>
   <rect x="256" y="62" width="5" height="11" rx="0.5" fill="#8B5E8B" opacity="0.6"/>
   <rect x="263" y="61" width="4" height="12" rx="0.5" fill="#C87070" opacity="0.6"/>
-  <!-- plant on shelf -->
+  <!-- plant on shelf with sway -->
   <rect x="281" y="65" width="8" height="7" rx="1" fill="#8B6548"/>
-  <ellipse cx="285" cy="63" rx="6" ry="4" fill="#5B8D5E" opacity="0.7"/>
+  <ellipse cx="285" cy="63" rx="6" ry="4" fill="#5B8D5E" opacity="0.7">
+    <animateTransform attributeName="transform" type="rotate" values="-1,285,70;1,285,70;-1,285,70" dur="4s" repeatCount="indefinite"/>
+  </ellipse>
   <!-- desk -->
   <rect x="110" y="100" width="120" height="6" rx="1" fill="url(#lofiOffDesk)"/>
   <rect x="115" y="106" width="6" height="40" rx="1" fill="#7A6245"/>
   <rect x="220" y="106" width="6" height="40" rx="1" fill="#7A6245"/>
   <rect x="118" y="130" width="105" height="3" rx="1" fill="#6A5235" opacity="0.5"/>
-  <!-- monitor -->
+  <!-- monitor with screen flicker -->
   <rect x="145" y="70" width="50" height="30" rx="2" fill="#2A2A3E" stroke="#1A1A2E" stroke-width="1"/>
-  <rect x="148" y="73" width="44" height="24" rx="1" fill="url(#lofiOffScreen)"/>
-  <line x1="152" y1="80" x2="185" y2="80" stroke="#6A9AC0" stroke-width="1" opacity="0.5"/>
-  <line x1="152" y1="84" x2="180" y2="84" stroke="#6A9AC0" stroke-width="1" opacity="0.4"/>
-  <line x1="152" y1="88" x2="175" y2="88" stroke="#6A9AC0" stroke-width="1" opacity="0.3"/>
+  <rect x="148" y="73" width="44" height="24" rx="1" fill="url(#lofiOffScreen)">
+    <animate attributeName="opacity" values="0.95;1;0.92;1;0.97;1;0.95" dur="4s" repeatCount="indefinite"/>
+  </rect>
+  <!-- animated code lines on screen -->
+  <g opacity="0.5">
+    <line x1="152" y1="79" x2="178" y2="79" stroke="#6A9AC0" stroke-width="1">
+      <animate attributeName="opacity" values="0.5;0.8;0.5" dur="2s" repeatCount="indefinite"/>
+    </line>
+    <line x1="152" y1="83" x2="185" y2="83" stroke="#6A9AC0" stroke-width="1">
+      <animate attributeName="opacity" values="0.4;0.7;0.4" dur="2.3s" repeatCount="indefinite"/>
+    </line>
+    <line x1="152" y1="87" x2="172" y2="87" stroke="#9AC06A" stroke-width="1">
+      <animate attributeName="opacity" values="0.3;0.6;0.3" dur="1.8s" repeatCount="indefinite"/>
+    </line>
+    <line x1="152" y1="91" x2="182" y2="91" stroke="#C0906A" stroke-width="1">
+      <animate attributeName="opacity" values="0.4;0.7;0.4" dur="2.5s" repeatCount="indefinite"/>
+    </line>
+    <!-- cursor blink -->
+    <rect x="183" y="82" width="2" height="3" fill="#FFF" opacity="0">
+      <animate attributeName="opacity" values="0;0.8;0.8;0" dur="1s" repeatCount="indefinite"/>
+    </rect>
+  </g>
+  <!-- monitor stand -->
   <rect x="165" y="100" width="10" height="3" rx="0.5" fill="#2A2A3E"/>
   <rect x="160" y="101" width="20" height="2" rx="1" fill="#3A3A4E"/>
+  <!-- screen glow on desk -->
+  <ellipse cx="170" cy="103" rx="30" ry="4" fill="#4A7AAA" opacity="0.06">
+    <animate attributeName="opacity" values="0.04;0.08;0.05;0.07;0.04" dur="4s" repeatCount="indefinite"/>
+  </ellipse>
   <!-- keyboard & mouse -->
   <rect x="152" y="104" width="36" height="4" rx="1" fill="#3A3A4E" opacity="0.7"/>
   <rect x="154" y="105" width="3" height="2" rx="0.3" fill="#4A4A5E" opacity="0.5"/>
@@ -81,11 +113,15 @@ export const lofiRoomBackgrounds: Record<string, string> = {
   <rect x="178" y="105" width="3" height="2" rx="0.3" fill="#4A4A5E" opacity="0.5"/>
   <rect x="182" y="105" width="3" height="2" rx="0.3" fill="#4A4A5E" opacity="0.5"/>
   <ellipse cx="198" cy="105" rx="4" ry="3" fill="#3A3A4E" opacity="0.6"/>
-  <!-- desk lamp -->
+  <!-- desk lamp with warm glow -->
   <line x1="130" y1="100" x2="135" y2="78" stroke="#4A4A5E" stroke-width="1.5"/>
   <line x1="135" y1="78" x2="142" y2="74" stroke="#4A4A5E" stroke-width="1.5"/>
   <path d="M139 70 Q142 68 148 72 L145 76 Q140 74 138 73 Z" fill="#F0C040" opacity="0.6"/>
   <circle cx="143" cy="73" r="2" fill="#FFF5D0" opacity="0.4"/>
+  <!-- lamp glow radius -->
+  <circle cx="140" cy="80" r="18" fill="url(#lofiOffLamp)">
+    <animate attributeName="opacity" values="0.8;1;0.85;0.95;0.8" dur="5s" repeatCount="indefinite"/>
+  </circle>
   <!-- chair -->
   <rect x="155" y="115" width="30" height="25" rx="4" fill="#4A4A5E" opacity="0.5"/>
   <rect x="168" y="140" width="4" height="10" rx="1" fill="#3A3A4E" opacity="0.4"/>
@@ -153,25 +189,55 @@ export const lofiRoomBackgrounds: Record<string, string> = {
   <rect x="73" y="125" width="6" height="2" rx="1" fill="#B0B0A0" opacity="0.6"/>
   <rect x="118" y="125" width="6" height="2" rx="1" fill="#B0B0A0" opacity="0.6"/>
   <rect x="168" y="125" width="6" height="2" rx="1" fill="#B0B0A0" opacity="0.6"/>
-  <!-- stove burners -->
+  <!-- stove burners with animated flame glow -->
   <ellipse cx="155" cy="94" rx="10" ry="4" fill="#3A3A3E" opacity="0.4"/>
   <ellipse cx="175" cy="94" rx="10" ry="4" fill="#3A3A3E" opacity="0.4"/>
-  <ellipse cx="155" cy="93" rx="5" ry="2" fill="#E08040" opacity="0.3"/>
-  <ellipse cx="175" cy="93" rx="5" ry="2" fill="#E08040" opacity="0.3"/>
-  <!-- pot -->
+  <ellipse cx="155" cy="93" rx="5" ry="2" fill="#E08040">
+    <animate attributeName="opacity" values="0.2;0.4;0.25;0.45;0.2" dur="0.6s" repeatCount="indefinite"/>
+    <animate attributeName="rx" values="4.5;5.5;5;5.5;4.5" dur="0.8s" repeatCount="indefinite"/>
+  </ellipse>
+  <ellipse cx="175" cy="93" rx="5" ry="2" fill="#E08040">
+    <animate attributeName="opacity" values="0.25;0.4;0.2;0.35;0.25" dur="0.7s" repeatCount="indefinite"/>
+    <animate attributeName="rx" values="5;5.5;4.5;5;5" dur="0.9s" repeatCount="indefinite"/>
+  </ellipse>
+  <!-- flame glow on wall -->
+  <ellipse cx="165" cy="80" rx="25" ry="12" fill="#E08040" opacity="0.03">
+    <animate attributeName="opacity" values="0.02;0.05;0.03;0.04;0.02" dur="1s" repeatCount="indefinite"/>
+  </ellipse>
+  <!-- pot with steam -->
   <rect x="147" y="84" width="16" height="10" rx="2" fill="#6A6A7E" opacity="0.6"/>
   <rect x="145" y="82" width="20" height="3" rx="1" fill="#7A7A8E" opacity="0.5"/>
+  <!-- animated steam wisps -->
+  <circle cx="152" cy="80" r="2" fill="#FFF" opacity="0">
+    <animate attributeName="cy" from="80" to="62" dur="2.5s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0;0.15;0.12;0" dur="2.5s" repeatCount="indefinite"/>
+    <animate attributeName="cx" values="152;149;153;150" dur="2.5s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="155" cy="78" r="1.8" fill="#FFF" opacity="0">
+    <animate attributeName="cy" from="78" to="60" dur="2.8s" repeatCount="indefinite" begin="0.7s"/>
+    <animate attributeName="opacity" values="0;0.12;0.1;0" dur="2.8s" repeatCount="indefinite" begin="0.7s"/>
+    <animate attributeName="cx" values="155;158;154;157" dur="2.8s" repeatCount="indefinite" begin="0.7s"/>
+  </circle>
+  <circle cx="158" cy="79" r="1.5" fill="#FFF" opacity="0">
+    <animate attributeName="cy" from="79" to="64" dur="2.2s" repeatCount="indefinite" begin="1.3s"/>
+    <animate attributeName="opacity" values="0;0.1;0.08;0" dur="2.2s" repeatCount="indefinite" begin="1.3s"/>
+    <animate attributeName="cx" values="158;156;160;157" dur="2.2s" repeatCount="indefinite" begin="1.3s"/>
+  </circle>
   <!-- sink -->
   <rect x="50" y="96" width="30" height="6" rx="2" fill="#8A8A9A" opacity="0.5"/>
   <ellipse cx="58" cy="99" rx="3" ry="2" fill="#6A6A7A" opacity="0.4"/>
   <ellipse cx="72" cy="99" rx="3" ry="2" fill="#6A6A7A" opacity="0.4"/>
   <line x1="65" y1="98" x2="65" y2="86" stroke="#A0A0B0" stroke-width="2" stroke-linecap="round"/>
   <line x1="65" y1="86" x2="60" y2="88" stroke="#A0A0B0" stroke-width="2" stroke-linecap="round"/>
-  <!-- fridge -->
+  <!-- fridge with subtle hum indicator -->
   <rect x="230" y="25" width="55" height="130" rx="3" fill="#C8C8C8" stroke="#A8A8A8" stroke-width="1"/>
   <line x1="230" y1="85" x2="285" y2="85" stroke="#B0B0B0" stroke-width="1"/>
   <rect x="278" y="50" width="3" height="15" rx="1" fill="#A0A0A0"/>
   <rect x="278" y="95" width="3" height="15" rx="1" fill="#A0A0A0"/>
+  <!-- fridge internal light glow -->
+  <rect x="232" y="27" width="51" height="56" rx="1" fill="#E0F0FF" opacity="0.02">
+    <animate attributeName="opacity" values="0.01;0.03;0.02;0.03;0.01" dur="8s" repeatCount="indefinite"/>
+  </rect>
   <rect x="240" y="35" width="8" height="8" rx="1" fill="#E0A040" opacity="0.5"/>
   <rect x="255" y="40" width="6" height="6" rx="1" fill="#C87070" opacity="0.4"/>
   <rect x="265" y="35" width="7" height="7" rx="1" fill="#5B8DBE" opacity="0.4"/>
@@ -180,10 +246,18 @@ export const lofiRoomBackgrounds: Record<string, string> = {
   <rect x="222" y="12" width="19" height="36" rx="1" fill="#A8D8EA" opacity="0.45"/>
   <rect x="244" y="12" width="19" height="36" rx="1" fill="#A8D8EA" opacity="0.45"/>
   <line x1="242" y1="12" x2="242" y2="48" stroke="#B0A090" stroke-width="1"/>
-  <!-- hanging utensils -->
-  <line x1="15" y1="55" x2="15" y2="68" stroke="#A0A0A0" stroke-width="1" opacity="0.5"/>
-  <line x1="25" y1="55" x2="25" y2="72" stroke="#A0A0A0" stroke-width="1" opacity="0.5"/>
-  <line x1="35" y1="55" x2="35" y2="66" stroke="#A0A0A0" stroke-width="1" opacity="0.5"/>
+  <!-- hanging utensils with gentle sway -->
+  <g>
+    <line x1="15" y1="55" x2="15" y2="68" stroke="#A0A0A0" stroke-width="1" opacity="0.5">
+      <animateTransform attributeName="transform" type="rotate" values="-1,15,55;1,15,55;-1,15,55" dur="5s" repeatCount="indefinite"/>
+    </line>
+    <line x1="25" y1="55" x2="25" y2="72" stroke="#A0A0A0" stroke-width="1" opacity="0.5">
+      <animateTransform attributeName="transform" type="rotate" values="1,25,55;-1,25,55;1,25,55" dur="4.5s" repeatCount="indefinite"/>
+    </line>
+    <line x1="35" y1="55" x2="35" y2="66" stroke="#A0A0A0" stroke-width="1" opacity="0.5">
+      <animateTransform attributeName="transform" type="rotate" values="-0.5,35,55;0.5,35,55;-0.5,35,55" dur="5.5s" repeatCount="indefinite"/>
+    </line>
+  </g>
 </svg>`,
 
   living_room: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 200">
@@ -193,6 +267,7 @@ export const lofiRoomBackgrounds: Record<string, string> = {
     <radialGradient id="lofiLivG" cx="0.5" cy="0.5" r="0.4"><stop offset="0%" stop-color="#FFE8C0" stop-opacity="0.25"/><stop offset="100%" stop-color="#FFE8C0" stop-opacity="0"/></radialGradient>
     <linearGradient id="lofiLivCouch" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#8B5040"/><stop offset="100%" stop-color="#6A3830"/></linearGradient>
     <linearGradient id="lofiLivTV" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2A2A40"/><stop offset="100%" stop-color="#1A1A30"/></linearGradient>
+    <radialGradient id="lofiLivLamp" cx="0.5" cy="0.3" r="0.5"><stop offset="0%" stop-color="#FFF0C0" stop-opacity="0.35"/><stop offset="100%" stop-color="#FFF0C0" stop-opacity="0"/></radialGradient>
   </defs>
   <!-- walls & floor -->
   <rect width="320" height="110" fill="url(#lofiLivW)"/>
@@ -209,6 +284,10 @@ export const lofiRoomBackgrounds: Record<string, string> = {
   <rect x="162" y="13" width="35" height="54" rx="1" fill="#A8D8EA" opacity="0.4"/>
   <line x1="160" y1="13" x2="160" y2="67" stroke="#B0A090" stroke-width="1.5"/>
   <line x1="123" y1="40" x2="197" y2="40" stroke="#B0A090" stroke-width="1"/>
+  <!-- window light beam -->
+  <polygon points="123,67 197,67 230,160 90,160" fill="#FFF5D0" opacity="0.03">
+    <animate attributeName="opacity" values="0.02;0.05;0.03;0.04;0.02" dur="8s" repeatCount="indefinite"/>
+  </polygon>
   <rect x="110" y="7" width="15" height="66" rx="2" fill="#C87060" opacity="0.3"/>
   <rect x="197" y="7" width="15" height="66" rx="2" fill="#C87060" opacity="0.3"/>
   <line x1="110" y1="7" x2="212" y2="7" stroke="#B06050" stroke-width="2" opacity="0.4"/>
@@ -234,26 +313,45 @@ export const lofiRoomBackgrounds: Record<string, string> = {
   <rect x="106" y="156" width="4" height="12" rx="1" fill="#5A4025"/>
   <rect x="55" y="146" width="12" height="4" rx="1" fill="#D4C4B0" opacity="0.5"/>
   <ellipse cx="85" cy="148" rx="5" ry="3" fill="#C87070" opacity="0.4"/>
-  <!-- TV on stand -->
+  <!-- TV with color-shifting screen -->
   <rect x="220" y="55" width="70" height="42" rx="2" fill="url(#lofiLivTV)" stroke="#1A1A2E" stroke-width="1"/>
   <rect x="223" y="58" width="64" height="36" rx="1" fill="#3A4A6A" opacity="0.5"/>
-  <rect x="226" y="61" width="58" height="30" rx="0.5" fill="#4A6A9A" opacity="0.2"/>
+  <!-- TV screen glow animation -->
+  <rect x="226" y="61" width="58" height="30" rx="0.5" fill="#4A6A9A" opacity="0.2">
+    <animate attributeName="fill" values="#4A6A9A;#6A5A9A;#4A8A6A;#7A6A4A;#4A6A9A" dur="10s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.15;0.25;0.18;0.22;0.15" dur="3s" repeatCount="indefinite"/>
+  </rect>
+  <!-- TV glow on wall -->
+  <rect x="210" y="40" width="100" height="60" rx="4" fill="#5A8ABE" opacity="0.02">
+    <animate attributeName="fill" values="#5A8ABE;#8A5ABE;#5ABE7A;#BE8A5A;#5A8ABE" dur="10s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.02;0.04;0.025;0.035;0.02" dur="3s" repeatCount="indefinite"/>
+  </rect>
   <rect x="210" y="100" width="90" height="12" rx="3" fill="#5A4030" opacity="0.6"/>
   <rect x="215" y="112" width="8" height="20" rx="2" fill="#4A3020" opacity="0.5"/>
   <rect x="282" y="112" width="8" height="20" rx="2" fill="#4A3020" opacity="0.5"/>
   <rect x="220" y="94" width="12" height="6" rx="1" fill="#4A4A5E" opacity="0.4"/>
   <rect x="278" y="92" width="10" height="8" rx="1" fill="#8B7355" opacity="0.4"/>
-  <!-- plant -->
+  <!-- plant with sway -->
   <rect x="270" y="80" width="10" height="14" rx="2" fill="#8B6548" opacity="0.6"/>
-  <ellipse cx="275" cy="78" rx="8" ry="6" fill="#5B8D5E" opacity="0.5"/>
-  <ellipse cx="271" cy="76" rx="5" ry="4" fill="#6A9A6A" opacity="0.4"/>
+  <g>
+    <ellipse cx="275" cy="78" rx="8" ry="6" fill="#5B8D5E" opacity="0.5">
+      <animateTransform attributeName="transform" type="rotate" values="-2,275,87;2,275,87;-2,275,87" dur="5s" repeatCount="indefinite"/>
+    </ellipse>
+    <ellipse cx="271" cy="76" rx="5" ry="4" fill="#6A9A6A" opacity="0.4">
+      <animateTransform attributeName="transform" type="rotate" values="1,271,87;-1,271,87;1,271,87" dur="4s" repeatCount="indefinite"/>
+    </ellipse>
+  </g>
   <!-- rug -->
   <rect x="25" y="155" width="120" height="30" rx="4" fill="#C87060" opacity="0.15"/>
   <rect x="30" y="158" width="110" height="24" rx="3" fill="#D4A060" opacity="0.1"/>
-  <!-- floor lamp -->
+  <!-- floor lamp with warm glow -->
   <line x1="175" y1="75" x2="175" y2="140" stroke="#4A4A5E" stroke-width="2"/>
   <ellipse cx="175" cy="73" rx="10" ry="7" fill="#F0D080" opacity="0.3"/>
   <circle cx="175" cy="73" r="4" fill="#FFF5D0" opacity="0.2"/>
+  <!-- lamp glow radius -->
+  <circle cx="175" cy="90" r="30" fill="url(#lofiLivLamp)">
+    <animate attributeName="opacity" values="0.7;0.9;0.75;0.85;0.7" dur="6s" repeatCount="indefinite"/>
+  </circle>
   <ellipse cx="175" cy="142" rx="8" ry="3" fill="#4A4A5E" opacity="0.4"/>
 </svg>`,
 
@@ -264,6 +362,7 @@ export const lofiRoomBackgrounds: Record<string, string> = {
     <radialGradient id="lofiBedG" cx="0.3" cy="0.4" r="0.35"><stop offset="0%" stop-color="#E8D8F0" stop-opacity="0.25"/><stop offset="100%" stop-color="#E8D8F0" stop-opacity="0"/></radialGradient>
     <linearGradient id="lofiBedFrame" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#6A5240"/><stop offset="100%" stop-color="#5A4230"/></linearGradient>
     <radialGradient id="lofiBedMoon" cx="0.5" cy="0.5" r="0.5"><stop offset="0%" stop-color="#F0E8C0" stop-opacity="0.6"/><stop offset="70%" stop-color="#F0E8C0" stop-opacity="0.2"/><stop offset="100%" stop-color="#F0E8C0" stop-opacity="0"/></radialGradient>
+    <radialGradient id="lofiBedLamp" cx="0.5" cy="0.5" r="0.5"><stop offset="0%" stop-color="#F0D080" stop-opacity="0.3"/><stop offset="100%" stop-color="#F0D080" stop-opacity="0"/></radialGradient>
   </defs>
   <!-- walls & floor -->
   <rect width="320" height="110" fill="url(#lofiBedW)"/>
@@ -271,14 +370,40 @@ export const lofiRoomBackgrounds: Record<string, string> = {
   <rect y="107" width="320" height="3" fill="#9A90B0" opacity="0.4"/>
   <rect y="110" width="320" height="90" fill="#887898" opacity="0.15"/>
   <rect width="320" height="200" fill="url(#lofiBedG)"/>
-  <!-- window with moon -->
+  <!-- window with animated moon -->
   <rect x="230" y="10" width="55" height="55" rx="2" fill="#B0A8C0" stroke="#9A90B0" stroke-width="1.5"/>
-  <rect x="233" y="13" width="23" height="49" rx="1" fill="#B0B8D0" opacity="0.45"/>
-  <rect x="259" y="13" width="23" height="49" rx="1" fill="#B0B8D0" opacity="0.45"/>
+  <rect x="233" y="13" width="23" height="49" rx="1" fill="#2A2848" opacity="0.6"/>
+  <rect x="259" y="13" width="23" height="49" rx="1" fill="#2A2848" opacity="0.6"/>
   <line x1="257" y1="13" x2="257" y2="62" stroke="#A098B0" stroke-width="1.5"/>
   <line x1="233" y1="37" x2="282" y2="37" stroke="#A098B0" stroke-width="1"/>
-  <circle cx="270" cy="25" r="8" fill="url(#lofiBedMoon)"/>
-  <circle cx="270" cy="25" r="5" fill="#F0E8C0" opacity="0.4"/>
+  <!-- stars through window -->
+  <circle cx="238" cy="18" r="0.6" fill="#FFF">
+    <animate attributeName="opacity" values="0.1;0.6;0.2;0.5;0.1" dur="4s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="248" cy="22" r="0.4" fill="#FFF">
+    <animate attributeName="opacity" values="0.2;0.5;0.1;0.4;0.2" dur="3.5s" repeatCount="indefinite" begin="1s"/>
+  </circle>
+  <circle cx="242" cy="30" r="0.3" fill="#FFF">
+    <animate attributeName="opacity" values="0;0.4;0.1;0.3;0" dur="5s" repeatCount="indefinite" begin="2s"/>
+  </circle>
+  <circle cx="264" cy="17" r="0.5" fill="#FFF">
+    <animate attributeName="opacity" values="0.15;0.55;0.2;0.45;0.15" dur="4.5s" repeatCount="indefinite" begin="0.5s"/>
+  </circle>
+  <circle cx="275" cy="20" r="0.4" fill="#FFF">
+    <animate attributeName="opacity" values="0.1;0.4;0.15;0.35;0.1" dur="3.8s" repeatCount="indefinite" begin="1.5s"/>
+  </circle>
+  <!-- moon with glow pulse -->
+  <circle cx="270" cy="25" r="12" fill="url(#lofiBedMoon)">
+    <animate attributeName="opacity" values="0.8;1;0.85;0.95;0.8" dur="6s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="270" cy="25" r="5" fill="#F0E8C0" opacity="0.5">
+    <animate attributeName="opacity" values="0.4;0.6;0.45;0.55;0.4" dur="6s" repeatCount="indefinite"/>
+  </circle>
+  <!-- moonlight beam on floor -->
+  <polygon points="233,62 282,62 300,170 215,170" fill="#E0D8F0" opacity="0.03">
+    <animate attributeName="opacity" values="0.02;0.05;0.03;0.04;0.02" dur="6s" repeatCount="indefinite"/>
+  </polygon>
+  <!-- curtains -->
   <rect x="224" y="7" width="12" height="62" rx="2" fill="#8070A0" opacity="0.3"/>
   <rect x="284" y="7" width="12" height="62" rx="2" fill="#8070A0" opacity="0.3"/>
   <!-- wall art -->
@@ -308,11 +433,18 @@ export const lofiRoomBackgrounds: Record<string, string> = {
   <rect x="197" y="110" width="26" height="12" rx="1" fill="#7A6250" opacity="0.4"/>
   <rect x="207" y="99" width="8" height="2" rx="0.5" fill="#A09080" opacity="0.5"/>
   <rect x="207" y="115" width="8" height="2" rx="0.5" fill="#A09080" opacity="0.5"/>
-  <!-- lamp -->
+  <!-- lamp with warm flicker -->
   <rect x="206" y="82" width="10" height="8" rx="2" fill="#D4C4B0" opacity="0.5"/>
-  <ellipse cx="211" cy="80" rx="8" ry="5" fill="#F0D080" opacity="0.35"/>
-  <circle cx="211" cy="80" r="3" fill="#FFF5D0" opacity="0.25"/>
-  <circle cx="211" cy="80" r="20" fill="#F0D080" opacity="0.08"/>
+  <ellipse cx="211" cy="80" rx="8" ry="5" fill="#F0D080" opacity="0.35">
+    <animate attributeName="opacity" values="0.3;0.4;0.32;0.38;0.3" dur="4s" repeatCount="indefinite"/>
+  </ellipse>
+  <circle cx="211" cy="80" r="3" fill="#FFF5D0" opacity="0.25">
+    <animate attributeName="opacity" values="0.2;0.3;0.22;0.28;0.2" dur="4s" repeatCount="indefinite"/>
+  </circle>
+  <!-- lamp glow radius -->
+  <circle cx="211" cy="80" r="25" fill="url(#lofiBedLamp)">
+    <animate attributeName="opacity" values="0.6;0.8;0.65;0.75;0.6" dur="4s" repeatCount="indefinite"/>
+  </circle>
   <!-- dresser -->
   <rect x="250" y="85" width="50" height="45" rx="3" fill="#6A5240" opacity="0.5"/>
   <rect x="253" y="89" width="44" height="17" rx="1" fill="#7A6250" opacity="0.4"/>

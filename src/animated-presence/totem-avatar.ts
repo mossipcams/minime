@@ -68,6 +68,11 @@ function headPixels(): string {
   return rows.join('');
 }
 
+function blinkOverlay(): string {
+  // Skin-colored rects that cover eyes during blink animation
+  return `<g class="totem-blink">${r(5, 5, SKIN)}${r(6, 5, SKIN)}${r(9, 5, SKIN)}${r(10, 5, SKIN)}</g>`;
+}
+
 function bodyPixels(): string {
   const rows: string[] = [];
   // Neck
@@ -150,6 +155,10 @@ function rightLegPixels(): string {
   return rows.join('');
 }
 
+function groundShadow(): string {
+  return `<ellipse class="totem-shadow" cx="${8 * P}" cy="${22.5 * P}" rx="${3.5 * P}" ry="${0.8 * P}" fill="#000" opacity="0.15"/>`;
+}
+
 function sleepingZzz(): string {
   return `<g class="totem-zzz">
     <text x="${13 * P}" y="${2 * P}" fill="${WHITE}" font-size="${P * 2.5}px" font-family="monospace" opacity="0">Z</text>
@@ -162,12 +171,15 @@ export function getTotemSvg(activity: string): string {
   const act = (ACTIVITIES.includes(activity as Activity) ? activity : 'idle') as Activity;
 
   const parts = [
-    `<g class="totem-head">${headPixels()}</g>`,
+    groundShadow(),
+    `<g class="totem-character">`,
+    `<g class="totem-left-leg">${leftLegPixels()}</g>`,
+    `<g class="totem-right-leg">${rightLegPixels()}</g>`,
     `<g class="totem-body">${bodyPixels()}</g>`,
     `<g class="totem-left-arm">${leftArmPixels()}</g>`,
     `<g class="totem-right-arm">${rightArmPixels()}</g>`,
-    `<g class="totem-left-leg">${leftLegPixels()}</g>`,
-    `<g class="totem-right-leg">${rightLegPixels()}</g>`,
+    `<g class="totem-head">${headPixels()}${act !== 'sleeping' ? blinkOverlay() : ''}</g>`,
+    `</g>`,
   ];
 
   if (act === 'sleeping') {
@@ -187,99 +199,277 @@ export const totemStyles = `
     image-rendering: pixelated;
   }
 
-  .totem-idle {
-    animation: totem-bob 1.5s ease-in-out infinite;
+  /* ===== EYE BLINK ===== */
+  .totem-blink {
+    opacity: 0;
+  }
+  .totem-avatar:not(.totem-sleeping) .totem-blink {
+    animation: totem-blink 4s step-end infinite;
+  }
+  @keyframes totem-blink {
+    0%, 90%, 100% { opacity: 0; }
+    93%, 97% { opacity: 1; }
+  }
+
+  /* ===== GROUND SHADOW ===== */
+  .totem-shadow {
+    transform-origin: ${8 * P}px ${22.5 * P}px;
+  }
+
+  /* ===== IDLE — bob + breathe + gentle sway ===== */
+  .totem-idle .totem-character {
+    animation: totem-bob 2.5s ease-in-out infinite;
+  }
+  .totem-idle .totem-head {
+    animation: totem-idle-head 5s ease-in-out infinite;
+    transform-origin: ${8 * P}px ${8 * P}px;
+  }
+  .totem-idle .totem-body {
+    animation: totem-breathe 3s ease-in-out infinite;
+    transform-origin: ${8 * P}px ${15 * P}px;
+  }
+  .totem-idle .totem-left-arm {
+    animation: totem-idle-arm-l 3s ease-in-out infinite;
+    transform-origin: ${4 * P}px ${9 * P}px;
+  }
+  .totem-idle .totem-right-arm {
+    animation: totem-idle-arm-r 3s ease-in-out infinite;
+    transform-origin: ${11 * P}px ${9 * P}px;
+  }
+  .totem-idle .totem-shadow {
+    animation: totem-shadow-idle 2.5s ease-in-out infinite;
   }
   @keyframes totem-bob {
     0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-2px); }
+    50% { transform: translateY(-${P}px); }
+  }
+  @keyframes totem-idle-head {
+    0%, 100% { transform: rotate(0deg); }
+    30% { transform: rotate(1.5deg); }
+    70% { transform: rotate(-1.5deg); }
+  }
+  @keyframes totem-breathe {
+    0%, 100% { transform: scaleY(1); }
+    50% { transform: scaleY(1.018); }
+  }
+  @keyframes totem-idle-arm-l {
+    0%, 100% { transform: rotate(0deg); }
+    50% { transform: rotate(-3deg); }
+  }
+  @keyframes totem-idle-arm-r {
+    0%, 100% { transform: rotate(0deg); }
+    50% { transform: rotate(3deg); }
+  }
+  @keyframes totem-shadow-idle {
+    0%, 100% { transform: scaleX(1); opacity: 0.15; }
+    50% { transform: scaleX(0.9); opacity: 0.1; }
   }
 
+  /* ===== WALKING — full walk cycle ===== */
+  .totem-walking .totem-character {
+    animation: totem-walk-bob 0.35s ease-in-out infinite;
+  }
+  .totem-walking .totem-head {
+    animation: totem-walk-head 0.35s ease-in-out infinite;
+  }
   .totem-walking .totem-left-arm {
-    animation: totem-arm-swing-l 0.4s ease-in-out infinite alternate;
+    animation: totem-arm-swing-l 0.35s ease-in-out infinite alternate;
     transform-origin: ${4 * P}px ${9 * P}px;
   }
   .totem-walking .totem-right-arm {
-    animation: totem-arm-swing-r 0.4s ease-in-out infinite alternate;
+    animation: totem-arm-swing-r 0.35s ease-in-out infinite alternate;
     transform-origin: ${11 * P}px ${9 * P}px;
   }
   .totem-walking .totem-left-leg {
-    animation: totem-leg-l 0.4s ease-in-out infinite alternate;
-  }
-  .totem-walking .totem-right-leg {
-    animation: totem-leg-r 0.4s ease-in-out infinite alternate;
-  }
-  @keyframes totem-arm-swing-l {
-    0% { transform: rotate(-15deg); }
-    100% { transform: rotate(15deg); }
-  }
-  @keyframes totem-arm-swing-r {
-    0% { transform: rotate(15deg); }
-    100% { transform: rotate(-15deg); }
-  }
-  @keyframes totem-leg-l {
-    0% { transform: translateY(-2px); }
-    100% { transform: translateY(2px); }
-  }
-  @keyframes totem-leg-r {
-    0% { transform: translateY(2px); }
-    100% { transform: translateY(-2px); }
-  }
-
-  .totem-studying .totem-left-leg,
-  .totem-studying .totem-right-leg {
-    transform: rotate(90deg) translateX(${2 * P}px);
+    animation: totem-leg-l 0.35s ease-in-out infinite alternate;
     transform-origin: ${7 * P}px ${16 * P}px;
   }
+  .totem-walking .totem-right-leg {
+    animation: totem-leg-r 0.35s ease-in-out infinite alternate;
+    transform-origin: ${8 * P}px ${16 * P}px;
+  }
+  .totem-walking .totem-shadow {
+    animation: totem-shadow-walk 0.35s ease-in-out infinite;
+  }
+  @keyframes totem-walk-bob {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-${P}px); }
+  }
+  @keyframes totem-walk-head {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-${Math.round(P * 0.5)}px); }
+  }
+  @keyframes totem-arm-swing-l {
+    0% { transform: rotate(-22deg); }
+    100% { transform: rotate(22deg); }
+  }
+  @keyframes totem-arm-swing-r {
+    0% { transform: rotate(22deg); }
+    100% { transform: rotate(-22deg); }
+  }
+  @keyframes totem-leg-l {
+    0% { transform: rotate(-14deg); }
+    100% { transform: rotate(14deg); }
+  }
+  @keyframes totem-leg-r {
+    0% { transform: rotate(14deg); }
+    100% { transform: rotate(-14deg); }
+  }
+  @keyframes totem-shadow-walk {
+    0%, 100% { transform: scaleX(1); opacity: 0.15; }
+    50% { transform: scaleX(0.8); opacity: 0.08; }
+  }
+
+  /* ===== STUDYING — seated, typing ===== */
+  .totem-studying .totem-left-leg {
+    transform: rotate(80deg);
+    transform-origin: ${6.5 * P}px ${16 * P}px;
+  }
+  .totem-studying .totem-right-leg {
+    transform: rotate(80deg);
+    transform-origin: ${8.5 * P}px ${16 * P}px;
+  }
+  .totem-studying .totem-character {
+    animation: totem-study-settle 3s ease-in-out infinite;
+  }
+  .totem-studying .totem-head {
+    animation: totem-study-head 2.5s ease-in-out infinite;
+    transform-origin: ${8 * P}px ${8 * P}px;
+  }
+  .totem-studying .totem-body {
+    animation: totem-study-lean 4s ease-in-out infinite;
+    transform-origin: ${8 * P}px ${15 * P}px;
+  }
   .totem-studying .totem-left-arm {
-    animation: totem-type-l 0.6s ease-in-out infinite alternate;
+    animation: totem-type-l 0.25s ease-in-out infinite alternate;
+    transform-origin: ${4 * P}px ${9 * P}px;
   }
   .totem-studying .totem-right-arm {
-    animation: totem-type-r 0.6s ease-in-out infinite alternate;
-    animation-delay: 0.15s;
+    animation: totem-type-r 0.25s ease-in-out infinite alternate;
+    transform-origin: ${11 * P}px ${9 * P}px;
+    animation-delay: 0.08s;
+  }
+  .totem-studying .totem-shadow {
+    transform: scaleX(1.2);
+    opacity: 0.12;
+  }
+  @keyframes totem-study-settle {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(${Math.round(P * 0.3)}px); }
+  }
+  @keyframes totem-study-head {
+    0%, 100% { transform: rotate(0deg) translateY(0); }
+    30% { transform: rotate(-2deg) translateY(${Math.round(P * 0.5)}px); }
+    70% { transform: rotate(1deg) translateY(0); }
+  }
+  @keyframes totem-study-lean {
+    0%, 100% { transform: rotate(0deg); }
+    50% { transform: rotate(1.5deg); }
   }
   @keyframes totem-type-l {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-${P}px); }
+    0% { transform: rotate(-6deg) translateY(0); }
+    100% { transform: rotate(4deg) translateY(-${P}px); }
   }
   @keyframes totem-type-r {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-${P}px); }
+    0% { transform: rotate(6deg) translateY(0); }
+    100% { transform: rotate(-4deg) translateY(-${P}px); }
   }
 
+  /* ===== COOKING — stir + hold + sway ===== */
+  .totem-cooking .totem-character {
+    animation: totem-cook-sway 1.5s ease-in-out infinite;
+  }
+  .totem-cooking .totem-head {
+    animation: totem-cook-head 2s ease-in-out infinite;
+    transform-origin: ${8 * P}px ${8 * P}px;
+  }
+  .totem-cooking .totem-body {
+    animation: totem-breathe 3s ease-in-out infinite;
+    transform-origin: ${8 * P}px ${15 * P}px;
+  }
   .totem-cooking .totem-right-arm {
-    animation: totem-stir 0.8s ease-in-out infinite;
+    animation: totem-stir 0.7s ease-in-out infinite;
     transform-origin: ${11 * P}px ${9 * P}px;
   }
-  @keyframes totem-stir {
-    0%, 100% { transform: rotate(0deg) translateY(-${P}px); }
-    25% { transform: rotate(10deg) translateY(-${P * 2}px); }
-    50% { transform: rotate(0deg) translateY(-${P}px); }
-    75% { transform: rotate(-10deg) translateY(-${P * 2}px); }
+  .totem-cooking .totem-left-arm {
+    animation: totem-cook-hold 1.2s ease-in-out infinite;
+    transform-origin: ${4 * P}px ${9 * P}px;
   }
-  .totem-cooking {
-    animation: totem-bob 1.5s ease-in-out infinite;
+  .totem-cooking .totem-shadow {
+    animation: totem-shadow-idle 1.5s ease-in-out infinite;
+  }
+  @keyframes totem-cook-sway {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-${Math.round(P * 0.5)}px); }
+  }
+  @keyframes totem-cook-head {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(-4deg); }
+    50% { transform: rotate(0deg); }
+    75% { transform: rotate(3deg); }
+  }
+  @keyframes totem-stir {
+    0% { transform: rotate(0deg) translateY(-${P}px); }
+    25% { transform: rotate(14deg) translateY(-${P * 2}px); }
+    50% { transform: rotate(0deg) translateY(-${P}px); }
+    75% { transform: rotate(-14deg) translateY(-${P * 2}px); }
+  }
+  @keyframes totem-cook-hold {
+    0%, 100% { transform: rotate(-10deg) translateY(-${P}px); }
+    50% { transform: rotate(-6deg) translateY(-${Math.round(P * 0.5)}px); }
   }
 
+  /* ===== SLEEPING — lay down + breathe + zzz ===== */
   .totem-sleeping {
     transform: rotate(90deg) scale(0.8);
     transform-origin: center center;
   }
+  .totem-sleeping .totem-shadow {
+    opacity: 0;
+  }
+  .totem-sleeping .totem-body {
+    animation: totem-sleep-breathe 3s ease-in-out infinite;
+    transform-origin: ${8 * P}px ${12 * P}px;
+  }
+  .totem-sleeping .totem-left-arm {
+    animation: totem-sleep-arm 4s ease-in-out infinite;
+    transform-origin: ${4 * P}px ${9 * P}px;
+  }
   .totem-sleeping .totem-zzz text:nth-child(1) {
-    animation: totem-zzz 2s ease-in-out infinite;
+    animation: totem-zzz 2.5s ease-in-out infinite;
   }
   .totem-sleeping .totem-zzz text:nth-child(2) {
-    animation: totem-zzz 2s ease-in-out infinite;
-    animation-delay: 0.5s;
+    animation: totem-zzz-2 2.5s ease-in-out infinite;
+    animation-delay: 0.6s;
   }
   .totem-sleeping .totem-zzz text:nth-child(3) {
-    animation: totem-zzz 2s ease-in-out infinite;
-    animation-delay: 1s;
+    animation: totem-zzz-3 2.5s ease-in-out infinite;
+    animation-delay: 1.2s;
+  }
+  @keyframes totem-sleep-breathe {
+    0%, 100% { transform: scaleY(1); }
+    50% { transform: scaleY(1.04); }
+  }
+  @keyframes totem-sleep-arm {
+    0%, 100% { transform: rotate(0deg); }
+    50% { transform: rotate(-3deg); }
   }
   @keyframes totem-zzz {
-    0% { opacity: 0; transform: translateY(0); }
-    20% { opacity: 1; }
-    80% { opacity: 1; }
-    100% { opacity: 0; transform: translateY(-${P * 3}px); }
+    0% { opacity: 0; transform: translate(0, 0); }
+    15% { opacity: 1; }
+    85% { opacity: 0.7; }
+    100% { opacity: 0; transform: translate(${P}px, -${P * 4}px); }
+  }
+  @keyframes totem-zzz-2 {
+    0% { opacity: 0; transform: translate(0, 0); }
+    15% { opacity: 0.9; }
+    85% { opacity: 0.6; }
+    100% { opacity: 0; transform: translate(-${P}px, -${P * 3}px); }
+  }
+  @keyframes totem-zzz-3 {
+    0% { opacity: 0; transform: translate(0, 0); }
+    15% { opacity: 0.7; }
+    85% { opacity: 0.5; }
+    100% { opacity: 0; transform: translate(${Math.round(P * 0.5)}px, -${P * 2}px); }
   }
 `;
