@@ -16,7 +16,7 @@ const TAN = '#C8943C';
 const TAN_DARK = '#A07830';
 const NOSE = '#2D2D2D';
 const EYE_HI = '#FFF';
-const TONGUE = '#E06060';
+const TONGUE = '#D85858';
 
 function r(x: number, y: number, fill: string): string {
   return `<rect x="${x * P}" y="${y * P}" width="${P}" height="${P}" fill="${fill}"/>`;

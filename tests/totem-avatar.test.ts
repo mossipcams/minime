@@ -62,13 +62,13 @@ describe('Totem Avatar', () => {
     expect(svg).toContain('totem-idle');
   });
 
-  it('uses pixel art character palette', () => {
+  it('uses realistic character palette', () => {
     const svg = getTotemSvg('idle');
-    // Skin, hair, hoodie colors
-    expect(svg).toContain('#F0C8A0');
-    expect(svg).toContain('#4A3728');
-    expect(svg).toContain('#5B8DBE');
-    expect(svg).toContain('#2D2D2D');
+    // Skin, hair, hoodie, eyes — muted natural tones
+    expect(svg).toContain('#E4B898');
+    expect(svg).toContain('#3C2D1E');
+    expect(svg).toContain('#506878');
+    expect(svg).toContain('#1C1C1C');
   });
 
   it('totemStyles contains keyframe animations for all activities', () => {

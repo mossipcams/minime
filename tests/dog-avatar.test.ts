@@ -63,8 +63,8 @@ describe('Dog Avatar', () => {
 
   it('tongue uses tongue color palette', () => {
     const svg = getDogSvg('idle');
-    // TONGUE constant is '#E06060'
-    expect(svg).toContain('#E06060');
+    // TONGUE constant — muted pink
+    expect(svg).toContain('#D85858');
   });
 
   it('dogStyles contains enhanced keyframe animations for all activities', () => {
