@@ -41,6 +41,18 @@ describe('Lofi Room Backgrounds', () => {
     expect(svg).toContain('moon');
   });
 
+  it('not_home scene should use visible colors, not near-black', () => {
+    const svg = lofiRoomBackgrounds.not_home;
+    // Sky background gradient should be a readable navy/indigo, not near-black
+    // Old colors like #0C0C1E, #080818 are too dark to distinguish anything
+    expect(svg).not.toContain('#0C0C1E');
+    expect(svg).not.toContain('#080818');
+    // Windows should have warm glow (amber/yellow tones) not dark fills
+    expect(svg).not.toContain('fill="#0A0A14"');
+    // Should have warm window glow color
+    expect(svg).toMatch(/#[CDEcde][0-9A-Fa-f][89ABab][0-9A-Fa-f][234][0-9A-Fa-f]/);
+  });
+
   it('indoor room furniture should be proportionally sized to avatar (person=45 viewBox units)', () => {
     // The avatar is ~45 viewBox units tall. A desk monitor should NOT be 40 units
     // tall (that's person-sized). Realistic: monitor ~10-12 units, desk at y>=62, etc.
