@@ -77,6 +77,20 @@ describe('Lofi Room Backgrounds', () => {
     }
   });
 
+  it('living room TV has bright screen with visible content and strong glow', () => {
+    const svg = lofiRoomBackgrounds.living_room;
+    // TV screen glow gradient should have stop-opacity >= 0.3 (strong, visible glow)
+    const tvGradient = svg.match(/id="lofiLivTV"[\s\S]*?<\/radialGradient>/);
+    expect(tvGradient).not.toBeNull();
+    const opacities = tvGradient![0].match(/stop-opacity="([^"]+)"/g) || [];
+    const maxOpacity = Math.max(...opacities.map(o => parseFloat(o.replace('stop-opacity="', '').replace('"', ''))));
+    expect(maxOpacity).toBeGreaterThanOrEqual(0.3);
+    // TV screen area should have content bars/shapes
+    expect(svg).toContain('screen-content');
+    // TV glow on floor should exist and be noticeable
+    expect(svg).toContain('TV glow on floor');
+  });
+
   it('each room has rich ambient animations (15+ animated elements)', () => {
     for (const [room, svg] of Object.entries(lofiRoomBackgrounds)) {
       const animCount = (svg.match(/<animate /g) || []).length;

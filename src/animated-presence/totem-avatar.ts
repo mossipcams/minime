@@ -1,6 +1,20 @@
-export type Activity = 'idle' | 'walking' | 'studying' | 'cooking' | 'sleeping' | 'watching';
+export type Activity = 'idle' | 'walking'
+  // Office
+  | 'studying' | 'reading' | 'thinking' | 'coffee-break' | 'whiteboarding' | 'phone-call'
+  // Kitchen
+  | 'cooking' | 'eating' | 'coffee-making' | 'washing-dishes' | 'snacking' | 'baking'
+  // Living room
+  | 'watching' | 'gaming' | 'reading-couch' | 'relaxing' | 'stretching' | 'napping'
+  // Bedroom
+  | 'sleeping' | 'reading-bed' | 'meditating' | 'getting-dressed' | 'morning-stretch' | 'phone-bed';
 
-const ACTIVITIES: Activity[] = ['idle', 'walking', 'studying', 'cooking', 'sleeping', 'watching'];
+const ACTIVITIES: Activity[] = [
+  'idle', 'walking',
+  'studying', 'reading', 'thinking', 'coffee-break', 'whiteboarding', 'phone-call',
+  'cooking', 'eating', 'coffee-making', 'washing-dishes', 'snacking', 'baking',
+  'watching', 'gaming', 'reading-couch', 'relaxing', 'stretching', 'napping',
+  'sleeping', 'reading-bed', 'meditating', 'getting-dressed', 'morning-stretch', 'phone-bed',
+];
 const P = 3;
 const W = 16 * P;
 const H = 24 * P;
@@ -298,6 +312,98 @@ function drinkProp(): string {
   return `<g class="totem-prop">${rows.join('')}</g>`;
 }
 
+
+// ===== NEW PROPS =====
+
+function bookProp(): string {
+  // Book held in front — open pages visible
+  const rows: string[] = [];
+  rows.push(r(3, 12, '#5A3020'), r(4, 12, '#E8D8C0'), r(5, 12, '#E0D0B0'));
+  rows.push(r(3, 13, '#5A3020'), r(4, 13, '#E8D8C0'), r(5, 13, '#E0D0B0'));
+  rows.push(r(3, 14, '#5A3020'), r(4, 14, '#E8D8C0'), r(5, 14, '#E0D0B0'));
+  return `<g class="totem-prop">${rows.join('')}</g>`;
+}
+
+function mugProp(): string {
+  // Coffee mug with steam
+  const rows: string[] = [];
+  rows.push(r(12, 12, '#A05830'), r(13, 12, '#A05830'));
+  rows.push(r(12, 13, '#A05830'), r(13, 13, '#A05830'));
+  rows.push(r(14, 12, '#8A4820')); // handle
+  // steam
+  rows.push(`<path d="M${12*P},${11*P} Q${11*P},${8*P} ${13*P},${6*P}" fill="none" stroke="#FFF" stroke-width="0.8" stroke-linecap="round" opacity="0"><animate attributeName="opacity" values="0;0.2;0.12;0.06;0" dur="2.5s" repeatCount="indefinite"/></path>`);
+  return `<g class="totem-prop">${rows.join('')}</g>`;
+}
+
+function markerProp(): string {
+  // Whiteboard marker held up
+  const rows: string[] = [];
+  rows.push(r(12, 6, '#E06060'));
+  rows.push(r(12, 7, '#E06060'));
+  rows.push(r(12, 8, '#C0C0C0'));
+  return `<g class="totem-prop">${rows.join('')}</g>`;
+}
+
+function plateProp(): string {
+  // Plate with food
+  const rows: string[] = [];
+  rows.push(r(3, 14, PAN), r(4, 14, PAN), r(5, 14, PAN), r(6, 14, PAN));
+  rows.push(r(4, 13, '#C8A040'), r(5, 13, '#80B060')); // food colors
+  return `<g class="totem-prop">${rows.join('')}</g>`;
+}
+
+function spongeProp(): string {
+  // Sponge held forward
+  const rows: string[] = [];
+  rows.push(r(3, 13, '#E8D040'), r(4, 13, '#D8C030'));
+  rows.push(r(3, 14, '#E8D040'), r(4, 14, '#D8C030'));
+  return `<g class="totem-prop">${rows.join('')}</g>`;
+}
+
+function bowlProp(): string {
+  // Mixing bowl
+  const rows: string[] = [];
+  rows.push(r(4, 12, PAN), r(5, 12, '#E8D8C0'), r(6, 12, '#E8D8C0'), r(7, 12, PAN));
+  rows.push(r(4, 13, PAN_DARK), r(5, 13, PAN), r(6, 13, PAN), r(7, 13, PAN_DARK));
+  return `<g class="totem-prop">${rows.join('')}</g>`;
+}
+
+function controllerProp(): string {
+  // Game controller
+  const rows: string[] = [];
+  rows.push(r(4, 14, PHONE_BODY), r(5, 14, PHONE_BODY), r(6, 14, PHONE_BODY));
+  rows.push(r(5, 13, '#4060A0')); // button
+  rows.push(r(4, 13, '#A04040')); // button
+  return `<g class="totem-prop">${rows.join('')}</g>`;
+}
+
+function shirtProp(): string {
+  // Shirt being put on
+  const rows: string[] = [];
+  rows.push(r(2, 10, '#6080A0'), r(3, 10, '#6080A0'));
+  rows.push(r(2, 11, '#5070A0'), r(3, 11, '#5070A0'));
+  rows.push(r(13, 10, '#6080A0'), r(14, 10, '#6080A0'));
+  rows.push(r(13, 11, '#5070A0'), r(14, 11, '#5070A0'));
+  return `<g class="totem-prop">${rows.join('')}</g>`;
+}
+
+function phoneUpProp(): string {
+  // Phone held above face (for phone-bed)
+  const rows: string[] = [];
+  rows.push(r(6, 4, PHONE_BODY), r(7, 4, PHONE_BODY), r(8, 4, PHONE_BODY));
+  rows.push(r(6, 5, PHONE_SCREEN), r(7, 5, PHONE_SCREEN), r(8, 5, PHONE_SCREEN));
+  rows.push(r(6, 6, PHONE_BODY), r(7, 6, PHONE_BODY), r(8, 6, PHONE_BODY));
+  rows.push(`<rect x="${6*P}" y="${5*P}" width="${3*P}" height="${P}" fill="${PHONE_SCREEN}" opacity="0.25"><animate attributeName="opacity" values="0.2;0.35;0.22;0.3;0.2" dur="3s" repeatCount="indefinite"/></rect>`);
+  return `<g class="totem-prop">${rows.join('')}</g>`;
+}
+
+function nappingZzz(): string {
+  return `<g class="totem-nap-zzz">
+    <text x="${13 * P}" y="${3 * P}" fill="${WHITE}" font-size="${P * 2}px" font-family="monospace" opacity="0">z</text>
+    <text x="${14 * P}" y="${5 * P}" fill="${WHITE}" font-size="${P * 1.5}px" font-family="monospace" opacity="0">z</text>
+  </g>`;
+}
+
 function groundShadow(): string {
   return `<ellipse class="totem-shadow" cx="${8 * P}" cy="${22.5 * P}" rx="${3.5 * P}" ry="${0.8 * P}" fill="#000" opacity="0.15"/>`;
 }
@@ -372,6 +478,183 @@ export function getTotemSvg(activity: string): string {
     parts.push(`<g class="totem-head">${headPixels()}${blinkOverlay()}</g>`);
     parts.push(remoteProp());
     parts.push(drinkProp());
+  } else if (act === 'reading') {
+    // Standing, holding book
+    parts.push(`<g class="totem-left-leg">${leftLegPixels()}</g>`);
+    parts.push(`<g class="totem-right-leg">${rightLegPixels()}</g>`);
+    parts.push(`<g class="totem-body">${bodyPixels()}</g>`);
+    parts.push(bookProp());
+    parts.push(`<g class="totem-left-arm">${leftArmPixels()}</g>`);
+    parts.push(`<g class="totem-right-arm">${rightArmPixels()}</g>`);
+    parts.push(`<g class="totem-head">${headPixels()}${blinkOverlay()}</g>`);
+  } else if (act === 'thinking') {
+    // Standing, hand on chin
+    parts.push(`<g class="totem-left-leg">${leftLegPixels()}</g>`);
+    parts.push(`<g class="totem-right-leg">${rightLegPixels()}</g>`);
+    parts.push(`<g class="totem-body">${bodyPixels()}</g>`);
+    parts.push(`<g class="totem-left-arm">${leftArmPixels()}</g>`);
+    parts.push(`<g class="totem-right-arm">${rightArmPixels()}</g>`);
+    parts.push(`<g class="totem-head">${headPixels()}${blinkOverlay()}</g>`);
+  } else if (act === 'coffee-break') {
+    // Standing, holding mug
+    parts.push(`<g class="totem-left-leg">${leftLegPixels()}</g>`);
+    parts.push(`<g class="totem-right-leg">${rightLegPixels()}</g>`);
+    parts.push(`<g class="totem-body">${bodyPixels()}</g>`);
+    parts.push(`<g class="totem-left-arm">${leftArmPixels()}</g>`);
+    parts.push(`<g class="totem-right-arm">${rightArmPixels()}</g>`);
+    parts.push(`<g class="totem-head">${headPixels()}${blinkOverlay()}</g>`);
+    parts.push(mugProp());
+  } else if (act === 'whiteboarding') {
+    // Standing, arm raised with marker
+    parts.push(`<g class="totem-left-leg">${leftLegPixels()}</g>`);
+    parts.push(`<g class="totem-right-leg">${rightLegPixels()}</g>`);
+    parts.push(`<g class="totem-body">${bodyPixels()}</g>`);
+    parts.push(`<g class="totem-left-arm">${leftArmPixels()}</g>`);
+    parts.push(`<g class="totem-right-arm">${rightArmPixels()}</g>`);
+    parts.push(`<g class="totem-head">${headPixels()}${blinkOverlay()}</g>`);
+    parts.push(markerProp());
+  } else if (act === 'phone-call') {
+    // Standing, hand at ear
+    parts.push(`<g class="totem-left-leg">${leftLegPixels()}</g>`);
+    parts.push(`<g class="totem-right-leg">${rightLegPixels()}</g>`);
+    parts.push(`<g class="totem-body">${bodyPixels()}</g>`);
+    parts.push(`<g class="totem-left-arm">${leftArmPixels()}</g>`);
+    parts.push(`<g class="totem-right-arm">${rightArmPixels()}</g>`);
+    parts.push(`<g class="totem-head">${headPixels()}${blinkOverlay()}</g>`);
+    parts.push(phoneProp());
+  } else if (act === 'eating') {
+    // Sitting, eating from plate
+    parts.push(`<g class="totem-left-leg">${leftLegPixels()}</g>`);
+    parts.push(`<g class="totem-right-leg">${rightLegPixels()}</g>`);
+    parts.push(`<g class="totem-body">${bodyPixels()}</g>`);
+    parts.push(plateProp());
+    parts.push(`<g class="totem-left-arm">${leftArmPixels()}</g>`);
+    parts.push(`<g class="totem-right-arm">${rightArmPixels()}</g>`);
+    parts.push(`<g class="totem-head">${headPixels()}${blinkOverlay()}</g>`);
+  } else if (act === 'coffee-making') {
+    // Standing, holding mug
+    parts.push(`<g class="totem-left-leg">${leftLegPixels()}</g>`);
+    parts.push(`<g class="totem-right-leg">${rightLegPixels()}</g>`);
+    parts.push(`<g class="totem-body">${bodyPixels()}</g>`);
+    parts.push(`<g class="totem-left-arm">${leftArmPixels()}</g>`);
+    parts.push(`<g class="totem-right-arm">${rightArmPixels()}</g>`);
+    parts.push(`<g class="totem-head">${headPixels()}${blinkOverlay()}</g>`);
+    parts.push(mugProp());
+  } else if (act === 'washing-dishes') {
+    // Standing, arms forward with sponge
+    parts.push(`<g class="totem-left-leg">${leftLegPixels()}</g>`);
+    parts.push(`<g class="totem-right-leg">${rightLegPixels()}</g>`);
+    parts.push(`<g class="totem-body">${bodyPixels()}</g>`);
+    parts.push(spongeProp());
+    parts.push(`<g class="totem-left-arm">${leftArmPixels()}</g>`);
+    parts.push(`<g class="totem-right-arm">${rightArmPixels()}</g>`);
+    parts.push(`<g class="totem-head">${headPixels()}${blinkOverlay()}</g>`);
+  } else if (act === 'snacking') {
+    // Standing, hand to mouth
+    parts.push(`<g class="totem-left-leg">${leftLegPixels()}</g>`);
+    parts.push(`<g class="totem-right-leg">${rightLegPixels()}</g>`);
+    parts.push(`<g class="totem-body">${bodyPixels()}</g>`);
+    parts.push(`<g class="totem-left-arm">${leftArmPixels()}</g>`);
+    parts.push(`<g class="totem-right-arm">${rightArmPixels()}</g>`);
+    parts.push(`<g class="totem-head">${headPixels()}${blinkOverlay()}</g>`);
+  } else if (act === 'baking') {
+    // Standing, stirring bowl
+    parts.push(`<g class="totem-left-leg">${leftLegPixels()}</g>`);
+    parts.push(`<g class="totem-right-leg">${rightLegPixels()}</g>`);
+    parts.push(`<g class="totem-body">${bodyPixels()}</g>`);
+    parts.push(bowlProp());
+    parts.push(`<g class="totem-left-arm">${leftArmPixels()}</g>`);
+    parts.push(`<g class="totem-right-arm">${rightArmPixels()}</g>`);
+    parts.push(`<g class="totem-head">${headPixels()}${blinkOverlay()}</g>`);
+  } else if (act === 'gaming') {
+    // Sitting, leaning forward with controller
+    parts.push(`<g class="totem-left-leg">${leftLegPixels()}</g>`);
+    parts.push(`<g class="totem-right-leg">${rightLegPixels()}</g>`);
+    parts.push(`<g class="totem-body">${bodyPixels()}</g>`);
+    parts.push(controllerProp());
+    parts.push(`<g class="totem-left-arm">${leftArmPixels()}</g>`);
+    parts.push(`<g class="totem-right-arm">${rightArmPixels()}</g>`);
+    parts.push(`<g class="totem-head">${headPixels()}${blinkOverlay()}</g>`);
+  } else if (act === 'reading-couch') {
+    // Sitting, book in lap
+    parts.push(`<g class="totem-left-leg">${leftLegPixels()}</g>`);
+    parts.push(`<g class="totem-right-leg">${rightLegPixels()}</g>`);
+    parts.push(`<g class="totem-body">${bodyPixels()}</g>`);
+    parts.push(bookProp());
+    parts.push(`<g class="totem-left-arm">${leftArmPixels()}</g>`);
+    parts.push(`<g class="totem-right-arm">${rightArmPixels()}</g>`);
+    parts.push(`<g class="totem-head">${headPixels()}${blinkOverlay()}</g>`);
+  } else if (act === 'relaxing') {
+    // Sitting, arms behind head
+    parts.push(`<g class="totem-left-leg">${leftLegPixels()}</g>`);
+    parts.push(`<g class="totem-right-leg">${rightLegPixels()}</g>`);
+    parts.push(`<g class="totem-body">${bodyPixels()}</g>`);
+    parts.push(`<g class="totem-left-arm">${leftArmPixels()}</g>`);
+    parts.push(`<g class="totem-right-arm">${rightArmPixels()}</g>`);
+    parts.push(`<g class="totem-head">${headPixels()}${blinkOverlay()}</g>`);
+  } else if (act === 'stretching') {
+    // Standing, arms up
+    parts.push(`<g class="totem-left-leg">${leftLegPixels()}</g>`);
+    parts.push(`<g class="totem-right-leg">${rightLegPixels()}</g>`);
+    parts.push(`<g class="totem-body">${bodyPixels()}</g>`);
+    parts.push(`<g class="totem-left-arm">${leftArmPixels()}</g>`);
+    parts.push(`<g class="totem-right-arm">${rightArmPixels()}</g>`);
+    parts.push(`<g class="totem-head">${headPixels()}${blinkOverlay()}</g>`);
+  } else if (act === 'napping') {
+    // Sitting, head tilted, Zzz
+    parts.push(`<g class="totem-left-leg">${leftLegPixels()}</g>`);
+    parts.push(`<g class="totem-right-leg">${rightLegPixels()}</g>`);
+    parts.push(`<g class="totem-body">${bodyPixels()}</g>`);
+    parts.push(`<g class="totem-left-arm">${leftArmPixels()}</g>`);
+    parts.push(`<g class="totem-right-arm">${rightArmPixels()}</g>`);
+    parts.push(`<g class="totem-head">${sleepingHeadPixels()}</g>`);
+  } else if (act === 'reading-bed') {
+    // Propped up with book
+    parts.push(pillowProp());
+    parts.push(`<g class="totem-left-leg">${leftLegPixels()}</g>`);
+    parts.push(`<g class="totem-right-leg">${rightLegPixels()}</g>`);
+    parts.push(`<g class="totem-body">${bodyPixels()}</g>`);
+    parts.push(bookProp());
+    parts.push(`<g class="totem-left-arm">${leftArmPixels()}</g>`);
+    parts.push(`<g class="totem-right-arm">${rightArmPixels()}</g>`);
+    parts.push(`<g class="totem-head">${headPixels()}${blinkOverlay()}</g>`);
+    parts.push(`<g class="totem-blanket">${blanketProp()}</g>`);
+  } else if (act === 'meditating') {
+    // Cross-legged, calm
+    parts.push(`<g class="totem-left-leg">${leftLegPixels()}</g>`);
+    parts.push(`<g class="totem-right-leg">${rightLegPixels()}</g>`);
+    parts.push(`<g class="totem-body">${bodyPixels()}</g>`);
+    parts.push(`<g class="totem-left-arm">${leftArmPixels()}</g>`);
+    parts.push(`<g class="totem-right-arm">${rightArmPixels()}</g>`);
+    parts.push(`<g class="totem-head">${sleepingHeadPixels()}</g>`);
+  } else if (act === 'getting-dressed') {
+    // Standing, arms out with shirt
+    parts.push(`<g class="totem-left-leg">${leftLegPixels()}</g>`);
+    parts.push(`<g class="totem-right-leg">${rightLegPixels()}</g>`);
+    parts.push(`<g class="totem-body">${bodyPixels()}</g>`);
+    parts.push(shirtProp());
+    parts.push(`<g class="totem-left-arm">${leftArmPixels()}</g>`);
+    parts.push(`<g class="totem-right-arm">${rightArmPixels()}</g>`);
+    parts.push(`<g class="totem-head">${headPixels()}${blinkOverlay()}</g>`);
+  } else if (act === 'morning-stretch') {
+    // Standing, arms up
+    parts.push(`<g class="totem-left-leg">${leftLegPixels()}</g>`);
+    parts.push(`<g class="totem-right-leg">${rightLegPixels()}</g>`);
+    parts.push(`<g class="totem-body">${bodyPixels()}</g>`);
+    parts.push(`<g class="totem-left-arm">${leftArmPixels()}</g>`);
+    parts.push(`<g class="totem-right-arm">${rightArmPixels()}</g>`);
+    parts.push(`<g class="totem-head">${headPixels()}${blinkOverlay()}</g>`);
+  } else if (act === 'phone-bed') {
+    // Lying down with phone above
+    parts.push(pillowProp());
+    parts.push(`<g class="totem-left-leg">${leftLegPixels()}</g>`);
+    parts.push(`<g class="totem-right-leg">${rightLegPixels()}</g>`);
+    parts.push(`<g class="totem-body">${bodyPixels()}</g>`);
+    parts.push(`<g class="totem-left-arm">${leftArmPixels()}</g>`);
+    parts.push(`<g class="totem-right-arm">${rightArmPixels()}</g>`);
+    parts.push(`<g class="totem-head">${headPixels()}${blinkOverlay()}</g>`);
+    parts.push(phoneUpProp());
+    parts.push(`<g class="totem-blanket">${blanketProp()}</g>`);
   } else if (act === 'idle') {
     parts.push(`<g class="totem-left-leg">${leftLegPixels()}</g>`);
     parts.push(`<g class="totem-right-leg">${rightLegPixels()}</g>`);
@@ -397,11 +680,15 @@ export function getTotemSvg(activity: string): string {
     parts.push(sleepingZzz());
   }
 
+  if (act === 'napping') {
+    parts.push(nappingZzz());
+  }
+
   if (act === 'studying') {
     parts.push(codeFloat());
   }
 
-  if (act === 'cooking') {
+  if (act === 'cooking' || act === 'coffee-making') {
     parts.push(steamFloat());
   }
 
@@ -913,4 +1200,647 @@ export const totemStyles = `
     85% { opacity: 0.5; transform: translate(${P * 0.4}px, -${P * 1.8}px); }
     100% { opacity: 0; transform: translate(${Math.round(P * 0.5)}px, -${P * 2}px); }
   }
+
+  /* ===== READING - Gentle page turn + slight sway ===== */
+  .totem-reading .totem-character {
+    animation: totem-bob 3.2s ease-in-out infinite;
+  }
+  .totem-reading .totem-head {
+    animation: totem-read-head 4s ease-in-out infinite;
+    transform-origin: ${8 * P}px ${8 * P}px;
+  }
+  .totem-reading .totem-left-arm {
+    animation: totem-read-arm 5s ease-in-out infinite;
+    transform-origin: ${4 * P}px ${9 * P}px;
+  }
+  .totem-reading .totem-body {
+    animation: totem-breathe 3.5s ease-in-out infinite;
+    transform-origin: ${8 * P}px ${15 * P}px;
+  }
+  @keyframes totem-read-head {
+    0%, 100% { transform: rotate(0deg) translateY(0); }
+    25% { transform: rotate(-3deg) translateY(${P * 0.2}px); }
+    75% { transform: rotate(2deg) translateY(0); }
+  }
+  @keyframes totem-read-arm {
+    0%, 100% { transform: rotate(0deg); }
+    40% { transform: rotate(-2deg); }
+    50% { transform: rotate(3deg); }
+    60% { transform: rotate(-1deg); }
+  }
+
+  /* ===== THINKING - Weight shift + chin scratch ===== */
+  .totem-thinking .totem-character {
+    animation: totem-think-shift 4s ease-in-out infinite;
+  }
+  .totem-thinking .totem-head {
+    animation: totem-think-head 3.5s ease-in-out infinite;
+    transform-origin: ${8 * P}px ${8 * P}px;
+  }
+  .totem-thinking .totem-right-arm {
+    animation: totem-think-arm 3s ease-in-out infinite;
+    transform-origin: ${11 * P}px ${9 * P}px;
+  }
+  .totem-thinking .totem-body {
+    animation: totem-breathe 3s ease-in-out infinite, totem-weight-shift 5s ease-in-out infinite;
+    transform-origin: ${8 * P}px ${15 * P}px;
+  }
+  @keyframes totem-think-shift {
+    0%, 100% { transform: translateX(0); }
+    30% { transform: translateX(${P * 0.4}px); }
+    70% { transform: translateX(-${P * 0.3}px); }
+  }
+  @keyframes totem-think-head {
+    0%, 100% { transform: rotate(0deg); }
+    20% { transform: rotate(4deg); }
+    50% { transform: rotate(-3deg); }
+    80% { transform: rotate(2deg); }
+  }
+  @keyframes totem-think-arm {
+    0%, 100% { transform: rotate(-15deg) translateY(-${P}px); }
+    50% { transform: rotate(-12deg) translateY(-${P * 1.5}px); }
+  }
+
+  /* ===== COFFEE-BREAK - Sip motion ===== */
+  .totem-coffee-break .totem-character {
+    animation: totem-bob 3s ease-in-out infinite;
+  }
+  .totem-coffee-break .totem-head {
+    animation: totem-coffee-sip 4s ease-in-out infinite;
+    transform-origin: ${8 * P}px ${8 * P}px;
+  }
+  .totem-coffee-break .totem-right-arm {
+    animation: totem-coffee-arm 4s ease-in-out infinite;
+    transform-origin: ${11 * P}px ${9 * P}px;
+  }
+  .totem-coffee-break .totem-body {
+    animation: totem-breathe 3.5s ease-in-out infinite;
+    transform-origin: ${8 * P}px ${15 * P}px;
+  }
+  @keyframes totem-coffee-sip {
+    0%, 100% { transform: rotate(0deg) translateY(0); }
+    30% { transform: rotate(-4deg) translateY(${P * 0.3}px); }
+    50% { transform: rotate(0deg) translateY(0); }
+  }
+  @keyframes totem-coffee-arm {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(-10deg) translateY(-${P}px); }
+    35% { transform: rotate(-15deg) translateY(-${P * 1.5}px); }
+    50% { transform: rotate(-8deg) translateY(-${P}px); }
+  }
+
+  /* ===== WHITEBOARDING - Drawing strokes ===== */
+  .totem-whiteboarding .totem-character {
+    animation: totem-bob 3.5s ease-in-out infinite;
+  }
+  .totem-whiteboarding .totem-right-arm {
+    animation: totem-wb-arm 1.5s ease-in-out infinite;
+    transform-origin: ${11 * P}px ${9 * P}px;
+  }
+  .totem-whiteboarding .totem-head {
+    animation: totem-wb-head 3s ease-in-out infinite;
+    transform-origin: ${8 * P}px ${8 * P}px;
+  }
+  .totem-whiteboarding .totem-body {
+    animation: totem-breathe 3s ease-in-out infinite;
+    transform-origin: ${8 * P}px ${15 * P}px;
+  }
+  @keyframes totem-wb-arm {
+    0%, 100% { transform: rotate(-30deg) translateY(-${P * 2}px); }
+    25% { transform: rotate(-25deg) translateY(-${P * 2.5}px); }
+    50% { transform: rotate(-35deg) translateY(-${P * 1.5}px); }
+    75% { transform: rotate(-28deg) translateY(-${P * 2}px); }
+  }
+  @keyframes totem-wb-head {
+    0%, 100% { transform: rotate(0deg); }
+    30% { transform: rotate(3deg); }
+    70% { transform: rotate(-2deg); }
+  }
+
+  /* ===== PHONE-CALL - Pacing + head nod ===== */
+  .totem-phone-call .totem-character {
+    animation: totem-pace 2.5s ease-in-out infinite;
+  }
+  .totem-phone-call .totem-head {
+    animation: totem-call-nod 1.8s ease-in-out infinite;
+    transform-origin: ${8 * P}px ${8 * P}px;
+  }
+  .totem-phone-call .totem-right-arm {
+    animation: totem-call-arm 2s ease-in-out infinite;
+    transform-origin: ${11 * P}px ${9 * P}px;
+  }
+  .totem-phone-call .totem-left-leg {
+    animation: totem-pace-leg-l 2.5s ease-in-out infinite;
+    transform-origin: ${7 * P}px ${16 * P}px;
+  }
+  .totem-phone-call .totem-right-leg {
+    animation: totem-pace-leg-r 2.5s ease-in-out infinite;
+    transform-origin: ${8 * P}px ${16 * P}px;
+  }
+  .totem-phone-call .totem-body {
+    animation: totem-breathe 3s ease-in-out infinite;
+    transform-origin: ${8 * P}px ${15 * P}px;
+  }
+  @keyframes totem-pace {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(${P * 2}px); }
+    75% { transform: translateX(-${P * 2}px); }
+  }
+  @keyframes totem-call-nod {
+    0%, 100% { transform: rotate(0deg); }
+    30% { transform: rotate(5deg); }
+    60% { transform: rotate(-2deg); }
+  }
+  @keyframes totem-call-arm {
+    0%, 100% { transform: rotate(-20deg) translateY(-${P * 2}px); }
+    50% { transform: rotate(-18deg) translateY(-${P * 1.8}px); }
+  }
+  @keyframes totem-pace-leg-l {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(-8deg); }
+    75% { transform: rotate(8deg); }
+  }
+  @keyframes totem-pace-leg-r {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(8deg); }
+    75% { transform: rotate(-8deg); }
+  }
+
+  /* ===== EATING - Sitting, fork to mouth ===== */
+  .totem-eating .totem-left-leg {
+    transform: rotate(80deg);
+    transform-origin: ${6.5 * P}px ${16 * P}px;
+  }
+  .totem-eating .totem-right-leg {
+    transform: rotate(80deg);
+    transform-origin: ${8.5 * P}px ${16 * P}px;
+  }
+  .totem-eating .totem-character {
+    animation: totem-eat-settle 3s ease-in-out infinite;
+  }
+  .totem-eating .totem-right-arm {
+    animation: totem-eat-arm 2s ease-in-out infinite;
+    transform-origin: ${11 * P}px ${9 * P}px;
+  }
+  .totem-eating .totem-head {
+    animation: totem-eat-head 2s ease-in-out infinite;
+    transform-origin: ${8 * P}px ${8 * P}px;
+  }
+  .totem-eating .totem-body {
+    animation: totem-breathe 3s ease-in-out infinite;
+    transform-origin: ${8 * P}px ${15 * P}px;
+  }
+  .totem-eating .totem-shadow {
+    transform: scaleX(1.2);
+    opacity: 0.12;
+  }
+  @keyframes totem-eat-settle {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(${Math.round(P * 0.2)}px); }
+  }
+  @keyframes totem-eat-arm {
+    0%, 100% { transform: rotate(0deg); }
+    20% { transform: rotate(-15deg) translateY(-${P}px); }
+    35% { transform: rotate(-20deg) translateY(-${P * 2}px); }
+    50% { transform: rotate(-10deg) translateY(-${P}px); }
+  }
+  @keyframes totem-eat-head {
+    0%, 100% { transform: rotate(0deg); }
+    30% { transform: rotate(-3deg); }
+    60% { transform: rotate(2deg); }
+  }
+
+  /* ===== COFFEE-MAKING - Pour + sip ===== */
+  .totem-coffee-making .totem-character {
+    animation: totem-bob 3s ease-in-out infinite;
+  }
+  .totem-coffee-making .totem-head {
+    animation: totem-coffee-sip 4.5s ease-in-out infinite;
+    transform-origin: ${8 * P}px ${8 * P}px;
+  }
+  .totem-coffee-making .totem-right-arm {
+    animation: totem-coffee-arm 4.5s ease-in-out infinite;
+    transform-origin: ${11 * P}px ${9 * P}px;
+  }
+  .totem-coffee-making .totem-body {
+    animation: totem-breathe 3s ease-in-out infinite;
+    transform-origin: ${8 * P}px ${15 * P}px;
+  }
+
+  /* ===== WASHING-DISHES - Scrubbing motion ===== */
+  .totem-washing-dishes .totem-character {
+    animation: totem-bob 2.5s ease-in-out infinite;
+  }
+  .totem-washing-dishes .totem-left-arm {
+    animation: totem-scrub-l 0.6s ease-in-out infinite;
+    transform-origin: ${4 * P}px ${9 * P}px;
+  }
+  .totem-washing-dishes .totem-right-arm {
+    animation: totem-scrub-r 0.6s ease-in-out infinite;
+    transform-origin: ${11 * P}px ${9 * P}px;
+  }
+  .totem-washing-dishes .totem-head {
+    animation: totem-cook-head 2.5s ease-in-out infinite;
+    transform-origin: ${8 * P}px ${8 * P}px;
+  }
+  .totem-washing-dishes .totem-body {
+    animation: totem-breathe 3s ease-in-out infinite;
+    transform-origin: ${8 * P}px ${15 * P}px;
+  }
+  @keyframes totem-scrub-l {
+    0%, 100% { transform: rotate(-5deg) translateX(-${P * 0.5}px); }
+    50% { transform: rotate(5deg) translateX(${P * 0.5}px); }
+  }
+  @keyframes totem-scrub-r {
+    0%, 100% { transform: rotate(5deg) translateX(${P * 0.5}px); }
+    50% { transform: rotate(-5deg) translateX(-${P * 0.5}px); }
+  }
+
+  /* ===== SNACKING - Hand to mouth ===== */
+  .totem-snacking .totem-character {
+    animation: totem-bob 3s ease-in-out infinite;
+  }
+  .totem-snacking .totem-right-arm {
+    animation: totem-snack-arm 2s ease-in-out infinite;
+    transform-origin: ${11 * P}px ${9 * P}px;
+  }
+  .totem-snacking .totem-head {
+    animation: totem-eat-head 2.5s ease-in-out infinite;
+    transform-origin: ${8 * P}px ${8 * P}px;
+  }
+  .totem-snacking .totem-body {
+    animation: totem-breathe 3s ease-in-out infinite;
+    transform-origin: ${8 * P}px ${15 * P}px;
+  }
+  @keyframes totem-snack-arm {
+    0%, 60%, 100% { transform: rotate(0deg); }
+    15% { transform: rotate(-12deg) translateY(-${P}px); }
+    25% { transform: rotate(-18deg) translateY(-${P * 1.5}px); }
+    40% { transform: rotate(-8deg) translateY(-${P * 0.5}px); }
+  }
+
+  /* ===== BAKING - Stirring bowl ===== */
+  .totem-baking .totem-character {
+    animation: totem-cook-weight 2.5s ease-in-out infinite;
+  }
+  .totem-baking .totem-right-arm {
+    animation: totem-stir 1s ease-in-out infinite;
+    transform-origin: ${11 * P}px ${9 * P}px;
+  }
+  .totem-baking .totem-head {
+    animation: totem-cook-head 2.5s ease-in-out infinite;
+    transform-origin: ${8 * P}px ${8 * P}px;
+  }
+  .totem-baking .totem-body {
+    animation: totem-breathe 3s ease-in-out infinite;
+    transform-origin: ${8 * P}px ${15 * P}px;
+  }
+
+  /* ===== GAMING - Sitting, leaning forward, button mashing ===== */
+  .totem-gaming .totem-left-leg {
+    transform: rotate(80deg);
+    transform-origin: ${6.5 * P}px ${16 * P}px;
+  }
+  .totem-gaming .totem-right-leg {
+    transform: rotate(80deg);
+    transform-origin: ${8.5 * P}px ${16 * P}px;
+  }
+  .totem-gaming .totem-character {
+    animation: totem-game-lean 2s ease-in-out infinite;
+  }
+  .totem-gaming .totem-left-arm {
+    animation: totem-game-mash-l 0.3s ease-in-out infinite;
+    transform-origin: ${4 * P}px ${9 * P}px;
+  }
+  .totem-gaming .totem-right-arm {
+    animation: totem-game-mash-r 0.3s ease-in-out infinite;
+    transform-origin: ${11 * P}px ${9 * P}px;
+    animation-delay: 0.05s;
+  }
+  .totem-gaming .totem-head {
+    animation: totem-game-head 3s ease-in-out infinite;
+    transform-origin: ${8 * P}px ${8 * P}px;
+  }
+  .totem-gaming .totem-body {
+    animation: totem-breathe 3s ease-in-out infinite;
+    transform-origin: ${8 * P}px ${15 * P}px;
+  }
+  .totem-gaming .totem-shadow {
+    transform: scaleX(1.2);
+    opacity: 0.12;
+  }
+  @keyframes totem-game-lean {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    30% { transform: translateY(-${P * 0.3}px) rotate(2deg); }
+    70% { transform: translateY(${P * 0.2}px) rotate(-1deg); }
+  }
+  @keyframes totem-game-mash-l {
+    0%, 100% { transform: rotate(-3deg); }
+    50% { transform: rotate(3deg) translateY(-${P * 0.3}px); }
+  }
+  @keyframes totem-game-mash-r {
+    0%, 100% { transform: rotate(3deg); }
+    50% { transform: rotate(-3deg) translateY(-${P * 0.3}px); }
+  }
+  @keyframes totem-game-head {
+    0%, 100% { transform: rotate(0deg); }
+    20% { transform: rotate(4deg); }
+    50% { transform: rotate(-3deg); }
+    80% { transform: rotate(2deg); }
+  }
+
+  /* ===== READING-COUCH - Sitting, page turns ===== */
+  .totem-reading-couch .totem-left-leg {
+    transform: rotate(80deg);
+    transform-origin: ${6.5 * P}px ${16 * P}px;
+  }
+  .totem-reading-couch .totem-right-leg {
+    transform: rotate(80deg);
+    transform-origin: ${8.5 * P}px ${16 * P}px;
+  }
+  .totem-reading-couch .totem-character {
+    animation: totem-watch-settle 4s ease-in-out infinite;
+  }
+  .totem-reading-couch .totem-head {
+    animation: totem-read-head 4.5s ease-in-out infinite;
+    transform-origin: ${8 * P}px ${8 * P}px;
+  }
+  .totem-reading-couch .totem-left-arm {
+    animation: totem-read-arm 5s ease-in-out infinite;
+    transform-origin: ${4 * P}px ${9 * P}px;
+  }
+  .totem-reading-couch .totem-body {
+    animation: totem-breathe 3.5s ease-in-out infinite;
+    transform-origin: ${8 * P}px ${15 * P}px;
+  }
+  .totem-reading-couch .totem-shadow {
+    transform: scaleX(1.2);
+    opacity: 0.12;
+  }
+
+  /* ===== RELAXING - Sitting, slow breathing ===== */
+  .totem-relaxing .totem-left-leg {
+    transform: rotate(80deg);
+    transform-origin: ${6.5 * P}px ${16 * P}px;
+  }
+  .totem-relaxing .totem-right-leg {
+    transform: rotate(80deg);
+    transform-origin: ${8.5 * P}px ${16 * P}px;
+  }
+  .totem-relaxing .totem-character {
+    animation: totem-watch-settle 5s ease-in-out infinite;
+  }
+  .totem-relaxing .totem-head {
+    animation: totem-relax-head 6s ease-in-out infinite;
+    transform-origin: ${8 * P}px ${8 * P}px;
+  }
+  .totem-relaxing .totem-left-arm {
+    animation: totem-relax-arm-l 4s ease-in-out infinite;
+    transform-origin: ${4 * P}px ${9 * P}px;
+  }
+  .totem-relaxing .totem-right-arm {
+    animation: totem-relax-arm-r 4s ease-in-out infinite;
+    transform-origin: ${11 * P}px ${9 * P}px;
+  }
+  .totem-relaxing .totem-body {
+    animation: totem-breathe 4s ease-in-out infinite;
+    transform-origin: ${8 * P}px ${15 * P}px;
+  }
+  .totem-relaxing .totem-shadow {
+    transform: scaleX(1.2);
+    opacity: 0.12;
+  }
+  @keyframes totem-relax-head {
+    0%, 100% { transform: rotate(0deg); }
+    30% { transform: rotate(-3deg); }
+    70% { transform: rotate(2deg); }
+  }
+  @keyframes totem-relax-arm-l {
+    0%, 100% { transform: rotate(-10deg) translateY(-${P}px); }
+    50% { transform: rotate(-8deg) translateY(-${P * 0.8}px); }
+  }
+  @keyframes totem-relax-arm-r {
+    0%, 100% { transform: rotate(10deg) translateY(-${P}px); }
+    50% { transform: rotate(8deg) translateY(-${P * 0.8}px); }
+  }
+
+  /* ===== STRETCHING - Standing, arms up cycle ===== */
+  .totem-stretching .totem-character {
+    animation: totem-stretch-body 3s ease-in-out infinite;
+  }
+  .totem-stretching .totem-left-arm {
+    animation: totem-stretch-arm-l 3s ease-in-out infinite;
+    transform-origin: ${4 * P}px ${9 * P}px;
+  }
+  .totem-stretching .totem-right-arm {
+    animation: totem-stretch-arm-r 3s ease-in-out infinite;
+    transform-origin: ${11 * P}px ${9 * P}px;
+  }
+  .totem-stretching .totem-head {
+    animation: totem-stretch-head 3s ease-in-out infinite;
+    transform-origin: ${8 * P}px ${8 * P}px;
+  }
+  .totem-stretching .totem-body {
+    animation: totem-breathe 3s ease-in-out infinite;
+    transform-origin: ${8 * P}px ${15 * P}px;
+  }
+  @keyframes totem-stretch-body {
+    0%, 100% { transform: translateY(0) scaleY(1); }
+    50% { transform: translateY(-${P}px) scaleY(1.03); }
+  }
+  @keyframes totem-stretch-arm-l {
+    0%, 100% { transform: rotate(0deg); }
+    50% { transform: rotate(-80deg) translateY(-${P * 2}px); }
+  }
+  @keyframes totem-stretch-arm-r {
+    0%, 100% { transform: rotate(0deg); }
+    50% { transform: rotate(80deg) translateY(-${P * 2}px); }
+  }
+  @keyframes totem-stretch-head {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-${P * 0.5}px); }
+  }
+
+  /* ===== NAPPING - Sitting, head tilted, slow breathing ===== */
+  .totem-napping .totem-left-leg {
+    transform: rotate(80deg);
+    transform-origin: ${6.5 * P}px ${16 * P}px;
+  }
+  .totem-napping .totem-right-leg {
+    transform: rotate(80deg);
+    transform-origin: ${8.5 * P}px ${16 * P}px;
+  }
+  .totem-napping .totem-character {
+    animation: totem-watch-settle 5s ease-in-out infinite;
+  }
+  .totem-napping .totem-head {
+    animation: totem-nap-head 4s ease-in-out infinite;
+    transform-origin: ${8 * P}px ${8 * P}px;
+  }
+  .totem-napping .totem-body {
+    animation: totem-sleep-deep 4s ease-in-out infinite;
+    transform-origin: ${8 * P}px ${15 * P}px;
+  }
+  .totem-napping .totem-shadow {
+    transform: scaleX(1.2);
+    opacity: 0.12;
+  }
+  .totem-napping .totem-nap-zzz text:nth-child(1) {
+    animation: totem-zzz 2.5s ease-in-out infinite;
+  }
+  .totem-napping .totem-nap-zzz text:nth-child(2) {
+    animation: totem-zzz-2 2.5s ease-in-out infinite;
+    animation-delay: 0.6s;
+  }
+  @keyframes totem-nap-head {
+    0%, 100% { transform: rotate(12deg); }
+    50% { transform: rotate(15deg); }
+  }
+
+  /* ===== READING-BED - Propped up, page turn ===== */
+  .totem-reading-bed {
+    transform: rotate(-90deg) scale(0.9);
+    transform-origin: center center;
+  }
+  .totem-reading-bed .totem-shadow {
+    opacity: 0;
+  }
+  .totem-reading-bed .totem-head {
+    animation: totem-read-head 4s ease-in-out infinite;
+    transform-origin: ${8 * P}px ${8 * P}px;
+  }
+  .totem-reading-bed .totem-left-arm {
+    animation: totem-read-arm 5s ease-in-out infinite;
+    transform-origin: ${4 * P}px ${9 * P}px;
+  }
+  .totem-reading-bed .totem-body {
+    animation: totem-breathe 3.5s ease-in-out infinite;
+    transform-origin: ${8 * P}px ${15 * P}px;
+  }
+  .totem-reading-bed .totem-blanket {
+    animation: totem-blanket-ripple 4s ease-in-out infinite;
+    transform-origin: ${8 * P}px ${15 * P}px;
+  }
+
+  /* ===== MEDITATING - Cross-legged, slow breathing ===== */
+  .totem-meditating .totem-left-leg {
+    transform: rotate(80deg);
+    transform-origin: ${6.5 * P}px ${16 * P}px;
+  }
+  .totem-meditating .totem-right-leg {
+    transform: rotate(80deg);
+    transform-origin: ${8.5 * P}px ${16 * P}px;
+  }
+  .totem-meditating .totem-character {
+    animation: totem-med-float 5s ease-in-out infinite;
+  }
+  .totem-meditating .totem-body {
+    animation: totem-sleep-deep 4s ease-in-out infinite;
+    transform-origin: ${8 * P}px ${12 * P}px;
+  }
+  .totem-meditating .totem-left-arm {
+    transform: rotate(15deg);
+    transform-origin: ${4 * P}px ${9 * P}px;
+  }
+  .totem-meditating .totem-right-arm {
+    transform: rotate(-15deg);
+    transform-origin: ${11 * P}px ${9 * P}px;
+  }
+  @keyframes totem-med-float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-${P * 0.5}px); }
+  }
+
+  /* ===== GETTING-DRESSED - Putting on shirt ===== */
+  .totem-getting-dressed .totem-character {
+    animation: totem-dress-body 2s ease-in-out infinite;
+  }
+  .totem-getting-dressed .totem-left-arm {
+    animation: totem-dress-arm-l 2s ease-in-out infinite;
+    transform-origin: ${4 * P}px ${9 * P}px;
+  }
+  .totem-getting-dressed .totem-right-arm {
+    animation: totem-dress-arm-r 2s ease-in-out infinite;
+    transform-origin: ${11 * P}px ${9 * P}px;
+  }
+  .totem-getting-dressed .totem-head {
+    animation: totem-stretch-head 2s ease-in-out infinite;
+    transform-origin: ${8 * P}px ${8 * P}px;
+  }
+  .totem-getting-dressed .totem-body {
+    animation: totem-breathe 3s ease-in-out infinite;
+    transform-origin: ${8 * P}px ${15 * P}px;
+  }
+  @keyframes totem-dress-body {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-${P * 0.5}px); }
+  }
+  @keyframes totem-dress-arm-l {
+    0%, 100% { transform: rotate(0deg); }
+    30% { transform: rotate(-50deg) translateY(-${P}px); }
+    70% { transform: rotate(-30deg); }
+  }
+  @keyframes totem-dress-arm-r {
+    0%, 100% { transform: rotate(0deg); }
+    30% { transform: rotate(50deg) translateY(-${P}px); }
+    70% { transform: rotate(30deg); }
+  }
+
+  /* ===== MORNING-STRETCH - Standing, big stretch ===== */
+  .totem-morning-stretch .totem-character {
+    animation: totem-stretch-body 4s ease-in-out infinite;
+  }
+  .totem-morning-stretch .totem-left-arm {
+    animation: totem-mstretch-arm-l 4s ease-in-out infinite;
+    transform-origin: ${4 * P}px ${9 * P}px;
+  }
+  .totem-morning-stretch .totem-right-arm {
+    animation: totem-mstretch-arm-r 4s ease-in-out infinite;
+    transform-origin: ${11 * P}px ${9 * P}px;
+  }
+  .totem-morning-stretch .totem-head {
+    animation: totem-stretch-head 4s ease-in-out infinite;
+    transform-origin: ${8 * P}px ${8 * P}px;
+  }
+  .totem-morning-stretch .totem-body {
+    animation: totem-breathe 3s ease-in-out infinite;
+    transform-origin: ${8 * P}px ${15 * P}px;
+  }
+  @keyframes totem-mstretch-arm-l {
+    0%, 20%, 100% { transform: rotate(0deg); }
+    50% { transform: rotate(-90deg) translateY(-${P * 2}px); }
+    80% { transform: rotate(-40deg) translateY(-${P}px); }
+  }
+  @keyframes totem-mstretch-arm-r {
+    0%, 20%, 100% { transform: rotate(0deg); }
+    50% { transform: rotate(90deg) translateY(-${P * 2}px); }
+    80% { transform: rotate(40deg) translateY(-${P}px); }
+  }
+
+  /* ===== PHONE-BED - Lying, scrolling phone ===== */
+  .totem-phone-bed {
+    transform: rotate(-90deg) scale(0.9);
+    transform-origin: center center;
+  }
+  .totem-phone-bed .totem-shadow {
+    opacity: 0;
+  }
+  .totem-phone-bed .totem-body {
+    animation: totem-breathe 3.5s ease-in-out infinite;
+    transform-origin: ${8 * P}px ${15 * P}px;
+  }
+  .totem-phone-bed .totem-right-arm {
+    animation: totem-phone-scroll 3s ease-in-out infinite;
+    transform-origin: ${11 * P}px ${9 * P}px;
+  }
+  .totem-phone-bed .totem-blanket {
+    animation: totem-blanket-ripple 4s ease-in-out infinite;
+    transform-origin: ${8 * P}px ${15 * P}px;
+  }
+  @keyframes totem-phone-scroll {
+    0%, 100% { transform: rotate(-5deg); }
+    30% { transform: rotate(-8deg) translateY(${P * 0.3}px); }
+    70% { transform: rotate(-3deg) translateY(-${P * 0.3}px); }
+  }
+
 `;

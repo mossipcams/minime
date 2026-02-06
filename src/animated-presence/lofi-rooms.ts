@@ -410,9 +410,9 @@ export const lofiRoomBackgrounds: Record<string, string> = {
       <stop offset="0%" stop-color="#1C0E35"/>
       <stop offset="100%" stop-color="#140C28"/>
     </linearGradient>
-    <radialGradient id="lofiLivTV" cx="0.6" cy="0.45" r="0.25">
-      <stop offset="0%" stop-color="#5A90D0" stop-opacity="0.22"/>
-      <stop offset="50%" stop-color="#5A90D0" stop-opacity="0.08"/>
+    <radialGradient id="lofiLivTV" cx="0.6" cy="0.45" r="0.3">
+      <stop offset="0%" stop-color="#6AA0E0" stop-opacity="0.38"/>
+      <stop offset="40%" stop-color="#5A90D0" stop-opacity="0.15"/>
       <stop offset="100%" stop-color="#5A90D0" stop-opacity="0"/>
     </radialGradient>
     <radialGradient id="lofiLivLamp" cx="0.47" cy="0.35" r="0.2">
@@ -520,23 +520,47 @@ export const lofiRoomBackgrounds: Record<string, string> = {
     <animate attributeName="opacity" values="0.02;0.04;0.025;0.035;0.02" dur="5s" repeatCount="indefinite"/>
   </ellipse>
 
-  <!-- TV — 35W × 20H, x=225 -->
-  <rect x="225" y="38" width="35" height="20" rx="1.5" fill="#0E0E1E" opacity="0.9"/>
-  <rect x="227" y="40" width="31" height="16" rx="1" fill="#1A2A4A">
-    <animate attributeName="fill" values="#1A2A4A;#2A1A4A;#1A4A3A;#3A2A1A;#1A2A4A" dur="12s" repeatCount="indefinite"/>
+  <!-- TV — 35W × 20H, x=225, bright screen ON -->
+  <rect x="225" y="38" width="35" height="20" rx="1.5" fill="#0E0E1E" opacity="0.95"/>
+  <rect x="227" y="40" width="31" height="16" rx="1" fill="#2040708">
+    <animate attributeName="fill" values="#204070;#402060;#206050;#604020;#204070" dur="12s" repeatCount="indefinite"/>
   </rect>
+  <!-- screen-content: color bars and shifting shapes -->
+  <g class="screen-content">
+    <rect x="228" y="42" width="8" height="5" rx="0.5" fill="#60B0E0" opacity="0.6">
+      <animate attributeName="opacity" values="0.5;0.7;0.4;0.65;0.5" dur="4s" repeatCount="indefinite"/>
+      <animate attributeName="x" values="228;235;230;240;228" dur="8s" repeatCount="indefinite"/>
+    </rect>
+    <rect x="240" y="44" width="10" height="4" rx="0.5" fill="#E08060" opacity="0.5">
+      <animate attributeName="opacity" values="0.4;0.6;0.35;0.55;0.4" dur="5s" repeatCount="indefinite"/>
+      <animate attributeName="width" values="10;14;8;12;10" dur="6s" repeatCount="indefinite"/>
+    </rect>
+    <rect x="232" y="49" width="12" height="3" rx="0.5" fill="#80C060" opacity="0.45">
+      <animate attributeName="opacity" values="0.35;0.55;0.3;0.5;0.35" dur="3.5s" repeatCount="indefinite"/>
+    </rect>
+    <rect x="248" y="41" width="6" height="8" rx="0.5" fill="#C080D0" opacity="0.4">
+      <animate attributeName="opacity" values="0.3;0.5;0.25;0.45;0.3" dur="4.5s" repeatCount="indefinite"/>
+    </rect>
+  </g>
+  <!-- screen flicker overlay -->
   <rect x="227" y="40" width="31" height="16" rx="1" fill="#FFF" opacity="0">
-    <animate attributeName="opacity" values="0.04;0.1;0.05;0.08;0.04" dur="3s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.06;0.15;0.07;0.12;0.06" dur="3s" repeatCount="indefinite"/>
   </rect>
-  <!-- TV glow on wall -->
-  <rect x="215" y="14" width="55" height="28" rx="3" fill="#5A90D0" opacity="0">
+  <!-- TV glow on wall (stronger) -->
+  <rect x="212" y="10" width="60" height="30" rx="4" fill="#5A90D0" opacity="0">
+    <animate attributeName="fill" values="#5A90D0;#9060C0;#50C080;#C08040;#5A90D0" dur="12s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.03;0.08;0.04;0.07;0.03" dur="3s" repeatCount="indefinite"/>
+  </rect>
+  <!-- TV glow on floor -->
+  <rect x="218" y="85" width="55" height="10" fill="#5A90D0" opacity="0">
     <animate attributeName="fill" values="#5A90D0;#9060C0;#50C080;#C08040;#5A90D0" dur="12s" repeatCount="indefinite"/>
     <animate attributeName="opacity" values="0.015;0.04;0.02;0.035;0.015" dur="3s" repeatCount="indefinite"/>
   </rect>
-  <rect x="220" y="85" width="50" height="8" fill="#5A90D0" opacity="0">
+  <!-- screen light wash on nearby furniture -->
+  <ellipse cx="242" cy="65" rx="25" ry="8" fill="#5A90D0" opacity="0">
     <animate attributeName="fill" values="#5A90D0;#9060C0;#50C080;#C08040;#5A90D0" dur="12s" repeatCount="indefinite"/>
-    <animate attributeName="opacity" values="0.008;0.02;0.01;0.015;0.008" dur="3s" repeatCount="indefinite"/>
-  </rect>
+    <animate attributeName="opacity" values="0.02;0.05;0.025;0.04;0.02" dur="3s" repeatCount="indefinite"/>
+  </ellipse>
   <!-- TV console -->
   <rect x="223" y="58" width="38" height="5" rx="1" fill="#4A3020" opacity="0.65"/>
   <rect x="226" y="63" width="3" height="22" rx="0.8" fill="#3A2010" opacity="0.5"/>

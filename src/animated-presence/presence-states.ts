@@ -5,11 +5,11 @@ export enum PresencePhase {
   WALKING_IN = 'WALKING_IN',
 }
 
-const ROOM_ANIMATIONS: Record<string, string> = {
-  office: 'studying',
-  kitchen: 'cooking',
-  bedroom: 'sleeping',
-  living_room: 'watching',
+const ROOM_ANIMATIONS: Record<string, string[]> = {
+  office: ['studying', 'reading', 'thinking', 'coffee-break', 'whiteboarding', 'phone-call'],
+  kitchen: ['cooking', 'eating', 'coffee-making', 'washing-dishes', 'snacking', 'baking'],
+  bedroom: ['sleeping', 'reading-bed', 'meditating', 'getting-dressed', 'morning-stretch', 'phone-bed'],
+  living_room: ['watching', 'gaming', 'reading-couch', 'relaxing', 'stretching', 'napping'],
 };
 
 const WALK_SPEED = 0.025;
@@ -21,7 +21,9 @@ const DEFAULT_X = 35;
 
 function getRoomAnimation(room: string | null): string {
   if (!room) return 'idle';
-  return ROOM_ANIMATIONS[room] ?? 'idle';
+  const activities = ROOM_ANIMATIONS[room];
+  if (!activities) return 'idle';
+  return activities[Math.floor(Math.random() * activities.length)];
 }
 
 export type PresenceState = ReturnType<typeof createInitialState>;

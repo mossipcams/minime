@@ -15,9 +15,10 @@ describe('Presence State Machine', () => {
   });
 
   it('creates state with initial room and room-specific animation', () => {
+    const validOfficeActivities = ['studying', 'reading', 'thinking', 'coffee-break', 'whiteboarding', 'phone-call'];
     const state = createInitialState('office');
     expect(state.currentRoom).toBe('office');
-    expect(state.animation).toBe('studying');
+    expect(validOfficeActivities).toContain(state.animation);
   });
 
   it('changeRoom does nothing when target is same as current room', () => {
@@ -76,14 +77,15 @@ describe('Presence State Machine', () => {
     expect(state.visible).toBe(true);
   });
 
-  it('full cycle: office to kitchen ends in IDLE with kitchen animation', () => {
+  it('full cycle: office to kitchen ends in IDLE with a valid kitchen animation', () => {
+    const validKitchenActivities = ['cooking', 'eating', 'coffee-making', 'washing-dishes', 'snacking', 'baking'];
     let state = createInitialState('office');
     state = changeRoom(state, 'kitchen');
     while (state.phase !== PresencePhase.IDLE) {
       state = tick(state, 16);
     }
     expect(state.currentRoom).toBe('kitchen');
-    expect(state.animation).toBe('cooking');
+    expect(validKitchenActivities).toContain(state.animation);
     expect(state.targetRoom).toBeNull();
   });
 
@@ -123,8 +125,41 @@ describe('Presence State Machine', () => {
     expect(state.phase).not.toBe(PresencePhase.IDLE);
   });
 
-  it('living_room uses watching animation', () => {
+  it('living_room uses a valid living room animation', () => {
+    const validActivities = ['watching', 'gaming', 'reading-couch', 'relaxing', 'stretching', 'napping'];
     const state = createInitialState('living_room');
-    expect(state.animation).toBe('watching');
+    expect(validActivities).toContain(state.animation);
+  });
+
+  it('getRoomAnimation returns one of the room activity arrays', () => {
+    const officeActivities = ['studying', 'reading', 'thinking', 'coffee-break', 'whiteboarding', 'phone-call'];
+    const kitchenActivities = ['cooking', 'eating', 'coffee-making', 'washing-dishes', 'snacking', 'baking'];
+    const livingActivities = ['watching', 'gaming', 'reading-couch', 'relaxing', 'stretching', 'napping'];
+    const bedroomActivities = ['sleeping', 'reading-bed', 'meditating', 'getting-dressed', 'morning-stretch', 'phone-bed'];
+
+    // Run multiple times to verify randomness coverage
+    const officeResults = new Set<string>();
+    const kitchenResults = new Set<string>();
+    const livingResults = new Set<string>();
+    const bedroomResults = new Set<string>();
+
+    for (let i = 0; i < 100; i++) {
+      officeResults.add(createInitialState('office').animation);
+      kitchenResults.add(createInitialState('kitchen').animation);
+      livingResults.add(createInitialState('living_room').animation);
+      bedroomResults.add(createInitialState('bedroom').animation);
+    }
+
+    // Each result should be within the valid set
+    for (const a of officeResults) expect(officeActivities).toContain(a);
+    for (const a of kitchenResults) expect(kitchenActivities).toContain(a);
+    for (const a of livingResults) expect(livingActivities).toContain(a);
+    for (const a of bedroomResults) expect(bedroomActivities).toContain(a);
+
+    // With 100 rolls and 6 options, we should see at least 2 different values
+    expect(officeResults.size).toBeGreaterThanOrEqual(2);
+    expect(kitchenResults.size).toBeGreaterThanOrEqual(2);
+    expect(livingResults.size).toBeGreaterThanOrEqual(2);
+    expect(bedroomResults.size).toBeGreaterThanOrEqual(2);
   });
 });

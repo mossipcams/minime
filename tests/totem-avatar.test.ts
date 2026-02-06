@@ -3,7 +3,17 @@ import { getTotemSvg, totemStyles } from '../src/animated-presence/totem-avatar'
 import type { Activity } from '../src/animated-presence/totem-avatar';
 
 describe('Totem Avatar', () => {
-  const activities: Activity[] = ['idle', 'walking', 'studying', 'cooking', 'sleeping', 'watching'];
+  const activities: Activity[] = [
+    'idle', 'walking',
+    // Office
+    'studying', 'reading', 'thinking', 'coffee-break', 'whiteboarding', 'phone-call',
+    // Kitchen
+    'cooking', 'eating', 'coffee-making', 'washing-dishes', 'snacking', 'baking',
+    // Living room
+    'watching', 'gaming', 'reading-couch', 'relaxing', 'stretching', 'napping',
+    // Bedroom
+    'sleeping', 'reading-bed', 'meditating', 'getting-dressed', 'morning-stretch', 'phone-bed',
+  ];
 
   it('exports getTotemSvg as a function', () => {
     expect(typeof getTotemSvg).toBe('function');
