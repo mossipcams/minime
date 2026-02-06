@@ -134,15 +134,31 @@ describe('Totem Avatar', () => {
     expect(totemStyles).toMatch(/totem-blink[\s\S]*?opacity:\s*1[\s\S]*?opacity:\s*0/);
   });
 
-  it('head has path-based hair with stroke outline and bangs overlay', () => {
+  it('body uses a single connected torso path that overlaps under the head (no thin neck rect)', () => {
     const svg = getTotemSvg('idle');
-    // Hair should use path shapes (not just ellipses) for a proper silhouette
+    // The torso should be a path (not a simple rect) that extends up into the head area
+    const bodySection = svg.slice(svg.indexOf('totem-body'), svg.indexOf('</g>', svg.indexOf('totem-body')));
+    expect(bodySection).toContain('<path');
+    // Should NOT have a separate thin neck rect — torso path covers the neck area
+    expect(bodySection).not.toMatch(/<rect[^>]*height="[2-5]"[^>]*fill/);
+  });
+
+  it('arms overlap into the torso area (no gap between arm and body)', () => {
+    const svg = getTotemSvg('idle');
+    const leftArm = svg.slice(svg.indexOf('totem-left-arm'), svg.indexOf('</g>', svg.indexOf('totem-left-arm')));
+    const rightArm = svg.slice(svg.indexOf('totem-right-arm'), svg.indexOf('</g>', svg.indexOf('totem-right-arm')));
+    expect(leftArm).toContain('<path');
+    expect(rightArm).toContain('<path');
+  });
+
+  it('face uses minimal detail (no separate eyebrow/nose/cheek elements)', () => {
+    const svg = getTotemSvg('idle');
     const headSection = svg.slice(svg.indexOf('totem-head'), svg.indexOf('</g>', svg.indexOf('totem-head')));
-    expect(headSection).toContain('<path');
-    // Hair should have a defining stroke for crisp edges
-    expect(headSection).toContain('stroke=');
-    // Should have a bangs/fringe element overlaying the forehead
-    expect(headSection).toContain('hair-bangs');
+    // Should have eyes
+    expect(headSection).toContain('fill=');
+    // Should NOT have overly detailed features that blur at small sizes
+    expect(headSection).not.toContain('eyebrow');
+    expect(headSection).not.toContain('cheek-blush');
   });
 
   it('totemStyles uses custom cubic-bezier easing', () => {
