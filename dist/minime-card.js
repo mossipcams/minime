@@ -85,7 +85,7 @@ function dt(t){return function(t){return(e,n)=>"object"==typeof n?pt(t,e,n):((t,
 
     .header {
       position: relative;
-      height: 80px;
+      height: 120px;
       overflow: hidden;
     }
 
@@ -130,16 +130,16 @@ function dt(t){return function(t){return(e,n)=>"object"==typeof n?pt(t,e,n):((t,
 
     .avatar {
       position: absolute;
-      bottom: 8px;
-      width: 48px;
+      bottom: 13px;
+      width: 36px;
       z-index: 2;
       transform: translateX(-50%);
     }
 
     .dog-avatar-wrap {
       position: absolute;
-      bottom: 8px;
-      width: 36px;
+      bottom: 15px;
+      width: 24px;
       z-index: 2;
       transform: translateX(-50%);
     }

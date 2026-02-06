@@ -97,6 +97,26 @@ describe('MiniMeCard', () => {
     })).not.toThrow();
   });
 
+  it('avatar is proportionally sized for the scene (not oversized)', async () => {
+    card.setConfig({ type: 'custom:minime-card', entity: 'device_tracker.phone' });
+    card.hass = mockHass({ 'device_tracker.phone': { state: 'home', attributes: { area: 'Office' } } });
+    document.body.appendChild(card);
+    await (card as any).updateComplete;
+    const shadow = card.shadowRoot!;
+    const header = shadow.querySelector('.header') as HTMLElement;
+    const avatar = shadow.querySelector('.avatar') as HTMLElement;
+    // Header should be tall enough for a scene (at least 100px)
+    const headerStyle = getComputedStyle(header);
+    expect(parseInt(headerStyle.height)).toBeGreaterThanOrEqual(100);
+    // Avatar should not fill more than 60% of the header height
+    if (avatar) {
+      const avatarStyle = getComputedStyle(avatar);
+      const avatarWidth = parseInt(avatarStyle.width);
+      expect(avatarWidth).toBeLessThanOrEqual(40);
+    }
+    document.body.removeChild(card);
+  });
+
   it('does not render info or name elements in layout', async () => {
     card.setConfig({ type: 'custom:minime-card', entity: 'device_tracker.phone' });
     card.hass = mockHass({ 'device_tracker.phone': { state: 'home', attributes: { area: 'Office' } } });
