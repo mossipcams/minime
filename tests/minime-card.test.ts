@@ -112,7 +112,7 @@ describe('MiniMeCard', () => {
     if (avatar) {
       const avatarStyle = getComputedStyle(avatar);
       const avatarWidth = parseInt(avatarStyle.width);
-      expect(avatarWidth).toBeLessThanOrEqual(40);
+      expect(avatarWidth).toBeLessThanOrEqual(44);
     }
     document.body.removeChild(card);
   });

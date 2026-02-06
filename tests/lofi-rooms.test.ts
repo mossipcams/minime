@@ -60,6 +60,23 @@ describe('Lofi Room Backgrounds', () => {
     }
   });
 
+  it('no furniture rect should be wider than 80 units (realistic room scale)', () => {
+    // Person shoulder width ≈ 14 units. A desk at 150cm = 46 units.
+    // Nothing except full-width floor/bg should exceed 80 units wide.
+    const indoorRooms = ['office', 'kitchen', 'living_room', 'bedroom'];
+    for (const room of indoorRooms) {
+      const svg = lofiRoomBackgrounds[room];
+      const rects = [...svg.matchAll(/rect[^>]*width="(\d+(?:\.\d+)?)"/g)];
+      for (const match of rects) {
+        const w = parseFloat(match[1]);
+        // Skip full-width background fills (width=400 or width=200+ for counter runs)
+        if (w >= 400) continue;
+        // No single furniture piece should be wider than 80 units
+        expect(w, `${room}: rect with width=${w} exceeds 80 unit max`).toBeLessThanOrEqual(80);
+      }
+    }
+  });
+
   it('each room has rich ambient animations (15+ animated elements)', () => {
     for (const [room, svg] of Object.entries(lofiRoomBackgrounds)) {
       const animCount = (svg.match(/<animate /g) || []).length;
