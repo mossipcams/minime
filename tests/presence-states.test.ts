@@ -8,7 +8,7 @@ describe('Presence State Machine', () => {
     expect(state.currentRoom).toBeNull();
     expect(state.targetRoom).toBeNull();
     expect(state.visible).toBe(true);
-    expect(state.avatarX).toBe(50);
+    expect(state.avatarX).toBe(35);
     expect(state.animation).toBe('idle');
     expect(state.crossfadeProgress).toBe(0);
     expect(state.outgoingRoom).toBeNull();

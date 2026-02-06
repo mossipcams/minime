@@ -4,6 +4,7 @@ export interface MiniMeConfig {
   type: string;
   entity: string;
   name?: string;
+  dog_entity?: string;
   transition_duration?: number;
 }
 

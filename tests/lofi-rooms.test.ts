@@ -7,11 +7,12 @@ describe('Lofi Room Backgrounds', () => {
     expect(typeof lofiRoomBackgrounds).toBe('object');
   });
 
-  it('should have all four required rooms', () => {
+  it('should have all four required rooms plus not_home', () => {
     expect(lofiRoomBackgrounds).toHaveProperty('office');
     expect(lofiRoomBackgrounds).toHaveProperty('kitchen');
     expect(lofiRoomBackgrounds).toHaveProperty('living_room');
     expect(lofiRoomBackgrounds).toHaveProperty('bedroom');
+    expect(lofiRoomBackgrounds).toHaveProperty('not_home');
   });
 
   it('should use lofi-prefixed gradient IDs to avoid collision', () => {
@@ -26,8 +27,17 @@ describe('Lofi Room Backgrounds', () => {
 
   it('should have floor line at y=85 for proper avatar alignment', () => {
     for (const [room, svg] of Object.entries(lofiRoomBackgrounds)) {
+      if (room === 'not_home') continue; // not_home is a house silhouette, no floor line
       const hasFloorAt85 = svg.includes('y="85"') || svg.includes('y1="85"');
       expect(hasFloorAt85, `${room} should have floor at y=85`).toBe(true);
     }
+  });
+
+  it('not_home scene should show a dark house silhouette with moon and stars', () => {
+    const svg = lofiRoomBackgrounds.not_home;
+    expect(svg).toContain('<svg');
+    expect(svg).toContain('</svg>');
+    expect(svg).toContain('star');
+    expect(svg).toContain('moon');
   });
 });

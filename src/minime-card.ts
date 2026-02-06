@@ -6,15 +6,19 @@ import { lofiRoomBackgrounds } from './animated-presence/lofi-rooms';
 import { PresenceEngine } from './animated-presence/presence-engine';
 import { PresencePhase, type PresenceState } from './animated-presence/presence-states';
 import { getTotemSvg, totemStyles } from './animated-presence/totem-avatar';
+import { getDogSvg, dogStyles } from './animated-presence/dog-avatar';
 
 export class MiniMeCard extends LitElement {
   private _config?: MiniMeConfig;
   private _hass?: HomeAssistant;
   private _engine?: PresenceEngine;
+  private _dogEngine?: PresenceEngine;
 
   @state() private _entityState?: string;
+  @state() private _dogEntityState?: string;
   @state() private _error?: string;
   @state() private _presenceState?: PresenceState;
+  @state() private _dogPresenceState?: PresenceState;
 
   public setConfig(config: MiniMeConfig): void {
     if (!config.entity) {
@@ -28,6 +32,7 @@ export class MiniMeCard extends LitElement {
 
     if (!this._config) return;
 
+    // --- Human entity ---
     const entity = hass.states[this._config.entity];
 
     if (!entity) {
@@ -52,8 +57,8 @@ export class MiniMeCard extends LitElement {
 
     // Bermuda device_tracker: state is home/not_home, area is in attributes
     if (entity.state === "not_home") {
-      if (this._entityState !== "Not detected") {
-        this._entityState = "Not detected";
+      if (this._entityState !== "not_home") {
+        this._entityState = "not_home";
       }
       if (this._error !== undefined) {
         this._error = undefined;
@@ -73,6 +78,25 @@ export class MiniMeCard extends LitElement {
       this._entityState = roomKey;
       if (this._engine) {
         this._engine.changeRoom(roomKey);
+      }
+    }
+
+    // --- Dog entity ---
+    if (this._config.dog_entity) {
+      const dogEntity = hass.states[this._config.dog_entity];
+      if (dogEntity && dogEntity.state !== "unavailable" && dogEntity.state !== "not_home") {
+        const dogArea = (dogEntity.attributes?.area as string) || dogEntity.state;
+        const dogRoomKey = dogArea.toLowerCase().replace(/\s+/g, "_");
+        if (this._dogEntityState !== dogRoomKey) {
+          this._dogEntityState = dogRoomKey;
+          if (this._dogEngine) {
+            this._dogEngine.changeRoom(dogRoomKey);
+          }
+        }
+      } else {
+        if (this._dogEntityState !== undefined) {
+          this._dogEntityState = undefined;
+        }
       }
     }
   }
@@ -99,8 +123,19 @@ export class MiniMeCard extends LitElement {
     });
     this._engine.start();
     // hass is set before connectedCallback, so sync the engine with current room
-    if (this._entityState && this._entityState !== "Not detected") {
+    if (this._entityState && this._entityState !== "not_home") {
       this._engine.changeRoom(this._entityState);
+    }
+
+    // Dog engine
+    if (this._config?.dog_entity) {
+      this._dogEngine = new PresenceEngine((dogState) => {
+        this._dogPresenceState = dogState;
+      });
+      this._dogEngine.start();
+      if (this._dogEntityState) {
+        this._dogEngine.changeRoom(this._dogEntityState);
+      }
     }
   }
 
@@ -108,6 +143,9 @@ export class MiniMeCard extends LitElement {
     super.disconnectedCallback();
     if (this._engine) {
       this._engine.stop();
+    }
+    if (this._dogEngine) {
+      this._dogEngine.stop();
     }
   }
 
@@ -127,6 +165,23 @@ export class MiniMeCard extends LitElement {
       `;
     }
 
+    // Not-home state: show dark house
+    const isNotHome = this._entityState === "not_home";
+    if (isNotHome) {
+      const notHomeSvg = lofiRoomBackgrounds["not_home"];
+      return html`
+        <ha-card>
+          <div class="header">
+            <div class="room-bg-wrap">
+              ${notHomeSvg
+                ? html`<div class="room-bg">${unsafeHTML(notHomeSvg)}</div>`
+                : html`<div class="room-bg-fallback"></div>`}
+            </div>
+          </div>
+        </ha-card>
+      `;
+    }
+
     const anim = this._presenceState;
     const currentRoom = anim?.currentRoom;
     const outgoingRoom = anim?.outgoingRoom;
@@ -138,9 +193,17 @@ export class MiniMeCard extends LitElement {
     const isCrossfading = anim?.phase === PresencePhase.CROSSFADE;
     const crossfadeOpacity = anim ? 1 - anim.crossfadeProgress : 1;
     const showAvatar = anim?.visible ?? false;
-    const avatarX = anim?.avatarX ?? 50;
+    const avatarX = anim?.avatarX ?? 35;
     const activity = anim?.animation ?? 'idle';
-    const displayName = this._config.name || this._entityState?.replace(/_/g, " ") || "Unknown";
+
+    // Dog positioning
+    const dogAnim = this._dogPresenceState;
+    const showDog = this._config.dog_entity &&
+      this._dogEntityState &&
+      dogAnim?.visible &&
+      dogAnim?.currentRoom === currentRoom;
+    const dogX = showDog ? (dogAnim?.avatarX ?? 35) + 12 : 0;
+    const dogActivity = dogAnim?.animation ?? 'idle';
 
     return html`
       <ha-card>
@@ -154,16 +217,12 @@ export class MiniMeCard extends LitElement {
               : html`<div class="room-bg-fallback"></div>`}
           </div>
 
-          <div class="header-content">
-            <div class="avatar-zone">
-              ${showAvatar
-                ? html`<div class="avatar" style="left: ${avatarX}%">${unsafeHTML(getTotemSvg(activity))}</div>`
-                : ""}
-            </div>
-            <div class="info">
-              <div class="name">${displayName}</div>
-            </div>
-          </div>
+          ${showAvatar
+            ? html`<div class="avatar" style="left: ${avatarX}%">${unsafeHTML(getTotemSvg(activity))}</div>`
+            : ""}
+          ${showDog
+            ? html`<div class="dog-avatar-wrap" style="left: ${dogX}%">${unsafeHTML(getDogSvg(dogActivity))}</div>`
+            : ""}
         </div>
       </ha-card>
     `;
@@ -228,47 +287,20 @@ export class MiniMeCard extends LitElement {
       background: linear-gradient(135deg, #2a2a3e 0%, #1a1a2e 100%);
     }
 
-    .header-content {
-      position: relative;
-      z-index: 2;
-      display: flex;
-      align-items: center;
-      height: 100%;
-      padding: 0 16px;
-      gap: 12px;
-      background: linear-gradient(90deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.2) 40%, transparent 100%);
-    }
-
-    .avatar-zone {
-      position: relative;
-      width: 48px;
-      height: 64px;
-      flex-shrink: 0;
-    }
-
     .avatar {
       position: absolute;
-      bottom: 0;
-      width: 100%;
+      bottom: 8px;
+      width: 48px;
+      z-index: 2;
       transform: translateX(-50%);
-      left: 50%;
     }
 
-    .info {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-      min-width: 0;
-    }
-
-    .name {
-      font-size: 1.1em;
-      font-weight: 600;
-      color: white;
-      text-shadow: 0 1px 3px rgba(0,0,0,0.5);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+    .dog-avatar-wrap {
+      position: absolute;
+      bottom: 8px;
+      width: 36px;
+      z-index: 2;
+      transform: translateX(-50%);
     }
 
     .error-header {
@@ -299,5 +331,6 @@ export class MiniMeCard extends LitElement {
     }
 
     ${unsafeCSS(totemStyles)}
+    ${unsafeCSS(dogStyles)}
   `;
 }

@@ -62,10 +62,10 @@ describe('MiniMeCard', () => {
     expect((card as any)._error).toContain('unavailable');
   });
 
-  it('sets Not detected when entity state is not_home', () => {
+  it('sets not_home entity state when entity state is not_home', () => {
     card.setConfig({ type: 'custom:minime-card', entity: 'device_tracker.phone' });
     card.hass = mockHass({ 'device_tracker.phone': { state: 'not_home' } });
-    expect((card as any)._entityState).toBe('Not detected');
+    expect((card as any)._entityState).toBe('not_home');
   });
 
   it('normalizes room name with spaces to underscore key', () => {
@@ -87,5 +87,26 @@ describe('MiniMeCard', () => {
   it('returns config element', () => {
     const el = MiniMeCard.getConfigElement();
     expect(el.tagName.toLowerCase()).toBe('minime-card-editor');
+  });
+
+  it('accepts dog_entity config', () => {
+    expect(() => card.setConfig({
+      type: 'custom:minime-card',
+      entity: 'device_tracker.phone',
+      dog_entity: 'device_tracker.rocky',
+    })).not.toThrow();
+  });
+
+  it('does not render info or name elements in layout', async () => {
+    card.setConfig({ type: 'custom:minime-card', entity: 'device_tracker.phone' });
+    card.hass = mockHass({ 'device_tracker.phone': { state: 'home', attributes: { area: 'Office' } } });
+    document.body.appendChild(card);
+    await (card as any).updateComplete;
+    const shadow = card.shadowRoot!;
+    expect(shadow.querySelector('.info')).toBeNull();
+    expect(shadow.querySelector('.name')).toBeNull();
+    expect(shadow.querySelector('.header-content')).toBeNull();
+    expect(shadow.querySelector('.avatar-zone')).toBeNull();
+    document.body.removeChild(card);
   });
 });

@@ -383,4 +383,79 @@ export const lofiRoomBackgrounds: Record<string, string> = {
     <animate attributeName="cy" from="72" to="55" dur="7s" repeatCount="indefinite" begin="2.5s"/>
   </circle>
 </svg>`,
+
+  not_home: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 100" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="lofiNhBg" x1="0" y1="0" x2="0.3" y2="1"><stop offset="0%" stop-color="#0A0A18"/><stop offset="100%" stop-color="#0E0E20"/></linearGradient>
+    <radialGradient id="lofiNhMoon" cx="0.8" cy="0.15" r="0.25"><stop offset="0%" stop-color="#E0D8C0" stop-opacity="0.2"/><stop offset="100%" stop-color="#E0D8C0" stop-opacity="0"/></radialGradient>
+  </defs>
+  <!-- dark sky -->
+  <rect width="400" height="100" fill="url(#lofiNhBg)"/>
+  <rect width="400" height="100" fill="url(#lofiNhMoon)"/>
+  <!-- stars -->
+  <circle class="star" cx="50" cy="12" r="0.6" fill="#FFF">
+    <animate attributeName="opacity" values="0.1;0.6;0.2;0.5;0.1" dur="3s" repeatCount="indefinite"/>
+  </circle>
+  <circle class="star" cx="120" cy="8" r="0.4" fill="#FFF">
+    <animate attributeName="opacity" values="0.05;0.4;0.1;0.3;0.05" dur="4s" repeatCount="indefinite" begin="1s"/>
+  </circle>
+  <circle class="star" cx="180" cy="18" r="0.5" fill="#FFF">
+    <animate attributeName="opacity" values="0.08;0.5;0.15;0.4;0.08" dur="3.5s" repeatCount="indefinite" begin="0.5s"/>
+  </circle>
+  <circle class="star" cx="250" cy="6" r="0.35" fill="#FFF">
+    <animate attributeName="opacity" values="0.1;0.45;0.15;0.35;0.1" dur="4.5s" repeatCount="indefinite" begin="2s"/>
+  </circle>
+  <circle class="star" cx="290" cy="22" r="0.5" fill="#FFF">
+    <animate attributeName="opacity" values="0;0.35;0.1;0.25;0" dur="5s" repeatCount="indefinite" begin="1.5s"/>
+  </circle>
+  <circle class="star" cx="370" cy="10" r="0.4" fill="#FFF">
+    <animate attributeName="opacity" values="0.05;0.3;0.08;0.2;0.05" dur="3.8s" repeatCount="indefinite" begin="0.8s"/>
+  </circle>
+  <!-- moon -->
+  <circle cx="330" cy="18" r="7" fill="#E0D8C0" opacity="0.3">
+    <animate attributeName="opacity" values="0.25;0.4;0.3;0.35;0.25" dur="6s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="333" cy="16" r="6" fill="#0A0A18" opacity="0.9"/>
+  <!-- ground -->
+  <rect x="0" y="78" width="400" height="22" fill="#0C0C1A"/>
+  <rect x="0" y="78" width="400" height="1" fill="#1A1A30" opacity="0.3"/>
+  <!-- house silhouette -->
+  <!-- main structure -->
+  <rect x="130" y="38" width="140" height="42" fill="#0E0E1E"/>
+  <!-- roof -->
+  <polygon points="120,38 200,8 280,38" fill="#0C0C1A" stroke="#1A1A2E" stroke-width="0.5"/>
+  <!-- chimney -->
+  <rect x="240" y="12" width="14" height="26" fill="#0E0E1E"/>
+  <!-- dark windows -->
+  <rect x="148" y="48" width="18" height="14" rx="1" fill="#0A0A16" stroke="#1A1A2E" stroke-width="0.5" opacity="0.8"/>
+  <rect x="178" y="48" width="18" height="14" rx="1" fill="#0A0A16" stroke="#1A1A2E" stroke-width="0.5" opacity="0.8"/>
+  <rect x="235" y="48" width="18" height="14" rx="1" fill="#0A0A16" stroke="#1A1A2E" stroke-width="0.5" opacity="0.8"/>
+  <!-- door -->
+  <rect x="205" y="55" width="16" height="25" rx="1" fill="#0A0A16" stroke="#1A1A2E" stroke-width="0.5"/>
+  <circle cx="218" cy="68" r="1" fill="#2A2A3E" opacity="0.4"/>
+  <!-- upper window (in roof) -->
+  <rect x="190" y="22" width="12" height="10" rx="1" fill="#0A0A16" stroke="#1A1A2E" stroke-width="0.5" opacity="0.7"/>
+  <!-- path to door -->
+  <rect x="208" y="80" width="10" height="20" fill="#0A0A16" opacity="0.3"/>
+  <!-- fence -->
+  <g opacity="0.15" stroke="#1A1A30" stroke-width="0.8">
+    <line x1="80" y1="78" x2="130" y2="78"/>
+    <line x1="270" y1="78" x2="340" y2="78"/>
+    <line x1="85" y1="72" x2="85" y2="78"/>
+    <line x1="100" y1="72" x2="100" y2="78"/>
+    <line x1="115" y1="72" x2="115" y2="78"/>
+    <line x1="280" y1="72" x2="280" y2="78"/>
+    <line x1="300" y1="72" x2="300" y2="78"/>
+    <line x1="320" y1="72" x2="320" y2="78"/>
+  </g>
+  <!-- tree silhouette -->
+  <ellipse cx="60" cy="55" rx="18" ry="22" fill="#0A0E14" opacity="0.6"/>
+  <rect x="58" y="70" width="4" height="10" fill="#0A0E14" opacity="0.5"/>
+  <ellipse cx="355" cy="58" rx="14" ry="18" fill="#0A0E14" opacity="0.5"/>
+  <rect x="353" y="72" width="4" height="8" fill="#0A0E14" opacity="0.4"/>
+  <!-- moonlight on ground -->
+  <ellipse cx="330" cy="80" rx="30" ry="8" fill="#D0C8E0" opacity="0.012">
+    <animate attributeName="opacity" values="0.008;0.018;0.01;0.015;0.008" dur="6s" repeatCount="indefinite"/>
+  </ellipse>
+</svg>`,
 };

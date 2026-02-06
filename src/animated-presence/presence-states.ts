@@ -17,7 +17,7 @@ const EXIT_EDGE = 110;
 const ENTER_EDGE = -10;
 const CROSSFADE_DURATION = 400;
 const MAX_DELTA = 200;
-const DEFAULT_X = 50;
+const DEFAULT_X = 35;
 
 function getRoomAnimation(room: string | null): string {
   if (!room) return 'idle';

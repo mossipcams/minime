@@ -56,6 +56,17 @@ export class MiniMeCardEditor extends LitElement {
         </div>
 
         <div class="editor-row">
+          <ha-entity-picker
+            .hass=${this.hass}
+            .value=${this._config.dog_entity || ''}
+            .configValue=${'dog_entity'}
+            @value-changed=${this._valueChanged}
+            label="Dog Entity (optional)"
+            allow-custom-entity
+          ></ha-entity-picker>
+        </div>
+
+        <div class="editor-row">
           <label>
             Card Name
             <input
