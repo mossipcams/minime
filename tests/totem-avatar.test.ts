@@ -72,13 +72,11 @@ describe('Totem Avatar', () => {
     expect(svg).toContain('totem-idle');
   });
 
-  it('uses realistic character palette', () => {
+  it('uses smooth SVG shapes instead of pixel rects', () => {
     const svg = getTotemSvg('idle');
-    // Skin, hair, hoodie, eyes — muted natural tones
-    expect(svg).toContain('#E4B898');
-    expect(svg).toContain('#3C2D1E');
-    expect(svg).toContain('#506878');
-    expect(svg).toContain('#1C1C1C');
+    // Should contain smooth SVG elements
+    const hasSmooth = svg.includes('<circle') || svg.includes('<ellipse') || svg.includes('<path') || svg.match(/<rect[^>]+rx="/);
+    expect(hasSmooth).toBe(true);
   });
 
   it('totemStyles contains keyframe animations for all activities', () => {
@@ -89,9 +87,10 @@ describe('Totem Avatar', () => {
     expect(totemStyles).toContain('totem-zzz');
   });
 
-  it('SVG uses crispEdges for pixel art rendering', () => {
+  it('SVG does not use pixel art rendering hints', () => {
     const svg = getTotemSvg('idle');
-    expect(svg).toContain('crispEdges');
+    expect(svg).not.toContain('crispEdges');
+    expect(svg).not.toContain('image-rendering: pixelated');
   });
 
   it('totemStyles contains enhanced idle animations', () => {

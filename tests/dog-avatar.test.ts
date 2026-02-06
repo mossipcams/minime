@@ -24,15 +24,16 @@ describe('Dog Avatar', () => {
     expect(svg).toContain('dog-idle');
   });
 
-  it('uses dachshund color palette (black and tan)', () => {
+  it('uses smooth SVG shapes instead of pixel rects', () => {
     const svg = getDogSvg('idle');
-    expect(svg).toContain('#1A1A1A');
-    expect(svg).toContain('#C8943C');
+    const hasSmooth = svg.includes('<circle') || svg.includes('<ellipse') || svg.includes('<path') || (/<rect[^>]+rx="/.test(svg));
+    expect(hasSmooth).toBe(true);
   });
 
-  it('SVG uses crispEdges for pixel art rendering', () => {
+  it('SVG does not use pixel art rendering hints', () => {
     const svg = getDogSvg('idle');
-    expect(svg).toContain('crispEdges');
+    expect(svg).not.toContain('crispEdges');
+    expect(svg).not.toContain('image-rendering: pixelated');
   });
 
   it('dogStyles contains keyframe animations', () => {
@@ -61,10 +62,9 @@ describe('Dog Avatar', () => {
     }
   });
 
-  it('tongue uses tongue color palette', () => {
+  it('tongue element exists in standing poses', () => {
     const svg = getDogSvg('idle');
-    // TONGUE constant — muted pink
-    expect(svg).toContain('#D85858');
+    expect(svg).toContain('dog-tongue');
   });
 
   it('dogStyles contains enhanced keyframe animations for all activities', () => {
