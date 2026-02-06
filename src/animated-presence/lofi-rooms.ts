@@ -1,176 +1,226 @@
 /**
- * Lo-fi room backgrounds — cozy, visible, atmospheric
+ * Lo-fi room backgrounds — full-width, atmospheric compositions
  *
  * Proportion system (person ≈ 52 viewBox units tall, 170cm):
  *   1 viewBox unit = 3.27cm real
  *   Floor line: y=85 (avatar feet)
- *   Desk: 46W × 23H, surface at y=62
- *   Monitor: 17W × 10H
- *   Counter: 76W × 28H, surface at y=57
- *   Fridge: 21W × 52H
- *   Sofa: 64W × 26H
- *   Queen bed (side): 61W, mattress at y=67
+ *   Avatar idle position: ~x=145-155 (CSS left: 35%)
  *   ViewBox: 400x100, preserveAspectRatio="xMidYMid slice"
+ *   Visible range: ~x=30 to x=370 depending on card width
  *   Gradient IDs prefixed with 'lofi' to avoid collision
  */
 
 export const lofiRoomBackgrounds: Record<string, string> = {
   office: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 100" preserveAspectRatio="xMidYMid slice">
   <defs>
-    <linearGradient id="lofiOffBg" x1="0" y1="0" x2="0.5" y2="1">
-      <stop offset="0%" stop-color="#1E2D3D"/>
-      <stop offset="100%" stop-color="#16202E"/>
+    <linearGradient id="lofiOffBg" x1="0" y1="0" x2="0.3" y2="1">
+      <stop offset="0%" stop-color="#1a2535"/>
+      <stop offset="100%" stop-color="#141e2c"/>
     </linearGradient>
-    <radialGradient id="lofiOffMonitor" cx="0.38" cy="0.5" r="0.25">
-      <stop offset="0%" stop-color="#4A90D0" stop-opacity="0.25"/>
-      <stop offset="60%" stop-color="#3A70A0" stop-opacity="0.08"/>
+    <radialGradient id="lofiOffLamp" cx="0.52" cy="0.52" r="0.2">
+      <stop offset="0%" stop-color="#FFE0A0" stop-opacity="0.28"/>
+      <stop offset="50%" stop-color="#FFD080" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#FFD080" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="lofiOffMonitor" cx="0.5" cy="0.48" r="0.18">
+      <stop offset="0%" stop-color="#4A90D0" stop-opacity="0.2"/>
+      <stop offset="60%" stop-color="#3A70A0" stop-opacity="0.05"/>
       <stop offset="100%" stop-color="#3A70A0" stop-opacity="0"/>
     </radialGradient>
-    <radialGradient id="lofiOffLamp" cx="0.3" cy="0.5" r="0.2">
-      <stop offset="0%" stop-color="#FFE4A0" stop-opacity="0.3"/>
-      <stop offset="50%" stop-color="#FFD080" stop-opacity="0.1"/>
-      <stop offset="100%" stop-color="#FFD080" stop-opacity="0"/>
+    <radialGradient id="lofiOffWindow" cx="0.3" cy="0.22" r="0.2">
+      <stop offset="0%" stop-color="#C0D0E0" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#C0D0E0" stop-opacity="0"/>
     </radialGradient>
   </defs>
 
-  <!-- background + light washes -->
+  <!-- background + light layers -->
   <rect width="400" height="100" fill="url(#lofiOffBg)"/>
-  <rect width="400" height="100" fill="url(#lofiOffLamp)"/>
-  <rect width="400" height="100" fill="url(#lofiOffMonitor)">
-    <animate attributeName="opacity" values="0.7;1;0.8;0.95;0.7" dur="4s" repeatCount="indefinite"/>
+  <rect width="400" height="100" fill="url(#lofiOffWindow)"/>
+  <rect width="400" height="100" fill="url(#lofiOffLamp)">
+    <animate attributeName="opacity" values="0.8;1;0.85;0.95;0.8" dur="5s" repeatCount="indefinite"/>
   </rect>
+  <rect width="400" height="100" fill="url(#lofiOffMonitor)">
+    <animate attributeName="opacity" values="0.6;1;0.7;0.9;0.6" dur="4s" repeatCount="indefinite"/>
+  </rect>
+
+  <!-- wall shadow line -->
+  <line x1="0" y1="55" x2="400" y2="55" stroke="#0E1822" stroke-width="0.4" opacity="0.12"/>
 
   <!-- baseboard -->
-  <rect x="0" y="82" width="400" height="3" fill="#1A2838" opacity="0.3"/>
+  <rect x="0" y="82" width="400" height="3" fill="#0E1822" opacity="0.25"/>
 
   <!-- floor -->
-  <rect x="0" y="85" width="400" height="15" fill="#0F1822" opacity="0.7"/>
-  <line x1="0" y1="85" x2="400" y2="85" stroke="#2A3A4E" stroke-width="0.5" opacity="0.5"/>
-  <line x1="0" y1="90" x2="400" y2="90" stroke="#1A2838" stroke-width="0.3" opacity="0.2"/>
-  <line x1="0" y1="95" x2="400" y2="95" stroke="#1A2838" stroke-width="0.3" opacity="0.15"/>
+  <rect x="0" y="85" width="400" height="15" fill="#0C1520" opacity="0.7"/>
+  <line x1="0" y1="85" x2="400" y2="85" stroke="#2A3A4E" stroke-width="0.5" opacity="0.4"/>
+  <line x1="0" y1="89" x2="400" y2="89" stroke="#1A2838" stroke-width="0.3" opacity="0.15"/>
+  <line x1="0" y1="93" x2="400" y2="93" stroke="#1A2838" stroke-width="0.3" opacity="0.12"/>
+  <line x1="0" y1="97" x2="400" y2="97" stroke="#1A2838" stroke-width="0.3" opacity="0.1"/>
+  <line x1="80" y1="85" x2="80" y2="100" stroke="#1A2838" stroke-width="0.2" opacity="0.06"/>
+  <line x1="160" y1="85" x2="160" y2="100" stroke="#1A2838" stroke-width="0.2" opacity="0.06"/>
+  <line x1="240" y1="85" x2="240" y2="100" stroke="#1A2838" stroke-width="0.2" opacity="0.06"/>
+  <line x1="320" y1="85" x2="320" y2="100" stroke="#1A2838" stroke-width="0.2" opacity="0.06"/>
 
-  <!-- DESK — 46W, surface at y=62 (75cm H) -->
-  <rect x="130" y="62" width="46" height="2.5" rx="0.5" fill="#6B5840" opacity="0.8"/>
-  <rect x="130" y="62" width="46" height="1" fill="#7D6A50" opacity="0.5"/>
-  <!-- desk legs -->
-  <rect x="133" y="64.5" width="2" height="20" fill="#5A4830" opacity="0.5"/>
-  <rect x="172" y="64.5" width="2" height="20" fill="#5A4830" opacity="0.5"/>
-  <rect x="133" y="76" width="41" height="1.2" rx="0.5" fill="#5A4830" opacity="0.2"/>
+  <!-- BOOKSHELF — 24W × 50H, x=40 -->
+  <rect x="40" y="35" width="24" height="50" rx="1" fill="#2A3848" opacity="0.55"/>
+  <rect x="42" y="38" width="20" height="10" fill="#223040" opacity="0.35"/>
+  <rect x="42" y="51" width="20" height="10" fill="#223040" opacity="0.35"/>
+  <rect x="42" y="64" width="20" height="10" fill="#223040" opacity="0.35"/>
+  <rect x="42" y="77" width="20" height="6" fill="#223040" opacity="0.35"/>
+  <!-- books -->
+  <rect x="44" y="39" width="3" height="8" fill="#D06060" opacity="0.35"/>
+  <rect x="48" y="40" width="2.5" height="7" fill="#50A058" opacity="0.3"/>
+  <rect x="51.5" y="39" width="3.5" height="8" fill="#5090D0" opacity="0.3"/>
+  <rect x="56" y="40.5" width="2.5" height="6.5" fill="#D0A040" opacity="0.25"/>
+  <rect x="44" y="52" width="3" height="8" fill="#9060A0" opacity="0.25"/>
+  <rect x="48" y="53" width="4" height="7" fill="#60A0A0" opacity="0.25"/>
+  <rect x="53" y="52" width="2.5" height="8" fill="#C08040" opacity="0.25"/>
+  <rect x="44" y="65" width="4" height="8" fill="#5080A0" opacity="0.2"/>
+  <rect x="49" y="66" width="3" height="7" fill="#D06060" opacity="0.2"/>
+  <rect x="53" y="65" width="3.5" height="8" fill="#50A058" opacity="0.2"/>
 
-  <!-- MONITOR — 17W × 10H, on desk -->
-  <rect x="144" y="50" width="17" height="10" rx="1" fill="#0E0E1E" opacity="0.9"/>
-  <rect x="145.5" y="51.5" width="14" height="7" rx="0.8" fill="#1A3050">
+  <!-- WALL ART — x=78 -->
+  <rect x="76" y="28" width="10" height="14" rx="0.8" fill="#1A2838" opacity="0.3"/>
+  <rect x="77" y="29" width="8" height="12" fill="#2A3A50" opacity="0.2"/>
+
+  <!-- WALL CLOCK — x=98 -->
+  <circle cx="98" cy="26" r="5" fill="#1A2838" opacity="0.4" stroke="#2A3A4E" stroke-width="0.5"/>
+  <line x1="98" y1="26" x2="98" y2="23" stroke="#8090A0" stroke-width="0.4" opacity="0.5">
+    <animateTransform attributeName="transform" type="rotate" from="0 98 26" to="360 98 26" dur="60s" repeatCount="indefinite"/>
+  </line>
+  <line x1="98" y1="26" x2="100" y2="25" stroke="#8090A0" stroke-width="0.3" opacity="0.4">
+    <animateTransform attributeName="transform" type="rotate" from="0 98 26" to="360 98 26" dur="3600s" repeatCount="indefinite"/>
+  </line>
+
+  <!-- WINDOW — 32W × 32H, x=115 -->
+  <rect x="115" y="14" width="32" height="32" rx="1.5" fill="#243848" opacity="0.45"/>
+  <rect x="117" y="16" width="13" height="28" fill="#1E3A50" opacity="0.4"/>
+  <rect x="132" y="16" width="13" height="28" fill="#1E3A50" opacity="0.4"/>
+  <rect x="117" y="16" width="28" height="28" fill="#4A6A90" opacity="0.05">
+    <animate attributeName="opacity" values="0.04;0.08;0.05;0.07;0.04" dur="6s" repeatCount="indefinite"/>
+  </rect>
+  <!-- rain -->
+  <line x1="123" y1="18" x2="122" y2="24" stroke="#6AAAD0" stroke-width="0.3" opacity="0">
+    <animate attributeName="opacity" values="0;0.22;0.12;0" dur="1.2s" repeatCount="indefinite"/>
+    <animate attributeName="y1" from="16" to="42" dur="1.2s" repeatCount="indefinite"/>
+    <animate attributeName="y2" from="22" to="48" dur="1.2s" repeatCount="indefinite"/>
+  </line>
+  <line x1="137" y1="20" x2="136" y2="25" stroke="#6AAAD0" stroke-width="0.3" opacity="0">
+    <animate attributeName="opacity" values="0;0.18;0.1;0" dur="1.5s" repeatCount="indefinite" begin="0.4s"/>
+    <animate attributeName="y1" from="16" to="42" dur="1.5s" repeatCount="indefinite" begin="0.4s"/>
+    <animate attributeName="y2" from="21" to="47" dur="1.5s" repeatCount="indefinite" begin="0.4s"/>
+  </line>
+  <line x1="129" y1="17" x2="128" y2="22" stroke="#6AAAD0" stroke-width="0.3" opacity="0">
+    <animate attributeName="opacity" values="0;0.16;0.08;0" dur="1.3s" repeatCount="indefinite" begin="0.7s"/>
+    <animate attributeName="y1" from="16" to="42" dur="1.3s" repeatCount="indefinite" begin="0.7s"/>
+    <animate attributeName="y2" from="21" to="47" dur="1.3s" repeatCount="indefinite" begin="0.7s"/>
+  </line>
+  <line x1="141" y1="19" x2="140" y2="24" stroke="#6AAAD0" stroke-width="0.3" opacity="0">
+    <animate attributeName="opacity" values="0;0.2;0.1;0" dur="1.6s" repeatCount="indefinite" begin="0.2s"/>
+    <animate attributeName="y1" from="16" to="42" dur="1.6s" repeatCount="indefinite" begin="0.2s"/>
+    <animate attributeName="y2" from="21" to="47" dur="1.6s" repeatCount="indefinite" begin="0.2s"/>
+  </line>
+  <!-- sill + small plant -->
+  <rect x="113" y="46" width="36" height="2" rx="0.5" fill="#2A3A4E" opacity="0.3"/>
+  <rect x="125" y="42" width="4" height="4" rx="1" fill="#3A5040" opacity="0.35"/>
+  <ellipse cx="127" cy="40" rx="4" ry="3" fill="#2A5030" opacity="0.3"/>
+
+  <!-- CHAIR — x=168 (avatar sits here) -->
+  <rect x="168" y="54" width="14" height="18" rx="3" fill="#2D3E50" opacity="0.5"/>
+  <rect x="171" y="72" width="8" height="13" rx="1.5" fill="#243444" opacity="0.4"/>
+
+  <!-- DESK — 46W, surface at y=62, x=185 -->
+  <rect x="185" y="62" width="46" height="2.5" rx="0.5" fill="#6B5840" opacity="0.8"/>
+  <rect x="185" y="62" width="46" height="1" fill="#7D6A50" opacity="0.5"/>
+  <rect x="188" y="64.5" width="2" height="20" fill="#5A4830" opacity="0.5"/>
+  <rect x="227" y="64.5" width="2" height="20" fill="#5A4830" opacity="0.5"/>
+  <rect x="188" y="76" width="41" height="1.2" rx="0.5" fill="#5A4830" opacity="0.2"/>
+
+  <!-- MONITOR — 17W × 10H -->
+  <rect x="199" y="50" width="17" height="10" rx="1" fill="#0E0E1E" opacity="0.9"/>
+  <rect x="200.5" y="51.5" width="14" height="7" rx="0.8" fill="#1A3050">
     <animate attributeName="fill" values="#1A3050;#1E3558;#1A3050" dur="6s" repeatCount="indefinite"/>
   </rect>
-  <!-- code lines -->
-  <line x1="147" y1="53.5" x2="155" y2="53.5" stroke="#7ABCE0" stroke-width="0.6" opacity="0.5">
+  <line x1="202" y1="53.5" x2="210" y2="53.5" stroke="#7ABCE0" stroke-width="0.6" opacity="0.5">
     <animate attributeName="opacity" values="0.4;0.6;0.35;0.55;0.4" dur="2s" repeatCount="indefinite"/>
   </line>
-  <line x1="147" y1="55.5" x2="157" y2="55.5" stroke="#7ABCE0" stroke-width="0.6" opacity="0.4">
+  <line x1="202" y1="55.5" x2="212" y2="55.5" stroke="#7ABCE0" stroke-width="0.6" opacity="0.4">
     <animate attributeName="opacity" values="0.3;0.55;0.35;0.5;0.3" dur="2.3s" repeatCount="indefinite" begin="0.3s"/>
   </line>
-  <line x1="149" y1="57" x2="154" y2="57" stroke="#A0D070" stroke-width="0.6" opacity="0.4">
+  <line x1="204" y1="57" x2="209" y2="57" stroke="#A0D070" stroke-width="0.6" opacity="0.4">
     <animate attributeName="opacity" values="0.25;0.5;0.3;0.45;0.25" dur="1.8s" repeatCount="indefinite" begin="0.6s"/>
   </line>
-  <!-- cursor blink -->
-  <rect x="157.5" y="55" width="1" height="2" fill="#FFF" opacity="0">
+  <rect x="212.5" y="55" width="1" height="2" fill="#FFF" opacity="0">
     <animate attributeName="opacity" values="0;0.7;0.7;0" dur="1s" repeatCount="indefinite"/>
   </rect>
   <!-- monitor stand -->
-  <rect x="149" y="60" width="6" height="2" rx="0.5" fill="#0E0E1E" opacity="0.8"/>
-  <rect x="147" y="61.5" width="10" height="1" rx="0.5" fill="#1A1A2E" opacity="0.7"/>
-  <!-- monitor glow on desk -->
-  <ellipse cx="152" cy="63.5" rx="14" ry="2.5" fill="#4A90D0" opacity="0.06">
+  <rect x="204" y="60" width="6" height="2" rx="0.5" fill="#0E0E1E" opacity="0.8"/>
+  <rect x="202" y="61.5" width="10" height="1" rx="0.5" fill="#1A1A2E" opacity="0.7"/>
+  <ellipse cx="207" cy="63.5" rx="14" ry="2.5" fill="#4A90D0" opacity="0.06">
     <animate attributeName="opacity" values="0.04;0.1;0.05;0.08;0.04" dur="4s" repeatCount="indefinite"/>
   </ellipse>
 
-  <!-- KEYBOARD — 14W -->
-  <rect x="145" y="63" width="14" height="1.5" rx="0.5" fill="#1A1A2E" opacity="0.6"/>
+  <!-- KEYBOARD + MUG -->
+  <rect x="200" y="63" width="14" height="1.5" rx="0.5" fill="#1A1A2E" opacity="0.6"/>
+  <rect x="220" y="59" width="2.5" height="3.5" rx="0.5" fill="#8B5030" opacity="0.6"/>
+  <rect x="222.5" y="60" width="1.2" height="1.5" rx="0.5" fill="#8B5030" opacity="0.4"/>
+  <path d="M221,57.5 Q220,54 222,50" fill="none" stroke="#FFF" stroke-width="0.5" stroke-linecap="round" opacity="0">
+    <animate attributeName="opacity" values="0;0.12;0.08;0.04;0" dur="3s" repeatCount="indefinite"/>
+    <animate attributeName="d" values="M221,57.5 Q220,54 222,50;M221,57.5 Q219,52 221.5,47;M221,57.5 Q222,53 220,49;M221,57.5 Q220,54 222,50" dur="3s" repeatCount="indefinite"/>
+  </path>
 
-  <!-- CHAIR — 15W, seat y=72, back top y=54 -->
-  <rect x="108" y="54" width="15" height="18" rx="3" fill="#2D3E50" opacity="0.5"/>
-  <rect x="112" y="72" width="8" height="13" rx="1.5" fill="#243444" opacity="0.4"/>
-
-  <!-- DESK LAMP — shade 6W at y=50 -->
-  <line x1="134" y1="62" x2="136" y2="50" stroke="#4A5A6A" stroke-width="1"/>
-  <line x1="136" y1="50" x2="141" y2="47" stroke="#4A5A6A" stroke-width="0.8"/>
-  <ellipse cx="140" cy="46" rx="3" ry="2" fill="#FFE4A0" opacity="0.25">
+  <!-- DESK LAMP -->
+  <line x1="189" y1="62" x2="191" y2="50" stroke="#4A5A6A" stroke-width="1"/>
+  <line x1="191" y1="50" x2="196" y2="47" stroke="#4A5A6A" stroke-width="0.8"/>
+  <ellipse cx="195" cy="46" rx="3" ry="2" fill="#FFE4A0" opacity="0.25">
     <animate attributeName="opacity" values="0.2;0.3;0.22;0.28;0.2" dur="5s" repeatCount="indefinite"/>
   </ellipse>
-  <circle cx="140" cy="46" r="1.2" fill="#FFF5D0" opacity="0.35">
+  <circle cx="195" cy="46" r="1.2" fill="#FFF5D0" opacity="0.35">
     <animate attributeName="opacity" values="0.3;0.4;0.32;0.38;0.3" dur="5s" repeatCount="indefinite"/>
   </circle>
-  <ellipse cx="138" cy="62" rx="8" ry="2" fill="#FFE4A0" opacity="0.04">
+  <ellipse cx="195" cy="62" rx="10" ry="2" fill="#FFE4A0" opacity="0.04">
     <animate attributeName="opacity" values="0.03;0.06;0.035;0.055;0.03" dur="5s" repeatCount="indefinite"/>
   </ellipse>
 
-  <!-- COFFEE MUG — 2.5W on desk -->
-  <rect x="164" y="59" width="2.5" height="3.5" rx="0.5" fill="#8B5030" opacity="0.6"/>
-  <rect x="166.5" y="60" width="1.2" height="1.5" rx="0.5" fill="#8B5030" opacity="0.4"/>
-  <!-- steam -->
-  <path d="M165,57.5 Q164,54 166,50" fill="none" stroke="#FFF" stroke-width="0.5" stroke-linecap="round" opacity="0">
-    <animate attributeName="opacity" values="0;0.15;0.1;0.05;0" dur="3s" repeatCount="indefinite"/>
-    <animate attributeName="d" values="M165,57.5 Q164,54 166,50;M165,57.5 Q163,52 165.5,47;M165,57.5 Q166,53 164,49;M165,57.5 Q164,54 166,50" dur="3s" repeatCount="indefinite"/>
-  </path>
-  <path d="M166.5,57.5 Q167,53 165,49" fill="none" stroke="#FFF" stroke-width="0.4" stroke-linecap="round" opacity="0">
-    <animate attributeName="opacity" values="0;0.12;0.08;0.04;0" dur="3.5s" repeatCount="indefinite" begin="1s"/>
-    <animate attributeName="d" values="M166.5,57.5 Q167,53 165,49;M166.5,57.5 Q168,51 166,46;M166.5,57.5 Q165.5,52 167,47;M166.5,57.5 Q167,53 165,49" dur="3.5s" repeatCount="indefinite" begin="1s"/>
-  </path>
+  <!-- CORKBOARD — x=260, 22W × 16H -->
+  <rect x="260" y="26" width="22" height="16" rx="1" fill="#5A4830" opacity="0.3"/>
+  <rect x="262" y="28" width="5" height="4" fill="#D0A040" opacity="0.15"/>
+  <rect x="269" y="29" width="4" height="5" fill="#5090D0" opacity="0.12"/>
+  <rect x="262" y="34" width="6" height="4" fill="#D06060" opacity="0.1"/>
+  <rect x="274" y="28" width="5" height="3" fill="#50A058" opacity="0.12"/>
 
-  <!-- BOOKSHELF — 28W × 55H, y=30 to y=85 -->
-  <rect x="220" y="30" width="28" height="55" rx="1.5" fill="#2A3A4A" opacity="0.5"/>
-  <rect x="222" y="33" width="24" height="11" fill="#223040" opacity="0.35"/>
-  <rect x="222" y="47" width="24" height="11" fill="#223040" opacity="0.35"/>
-  <rect x="222" y="61" width="24" height="11" fill="#223040" opacity="0.35"/>
-  <rect x="222" y="75" width="24" height="8" fill="#223040" opacity="0.35"/>
-  <!-- books -->
-  <rect x="224" y="34" width="3" height="9" fill="#D06060" opacity="0.35"/>
-  <rect x="228" y="35" width="2.5" height="8" fill="#50A058" opacity="0.3"/>
-  <rect x="231" y="34" width="3.5" height="9" fill="#5090D0" opacity="0.3"/>
-  <rect x="236" y="36" width="2.5" height="7" fill="#D0A040" opacity="0.25"/>
-  <rect x="224" y="48" width="3.5" height="9" fill="#D0A040" opacity="0.25"/>
-  <rect x="228.5" y="49" width="3" height="8" fill="#9060A0" opacity="0.25"/>
-  <rect x="232.5" y="48" width="2.5" height="9" fill="#60A0A0" opacity="0.25"/>
-  <rect x="224" y="62" width="4" height="9" fill="#C06050" opacity="0.25"/>
-  <rect x="229" y="63" width="3" height="8" fill="#5080A0" opacity="0.2"/>
+  <!-- FILING CABINET — 16W × 20H, x=262 -->
+  <rect x="262" y="65" width="16" height="20" rx="1" fill="#2A3848" opacity="0.45"/>
+  <rect x="264" y="67" width="12" height="8" rx="0.5" fill="#223040" opacity="0.3"/>
+  <rect x="264" y="77" width="12" height="6" rx="0.5" fill="#223040" opacity="0.3"/>
+  <rect x="268" y="70" width="4" height="0.8" rx="0.3" fill="#4A5A6A" opacity="0.3"/>
+  <rect x="268" y="79" width="4" height="0.8" rx="0.3" fill="#4A5A6A" opacity="0.3"/>
 
-  <!-- WINDOW — 28W × 37H, sill y=20 top y=57 -->
-  <rect x="270" y="20" width="28" height="37" rx="1.5" fill="#243848" opacity="0.4"/>
-  <rect x="272" y="22" width="11" height="33" fill="#2A4A60" opacity="0.35"/>
-  <rect x="285" y="22" width="11" height="33" fill="#2A4A60" opacity="0.35"/>
-  <!-- rain -->
-  <line x1="276" y1="24" x2="275" y2="30" stroke="#6AAAD0" stroke-width="0.3" opacity="0">
-    <animate attributeName="opacity" values="0;0.25;0.15;0" dur="1.2s" repeatCount="indefinite"/>
-    <animate attributeName="y1" from="22" to="53" dur="1.2s" repeatCount="indefinite"/>
-    <animate attributeName="y2" from="28" to="59" dur="1.2s" repeatCount="indefinite"/>
-  </line>
-  <line x1="289" y1="26" x2="288" y2="31" stroke="#6AAAD0" stroke-width="0.3" opacity="0">
-    <animate attributeName="opacity" values="0;0.2;0.12;0" dur="1.5s" repeatCount="indefinite" begin="0.4s"/>
-    <animate attributeName="y1" from="22" to="53" dur="1.5s" repeatCount="indefinite" begin="0.4s"/>
-    <animate attributeName="y2" from="27" to="58" dur="1.5s" repeatCount="indefinite" begin="0.4s"/>
-  </line>
-  <line x1="282" y1="23" x2="281" y2="28" stroke="#6AAAD0" stroke-width="0.3" opacity="0">
-    <animate attributeName="opacity" values="0;0.18;0.1;0" dur="1.3s" repeatCount="indefinite" begin="0.7s"/>
-    <animate attributeName="y1" from="22" to="53" dur="1.3s" repeatCount="indefinite" begin="0.7s"/>
-    <animate attributeName="y2" from="27" to="58" dur="1.3s" repeatCount="indefinite" begin="0.7s"/>
-  </line>
-  <line x1="293" y1="25" x2="292" y2="30" stroke="#6AAAD0" stroke-width="0.3" opacity="0">
-    <animate attributeName="opacity" values="0;0.2;0.1;0" dur="1.6s" repeatCount="indefinite" begin="0.2s"/>
-    <animate attributeName="y1" from="22" to="53" dur="1.6s" repeatCount="indefinite" begin="0.2s"/>
-    <animate attributeName="y2" from="27" to="58" dur="1.6s" repeatCount="indefinite" begin="0.2s"/>
-  </line>
+  <!-- FLOOR LAMP — x=310 -->
+  <line x1="310" y1="36" x2="310" y2="83" stroke="#3A4858" stroke-width="1" opacity="0.4"/>
+  <ellipse cx="310" cy="34" rx="4.5" ry="3" fill="#FFE0A0" opacity="0.1">
+    <animate attributeName="opacity" values="0.08;0.14;0.09;0.13;0.08" dur="6s" repeatCount="indefinite"/>
+  </ellipse>
+  <circle cx="310" cy="34" r="1.8" fill="#FFF5D0" opacity="0.08">
+    <animate attributeName="opacity" values="0.06;0.12;0.07;0.1;0.06" dur="6s" repeatCount="indefinite"/>
+  </circle>
+  <ellipse cx="310" cy="84" rx="3.5" ry="1" fill="#3A4858" opacity="0.3"/>
 
-  <!-- WALL ART — small frame -->
-  <rect x="190" y="32" width="12" height="16" rx="1" fill="#1A2838" opacity="0.3"/>
-  <rect x="191" y="33" width="10" height="14" fill="#2A3A50" opacity="0.2"/>
+  <!-- POTTED PLANT — x=345 -->
+  <rect x="343" y="74" width="7" height="11" rx="2" fill="#2A3828" opacity="0.4"/>
+  <ellipse cx="346" cy="71" rx="6" ry="5" fill="#2A5030" opacity="0.35">
+    <animateTransform attributeName="transform" type="rotate" values="-1,346,78;1,346,78;-1,346,78" dur="5s" repeatCount="indefinite"/>
+  </ellipse>
+
+  <!-- rug under desk area -->
+  <rect x="175" y="86" width="52" height="5" rx="2" fill="#3A3050" opacity="0.1"/>
 
   <!-- dust in lamp light -->
-  <circle cx="138" cy="54" r="0.5" fill="#FFE4A0" opacity="0">
-    <animate attributeName="opacity" values="0;0.2;0.1;0.15;0" dur="4s" repeatCount="indefinite"/>
+  <circle cx="193" cy="54" r="0.5" fill="#FFE4A0" opacity="0">
+    <animate attributeName="opacity" values="0;0.18;0.1;0.14;0" dur="4s" repeatCount="indefinite"/>
     <animate attributeName="cy" from="58" to="46" dur="4s" repeatCount="indefinite"/>
   </circle>
-  <circle cx="145" cy="58" r="0.35" fill="#FFE4A0" opacity="0">
-    <animate attributeName="opacity" values="0;0.15;0.08;0" dur="5s" repeatCount="indefinite" begin="2s"/>
+  <circle cx="200" cy="58" r="0.35" fill="#FFE4A0" opacity="0">
+    <animate attributeName="opacity" values="0;0.12;0.06;0" dur="5s" repeatCount="indefinite" begin="2s"/>
     <animate attributeName="cy" from="62" to="48" dur="5s" repeatCount="indefinite" begin="2s"/>
   </circle>
 </svg>`,
@@ -181,125 +231,176 @@ export const lofiRoomBackgrounds: Record<string, string> = {
       <stop offset="0%" stop-color="#2E2218"/>
       <stop offset="100%" stop-color="#241C12"/>
     </linearGradient>
-    <radialGradient id="lofiKitFlame" cx="0.45" cy="0.55" r="0.25">
+    <radialGradient id="lofiKitFlame" cx="0.52" cy="0.55" r="0.2">
       <stop offset="0%" stop-color="#FF8040" stop-opacity="0.2"/>
-      <stop offset="40%" stop-color="#E06020" stop-opacity="0.08"/>
+      <stop offset="40%" stop-color="#E06020" stop-opacity="0.06"/>
       <stop offset="100%" stop-color="#E06020" stop-opacity="0"/>
     </radialGradient>
-    <radialGradient id="lofiKitOverhead" cx="0.4" cy="0.02" r="0.45">
-      <stop offset="0%" stop-color="#FFE8C0" stop-opacity="0.12"/>
+    <radialGradient id="lofiKitOverhead" cx="0.5" cy="0.02" r="0.5">
+      <stop offset="0%" stop-color="#FFE8C0" stop-opacity="0.1"/>
       <stop offset="100%" stop-color="#FFE8C0" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="lofiKitWindow" cx="0.14" cy="0.22" r="0.16">
+      <stop offset="0%" stop-color="#C0D8E8" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#C0D8E8" stop-opacity="0"/>
     </radialGradient>
   </defs>
 
-  <!-- background + light washes -->
+  <!-- background + light layers -->
   <rect width="400" height="100" fill="url(#lofiKitBg)"/>
   <rect width="400" height="100" fill="url(#lofiKitOverhead)"/>
+  <rect width="400" height="100" fill="url(#lofiKitWindow)"/>
   <rect width="400" height="100" fill="url(#lofiKitFlame)">
-    <animate attributeName="opacity" values="0.6;1;0.7;0.9;0.65;0.95;0.6" dur="1.5s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.5;1;0.6;0.9;0.55;0.85;0.5" dur="1.5s" repeatCount="indefinite"/>
   </rect>
 
   <!-- baseboard -->
-  <rect x="0" y="82" width="400" height="3" fill="#2A2010" opacity="0.25"/>
+  <rect x="0" y="82" width="400" height="3" fill="#2A2010" opacity="0.2"/>
 
-  <!-- floor -->
+  <!-- floor — tile pattern -->
   <rect x="0" y="85" width="400" height="15" fill="#1A1508" opacity="0.6"/>
   <line x1="0" y1="85" x2="400" y2="85" stroke="#3A3020" stroke-width="0.5" opacity="0.4"/>
-  <line x1="0" y1="92" x2="400" y2="92" stroke="#2A2010" stroke-width="0.3" opacity="0.15"/>
+  <line x1="0" y1="92" x2="400" y2="92" stroke="#2A2010" stroke-width="0.3" opacity="0.12"/>
+  <line x1="50" y1="85" x2="50" y2="100" stroke="#2A2010" stroke-width="0.2" opacity="0.06"/>
+  <line x1="100" y1="85" x2="100" y2="100" stroke="#2A2010" stroke-width="0.2" opacity="0.06"/>
+  <line x1="150" y1="85" x2="150" y2="100" stroke="#2A2010" stroke-width="0.2" opacity="0.06"/>
+  <line x1="200" y1="85" x2="200" y2="100" stroke="#2A2010" stroke-width="0.2" opacity="0.06"/>
+  <line x1="250" y1="85" x2="250" y2="100" stroke="#2A2010" stroke-width="0.2" opacity="0.06"/>
+  <line x1="300" y1="85" x2="300" y2="100" stroke="#2A2010" stroke-width="0.2" opacity="0.06"/>
+  <line x1="350" y1="85" x2="350" y2="100" stroke="#2A2010" stroke-width="0.2" opacity="0.06"/>
 
-  <!-- COUNTER — 76W, surface at y=57 (90cm, 28 from floor) -->
-  <rect x="115" y="57" width="76" height="2.5" rx="0.5" fill="#909898" opacity="0.6"/>
-  <rect x="115" y="57" width="76" height="1" fill="#A0A8A8" opacity="0.4"/>
-  <!-- lower cabinets -->
-  <rect x="115" y="59.5" width="76" height="22" rx="1" fill="#3D5A40" opacity="0.45"/>
-  <rect x="118" y="61.5" width="16" height="18" rx="0.8" fill="#456048" opacity="0.3"/>
-  <rect x="137" y="61.5" width="16" height="18" rx="0.8" fill="#456048" opacity="0.3"/>
-  <rect x="156" y="61.5" width="16" height="18" rx="0.8" fill="#456048" opacity="0.3"/>
-  <rect x="175" y="61.5" width="13" height="18" rx="0.8" fill="#456048" opacity="0.3"/>
-  <!-- handles -->
-  <rect x="124" y="69" width="3" height="1" rx="0.5" fill="#708068" opacity="0.4"/>
-  <rect x="143" y="69" width="3" height="1" rx="0.5" fill="#708068" opacity="0.4"/>
-  <rect x="162" y="69" width="3" height="1" rx="0.5" fill="#708068" opacity="0.4"/>
+  <!-- WINDOW above sink — 26W × 26H, x=44 -->
+  <rect x="44" y="14" width="26" height="26" rx="1.5" fill="#2A3A4A" opacity="0.4"/>
+  <rect x="46" y="16" width="10" height="22" fill="#304858" opacity="0.35"/>
+  <rect x="58" y="16" width="10" height="22" fill="#304858" opacity="0.35"/>
+  <rect x="46" y="16" width="22" height="22" fill="#C0D8E8" opacity="0.04">
+    <animate attributeName="opacity" values="0.03;0.06;0.04;0.05;0.03" dur="8s" repeatCount="indefinite"/>
+  </rect>
 
-  <!-- backsplash tiles -->
-  <g stroke="#3A3020" stroke-width="0.2" opacity="0.15">
-    <line x1="115" y1="38" x2="191" y2="38"/>
-    <line x1="115" y1="48" x2="191" y2="48"/>
+  <!-- COUNTER RUN 1 — sink area, 68W, x=36, surface at y=57 -->
+  <rect x="36" y="57" width="68" height="2.5" rx="0.5" fill="#909898" opacity="0.6"/>
+  <rect x="36" y="57" width="68" height="1" fill="#A0A8A8" opacity="0.35"/>
+  <rect x="36" y="59.5" width="68" height="22" rx="1" fill="#3D5A40" opacity="0.45"/>
+  <rect x="39" y="61.5" width="14" height="18" rx="0.8" fill="#456048" opacity="0.3"/>
+  <rect x="56" y="61.5" width="14" height="18" rx="0.8" fill="#456048" opacity="0.3"/>
+  <rect x="73" y="61.5" width="14" height="18" rx="0.8" fill="#456048" opacity="0.3"/>
+  <rect x="90" y="61.5" width="11" height="18" rx="0.8" fill="#456048" opacity="0.3"/>
+  <rect x="44" y="69" width="3" height="1" rx="0.5" fill="#708068" opacity="0.4"/>
+  <rect x="61" y="69" width="3" height="1" rx="0.5" fill="#708068" opacity="0.4"/>
+  <rect x="78" y="69" width="3" height="1" rx="0.5" fill="#708068" opacity="0.4"/>
+
+  <!-- SINK — 15W -->
+  <rect x="54" y="54.5" width="15" height="2.5" rx="1" fill="#6A7280" opacity="0.4"/>
+  <line x1="61" y1="54" x2="61" y2="42" stroke="#808890" stroke-width="1" stroke-linecap="round" opacity="0.35"/>
+  <line x1="61" y1="42" x2="64" y2="42" stroke="#808890" stroke-width="0.8" stroke-linecap="round" opacity="0.3"/>
+  <circle cx="64" cy="55" r="0.5" fill="#6AAAD0" opacity="0">
+    <animate attributeName="opacity" values="0;0;0.3;0.2;0" dur="3s" repeatCount="indefinite"/>
+    <animate attributeName="cy" from="43" to="55" dur="3s" repeatCount="indefinite"/>
+  </circle>
+
+  <!-- UPPER CABINETS (left) -->
+  <rect x="36" y="8" width="22" height="12" rx="1" fill="#3D5A40" opacity="0.4"/>
+  <rect x="82" y="8" width="22" height="12" rx="1" fill="#3D5A40" opacity="0.4"/>
+  <!-- backsplash -->
+  <g stroke="#3A3020" stroke-width="0.2" opacity="0.1">
+    <line x1="36" y1="35" x2="104" y2="35"/>
+    <line x1="36" y1="45" x2="104" y2="45"/>
   </g>
 
-  <!-- upper cabinets — 24W × 12H each -->
-  <rect x="115" y="16" width="24" height="12" rx="1" fill="#3D5A40" opacity="0.4"/>
-  <rect x="145" y="16" width="24" height="12" rx="1" fill="#3D5A40" opacity="0.4"/>
+  <!-- PENDANT LIGHT — above gap between counters -->
+  <line x1="135" y1="0" x2="135" y2="14" stroke="#4A4A4A" stroke-width="0.5" opacity="0.3"/>
+  <ellipse cx="135" cy="15" rx="4" ry="2.5" fill="#FFE8C0" opacity="0.1">
+    <animate attributeName="opacity" values="0.08;0.14;0.09;0.12;0.08" dur="5s" repeatCount="indefinite"/>
+  </ellipse>
+  <circle cx="135" cy="15" r="1.5" fill="#FFF5D0" opacity="0.08">
+    <animate attributeName="opacity" values="0.06;0.1;0.07;0.09;0.06" dur="5s" repeatCount="indefinite"/>
+  </circle>
 
-  <!-- RANGE HOOD — 18W above stove -->
-  <rect x="200" y="22" width="18" height="8" rx="1" fill="#586060" opacity="0.35"/>
-  <rect x="202" y="30" width="14" height="1.5" rx="0.5" fill="#505050" opacity="0.3"/>
+  <!-- COUNTER RUN 2 — stove area, 70W, x=172, surface at y=57 -->
+  <rect x="172" y="57" width="70" height="2.5" rx="0.5" fill="#909898" opacity="0.6"/>
+  <rect x="172" y="57" width="70" height="1" fill="#A0A8A8" opacity="0.35"/>
+  <rect x="172" y="59.5" width="70" height="22" rx="1" fill="#3D5A40" opacity="0.45"/>
+  <rect x="175" y="61.5" width="14" height="18" rx="0.8" fill="#456048" opacity="0.3"/>
+  <rect x="217" y="61.5" width="14" height="18" rx="0.8" fill="#456048" opacity="0.3"/>
+  <rect x="234" y="61.5" width="5" height="18" rx="0.8" fill="#456048" opacity="0.3"/>
+  <rect x="180" y="69" width="3" height="1" rx="0.5" fill="#708068" opacity="0.4"/>
+  <rect x="222" y="69" width="3" height="1" rx="0.5" fill="#708068" opacity="0.4"/>
 
-  <!-- STOVE area — separate from counter, 20W -->
-  <rect x="198" y="57" width="24" height="2.5" rx="0.5" fill="#404040" opacity="0.5"/>
-  <!-- burners — 6W each -->
-  <ellipse cx="205" cy="56" rx="3" ry="1.5" fill="#282020" opacity="0.5"/>
-  <ellipse cx="216" cy="56" rx="3" ry="1.5" fill="#282020" opacity="0.5"/>
-  <!-- flames -->
-  <ellipse cx="205" cy="55.5" rx="2.5" ry="1.2" fill="#FF8040">
+  <!-- STOVE — 22W on counter -->
+  <rect x="192" y="57" width="22" height="2.5" rx="0.5" fill="#404040" opacity="0.5"/>
+  <ellipse cx="199" cy="56" rx="3" ry="1.5" fill="#282020" opacity="0.5"/>
+  <ellipse cx="210" cy="56" rx="3" ry="1.5" fill="#282020" opacity="0.5"/>
+  <ellipse cx="199" cy="55.5" rx="2.5" ry="1.2" fill="#FF8040">
     <animate attributeName="opacity" values="0.2;0.5;0.25;0.45;0.2" dur="0.5s" repeatCount="indefinite"/>
     <animate attributeName="rx" values="2;3;2.2;2.8;2" dur="0.7s" repeatCount="indefinite"/>
   </ellipse>
-  <ellipse cx="216" cy="55.5" rx="2.5" ry="1.2" fill="#FF8040">
+  <ellipse cx="210" cy="55.5" rx="2.5" ry="1.2" fill="#FF8040">
     <animate attributeName="opacity" values="0.25;0.45;0.2;0.4;0.25" dur="0.6s" repeatCount="indefinite" begin="0.15s"/>
     <animate attributeName="rx" values="2.2;3;2;2.8;2.2" dur="0.8s" repeatCount="indefinite" begin="0.15s"/>
   </ellipse>
-  <!-- flame glow on wall -->
-  <rect x="195" y="32" width="30" height="18" fill="#FF8040" opacity="0.02">
-    <animate attributeName="opacity" values="0.015;0.04;0.02;0.035;0.015" dur="0.8s" repeatCount="indefinite"/>
+  <rect x="187" y="32" width="30" height="18" fill="#FF8040" opacity="0.015">
+    <animate attributeName="opacity" values="0.01;0.03;0.015;0.025;0.01" dur="0.8s" repeatCount="indefinite"/>
   </rect>
 
-  <!-- POT — 6W on burner -->
-  <rect x="202" y="48" width="6" height="7" rx="1.5" fill="#5A6470" opacity="0.6"/>
-  <rect x="201" y="47" width="8" height="1.5" rx="0.6" fill="#6A7280" opacity="0.5"/>
-  <rect x="201" y="46" width="8" height="1.2" rx="0.6" fill="#7A8290" opacity="0.4">
+  <!-- RANGE HOOD -->
+  <rect x="190" y="22" width="26" height="8" rx="1" fill="#586060" opacity="0.35"/>
+  <rect x="193" y="30" width="20" height="1.5" rx="0.5" fill="#505050" opacity="0.3"/>
+
+  <!-- UPPER CABINETS (right) -->
+  <rect x="172" y="8" width="22" height="12" rx="1" fill="#3D5A40" opacity="0.4"/>
+  <rect x="220" y="8" width="22" height="12" rx="1" fill="#3D5A40" opacity="0.4"/>
+  <!-- backsplash -->
+  <g stroke="#3A3020" stroke-width="0.2" opacity="0.1">
+    <line x1="172" y1="35" x2="242" y2="35"/>
+    <line x1="172" y1="45" x2="242" y2="45"/>
+  </g>
+
+  <!-- POT on burner -->
+  <rect x="196" y="48" width="6" height="7" rx="1.5" fill="#5A6470" opacity="0.6"/>
+  <rect x="195" y="47" width="8" height="1.5" rx="0.6" fill="#6A7280" opacity="0.5"/>
+  <rect x="195" y="46" width="8" height="1.2" rx="0.6" fill="#7A8290" opacity="0.4">
     <animate attributeName="y" values="46;45.3;46;45.6;46" dur="0.7s" repeatCount="indefinite"/>
-    <animateTransform attributeName="transform" type="rotate" values="-0.5,205,46.5;0.5,205,46.5;-0.5,205,46.5" dur="0.5s" repeatCount="indefinite"/>
   </rect>
-
-  <!-- STEAM -->
-  <path d="M204,44 Q203,39 205,34" fill="none" stroke="#FFF" stroke-width="0.8" stroke-linecap="round" opacity="0">
+  <!-- steam -->
+  <path d="M198,44 Q197,39 199,34" fill="none" stroke="#FFF" stroke-width="0.8" stroke-linecap="round" opacity="0">
     <animate attributeName="opacity" values="0;0.18;0.12;0.06;0" dur="2.5s" repeatCount="indefinite"/>
-    <animate attributeName="d" values="M204,44 Q203,39 205,34;M204,44 Q201,36 204,28;M204,44 Q206,38 203,32;M204,44 Q203,39 205,34" dur="2.5s" repeatCount="indefinite"/>
+    <animate attributeName="d" values="M198,44 Q197,39 199,34;M198,44 Q195,36 198,28;M198,44 Q200,38 197,32;M198,44 Q197,39 199,34" dur="2.5s" repeatCount="indefinite"/>
   </path>
-  <path d="M206,44 Q207,38 205,32" fill="none" stroke="#FFF" stroke-width="0.6" stroke-linecap="round" opacity="0">
+  <path d="M200,44 Q201,38 199,32" fill="none" stroke="#FFF" stroke-width="0.6" stroke-linecap="round" opacity="0">
     <animate attributeName="opacity" values="0;0.14;0.1;0.04;0" dur="3s" repeatCount="indefinite" begin="0.8s"/>
-    <animate attributeName="d" values="M206,44 Q207,38 205,32;M206,44 Q208,34 205,26;M206,44 Q205,36 207,30;M206,44 Q207,38 205,32" dur="3s" repeatCount="indefinite" begin="0.8s"/>
-  </path>
-  <path d="M208,44 Q207,40 209,35" fill="none" stroke="#FFF" stroke-width="0.5" stroke-linecap="round" opacity="0">
-    <animate attributeName="opacity" values="0;0.1;0.06;0.03;0" dur="2.8s" repeatCount="indefinite" begin="1.5s"/>
-    <animate attributeName="d" values="M208,44 Q207,40 209,35;M208,44 Q206,36 209,29;M208,44 Q209,38 207,33;M208,44 Q207,40 209,35" dur="2.8s" repeatCount="indefinite" begin="1.5s"/>
+    <animate attributeName="d" values="M200,44 Q201,38 199,32;M200,44 Q202,34 199,26;M200,44 Q199,36 201,30;M200,44 Q201,38 199,32" dur="3s" repeatCount="indefinite" begin="0.8s"/>
   </path>
 
-  <!-- FRIDGE — 21W × 52H, y=33 to y=85 -->
-  <rect x="260" y="33" width="21" height="52" rx="1.5" fill="#586060" opacity="0.4"/>
-  <line x1="260" y1="55" x2="281" y2="55" stroke="#505050" stroke-width="0.4" opacity="0.35"/>
-  <rect x="276" y="39" width="2" height="8" rx="0.5" fill="#6A6A6A" opacity="0.35"/>
-  <rect x="276" y="62" width="2" height="8" rx="0.5" fill="#6A6A6A" opacity="0.35"/>
+  <!-- FRIDGE — 20W × 52H, x=258 -->
+  <rect x="258" y="33" width="20" height="52" rx="1.5" fill="#586060" opacity="0.4"/>
+  <line x1="258" y1="55" x2="278" y2="55" stroke="#505050" stroke-width="0.4" opacity="0.35"/>
+  <rect x="274" y="39" width="1.5" height="8" rx="0.5" fill="#6A6A6A" opacity="0.35"/>
+  <rect x="274" y="62" width="1.5" height="8" rx="0.5" fill="#6A6A6A" opacity="0.35"/>
 
-  <!-- SINK — 17W on counter -->
-  <rect x="125" y="54.5" width="17" height="2.5" rx="1" fill="#6A7280" opacity="0.4"/>
-  <line x1="133" y1="54" x2="133" y2="38" stroke="#808890" stroke-width="1" stroke-linecap="round" opacity="0.35"/>
-  <!-- water drip -->
-  <circle cx="133" cy="55" r="0.5" fill="#6AAAD0" opacity="0">
-    <animate attributeName="opacity" values="0;0;0.3;0.2;0" dur="3s" repeatCount="indefinite"/>
-    <animate attributeName="cy" from="55" to="57.5" dur="3s" repeatCount="indefinite"/>
-  </circle>
+  <!-- SMALL TABLE — 26W, x=300 -->
+  <rect x="300" y="72" width="26" height="2" rx="0.5" fill="#6B5840" opacity="0.5"/>
+  <rect x="303" y="74" width="2" height="11" rx="0.5" fill="#5A4830" opacity="0.35"/>
+  <rect x="323" y="74" width="2" height="11" rx="0.5" fill="#5A4830" opacity="0.35"/>
+  <!-- items on table -->
+  <rect x="308" y="69" width="2" height="3" rx="0.5" fill="#8B5030" opacity="0.4"/>
+  <rect x="315" y="70" width="4" height="2.5" rx="0.5" fill="#6A7280" opacity="0.3"/>
 
-  <!-- HANGING UTENSILS — near stove -->
-  <line x1="235" y1="32" x2="235" y2="44" stroke="#707070" stroke-width="0.5" opacity="0.3">
-    <animateTransform attributeName="transform" type="rotate" values="-1,235,32;1,235,32;-1,235,32" dur="4s" repeatCount="indefinite"/>
+  <!-- WALL SHELF with jars — x=298 -->
+  <rect x="298" y="28" width="30" height="1.5" rx="0.5" fill="#5A4830" opacity="0.35"/>
+  <rect x="301" y="20" width="4" height="8" rx="1" fill="#6A7280" opacity="0.2"/>
+  <rect x="307" y="22" width="3.5" height="6" rx="0.8" fill="#8B6840" opacity="0.2"/>
+  <rect x="313" y="21" width="3" height="7" rx="0.8" fill="#6A8280" opacity="0.18"/>
+  <rect x="319" y="23" width="4" height="5" rx="1" fill="#8B5030" opacity="0.15"/>
+
+  <!-- HANGING UTENSILS — x=350 -->
+  <line x1="350" y1="20" x2="350" y2="34" stroke="#707070" stroke-width="0.5" opacity="0.25">
+    <animateTransform attributeName="transform" type="rotate" values="-1,350,20;1,350,20;-1,350,20" dur="4s" repeatCount="indefinite"/>
   </line>
-  <line x1="240" y1="32" x2="240" y2="46" stroke="#707070" stroke-width="0.5" opacity="0.3">
-    <animateTransform attributeName="transform" type="rotate" values="0.8,240,32;-0.8,240,32;0.8,240,32" dur="3.5s" repeatCount="indefinite"/>
+  <line x1="355" y1="20" x2="355" y2="36" stroke="#707070" stroke-width="0.5" opacity="0.25">
+    <animateTransform attributeName="transform" type="rotate" values="0.8,355,20;-0.8,355,20;0.8,355,20" dur="3.5s" repeatCount="indefinite"/>
   </line>
-  <line x1="245" y1="32" x2="245" y2="42" stroke="#707070" stroke-width="0.5" opacity="0.3">
-    <animateTransform attributeName="transform" type="rotate" values="-0.6,245,32;1,245,32;-0.6,245,32" dur="4.5s" repeatCount="indefinite"/>
+  <line x1="360" y1="20" x2="360" y2="32" stroke="#707070" stroke-width="0.5" opacity="0.25">
+    <animateTransform attributeName="transform" type="rotate" values="-0.6,360,20;1,360,20;-0.6,360,20" dur="4.5s" repeatCount="indefinite"/>
   </line>
 </svg>`,
 
@@ -307,17 +408,21 @@ export const lofiRoomBackgrounds: Record<string, string> = {
   <defs>
     <linearGradient id="lofiLivBg" x1="0" y1="0" x2="0.8" y2="1">
       <stop offset="0%" stop-color="#1C1A2A"/>
-      <stop offset="100%" stop-color="#181628"/>
+      <stop offset="100%" stop-color="#161428"/>
     </linearGradient>
-    <radialGradient id="lofiLivTV" cx="0.72" cy="0.5" r="0.3">
-      <stop offset="0%" stop-color="#5A90D0" stop-opacity="0.2"/>
-      <stop offset="50%" stop-color="#5A90D0" stop-opacity="0.06"/>
+    <radialGradient id="lofiLivTV" cx="0.6" cy="0.45" r="0.25">
+      <stop offset="0%" stop-color="#5A90D0" stop-opacity="0.18"/>
+      <stop offset="50%" stop-color="#5A90D0" stop-opacity="0.05"/>
       <stop offset="100%" stop-color="#5A90D0" stop-opacity="0"/>
     </radialGradient>
-    <radialGradient id="lofiLivLamp" cx="0.5" cy="0.4" r="0.2">
-      <stop offset="0%" stop-color="#FFE0A0" stop-opacity="0.25"/>
-      <stop offset="50%" stop-color="#FFD080" stop-opacity="0.08"/>
+    <radialGradient id="lofiLivLamp" cx="0.47" cy="0.35" r="0.2">
+      <stop offset="0%" stop-color="#FFE0A0" stop-opacity="0.22"/>
+      <stop offset="50%" stop-color="#FFD080" stop-opacity="0.06"/>
       <stop offset="100%" stop-color="#FFD080" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="lofiLivCandle" cx="0.28" cy="0.78" r="0.1">
+      <stop offset="0%" stop-color="#FFD040" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#FFD040" stop-opacity="0"/>
     </radialGradient>
   </defs>
 
@@ -329,111 +434,144 @@ export const lofiRoomBackgrounds: Record<string, string> = {
   <rect width="400" height="100" fill="url(#lofiLivTV)">
     <animate attributeName="opacity" values="0.5;1;0.6;0.9;0.5" dur="3s" repeatCount="indefinite"/>
   </rect>
+  <rect width="400" height="100" fill="url(#lofiLivCandle)">
+    <animate attributeName="opacity" values="0.4;0.8;0.3;0.7;0.5;0.9;0.4" dur="1.5s" repeatCount="indefinite"/>
+  </rect>
 
   <!-- baseboard -->
-  <rect x="0" y="82" width="400" height="3" fill="#1A1830" opacity="0.2"/>
+  <rect x="0" y="82" width="400" height="3" fill="#141230" opacity="0.2"/>
 
   <!-- floor -->
-  <rect x="0" y="85" width="400" height="15" fill="#0E0D1A" opacity="0.6"/>
-  <line x1="0" y1="85" x2="400" y2="85" stroke="#2A2840" stroke-width="0.5" opacity="0.4"/>
-  <line x1="0" y1="92" x2="400" y2="92" stroke="#1A1830" stroke-width="0.3" opacity="0.12"/>
-  <!-- rug -->
-  <rect x="100" y="86" width="60" height="6" rx="2" fill="#7A4040" opacity="0.12"/>
+  <rect x="0" y="85" width="400" height="15" fill="#0C0B1A" opacity="0.6"/>
+  <line x1="0" y1="85" x2="400" y2="85" stroke="#2A2840" stroke-width="0.5" opacity="0.35"/>
+  <line x1="0" y1="90" x2="400" y2="90" stroke="#1A1830" stroke-width="0.3" opacity="0.12"/>
+  <line x1="0" y1="95" x2="400" y2="95" stroke="#1A1830" stroke-width="0.3" opacity="0.08"/>
+  <line x1="70" y1="85" x2="70" y2="100" stroke="#1A1830" stroke-width="0.2" opacity="0.06"/>
+  <line x1="150" y1="85" x2="150" y2="100" stroke="#1A1830" stroke-width="0.2" opacity="0.06"/>
+  <line x1="230" y1="85" x2="230" y2="100" stroke="#1A1830" stroke-width="0.2" opacity="0.06"/>
+  <line x1="310" y1="85" x2="310" y2="100" stroke="#1A1830" stroke-width="0.2" opacity="0.06"/>
+  <!-- area rug -->
+  <rect x="60" y="86" width="70" height="6" rx="2" fill="#7A4040" opacity="0.1"/>
 
-  <!-- SOFA — 64W × 26H, back top at y=59, seat at y=71 -->
-  <rect x="85" y="59" width="64" height="4" rx="2" fill="#6A4028" opacity="0.6"/>
-  <rect x="82" y="63" width="70" height="18" rx="3" fill="#5A3018" opacity="0.55"/>
-  <!-- cushions -->
-  <rect x="86" y="64" width="19" height="15" rx="3" fill="#6A3820" opacity="0.4"/>
-  <rect x="108" y="64" width="19" height="15" rx="3" fill="#6A3820" opacity="0.4"/>
-  <rect x="130" y="64" width="19" height="15" rx="3" fill="#6A3820" opacity="0.4"/>
-  <!-- legs -->
-  <rect x="86" y="81" width="2.5" height="5" rx="0.5" fill="#4A2810" opacity="0.4"/>
-  <rect x="146" y="81" width="2.5" height="5" rx="0.5" fill="#4A2810" opacity="0.4"/>
-  <!-- armrests -->
-  <rect x="79" y="60" width="7" height="22" rx="3" fill="#5A3018" opacity="0.45"/>
-  <rect x="149" y="60" width="7" height="22" rx="3" fill="#5A3018" opacity="0.45"/>
-  <!-- throw pillows -->
-  <rect x="89" y="57" width="9" height="7" rx="3" fill="#E0A040" opacity="0.3"/>
-  <rect x="137" y="57" width="8" height="7" rx="3" fill="#5090D0" opacity="0.2"/>
+  <!-- TALL BOOKSHELF — x=38, 18W × 46H -->
+  <rect x="38" y="39" width="18" height="46" rx="1" fill="#2A2040" opacity="0.5"/>
+  <rect x="40" y="42" width="14" height="9" fill="#222040" opacity="0.3"/>
+  <rect x="40" y="54" width="14" height="9" fill="#222040" opacity="0.3"/>
+  <rect x="40" y="66" width="14" height="9" fill="#222040" opacity="0.3"/>
+  <rect x="40" y="78" width="14" height="5" fill="#222040" opacity="0.3"/>
+  <rect x="42" y="43" width="3" height="7" fill="#D06060" opacity="0.25"/>
+  <rect x="46" y="44" width="2.5" height="6" fill="#50A058" opacity="0.2"/>
+  <rect x="49.5" y="43" width="3" height="7" fill="#5090D0" opacity="0.2"/>
+  <rect x="42" y="55" width="3.5" height="7" fill="#D0A040" opacity="0.2"/>
+  <rect x="46.5" y="56" width="2.5" height="6" fill="#9060A0" opacity="0.18"/>
+  <rect x="42" y="67" width="4" height="7" fill="#C08040" opacity="0.18"/>
+  <rect x="47" y="68" width="3" height="6" fill="#5080A0" opacity="0.15"/>
 
-  <!-- COFFEE TABLE — 31W × 14H, top at y=79 -->
-  <rect x="100" y="79" width="31" height="2.5" rx="0.8" fill="#5A4028" opacity="0.45"/>
-  <rect x="103" y="81.5" width="2" height="5" rx="0.5" fill="#4A3018" opacity="0.3"/>
-  <rect x="127" y="81.5" width="2" height="5" rx="0.5" fill="#4A3018" opacity="0.3"/>
-  <!-- CANDLE -->
-  <rect x="113" y="76.5" width="2" height="3" rx="0.3" fill="#E8D8B0" opacity="0.35"/>
-  <ellipse cx="114" cy="75.5" rx="1.2" ry="1.5" fill="#FFD040" opacity="0">
+  <!-- SIDE TABLE + LAMP — x=62 -->
+  <rect x="62" y="72" width="10" height="2" rx="0.5" fill="#4A3828" opacity="0.4"/>
+  <rect x="64" y="74" width="2" height="11" rx="0.5" fill="#3A2818" opacity="0.3"/>
+  <rect x="69" y="74" width="2" height="11" rx="0.5" fill="#3A2818" opacity="0.3"/>
+  <rect x="65" y="68" width="4" height="4" rx="1" fill="#3A3050" opacity="0.4"/>
+  <ellipse cx="67" cy="67" rx="3" ry="2" fill="#FFE0A0" opacity="0.1">
+    <animate attributeName="opacity" values="0.08;0.14;0.09;0.13;0.08" dur="5s" repeatCount="indefinite"/>
+  </ellipse>
+
+  <!-- SOFA — 64W, x=80 -->
+  <rect x="80" y="59" width="64" height="4" rx="2" fill="#6A4028" opacity="0.6"/>
+  <rect x="77" y="63" width="70" height="18" rx="3" fill="#5A3018" opacity="0.55"/>
+  <rect x="81" y="64" width="19" height="15" rx="3" fill="#6A3820" opacity="0.4"/>
+  <rect x="103" y="64" width="19" height="15" rx="3" fill="#6A3820" opacity="0.4"/>
+  <rect x="125" y="64" width="19" height="15" rx="3" fill="#6A3820" opacity="0.4"/>
+  <rect x="81" y="81" width="2.5" height="5" rx="0.5" fill="#4A2810" opacity="0.4"/>
+  <rect x="141" y="81" width="2.5" height="5" rx="0.5" fill="#4A2810" opacity="0.4"/>
+  <rect x="74" y="60" width="7" height="22" rx="3" fill="#5A3018" opacity="0.45"/>
+  <rect x="144" y="60" width="7" height="22" rx="3" fill="#5A3018" opacity="0.45"/>
+  <rect x="84" y="57" width="9" height="7" rx="3" fill="#E0A040" opacity="0.3"/>
+  <rect x="132" y="57" width="8" height="7" rx="3" fill="#5090D0" opacity="0.2"/>
+
+  <!-- COFFEE TABLE — 30W, x=90 -->
+  <rect x="90" y="79" width="30" height="2.5" rx="0.8" fill="#5A4028" opacity="0.45"/>
+  <rect x="93" y="81.5" width="2" height="5" rx="0.5" fill="#4A3018" opacity="0.3"/>
+  <rect x="117" y="81.5" width="2" height="5" rx="0.5" fill="#4A3018" opacity="0.3"/>
+  <!-- candle -->
+  <rect x="103" y="76.5" width="2" height="3" rx="0.3" fill="#E8D8B0" opacity="0.35"/>
+  <ellipse cx="104" cy="75.5" rx="1.2" ry="1.5" fill="#FFD040" opacity="0">
     <animate attributeName="opacity" values="0.15;0.35;0.1;0.3;0.2;0.28;0.15" dur="1.5s" repeatCount="indefinite"/>
     <animate attributeName="ry" values="1.5;2;1.2;1.8;1.5" dur="1.2s" repeatCount="indefinite"/>
   </ellipse>
-  <circle cx="114" cy="75" r="0.6" fill="#FFF5D0" opacity="0">
+  <circle cx="104" cy="75" r="0.6" fill="#FFF5D0" opacity="0">
     <animate attributeName="opacity" values="0.1;0.3;0.08;0.25;0.12;0.22;0.1" dur="1.5s" repeatCount="indefinite"/>
   </circle>
-  <ellipse cx="114" cy="79" rx="6" ry="1.5" fill="#FFD040" opacity="0.015">
-    <animate attributeName="opacity" values="0.01;0.03;0.012;0.025;0.01" dur="1.5s" repeatCount="indefinite"/>
-  </ellipse>
 
-  <!-- TV — 37W × 21H on console -->
-  <rect x="250" y="42" width="37" height="21" rx="1.5" fill="#0E0E1E" opacity="0.8"/>
-  <rect x="252" y="44" width="33" height="17" rx="1" fill="#1A2A4A">
-    <animate attributeName="fill" values="#1A2A4A;#2A1A4A;#1A4A3A;#3A2A1A;#1A2A4A" dur="12s" repeatCount="indefinite"/>
-  </rect>
-  <rect x="252" y="44" width="33" height="17" rx="1" fill="#FFF" opacity="0">
-    <animate attributeName="opacity" values="0.03;0.08;0.04;0.06;0.03" dur="3s" repeatCount="indefinite"/>
-  </rect>
-  <!-- TV glow on wall -->
-  <rect x="240" y="18" width="55" height="28" rx="3" fill="#5A90D0" opacity="0">
-    <animate attributeName="fill" values="#5A90D0;#9060C0;#50C080;#C08040;#5A90D0" dur="12s" repeatCount="indefinite"/>
-    <animate attributeName="opacity" values="0.015;0.04;0.02;0.035;0.015" dur="3s" repeatCount="indefinite"/>
-  </rect>
-  <!-- TV glow on floor -->
-  <rect x="245" y="85" width="50" height="10" fill="#5A90D0" opacity="0">
-    <animate attributeName="fill" values="#5A90D0;#9060C0;#50C080;#C08040;#5A90D0" dur="12s" repeatCount="indefinite"/>
-    <animate attributeName="opacity" values="0.005;0.015;0.008;0.012;0.005" dur="3s" repeatCount="indefinite"/>
-  </rect>
-  <!-- TV console — 37W × 15H -->
-  <rect x="250" y="63" width="37" height="5" rx="1" fill="#3A2820" opacity="0.5"/>
-  <rect x="253" y="68" width="3" height="17" rx="0.8" fill="#2A1810" opacity="0.35"/>
-  <rect x="281" y="68" width="3" height="17" rx="0.8" fill="#2A1810" opacity="0.35"/>
+  <!-- WALL ART — above sofa -->
+  <rect x="100" y="24" width="16" height="12" rx="1" fill="#1A1830" opacity="0.35"/>
+  <rect x="101.5" y="25.5" width="13" height="9" fill="#2A2848" opacity="0.25"/>
 
-  <!-- FLOOR LAMP — shade 9W at y=39 (150cm) -->
-  <line x1="195" y1="39" x2="195" y2="82" stroke="#3A3850" stroke-width="1" opacity="0.45"/>
-  <ellipse cx="195" cy="37" rx="5" ry="3.5" fill="#FFE0A0" opacity="0.18">
+  <!-- FLOOR LAMP — x=185 -->
+  <line x1="185" y1="35" x2="185" y2="82" stroke="#3A3850" stroke-width="1" opacity="0.45"/>
+  <ellipse cx="185" cy="33" rx="5" ry="3.5" fill="#FFE0A0" opacity="0.18">
     <animate attributeName="opacity" values="0.15;0.22;0.16;0.2;0.15" dur="5s" repeatCount="indefinite"/>
   </ellipse>
-  <circle cx="195" cy="37" r="2" fill="#FFF5D0" opacity="0.15">
+  <circle cx="185" cy="33" r="2" fill="#FFF5D0" opacity="0.15">
     <animate attributeName="opacity" values="0.12;0.2;0.14;0.18;0.12" dur="5s" repeatCount="indefinite"/>
   </circle>
-  <ellipse cx="195" cy="84" rx="4" ry="1.5" fill="#3A3850" opacity="0.3"/>
-  <ellipse cx="195" cy="88" rx="10" ry="3" fill="#FFE0A0" opacity="0.02">
+  <ellipse cx="185" cy="84" rx="4" ry="1.5" fill="#3A3850" opacity="0.3"/>
+  <ellipse cx="185" cy="88" rx="12" ry="3" fill="#FFE0A0" opacity="0.02">
     <animate attributeName="opacity" values="0.015;0.03;0.018;0.025;0.015" dur="5s" repeatCount="indefinite"/>
   </ellipse>
 
-  <!-- WINDOW — 28W × 37H -->
-  <rect x="170" y="10" width="28" height="37" rx="1.5" fill="#242240" opacity="0.35"/>
-  <rect x="172" y="12" width="11" height="33" fill="#2E2C50" opacity="0.3"/>
-  <rect x="185" y="12" width="11" height="33" fill="#2E2C50" opacity="0.3"/>
-  <!-- curtains -->
-  <rect x="170" y="10" width="3.5" height="37" fill="#302850" opacity="0.2">
-    <animateTransform attributeName="transform" type="rotate" values="0,172,10;0.8,172,10;-0.4,172,10;0,172,10" dur="5s" repeatCount="indefinite"/>
+  <!-- TV — 35W × 20H, x=225 -->
+  <rect x="225" y="38" width="35" height="20" rx="1.5" fill="#0E0E1E" opacity="0.8"/>
+  <rect x="227" y="40" width="31" height="16" rx="1" fill="#1A2A4A">
+    <animate attributeName="fill" values="#1A2A4A;#2A1A4A;#1A4A3A;#3A2A1A;#1A2A4A" dur="12s" repeatCount="indefinite"/>
   </rect>
-  <rect x="194.5" y="10" width="3.5" height="37" fill="#302850" opacity="0.2">
-    <animateTransform attributeName="transform" type="rotate" values="0,196,10;-0.6,196,10;0.5,196,10;0,196,10" dur="5.5s" repeatCount="indefinite"/>
+  <rect x="227" y="40" width="31" height="16" rx="1" fill="#FFF" opacity="0">
+    <animate attributeName="opacity" values="0.03;0.08;0.04;0.06;0.03" dur="3s" repeatCount="indefinite"/>
+  </rect>
+  <!-- TV glow on wall -->
+  <rect x="215" y="14" width="55" height="28" rx="3" fill="#5A90D0" opacity="0">
+    <animate attributeName="fill" values="#5A90D0;#9060C0;#50C080;#C08040;#5A90D0" dur="12s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.01;0.03;0.015;0.025;0.01" dur="3s" repeatCount="indefinite"/>
+  </rect>
+  <rect x="220" y="85" width="50" height="8" fill="#5A90D0" opacity="0">
+    <animate attributeName="fill" values="#5A90D0;#9060C0;#50C080;#C08040;#5A90D0" dur="12s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.005;0.015;0.008;0.012;0.005" dur="3s" repeatCount="indefinite"/>
+  </rect>
+  <!-- TV console -->
+  <rect x="223" y="58" width="38" height="5" rx="1" fill="#3A2820" opacity="0.5"/>
+  <rect x="226" y="63" width="3" height="22" rx="0.8" fill="#2A1810" opacity="0.35"/>
+  <rect x="255" y="63" width="3" height="22" rx="0.8" fill="#2A1810" opacity="0.35"/>
+
+  <!-- WINDOW — 26W × 34H, x=275 -->
+  <rect x="275" y="10" width="26" height="34" rx="1.5" fill="#242240" opacity="0.35"/>
+  <rect x="277" y="12" width="10" height="30" fill="#2E2C50" opacity="0.3"/>
+  <rect x="289" y="12" width="10" height="30" fill="#2E2C50" opacity="0.3"/>
+  <rect x="275" y="10" width="3.5" height="34" fill="#302850" opacity="0.2">
+    <animateTransform attributeName="transform" type="rotate" values="0,277,10;0.8,277,10;-0.4,277,10;0,277,10" dur="5s" repeatCount="indefinite"/>
+  </rect>
+  <rect x="297.5" y="10" width="3.5" height="34" fill="#302850" opacity="0.2">
+    <animateTransform attributeName="transform" type="rotate" values="0,299,10;-0.6,299,10;0.5,299,10;0,299,10" dur="5.5s" repeatCount="indefinite"/>
   </rect>
 
-  <!-- PLANT — 7W pot -->
-  <rect x="305" y="72" width="7" height="13" rx="2" fill="#2A3828" opacity="0.4"/>
-  <ellipse cx="308" cy="69" rx="6" ry="5" fill="#2A5030" opacity="0.35">
-    <animateTransform attributeName="transform" type="rotate" values="-1.5,308,78;1.5,308,78;-1.5,308,78" dur="4s" repeatCount="indefinite"/>
+  <!-- READING CHAIR — x=320, 16W -->
+  <rect x="320" y="62" width="16" height="4" rx="2" fill="#4A3040" opacity="0.4"/>
+  <rect x="318" y="66" width="20" height="16" rx="3" fill="#3A2030" opacity="0.4"/>
+  <rect x="320" y="82" width="2" height="4" rx="0.5" fill="#2A1820" opacity="0.3"/>
+  <rect x="334" y="82" width="2" height="4" rx="0.5" fill="#2A1820" opacity="0.3"/>
+  <rect x="324" y="59" width="7" height="5" rx="2" fill="#5A4068" opacity="0.2"/>
+
+  <!-- PLANT — x=352 -->
+  <rect x="350" y="72" width="7" height="13" rx="2" fill="#2A3828" opacity="0.4"/>
+  <ellipse cx="353" cy="69" rx="6" ry="5" fill="#2A5030" opacity="0.35">
+    <animateTransform attributeName="transform" type="rotate" values="-1.5,353,78;1.5,353,78;-1.5,353,78" dur="4s" repeatCount="indefinite"/>
   </ellipse>
 
   <!-- dust in lamp light -->
-  <circle cx="192" cy="48" r="0.4" fill="#FFE4A0" opacity="0">
+  <circle cx="182" cy="48" r="0.4" fill="#FFE4A0" opacity="0">
     <animate attributeName="opacity" values="0;0.15;0.08;0.12;0" dur="5s" repeatCount="indefinite"/>
     <animate attributeName="cy" from="52" to="40" dur="5s" repeatCount="indefinite"/>
   </circle>
-  <circle cx="200" cy="54" r="0.35" fill="#FFE4A0" opacity="0">
+  <circle cx="190" cy="54" r="0.35" fill="#FFE4A0" opacity="0">
     <animate attributeName="opacity" values="0;0.12;0.06;0" dur="6s" repeatCount="indefinite" begin="2.5s"/>
     <animate attributeName="cy" from="58" to="46" dur="6s" repeatCount="indefinite" begin="2.5s"/>
   </circle>
@@ -445,12 +583,12 @@ export const lofiRoomBackgrounds: Record<string, string> = {
       <stop offset="0%" stop-color="#161030"/>
       <stop offset="100%" stop-color="#1A1438"/>
     </linearGradient>
-    <radialGradient id="lofiBedMoon" cx="0.85" cy="0.12" r="0.35">
-      <stop offset="0%" stop-color="#E0D8C0" stop-opacity="0.2"/>
-      <stop offset="40%" stop-color="#C0B8A0" stop-opacity="0.06"/>
+    <radialGradient id="lofiBedMoon" cx="0.14" cy="0.12" r="0.25">
+      <stop offset="0%" stop-color="#E0D8C0" stop-opacity="0.18"/>
+      <stop offset="40%" stop-color="#C0B8A0" stop-opacity="0.05"/>
       <stop offset="100%" stop-color="#C0B8A0" stop-opacity="0"/>
     </radialGradient>
-    <radialGradient id="lofiBedLamp" cx="0.62" cy="0.62" r="0.18">
+    <radialGradient id="lofiBedLamp" cx="0.45" cy="0.55" r="0.15">
       <stop offset="0%" stop-color="#F0D080" stop-opacity="0.15"/>
       <stop offset="50%" stop-color="#F0D080" stop-opacity="0.04"/>
       <stop offset="100%" stop-color="#F0D080" stop-opacity="0"/>
@@ -472,101 +610,131 @@ export const lofiRoomBackgrounds: Record<string, string> = {
   <!-- floor -->
   <rect x="0" y="85" width="400" height="15" fill="#0C0A1E" opacity="0.6"/>
   <line x1="0" y1="85" x2="400" y2="85" stroke="#2A2848" stroke-width="0.3" opacity="0.3"/>
+  <line x1="0" y1="90" x2="400" y2="90" stroke="#1A1838" stroke-width="0.3" opacity="0.1"/>
+  <line x1="0" y1="95" x2="400" y2="95" stroke="#1A1838" stroke-width="0.3" opacity="0.08"/>
+  <line x1="90" y1="85" x2="90" y2="100" stroke="#1A1838" stroke-width="0.2" opacity="0.06"/>
+  <line x1="180" y1="85" x2="180" y2="100" stroke="#1A1838" stroke-width="0.2" opacity="0.06"/>
+  <line x1="270" y1="85" x2="270" y2="100" stroke="#1A1838" stroke-width="0.2" opacity="0.06"/>
+  <line x1="360" y1="85" x2="360" y2="100" stroke="#1A1838" stroke-width="0.2" opacity="0.06"/>
+  <!-- bedside rug -->
+  <rect x="160" y="86" width="40" height="5" rx="2" fill="#4A3050" opacity="0.1"/>
 
-  <!-- BED (side view) — 61W, mattress top y=67, headboard top y=48 -->
-  <!-- headboard (side: 3W thick, 37H) -->
-  <rect x="110" y="48" width="3" height="37" rx="1" fill="#4A3428" opacity="0.7"/>
-  <!-- mattress + frame -->
-  <rect x="113" y="67" width="61" height="18" rx="2" fill="#2A2050" opacity="0.55"/>
-  <!-- duvet -->
-  <rect x="115" y="64" width="58" height="18" rx="2.5" fill="#3A3068" opacity="0.5"/>
-  <!-- duvet folds -->
-  <line x1="118" y1="70" x2="170" y2="70" stroke="#4A4080" stroke-width="0.4" opacity="0.2"/>
-  <line x1="118" y1="76" x2="170" y2="76" stroke="#4A4080" stroke-width="0.3" opacity="0.15"/>
-  <!-- pillows -->
-  <ellipse cx="123" cy="66" rx="8" ry="4" fill="#D8D0A8" opacity="0.22"/>
-  <ellipse cx="123" cy="69" rx="7" ry="3.5" fill="#D0C8A0" opacity="0.18"/>
-  <ellipse cx="135" cy="67" rx="7" ry="3.5" fill="#D0C8A0" opacity="0.15"/>
-  <!-- footboard (side: 3W) -->
-  <rect x="174" y="67" width="3" height="18" rx="1" fill="#4A3428" opacity="0.5"/>
-  <!-- legs -->
-  <rect x="111" y="84" width="2.5" height="4" rx="0.5" fill="#4A3428" opacity="0.4"/>
-  <rect x="173" y="84" width="2.5" height="4" rx="0.5" fill="#4A3428" opacity="0.4"/>
+  <!-- WINDOW — 28W × 35H, x=38, night sky -->
+  <rect x="38" y="10" width="28" height="35" rx="1.5" fill="#181640" opacity="0.6"/>
+  <rect x="40" y="12" width="11" height="31" fill="#1A1848" opacity="0.6"/>
+  <rect x="53" y="12" width="11" height="31" fill="#1A1848" opacity="0.6"/>
+  <rect x="38" y="10" width="3.5" height="35" fill="#2A2058" opacity="0.25">
+    <animateTransform attributeName="transform" type="rotate" values="0,40,10;0.5,40,10;-0.3,40,10;0,40,10" dur="7s" repeatCount="indefinite"/>
+  </rect>
+  <rect x="62.5" y="10" width="3.5" height="35" fill="#2A2058" opacity="0.25">
+    <animateTransform attributeName="transform" type="rotate" values="0,64,10;-0.4,64,10;0.3,64,10;0,64,10" dur="7.5s" repeatCount="indefinite"/>
+  </rect>
+  <!-- stars -->
+  <circle cx="44" cy="15" r="0.5" fill="#FFF">
+    <animate attributeName="opacity" values="0.1;0.6;0.15;0.5;0.1" dur="3s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="50" cy="22" r="0.4" fill="#FFF">
+    <animate attributeName="opacity" values="0.15;0.5;0.1;0.4;0.15" dur="3.5s" repeatCount="indefinite" begin="1s"/>
+  </circle>
+  <circle cx="57" cy="14" r="0.45" fill="#FFF">
+    <animate attributeName="opacity" values="0.1;0.55;0.15;0.45;0.1" dur="4s" repeatCount="indefinite" begin="0.5s"/>
+  </circle>
+  <circle cx="62" cy="21" r="0.35" fill="#FFF">
+    <animate attributeName="opacity" values="0.08;0.4;0.12;0.35;0.08" dur="3.8s" repeatCount="indefinite" begin="1.5s"/>
+  </circle>
+  <circle cx="45" cy="28" r="0.3" fill="#FFF">
+    <animate attributeName="opacity" values="0.05;0.35;0.1;0.25;0.05" dur="5s" repeatCount="indefinite" begin="2s"/>
+  </circle>
+  <!-- moon -->
+  <circle cx="60" cy="17" r="3" fill="#E8E0C8" opacity="0.4">
+    <animate attributeName="opacity" values="0.35;0.5;0.38;0.45;0.35" dur="6s" repeatCount="indefinite"/>
+  </circle>
+  <ellipse cx="55" cy="18" rx="6" ry="2.5" fill="#1A1848" opacity="0">
+    <animate attributeName="opacity" values="0;0;0.4;0.5;0.4;0;0" dur="18s" repeatCount="indefinite"/>
+    <animate attributeName="cx" from="42" to="68" dur="18s" repeatCount="indefinite"/>
+  </ellipse>
+  <!-- moonbeam -->
+  <polygon points="40,45 66,45 76,100 22,100" fill="#C8C0E0" opacity="0.015">
+    <animate attributeName="opacity" values="0.01;0.025;0.015;0.02;0.01" dur="8s" repeatCount="indefinite"/>
+  </polygon>
 
-  <!-- NIGHTSTAND — 14W × 20H, y=65 to y=85 -->
-  <rect x="185" y="65" width="14" height="20" rx="1.5" fill="#2A2040" opacity="0.5"/>
-  <rect x="187" y="67" width="10" height="7" rx="0.8" fill="#322850" opacity="0.35"/>
-  <rect x="187" y="76" width="10" height="7" rx="0.8" fill="#322850" opacity="0.35"/>
+  <!-- NIGHTSTAND 1 — 12W, x=80 -->
+  <rect x="80" y="67" width="12" height="18" rx="1" fill="#2A2040" opacity="0.45"/>
+  <rect x="82" y="69" width="8" height="6" rx="0.5" fill="#322850" opacity="0.3"/>
+  <rect x="82" y="77" width="8" height="6" rx="0.5" fill="#322850" opacity="0.3"/>
 
-  <!-- LAMP on nightstand — shade 5W at y=57 -->
-  <rect x="189" y="58" width="6" height="7" rx="1.5" fill="#403060" opacity="0.5"/>
-  <ellipse cx="192" cy="56" rx="4" ry="2.5" fill="#F0D080" opacity="0.2">
+  <!-- BED — headboard 3W, mattress 61W, footboard 3W -->
+  <rect x="92" y="48" width="3" height="37" rx="1" fill="#4A3428" opacity="0.7"/>
+  <rect x="95" y="67" width="61" height="18" rx="2" fill="#2A2050" opacity="0.55"/>
+  <rect x="97" y="64" width="58" height="18" rx="2.5" fill="#3A3068" opacity="0.5"/>
+  <line x1="100" y1="70" x2="152" y2="70" stroke="#4A4080" stroke-width="0.4" opacity="0.2"/>
+  <line x1="100" y1="76" x2="152" y2="76" stroke="#4A4080" stroke-width="0.3" opacity="0.15"/>
+  <ellipse cx="105" cy="66" rx="8" ry="4" fill="#D8D0A8" opacity="0.22"/>
+  <ellipse cx="105" cy="69" rx="7" ry="3.5" fill="#D0C8A0" opacity="0.18"/>
+  <ellipse cx="117" cy="67" rx="7" ry="3.5" fill="#D0C8A0" opacity="0.15"/>
+  <rect x="156" y="67" width="3" height="18" rx="1" fill="#4A3428" opacity="0.5"/>
+  <rect x="93" y="84" width="2.5" height="4" rx="0.5" fill="#4A3428" opacity="0.4"/>
+  <rect x="155" y="84" width="2.5" height="4" rx="0.5" fill="#4A3428" opacity="0.4"/>
+
+  <!-- WALL ART above bed -->
+  <rect x="115" y="24" width="16" height="12" rx="0.8" fill="#1A1838" opacity="0.3"/>
+  <rect x="116.5" y="25.5" width="13" height="9" fill="#222048" opacity="0.2"/>
+
+  <!-- NIGHTSTAND 2 + LAMP — x=168 -->
+  <rect x="168" y="65" width="14" height="20" rx="1.5" fill="#2A2040" opacity="0.5"/>
+  <rect x="170" y="67" width="10" height="7" rx="0.8" fill="#322850" opacity="0.35"/>
+  <rect x="170" y="76" width="10" height="7" rx="0.8" fill="#322850" opacity="0.35"/>
+  <rect x="172" y="58" width="6" height="7" rx="1.5" fill="#403060" opacity="0.5"/>
+  <ellipse cx="175" cy="56" rx="4" ry="2.5" fill="#F0D080" opacity="0.2">
     <animate attributeName="opacity" values="0.16;0.25;0.18;0.23;0.16" dur="4s" repeatCount="indefinite"/>
   </ellipse>
-  <circle cx="192" cy="56" r="1.5" fill="#FFF5D0" opacity="0.2">
+  <circle cx="175" cy="56" r="1.5" fill="#FFF5D0" opacity="0.2">
     <animate attributeName="opacity" values="0.15;0.25;0.17;0.22;0.15" dur="4s" repeatCount="indefinite"/>
   </circle>
-  <ellipse cx="192" cy="65" rx="8" ry="2.5" fill="#F0D080" opacity="0.02">
+  <ellipse cx="175" cy="65" rx="8" ry="2.5" fill="#F0D080" opacity="0.02">
     <animate attributeName="opacity" values="0.015;0.03;0.018;0.025;0.015" dur="4s" repeatCount="indefinite"/>
   </ellipse>
 
-  <!-- WINDOW — 28W × 37H, night sky -->
-  <rect x="280" y="10" width="28" height="37" rx="1.5" fill="#181640" opacity="0.6"/>
-  <rect x="282" y="12" width="11" height="33" fill="#1A1848" opacity="0.6"/>
-  <rect x="295" y="12" width="11" height="33" fill="#1A1848" opacity="0.6"/>
-  <!-- curtains -->
-  <rect x="280" y="10" width="3.5" height="37" fill="#2A2058" opacity="0.25">
-    <animateTransform attributeName="transform" type="rotate" values="0,282,10;0.5,282,10;-0.3,282,10;0,282,10" dur="7s" repeatCount="indefinite"/>
-  </rect>
-  <rect x="304.5" y="10" width="3.5" height="37" fill="#2A2058" opacity="0.25">
-    <animateTransform attributeName="transform" type="rotate" values="0,306,10;-0.4,306,10;0.3,306,10;0,306,10" dur="7.5s" repeatCount="indefinite"/>
-  </rect>
+  <!-- DRESSER — 30W × 24H, x=235 -->
+  <rect x="235" y="61" width="30" height="24" rx="1.5" fill="#2A2040" opacity="0.4"/>
+  <rect x="237" y="64" width="26" height="8" rx="0.8" fill="#322850" opacity="0.25"/>
+  <rect x="237" y="75" width="26" height="8" rx="0.8" fill="#322850" opacity="0.25"/>
+  <rect x="247" y="67" width="6" height="0.8" rx="0.3" fill="#4A4060" opacity="0.3"/>
+  <rect x="247" y="78" width="6" height="0.8" rx="0.3" fill="#4A4060" opacity="0.3"/>
 
-  <!-- STARS -->
-  <circle cx="286" cy="15" r="0.5" fill="#FFF">
-    <animate attributeName="opacity" values="0.1;0.6;0.15;0.5;0.1" dur="3s" repeatCount="indefinite"/>
-  </circle>
-  <circle cx="292" cy="22" r="0.4" fill="#FFF">
-    <animate attributeName="opacity" values="0.15;0.5;0.1;0.4;0.15" dur="3.5s" repeatCount="indefinite" begin="1s"/>
-  </circle>
-  <circle cx="299" cy="14" r="0.45" fill="#FFF">
-    <animate attributeName="opacity" values="0.1;0.55;0.15;0.45;0.1" dur="4s" repeatCount="indefinite" begin="0.5s"/>
-  </circle>
-  <circle cx="304" cy="21" r="0.35" fill="#FFF">
-    <animate attributeName="opacity" values="0.08;0.4;0.12;0.35;0.08" dur="3.8s" repeatCount="indefinite" begin="1.5s"/>
-  </circle>
-  <circle cx="287" cy="28" r="0.3" fill="#FFF">
-    <animate attributeName="opacity" values="0.05;0.35;0.1;0.25;0.05" dur="5s" repeatCount="indefinite" begin="2s"/>
-  </circle>
+  <!-- MIRROR above dresser -->
+  <rect x="242" y="24" width="16" height="22" rx="1" fill="#1A1838" opacity="0.35"/>
+  <rect x="243.5" y="25.5" width="13" height="19" fill="#222048" opacity="0.3"/>
+  <line x1="246" y1="30" x2="253" y2="30" stroke="#3A3868" stroke-width="0.3" opacity="0.15"/>
 
-  <!-- MOON -->
-  <circle cx="302" cy="17" r="3.5" fill="#E8E0C8" opacity="0.4">
-    <animate attributeName="opacity" values="0.35;0.5;0.38;0.45;0.35" dur="6s" repeatCount="indefinite"/>
-  </circle>
-  <!-- cloud drift -->
-  <ellipse cx="295" cy="18" rx="8" ry="3" fill="#1A1848" opacity="0">
-    <animate attributeName="opacity" values="0;0;0.4;0.5;0.4;0;0" dur="18s" repeatCount="indefinite"/>
-    <animate attributeName="cx" from="284" to="312" dur="18s" repeatCount="indefinite"/>
+  <!-- WARDROBE — 24W × 52H, x=280 -->
+  <rect x="280" y="33" width="24" height="52" rx="1.5" fill="#2A2040" opacity="0.45"/>
+  <line x1="292" y1="33" x2="292" y2="85" stroke="#222040" stroke-width="0.4" opacity="0.3"/>
+  <rect x="289" y="55" width="1.5" height="5" rx="0.5" fill="#4A4060" opacity="0.3"/>
+  <rect x="293.5" y="55" width="1.5" height="5" rx="0.5" fill="#4A4060" opacity="0.3"/>
+
+  <!-- READING CHAIR — x=322, 16W -->
+  <rect x="322" y="62" width="16" height="4" rx="2" fill="#3A2848" opacity="0.4"/>
+  <rect x="320" y="66" width="20" height="16" rx="3" fill="#2A1838" opacity="0.4"/>
+  <rect x="322" y="82" width="2" height="4" rx="0.5" fill="#1A1028" opacity="0.3"/>
+  <rect x="336" y="82" width="2" height="4" rx="0.5" fill="#1A1028" opacity="0.3"/>
+  <rect x="324" y="59" width="7" height="5" rx="2" fill="#5A4068" opacity="0.2"/>
+
+  <!-- PLANT — x=355 -->
+  <rect x="353" y="72" width="7" height="13" rx="2" fill="#2A3828" opacity="0.35"/>
+  <ellipse cx="356" cy="69" rx="6" ry="5" fill="#1A4030" opacity="0.3">
+    <animateTransform attributeName="transform" type="rotate" values="-1,356,78;1,356,78;-1,356,78" dur="5s" repeatCount="indefinite"/>
   </ellipse>
 
-  <!-- MOONBEAM on floor -->
-  <polygon points="282,47 306,47 318,100 264,100" fill="#C8C0E0" opacity="0.02">
-    <animate attributeName="opacity" values="0.015;0.035;0.02;0.03;0.015" dur="8s" repeatCount="indefinite"/>
-  </polygon>
   <!-- dust in moonbeam -->
-  <circle cx="295" cy="58" r="0.5" fill="#D0C8E0" opacity="0">
+  <circle cx="55" cy="58" r="0.5" fill="#D0C8E0" opacity="0">
     <animate attributeName="opacity" values="0;0.15;0.08;0.12;0" dur="5s" repeatCount="indefinite"/>
     <animate attributeName="cy" from="62" to="48" dur="5s" repeatCount="indefinite"/>
   </circle>
-  <circle cx="288" cy="68" r="0.4" fill="#D0C8E0" opacity="0">
+  <circle cx="48" cy="68" r="0.4" fill="#D0C8E0" opacity="0">
     <animate attributeName="opacity" values="0;0.12;0.06;0.1;0" dur="6s" repeatCount="indefinite" begin="2s"/>
     <animate attributeName="cy" from="72" to="55" dur="6s" repeatCount="indefinite" begin="2s"/>
   </circle>
-
-  <!-- DRESSER — 31W × 26H, y=59 to y=85 -->
-  <rect x="330" y="59" width="31" height="26" rx="1.5" fill="#2A2040" opacity="0.4"/>
-  <rect x="332" y="62" width="27" height="9" rx="0.8" fill="#322850" opacity="0.25"/>
-  <rect x="332" y="74" width="27" height="9" rx="0.8" fill="#322850" opacity="0.25"/>
 </svg>`,
 
   not_home: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 100" preserveAspectRatio="xMidYMid slice">
