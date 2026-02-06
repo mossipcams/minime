@@ -41,6 +41,25 @@ describe('Lofi Room Backgrounds', () => {
     expect(svg).toContain('moon');
   });
 
+  it('indoor room furniture should be proportionally sized to avatar (person=45 viewBox units)', () => {
+    // The avatar is ~45 viewBox units tall. A desk monitor should NOT be 40 units
+    // tall (that's person-sized). Realistic: monitor ~10-12 units, desk at y>=62, etc.
+    const indoorRooms = ['office', 'kitchen', 'living_room', 'bedroom'];
+    for (const room of indoorRooms) {
+      const svg = lofiRoomBackgrounds[room];
+      // No furniture element should span more than 55 vertical units (bookshelf/fridge max)
+      const rects = [...svg.matchAll(/rect[^>]*y="(\d+(?:\.\d+)?)"[^>]*height="(\d+(?:\.\d+)?)"/g)];
+      for (const match of rects) {
+        const y = parseFloat(match[1]);
+        const h = parseFloat(match[2]);
+        // Skip full-width background fills (height=100 or height=15 floor)
+        if (h >= 90) continue;
+        // No single furniture rect should be taller than 55 units
+        expect(h, `${room}: rect at y=${y} has height=${h}, max allowed is 55`).toBeLessThanOrEqual(55);
+      }
+    }
+  });
+
   it('each room has rich ambient animations (15+ animated elements)', () => {
     for (const [room, svg] of Object.entries(lofiRoomBackgrounds)) {
       const animCount = (svg.match(/<animate /g) || []).length;
