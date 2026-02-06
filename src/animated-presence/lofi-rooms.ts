@@ -124,60 +124,60 @@ export const lofiRoomBackgrounds: Record<string, string> = {
   <rect x="125" y="42" width="4" height="4" rx="1" fill="#3A5040" opacity="0.55"/>
   <ellipse cx="127" cy="40" rx="4" ry="3" fill="#2A6838" opacity="0.5"/>
 
-  <!-- CHAIR — x=168 (avatar sits here) -->
-  <rect x="168" y="54" width="14" height="18" rx="3" fill="#3A2028" opacity="0.7"/>
-  <rect x="171" y="72" width="8" height="13" rx="1.5" fill="#2E1820" opacity="0.6"/>
+  <!-- CHAIR — x=143 (avatar sits here) -->
+  <rect x="143" y="54" width="14" height="18" rx="3" fill="#3A2028" opacity="0.7"/>
+  <rect x="146" y="72" width="8" height="13" rx="1.5" fill="#2E1820" opacity="0.6"/>
 
-  <!-- DESK — 46W, surface at y=62, x=185 -->
-  <rect x="185" y="62" width="46" height="2.5" rx="0.5" fill="#8B6840" opacity="0.85"/>
-  <rect x="185" y="62" width="46" height="1" fill="#A07848" opacity="0.6"/>
-  <rect x="188" y="64.5" width="2" height="20" fill="#6A5030" opacity="0.7"/>
-  <rect x="227" y="64.5" width="2" height="20" fill="#6A5030" opacity="0.7"/>
-  <rect x="188" y="76" width="41" height="1.2" rx="0.5" fill="#6A5030" opacity="0.35"/>
+  <!-- DESK — 46W, surface at y=62, x=160 -->
+  <rect x="160" y="62" width="46" height="2.5" rx="0.5" fill="#8B6840" opacity="0.85"/>
+  <rect x="160" y="62" width="46" height="1" fill="#A07848" opacity="0.6"/>
+  <rect x="163" y="64.5" width="2" height="20" fill="#6A5030" opacity="0.7"/>
+  <rect x="202" y="64.5" width="2" height="20" fill="#6A5030" opacity="0.7"/>
+  <rect x="163" y="76" width="41" height="1.2" rx="0.5" fill="#6A5030" opacity="0.35"/>
 
   <!-- MONITOR — 17W × 10H -->
-  <rect x="199" y="50" width="17" height="10" rx="1" fill="#0E0E1E" opacity="0.95"/>
-  <rect x="200.5" y="51.5" width="14" height="7" rx="0.8" fill="#1A3058">
+  <rect x="174" y="50" width="17" height="10" rx="1" fill="#0E0E1E" opacity="0.95"/>
+  <rect x="175.5" y="51.5" width="14" height="7" rx="0.8" fill="#1A3058">
     <animate attributeName="fill" values="#1A3058;#1E3860;#1A3058" dur="6s" repeatCount="indefinite"/>
   </rect>
-  <line x1="202" y1="53.5" x2="210" y2="53.5" stroke="#7ABCE0" stroke-width="0.6" opacity="0.65">
+  <line x1="177" y1="53.5" x2="185" y2="53.5" stroke="#7ABCE0" stroke-width="0.6" opacity="0.65">
     <animate attributeName="opacity" values="0.5;0.75;0.45;0.65;0.5" dur="2s" repeatCount="indefinite"/>
   </line>
-  <line x1="202" y1="55.5" x2="212" y2="55.5" stroke="#7ABCE0" stroke-width="0.6" opacity="0.55">
+  <line x1="177" y1="55.5" x2="187" y2="55.5" stroke="#7ABCE0" stroke-width="0.6" opacity="0.55">
     <animate attributeName="opacity" values="0.4;0.65;0.45;0.6;0.4" dur="2.3s" repeatCount="indefinite" begin="0.3s"/>
   </line>
-  <line x1="204" y1="57" x2="209" y2="57" stroke="#A0D070" stroke-width="0.6" opacity="0.5">
+  <line x1="179" y1="57" x2="184" y2="57" stroke="#A0D070" stroke-width="0.6" opacity="0.5">
     <animate attributeName="opacity" values="0.35;0.6;0.4;0.55;0.35" dur="1.8s" repeatCount="indefinite" begin="0.6s"/>
   </line>
-  <rect x="212.5" y="55" width="1" height="2" fill="#FFF" opacity="0">
+  <rect x="187.5" y="55" width="1" height="2" fill="#FFF" opacity="0">
     <animate attributeName="opacity" values="0;0.8;0.8;0" dur="1s" repeatCount="indefinite"/>
   </rect>
   <!-- monitor stand -->
-  <rect x="204" y="60" width="6" height="2" rx="0.5" fill="#0E0E1E" opacity="0.9"/>
-  <rect x="202" y="61.5" width="10" height="1" rx="0.5" fill="#1A1A2E" opacity="0.8"/>
-  <ellipse cx="207" cy="63.5" rx="14" ry="2.5" fill="#4A90D0" opacity="0.08">
+  <rect x="179" y="60" width="6" height="2" rx="0.5" fill="#0E0E1E" opacity="0.9"/>
+  <rect x="177" y="61.5" width="10" height="1" rx="0.5" fill="#1A1A2E" opacity="0.8"/>
+  <ellipse cx="182" cy="63.5" rx="14" ry="2.5" fill="#4A90D0" opacity="0.08">
     <animate attributeName="opacity" values="0.05;0.12;0.06;0.1;0.05" dur="4s" repeatCount="indefinite"/>
   </ellipse>
 
   <!-- KEYBOARD + MUG -->
-  <rect x="200" y="63" width="14" height="1.5" rx="0.5" fill="#1A1A2E" opacity="0.7"/>
-  <rect x="220" y="59" width="2.5" height="3.5" rx="0.5" fill="#A05830" opacity="0.75"/>
-  <rect x="222.5" y="60" width="1.2" height="1.5" rx="0.5" fill="#A05830" opacity="0.55"/>
-  <path d="M221,57.5 Q220,54 222,50" fill="none" stroke="#FFF" stroke-width="0.5" stroke-linecap="round" opacity="0">
+  <rect x="175" y="63" width="14" height="1.5" rx="0.5" fill="#1A1A2E" opacity="0.7"/>
+  <rect x="195" y="59" width="2.5" height="3.5" rx="0.5" fill="#A05830" opacity="0.75"/>
+  <rect x="197.5" y="60" width="1.2" height="1.5" rx="0.5" fill="#A05830" opacity="0.55"/>
+  <path d="M196,57.5 Q195,54 197,50" fill="none" stroke="#FFF" stroke-width="0.5" stroke-linecap="round" opacity="0">
     <animate attributeName="opacity" values="0;0.18;0.12;0.06;0" dur="3s" repeatCount="indefinite"/>
-    <animate attributeName="d" values="M221,57.5 Q220,54 222,50;M221,57.5 Q219,52 221.5,47;M221,57.5 Q222,53 220,49;M221,57.5 Q220,54 222,50" dur="3s" repeatCount="indefinite"/>
+    <animate attributeName="d" values="M196,57.5 Q195,54 197,50;M196,57.5 Q194,52 196.5,47;M196,57.5 Q197,53 195,49;M196,57.5 Q195,54 197,50" dur="3s" repeatCount="indefinite"/>
   </path>
 
   <!-- DESK LAMP -->
-  <line x1="189" y1="62" x2="191" y2="50" stroke="#6A5A4A" stroke-width="1"/>
-  <line x1="191" y1="50" x2="196" y2="47" stroke="#6A5A4A" stroke-width="0.8"/>
-  <ellipse cx="195" cy="46" rx="3" ry="2" fill="#FFE4A0" opacity="0.35">
+  <line x1="164" y1="62" x2="166" y2="50" stroke="#6A5A4A" stroke-width="1"/>
+  <line x1="166" y1="50" x2="171" y2="47" stroke="#6A5A4A" stroke-width="0.8"/>
+  <ellipse cx="170" cy="46" rx="3" ry="2" fill="#FFE4A0" opacity="0.35">
     <animate attributeName="opacity" values="0.3;0.42;0.32;0.4;0.3" dur="5s" repeatCount="indefinite"/>
   </ellipse>
-  <circle cx="195" cy="46" r="1.2" fill="#FFF5D0" opacity="0.45">
+  <circle cx="170" cy="46" r="1.2" fill="#FFF5D0" opacity="0.45">
     <animate attributeName="opacity" values="0.4;0.55;0.42;0.5;0.4" dur="5s" repeatCount="indefinite"/>
   </circle>
-  <ellipse cx="195" cy="62" rx="10" ry="2" fill="#FFE4A0" opacity="0.06">
+  <ellipse cx="170" cy="62" rx="10" ry="2" fill="#FFE4A0" opacity="0.06">
     <animate attributeName="opacity" values="0.04;0.08;0.05;0.07;0.04" dur="5s" repeatCount="indefinite"/>
   </ellipse>
 
@@ -212,14 +212,14 @@ export const lofiRoomBackgrounds: Record<string, string> = {
   </ellipse>
 
   <!-- rug under desk area -->
-  <rect x="175" y="86" width="52" height="5" rx="2" fill="#4A2840" opacity="0.15"/>
+  <rect x="150" y="86" width="52" height="5" rx="2" fill="#4A2840" opacity="0.15"/>
 
   <!-- dust in lamp light -->
-  <circle cx="193" cy="54" r="0.5" fill="#FFE4A0" opacity="0">
+  <circle cx="168" cy="54" r="0.5" fill="#FFE4A0" opacity="0">
     <animate attributeName="opacity" values="0;0.22;0.12;0.16;0" dur="4s" repeatCount="indefinite"/>
     <animate attributeName="cy" from="58" to="46" dur="4s" repeatCount="indefinite"/>
   </circle>
-  <circle cx="200" cy="58" r="0.35" fill="#FFE4A0" opacity="0">
+  <circle cx="175" cy="58" r="0.35" fill="#FFE4A0" opacity="0">
     <animate attributeName="opacity" values="0;0.16;0.08;0" dur="5s" repeatCount="indefinite" begin="2s"/>
     <animate attributeName="cy" from="62" to="48" dur="5s" repeatCount="indefinite" begin="2s"/>
   </circle>
