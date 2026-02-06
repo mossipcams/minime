@@ -43,4 +43,46 @@ describe('Dog Avatar', () => {
   it('sleeping dog curls up naturally without rotation', () => {
     expect(dogStyles).not.toContain('.dog-sleeping { transform: rotate');
   });
+
+  it('idle/walking/studying SVG contains separate front and back leg groups', () => {
+    for (const act of ['idle', 'walking', 'studying']) {
+      const svg = getDogSvg(act);
+      expect(svg).toContain('dog-legs-front');
+      expect(svg).toContain('dog-legs-back');
+      // Old single dog-legs group should NOT exist in these activities
+      expect(svg).not.toMatch(/class="dog-legs"[^-]/);
+    }
+  });
+
+  it('idle/walking/studying SVG contains tongue element', () => {
+    for (const act of ['idle', 'walking', 'studying']) {
+      const svg = getDogSvg(act);
+      expect(svg).toContain('dog-tongue');
+    }
+  });
+
+  it('tongue uses tongue color palette', () => {
+    const svg = getDogSvg('idle');
+    // TONGUE constant is '#E06060'
+    expect(svg).toContain('#E06060');
+  });
+
+  it('dogStyles contains enhanced keyframe animations for all activities', () => {
+    // Existing (must still exist)
+    expect(dogStyles).toContain('dog-tail-wag');
+    expect(dogStyles).toContain('dog-breathe');
+    // New keyframes
+    expect(dogStyles).toContain('dog-sniff');
+    expect(dogStyles).toContain('dog-tongue-pant');
+    expect(dogStyles).toContain('dog-ear-twitch');
+    expect(dogStyles).toContain('dog-leg-trot-back');
+    expect(dogStyles).toContain('dog-dream-twitch');
+    expect(dogStyles).toContain('dog-nose-nuzzle');
+    expect(dogStyles).toContain('dog-paw-tap');
+    expect(dogStyles).toContain('dog-beg-nod');
+  });
+
+  it('dogStyles uses custom easing curves', () => {
+    expect(dogStyles).toContain('cubic-bezier');
+  });
 });
