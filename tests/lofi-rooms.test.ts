@@ -40,4 +40,13 @@ describe('Lofi Room Backgrounds', () => {
     expect(svg).toContain('star');
     expect(svg).toContain('moon');
   });
+
+  it('each room has rich ambient animations (15+ animated elements)', () => {
+    for (const [room, svg] of Object.entries(lofiRoomBackgrounds)) {
+      const animCount = (svg.match(/<animate /g) || []).length;
+      const animTransformCount = (svg.match(/<animateTransform /g) || []).length;
+      const total = animCount + animTransformCount;
+      expect(total, `${room} should have at least 15 ambient animations`).toBeGreaterThanOrEqual(15);
+    }
+  });
 });

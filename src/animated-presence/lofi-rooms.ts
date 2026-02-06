@@ -1,5 +1,5 @@
 /**
- * Atmospheric room backgrounds with properly-scaled furniture
+ * Atmospheric room backgrounds with rich ambient animations
  * Each scene has key furniture that matches the avatar's activity:
  *   office → desk + monitor (avatar studies at desk)
  *   kitchen → counter + stove (avatar cooks at counter)
@@ -45,12 +45,14 @@ export const lofiRoomBackgrounds: Record<string, string> = {
   <rect x="108" y="13" width="54" height="32" rx="1" fill="#2A4A6A" opacity="0.55">
     <animate attributeName="opacity" values="0.5;0.6;0.52;0.58;0.5" dur="4s" repeatCount="indefinite"/>
   </rect>
-  <!-- code lines on screen -->
+  <!-- code lines on screen — scrolling effect -->
   <line x1="113" y1="20" x2="143" y2="20" stroke="#6AAAC0" stroke-width="0.8" opacity="0.3">
     <animate attributeName="opacity" values="0.2;0.4;0.25;0.35;0.2" dur="2s" repeatCount="indefinite"/>
+    <animate attributeName="x2" values="143;148;140;145;143" dur="3s" repeatCount="indefinite"/>
   </line>
   <line x1="113" y1="26" x2="153" y2="26" stroke="#6AAAC0" stroke-width="0.8" opacity="0.25">
     <animate attributeName="opacity" values="0.15;0.35;0.2;0.3;0.15" dur="2.3s" repeatCount="indefinite" begin="0.3s"/>
+    <animate attributeName="x2" values="153;148;155;150;153" dur="2.8s" repeatCount="indefinite" begin="0.3s"/>
   </line>
   <line x1="113" y1="32" x2="138" y2="32" stroke="#9AC06A" stroke-width="0.8" opacity="0.2">
     <animate attributeName="opacity" values="0.12;0.28;0.16;0.24;0.12" dur="1.8s" repeatCount="indefinite" begin="0.6s"/>
@@ -80,6 +82,24 @@ export const lofiRoomBackgrounds: Record<string, string> = {
   <circle cx="22" cy="22" r="4" fill="#FFF0C0" opacity="0.15">
     <animate attributeName="opacity" values="0.1;0.2;0.12;0.18;0.1" dur="5s" repeatCount="indefinite"/>
   </circle>
+  <!-- lamp warm cone on desk -->
+  <ellipse cx="18" cy="50" rx="14" ry="3" fill="#FFF0C0" opacity="0.02">
+    <animate attributeName="opacity" values="0.015;0.035;0.02;0.03;0.015" dur="5s" repeatCount="indefinite"/>
+  </ellipse>
+  <!-- coffee mug on desk -->
+  <rect x="80" y="47" width="6" height="5" rx="0.8" fill="#6A4030" opacity="0.4"/>
+  <rect x="86" y="49" width="2" height="2" rx="0.5" fill="#6A4030" opacity="0.3"/>
+  <!-- coffee steam -->
+  <circle cx="83" cy="44" r="1" fill="#FFF" opacity="0">
+    <animate attributeName="cy" from="44" to="30" dur="3s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0;0.06;0.04;0" dur="3s" repeatCount="indefinite"/>
+    <animate attributeName="cx" values="83;81;84;82" dur="3s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="85" cy="42" r="0.8" fill="#FFF" opacity="0">
+    <animate attributeName="cy" from="42" to="28" dur="3.5s" repeatCount="indefinite" begin="1.2s"/>
+    <animate attributeName="opacity" values="0;0.05;0.03;0" dur="3.5s" repeatCount="indefinite" begin="1.2s"/>
+    <animate attributeName="cx" values="85;87;84;86" dur="3.5s" repeatCount="indefinite" begin="1.2s"/>
+  </circle>
   <!-- bookshelf far right -->
   <rect x="330" y="5" width="55" height="78" rx="1.5" fill="#253545" opacity="0.35"/>
   <rect x="334" y="10" width="47" height="14" fill="#2A3A4A" opacity="0.25"/>
@@ -96,12 +116,32 @@ export const lofiRoomBackgrounds: Record<string, string> = {
   <rect x="260" y="5" width="45" height="35" rx="1.5" fill="#2A3A4A" opacity="0.3"/>
   <rect x="263" y="8" width="18" height="29" fill="#3A5060" opacity="0.22"/>
   <rect x="284" y="8" width="18" height="29" fill="#3A5060" opacity="0.22"/>
+  <!-- rain on window -->
+  <line x1="268" y1="10" x2="267" y2="18" stroke="#5A8ABE" stroke-width="0.3" opacity="0">
+    <animate attributeName="opacity" values="0;0.15;0.1;0" dur="1.5s" repeatCount="indefinite"/>
+    <animate attributeName="y1" from="8" to="35" dur="1.5s" repeatCount="indefinite"/>
+    <animate attributeName="y2" from="12" to="39" dur="1.5s" repeatCount="indefinite"/>
+  </line>
+  <line x1="275" y1="12" x2="274" y2="20" stroke="#5A8ABE" stroke-width="0.3" opacity="0">
+    <animate attributeName="opacity" values="0;0.12;0.08;0" dur="1.8s" repeatCount="indefinite" begin="0.4s"/>
+    <animate attributeName="y1" from="8" to="35" dur="1.8s" repeatCount="indefinite" begin="0.4s"/>
+    <animate attributeName="y2" from="14" to="41" dur="1.8s" repeatCount="indefinite" begin="0.4s"/>
+  </line>
+  <line x1="290" y1="9" x2="289" y2="15" stroke="#5A8ABE" stroke-width="0.3" opacity="0">
+    <animate attributeName="opacity" values="0;0.1;0.06;0" dur="1.3s" repeatCount="indefinite" begin="0.8s"/>
+    <animate attributeName="y1" from="8" to="35" dur="1.3s" repeatCount="indefinite" begin="0.8s"/>
+    <animate attributeName="y2" from="13" to="40" dur="1.3s" repeatCount="indefinite" begin="0.8s"/>
+  </line>
   <!-- ambient dust -->
   <circle cx="80" cy="30" r="0.6" fill="#FFF0C0" opacity="0">
     <animate attributeName="opacity" values="0;0.1;0.05;0" dur="5s" repeatCount="indefinite"/>
   </circle>
   <circle cx="200" cy="40" r="0.5" fill="#8AB0E0" opacity="0">
     <animate attributeName="opacity" values="0;0.08;0.04;0" dur="6s" repeatCount="indefinite" begin="2.5s"/>
+  </circle>
+  <circle cx="300" cy="35" r="0.4" fill="#FFF0C0" opacity="0">
+    <animate attributeName="opacity" values="0;0.06;0.03;0" dur="7s" repeatCount="indefinite" begin="1.5s"/>
+    <animate attributeName="cy" from="38" to="28" dur="7s" repeatCount="indefinite" begin="1.5s"/>
   </circle>
 </svg>`,
 
@@ -165,6 +205,20 @@ export const lofiRoomBackgrounds: Record<string, string> = {
   <!-- pot on burner -->
   <rect x="147" y="36" width="16" height="12" rx="2" fill="#505868" opacity="0.5"/>
   <rect x="145" y="34" width="20" height="3" rx="1" fill="#606870" opacity="0.4"/>
+  <!-- pot lid rattling -->
+  <rect x="145" y="33" width="20" height="2" rx="1" fill="#707880" opacity="0.3">
+    <animate attributeName="y" values="33;32.5;33;32.8;33" dur="0.8s" repeatCount="indefinite"/>
+    <animateTransform attributeName="transform" type="rotate" values="-0.3,155,34;0.3,155,34;-0.3,155,34" dur="0.6s" repeatCount="indefinite"/>
+  </rect>
+  <!-- bubbling in pot -->
+  <circle cx="153" cy="36" r="0.8" fill="#FFF" opacity="0">
+    <animate attributeName="opacity" values="0;0.08;0.04;0" dur="0.8s" repeatCount="indefinite"/>
+    <animate attributeName="cy" from="36" to="34" dur="0.8s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="158" cy="37" r="0.6" fill="#FFF" opacity="0">
+    <animate attributeName="opacity" values="0;0.06;0.03;0" dur="1.1s" repeatCount="indefinite" begin="0.3s"/>
+    <animate attributeName="cy" from="37" to="35" dur="1.1s" repeatCount="indefinite" begin="0.3s"/>
+  </circle>
   <!-- steam wisps -->
   <circle cx="153" cy="30" r="1.8" fill="#FFF" opacity="0">
     <animate attributeName="cy" from="30" to="5" dur="2.8s" repeatCount="indefinite"/>
@@ -185,14 +239,28 @@ export const lofiRoomBackgrounds: Record<string, string> = {
   <ellipse cx="170" cy="32" rx="25" ry="12" fill="#E08040" opacity="0.025">
     <animate attributeName="opacity" values="0.02;0.04;0.025;0.035;0.02" dur="1s" repeatCount="indefinite"/>
   </ellipse>
+  <!-- flame dancing reflections on cabinets -->
+  <rect x="140" y="57" width="40" height="26" fill="#E08040" opacity="0">
+    <animate attributeName="opacity" values="0;0.015;0.008;0.012;0" dur="0.9s" repeatCount="indefinite"/>
+  </rect>
   <!-- FRIDGE far right -->
   <rect x="310" y="5" width="55" height="80" rx="2" fill="#505858" opacity="0.3"/>
   <line x1="310" y1="38" x2="365" y2="38" stroke="#484848" stroke-width="0.5" opacity="0.3"/>
   <rect x="358" y="15" width="2.5" height="12" rx="0.5" fill="#606060" opacity="0.25"/>
   <rect x="358" y="48" width="2.5" height="12" rx="0.5" fill="#606060" opacity="0.25"/>
+  <!-- fridge hum glow -->
+  <rect x="310" y="5" width="55" height="80" rx="2" fill="#8AC0E0" opacity="0">
+    <animate attributeName="opacity" values="0;0.008;0.004;0.006;0" dur="8s" repeatCount="indefinite"/>
+  </rect>
   <!-- sink area -->
   <rect x="60" y="46" width="28" height="4" rx="1.2" fill="#606870" opacity="0.3"/>
   <line x1="74" y1="46" x2="74" y2="30" stroke="#707880" stroke-width="1.2" stroke-linecap="round" opacity="0.25"/>
+  <!-- water drip from faucet -->
+  <circle cx="74" cy="47" r="0.5" fill="#5A8ABE" opacity="0">
+    <animate attributeName="opacity" values="0;0.2;0.15;0" dur="2.5s" repeatCount="indefinite"/>
+    <animate attributeName="cy" from="47" to="50" dur="2.5s" repeatCount="indefinite"/>
+    <animate attributeName="r" values="0.5;0.3;0.5" dur="2.5s" repeatCount="indefinite"/>
+  </circle>
   <!-- hanging utensils -->
   <line x1="225" y1="20" x2="225" y2="36" stroke="#606060" stroke-width="0.6" opacity="0.18">
     <animateTransform attributeName="transform" type="rotate" values="-0.8,225,20;0.8,225,20;-0.8,225,20" dur="5s" repeatCount="indefinite"/>
@@ -200,9 +268,16 @@ export const lofiRoomBackgrounds: Record<string, string> = {
   <line x1="233" y1="20" x2="233" y2="38" stroke="#606060" stroke-width="0.6" opacity="0.18">
     <animateTransform attributeName="transform" type="rotate" values="0.5,233,20;-0.5,233,20;0.5,233,20" dur="4.5s" repeatCount="indefinite"/>
   </line>
+  <line x1="240" y1="20" x2="240" y2="34" stroke="#606060" stroke-width="0.6" opacity="0.18">
+    <animateTransform attributeName="transform" type="rotate" values="-0.4,240,20;0.6,240,20;-0.4,240,20" dur="5.5s" repeatCount="indefinite"/>
+  </line>
   <!-- warm dust -->
   <circle cx="100" cy="30" r="0.5" fill="#FFF0C0" opacity="0">
     <animate attributeName="opacity" values="0;0.08;0.04;0" dur="5s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="250" cy="25" r="0.4" fill="#E0A060" opacity="0">
+    <animate attributeName="opacity" values="0;0.06;0.03;0" dur="6s" repeatCount="indefinite" begin="2s"/>
+    <animate attributeName="cy" from="28" to="20" dur="6s" repeatCount="indefinite" begin="2s"/>
   </circle>
 </svg>`,
 
@@ -247,6 +322,16 @@ export const lofiRoomBackgrounds: Record<string, string> = {
   <rect x="50" y="80" width="90" height="4" rx="1" fill="#4A3828" opacity="0.35"/>
   <rect x="55" y="84" width="3" height="10" rx="0.5" fill="#3A2818" opacity="0.25"/>
   <rect x="132" y="84" width="3" height="10" rx="0.5" fill="#3A2818" opacity="0.25"/>
+  <!-- candle on coffee table -->
+  <rect x="92" y="77" width="3" height="4" rx="0.3" fill="#E0D0B0" opacity="0.2"/>
+  <circle cx="93.5" cy="76" r="1.2" fill="#FFD040" opacity="0.15">
+    <animate attributeName="opacity" values="0.1;0.2;0.08;0.18;0.12;0.15;0.1" dur="2s" repeatCount="indefinite"/>
+    <animate attributeName="r" values="1.2;1.4;1.1;1.3;1.2" dur="1.5s" repeatCount="indefinite"/>
+  </circle>
+  <!-- candle glow on table -->
+  <ellipse cx="93.5" cy="80" rx="8" ry="2" fill="#FFD040" opacity="0.01">
+    <animate attributeName="opacity" values="0.008;0.02;0.01;0.015;0.008" dur="2s" repeatCount="indefinite"/>
+  </ellipse>
   <!-- TV — right side, prominent -->
   <rect x="285" y="12" width="65" height="40" rx="1.5" fill="#1A1A2E" opacity="0.65"/>
   <rect x="288" y="15" width="59" height="34" rx="1" fill="#2A3A5A" opacity="0.4">
@@ -257,10 +342,21 @@ export const lofiRoomBackgrounds: Record<string, string> = {
     <animate attributeName="fill" values="#4A6A9A;#6A5A9A;#4A8A6A;#7A6A4A;#4A6A9A" dur="10s" repeatCount="indefinite"/>
     <animate attributeName="opacity" values="0.08;0.18;0.1;0.15;0.08" dur="3s" repeatCount="indefinite"/>
   </rect>
+  <!-- TV scan lines -->
+  <line x1="291" y1="22" x2="344" y2="22" stroke="#FFF" stroke-width="0.3" opacity="0">
+    <animate attributeName="opacity" values="0;0.03;0" dur="0.1s" repeatCount="indefinite"/>
+    <animate attributeName="y1" from="18" to="46" dur="2s" repeatCount="indefinite"/>
+    <animate attributeName="y2" from="18" to="46" dur="2s" repeatCount="indefinite"/>
+  </line>
   <!-- TV glow on wall -->
   <rect x="275" y="2" width="95" height="50" rx="3" fill="#5A8ABE" opacity="0.015">
     <animate attributeName="fill" values="#5A8ABE;#8A5ABE;#5ABE7A;#BE8A5A;#5A8ABE" dur="10s" repeatCount="indefinite"/>
     <animate attributeName="opacity" values="0.01;0.03;0.015;0.025;0.01" dur="3s" repeatCount="indefinite"/>
+  </rect>
+  <!-- TV glow on couch -->
+  <rect x="150" y="48" width="50" height="24" fill="#5A8ABE" opacity="0">
+    <animate attributeName="fill" values="#5A8ABE;#8A5ABE;#5ABE7A;#BE8A5A;#5A8ABE" dur="10s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0;0.008;0.004;0.006;0" dur="3s" repeatCount="indefinite"/>
   </rect>
   <!-- TV console -->
   <rect x="280" y="54" width="80" height="8" rx="1.5" fill="#3A2820" opacity="0.4"/>
@@ -268,13 +364,22 @@ export const lofiRoomBackgrounds: Record<string, string> = {
   <rect x="350" y="62" width="5" height="23" rx="1" fill="#2A1810" opacity="0.3"/>
   <!-- floor lamp -->
   <line x1="225" y1="16" x2="225" y2="82" stroke="#3A3848" stroke-width="1.2" opacity="0.35"/>
-  <ellipse cx="225" cy="14" rx="8" ry="5" fill="#F0D080" opacity="0.12"/>
+  <ellipse cx="225" cy="14" rx="8" ry="5" fill="#F0D080" opacity="0.12">
+    <animate attributeName="opacity" values="0.1;0.15;0.11;0.14;0.1" dur="5s" repeatCount="indefinite"/>
+  </ellipse>
   <circle cx="225" cy="14" r="2.5" fill="#FFF5D0" opacity="0.08"/>
   <ellipse cx="225" cy="84" rx="5" ry="2" fill="#3A3848" opacity="0.25"/>
   <!-- window hint -->
   <rect x="140" y="3" width="50" height="30" rx="1.5" fill="#2A2840" opacity="0.25"/>
   <rect x="143" y="6" width="20" height="24" fill="#3A3858" opacity="0.2"/>
   <rect x="167" y="6" width="20" height="24" fill="#3A3858" opacity="0.2"/>
+  <!-- curtain sway -->
+  <rect x="140" y="3" width="4" height="30" fill="#3A3050" opacity="0.15">
+    <animateTransform attributeName="transform" type="rotate" values="0,142,3;0.5,142,3;-0.3,142,3;0,142,3" dur="6s" repeatCount="indefinite"/>
+  </rect>
+  <rect x="186" y="3" width="4" height="30" fill="#3A3050" opacity="0.15">
+    <animateTransform attributeName="transform" type="rotate" values="0,188,3;-0.4,188,3;0.3,188,3;0,188,3" dur="6.5s" repeatCount="indefinite"/>
+  </rect>
   <!-- plant silhouette -->
   <rect x="370" y="55" width="10" height="28" rx="2" fill="#2A3828" opacity="0.3"/>
   <ellipse cx="375" cy="52" rx="8" ry="6" fill="#2A4828" opacity="0.25">
@@ -286,6 +391,10 @@ export const lofiRoomBackgrounds: Record<string, string> = {
   </circle>
   <circle cx="320" cy="25" r="0.4" fill="#8AB0E0" opacity="0">
     <animate attributeName="opacity" values="0;0.06;0.03;0" dur="4.5s" repeatCount="indefinite" begin="1.5s"/>
+  </circle>
+  <circle cx="240" cy="45" r="0.3" fill="#FFF0C0" opacity="0">
+    <animate attributeName="opacity" values="0;0.05;0.02;0" dur="7s" repeatCount="indefinite" begin="3s"/>
+    <animate attributeName="cy" from="48" to="38" dur="7s" repeatCount="indefinite" begin="3s"/>
   </circle>
 </svg>`,
 
@@ -341,10 +450,21 @@ export const lofiRoomBackgrounds: Record<string, string> = {
   <circle cx="297" cy="28" r="2.5" fill="#FFF5D0" opacity="0.1">
     <animate attributeName="opacity" values="0.08;0.14;0.1;0.12;0.08" dur="4s" repeatCount="indefinite"/>
   </circle>
+  <!-- lamp warm cone -->
+  <ellipse cx="297" cy="42" rx="12" ry="4" fill="#F0D080" opacity="0.01">
+    <animate attributeName="opacity" values="0.008;0.018;0.01;0.015;0.008" dur="4s" repeatCount="indefinite"/>
+  </ellipse>
   <!-- WINDOW with night sky -->
   <rect x="330" y="5" width="45" height="38" rx="1.5" fill="#1A1838" opacity="0.5"/>
   <rect x="333" y="8" width="18" height="32" fill="#181640" opacity="0.5"/>
   <rect x="355" y="8" width="18" height="32" fill="#181640" opacity="0.5"/>
+  <!-- curtains -->
+  <rect x="330" y="5" width="5" height="38" fill="#2A2050" opacity="0.2">
+    <animateTransform attributeName="transform" type="rotate" values="0,332,5;0.3,332,5;-0.2,332,5;0,332,5" dur="8s" repeatCount="indefinite"/>
+  </rect>
+  <rect x="370" y="5" width="5" height="38" fill="#2A2050" opacity="0.2">
+    <animateTransform attributeName="transform" type="rotate" values="0,373,5;-0.3,373,5;0.2,373,5;0,373,5" dur="8.5s" repeatCount="indefinite"/>
+  </rect>
   <!-- stars -->
   <circle cx="338" cy="12" r="0.5" fill="#FFF">
     <animate attributeName="opacity" values="0.05;0.4;0.1;0.3;0.05" dur="4s" repeatCount="indefinite"/>
@@ -361,10 +481,18 @@ export const lofiRoomBackgrounds: Record<string, string> = {
   <circle cx="340" cy="28" r="0.3" fill="#FFF">
     <animate attributeName="opacity" values="0;0.2;0.05;0.15;0" dur="5s" repeatCount="indefinite" begin="2s"/>
   </circle>
+  <circle cx="356" cy="15" r="0.25" fill="#FFF">
+    <animate attributeName="opacity" values="0.05;0.3;0.08;0.2;0.05" dur="6s" repeatCount="indefinite" begin="0.8s"/>
+  </circle>
   <!-- moon -->
   <circle cx="365" cy="15" r="5" fill="#E0D8C0" opacity="0.25">
     <animate attributeName="opacity" values="0.2;0.35;0.25;0.3;0.2" dur="6s" repeatCount="indefinite"/>
   </circle>
+  <!-- cloud drifting past moon -->
+  <ellipse cx="350" cy="16" rx="12" ry="4" fill="#1A1838" opacity="0">
+    <animate attributeName="opacity" values="0;0;0.3;0.4;0.3;0;0" dur="20s" repeatCount="indefinite"/>
+    <animate attributeName="cx" from="340" to="380" dur="20s" repeatCount="indefinite"/>
+  </ellipse>
   <!-- moonlight beam on floor -->
   <polygon points="333,43 373,43 390,100 310,100" fill="#D0C8E0" opacity="0.015">
     <animate attributeName="opacity" values="0.01;0.025;0.015;0.02;0.01" dur="6s" repeatCount="indefinite"/>
@@ -381,6 +509,14 @@ export const lofiRoomBackgrounds: Record<string, string> = {
   <circle cx="360" cy="70" r="0.4" fill="#D0C8E0" opacity="0">
     <animate attributeName="opacity" values="0;0.06;0.03;0" dur="7s" repeatCount="indefinite" begin="2.5s"/>
     <animate attributeName="cy" from="72" to="55" dur="7s" repeatCount="indefinite" begin="2.5s"/>
+  </circle>
+  <circle cx="340" cy="62" r="0.35" fill="#D0C8E0" opacity="0">
+    <animate attributeName="opacity" values="0;0.05;0.025;0" dur="8s" repeatCount="indefinite" begin="4s"/>
+    <animate attributeName="cy" from="65" to="50" dur="8s" repeatCount="indefinite" begin="4s"/>
+  </circle>
+  <!-- cricket glow (small green flash outside window) -->
+  <circle cx="345" cy="35" r="0.4" fill="#80E080" opacity="0">
+    <animate attributeName="opacity" values="0;0;0;0.15;0.08;0.12;0;0;0;0;0;0" dur="5s" repeatCount="indefinite"/>
   </circle>
 </svg>`,
 
@@ -411,11 +547,30 @@ export const lofiRoomBackgrounds: Record<string, string> = {
   <circle class="star" cx="370" cy="10" r="0.4" fill="#FFF">
     <animate attributeName="opacity" values="0.05;0.3;0.08;0.2;0.05" dur="3.8s" repeatCount="indefinite" begin="0.8s"/>
   </circle>
+  <!-- extra stars -->
+  <circle class="star" cx="30" cy="25" r="0.3" fill="#FFF">
+    <animate attributeName="opacity" values="0.05;0.25;0.08;0.18;0.05" dur="5.5s" repeatCount="indefinite" begin="1.2s"/>
+  </circle>
+  <circle class="star" cx="155" cy="5" r="0.35" fill="#FFF">
+    <animate attributeName="opacity" values="0.08;0.35;0.12;0.28;0.08" dur="4.2s" repeatCount="indefinite" begin="0.3s"/>
+  </circle>
+  <circle class="star" cx="220" cy="15" r="0.3" fill="#FFF">
+    <animate attributeName="opacity" values="0.03;0.2;0.06;0.15;0.03" dur="6s" repeatCount="indefinite" begin="2.5s"/>
+  </circle>
   <!-- moon -->
   <circle cx="330" cy="18" r="7" fill="#E0D8C0" opacity="0.3">
     <animate attributeName="opacity" values="0.25;0.4;0.3;0.35;0.25" dur="6s" repeatCount="indefinite"/>
   </circle>
   <circle cx="333" cy="16" r="6" fill="#0A0A18" opacity="0.9"/>
+  <!-- cloud drifting across sky -->
+  <ellipse cx="100" cy="20" rx="20" ry="5" fill="#151530" opacity="0">
+    <animate attributeName="opacity" values="0;0.15;0.2;0.15;0" dur="25s" repeatCount="indefinite"/>
+    <animate attributeName="cx" from="0" to="400" dur="25s" repeatCount="indefinite"/>
+  </ellipse>
+  <ellipse cx="250" cy="12" rx="15" ry="4" fill="#151530" opacity="0">
+    <animate attributeName="opacity" values="0;0.1;0.15;0.1;0" dur="30s" repeatCount="indefinite" begin="8s"/>
+    <animate attributeName="cx" from="50" to="450" dur="30s" repeatCount="indefinite" begin="8s"/>
+  </ellipse>
   <!-- ground -->
   <rect x="0" y="78" width="400" height="22" fill="#0C0C1A"/>
   <rect x="0" y="78" width="400" height="1" fill="#1A1A30" opacity="0.3"/>
@@ -426,6 +581,19 @@ export const lofiRoomBackgrounds: Record<string, string> = {
   <polygon points="120,38 200,8 280,38" fill="#0C0C1A" stroke="#1A1A2E" stroke-width="0.5"/>
   <!-- chimney -->
   <rect x="240" y="12" width="14" height="26" fill="#0E0E1E"/>
+  <!-- chimney smoke wisps -->
+  <circle cx="247" cy="10" r="2" fill="#1A1A30" opacity="0">
+    <animate attributeName="cy" from="10" to="-10" dur="5s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0;0.12;0.08;0" dur="5s" repeatCount="indefinite"/>
+    <animate attributeName="cx" values="247;250;245;248" dur="5s" repeatCount="indefinite"/>
+    <animate attributeName="r" values="2;3;3.5;4" dur="5s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="249" cy="8" r="1.5" fill="#1A1A30" opacity="0">
+    <animate attributeName="cy" from="8" to="-12" dur="6s" repeatCount="indefinite" begin="2s"/>
+    <animate attributeName="opacity" values="0;0.1;0.06;0" dur="6s" repeatCount="indefinite" begin="2s"/>
+    <animate attributeName="cx" values="249;252;247;250" dur="6s" repeatCount="indefinite" begin="2s"/>
+    <animate attributeName="r" values="1.5;2.5;3;3.5" dur="6s" repeatCount="indefinite" begin="2s"/>
+  </circle>
   <!-- dark windows -->
   <rect x="148" y="48" width="18" height="14" rx="1" fill="#0A0A16" stroke="#1A1A2E" stroke-width="0.5" opacity="0.8"/>
   <rect x="178" y="48" width="18" height="14" rx="1" fill="#0A0A16" stroke="#1A1A2E" stroke-width="0.5" opacity="0.8"/>
@@ -448,11 +616,31 @@ export const lofiRoomBackgrounds: Record<string, string> = {
     <line x1="300" y1="72" x2="300" y2="78"/>
     <line x1="320" y1="72" x2="320" y2="78"/>
   </g>
-  <!-- tree silhouette -->
-  <ellipse cx="60" cy="55" rx="18" ry="22" fill="#0A0E14" opacity="0.6"/>
+  <!-- tree silhouette with sway -->
+  <ellipse cx="60" cy="55" rx="18" ry="22" fill="#0A0E14" opacity="0.6">
+    <animateTransform attributeName="transform" type="rotate" values="-0.5,60,70;0.5,60,70;-0.5,60,70" dur="6s" repeatCount="indefinite"/>
+  </ellipse>
   <rect x="58" y="70" width="4" height="10" fill="#0A0E14" opacity="0.5"/>
-  <ellipse cx="355" cy="58" rx="14" ry="18" fill="#0A0E14" opacity="0.5"/>
+  <ellipse cx="355" cy="58" rx="14" ry="18" fill="#0A0E14" opacity="0.5">
+    <animateTransform attributeName="transform" type="rotate" values="0.3,355,72;-0.4,355,72;0.3,355,72" dur="7s" repeatCount="indefinite"/>
+  </ellipse>
   <rect x="353" y="72" width="4" height="8" fill="#0A0E14" opacity="0.4"/>
+  <!-- fireflies -->
+  <circle cx="90" cy="72" r="0.5" fill="#C0E060" opacity="0">
+    <animate attributeName="opacity" values="0;0;0.2;0.3;0.15;0;0;0;0" dur="4s" repeatCount="indefinite"/>
+    <animate attributeName="cx" values="90;93;88;92;90" dur="4s" repeatCount="indefinite"/>
+    <animate attributeName="cy" values="72;70;73;69;72" dur="4s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="310" cy="74" r="0.4" fill="#C0E060" opacity="0">
+    <animate attributeName="opacity" values="0;0;0;0.15;0.25;0.1;0;0;0" dur="5s" repeatCount="indefinite" begin="2s"/>
+    <animate attributeName="cx" values="310;312;308;311;310" dur="5s" repeatCount="indefinite" begin="2s"/>
+    <animate attributeName="cy" values="74;72;75;71;74" dur="5s" repeatCount="indefinite" begin="2s"/>
+  </circle>
+  <circle cx="180" cy="76" r="0.35" fill="#C0E060" opacity="0">
+    <animate attributeName="opacity" values="0;0;0;0;0.2;0.1;0;0" dur="6s" repeatCount="indefinite" begin="3.5s"/>
+    <animate attributeName="cx" values="180;183;178;181;180" dur="6s" repeatCount="indefinite" begin="3.5s"/>
+    <animate attributeName="cy" values="76;74;77;73;76" dur="6s" repeatCount="indefinite" begin="3.5s"/>
+  </circle>
   <!-- moonlight on ground -->
   <ellipse cx="330" cy="80" rx="30" ry="8" fill="#D0C8E0" opacity="0.012">
     <animate attributeName="opacity" values="0.008;0.018;0.01;0.015;0.008" dur="6s" repeatCount="indefinite"/>
