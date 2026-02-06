@@ -68,15 +68,26 @@ const BLANKET_HI = '#7C6CA4';
 
 function headShape(): string {
   const parts: string[] = [];
-  // Hair base (large round shape)
-  parts.push(`<ellipse cx="25" cy="10" rx="12" ry="10" fill="${HAIR}"/>`);
-  // Hair highlights
-  parts.push(`<ellipse cx="22" cy="6" rx="6" ry="4" fill="${HAIR_HI}" opacity="0.6"/>`);
-  parts.push(`<ellipse cx="30" cy="7" rx="4" ry="3" fill="${HAIR_DARK}" opacity="0.5"/>`);
+  // Back hair — extends behind and below the head for volume
+  parts.push(`<path d="M11,14 C11,3 15,-1 25,-1 C35,-1 39,3 39,14 C39,18 37,20 35,21 L15,21 C13,20 11,18 11,14 Z" fill="${HAIR}" stroke="${HAIR_DARK}" stroke-width="0.6"/>`);
+  // Hair volume/texture — side chunks
+  parts.push(`<path d="M11,14 C10,10 11,6 14,4 C12,8 12,12 13,15 Z" fill="${HAIR_DARK}" opacity="0.5"/>`);
+  parts.push(`<path d="M39,14 C40,10 39,6 36,4 C38,8 38,12 37,15 Z" fill="${HAIR_DARK}" opacity="0.5"/>`);
+  // Hair top highlight
+  parts.push(`<path d="M18,1 C22,-1 28,-1 32,1 C29,0 22,0 18,1 Z" fill="${HAIR_HI}" opacity="0.6"/>`);
   // Face
-  parts.push(`<ellipse cx="25" cy="13" rx="9" ry="8" fill="${SKIN}"/>`);
-  // Face highlights
-  parts.push(`<ellipse cx="23" cy="11" rx="5" ry="4" fill="${SKIN_HI}" opacity="0.4"/>`);
+  parts.push(`<ellipse cx="25" cy="14" rx="10" ry="8.5" fill="${SKIN}"/>`);
+  // Face highlight
+  parts.push(`<ellipse cx="23" cy="12" rx="5" ry="4" fill="${SKIN_HI}" opacity="0.35"/>`);
+  // Hair bangs — side-swept fringe overlaying forehead
+  parts.push(`<g class="hair-bangs">`);
+  parts.push(`<path d="M14,8 C15,4 18,2 22,1.5 C19,3 17,5.5 16,9 Z" fill="${HAIR}" stroke="${HAIR_DARK}" stroke-width="0.4"/>`);
+  parts.push(`<path d="M22,1.5 C26,0.5 30,1 33,3 C30,2.5 26,3 23,5 C22,3 22,2 22,1.5 Z" fill="${HAIR}" stroke="${HAIR_DARK}" stroke-width="0.4"/>`);
+  parts.push(`<path d="M33,3 C36,5 37,8 37,10 C36,7 34,5 31,4.5 Z" fill="${HAIR_HI}" stroke="${HAIR_DARK}" stroke-width="0.3"/>`);
+  // Wispy bang tips on forehead
+  parts.push(`<path d="M16,9 C17,7 19,6 21,6.5" fill="none" stroke="${HAIR}" stroke-width="1.2" stroke-linecap="round"/>`);
+  parts.push(`<path d="M21,6 C23,5 26,5 28,5.5" fill="none" stroke="${HAIR}" stroke-width="0.8" stroke-linecap="round"/>`);
+  parts.push(`</g>`);
   // Eyebrows
   parts.push(`<path d="M18,11 Q20,9.5 22,11" fill="none" stroke="${BROW}" stroke-width="1" stroke-linecap="round"/>`);
   parts.push(`<path d="M28,11 Q30,9.5 32,11" fill="none" stroke="${BROW}" stroke-width="1" stroke-linecap="round"/>`);
@@ -89,34 +100,43 @@ function headShape(): string {
   parts.push(`<circle cx="19.8" cy="12.3" r="0.5" fill="#FFF" opacity="0.7"/>`);
   parts.push(`<circle cx="29.8" cy="12.3" r="0.5" fill="#FFF" opacity="0.7"/>`);
   // Nose
-  parts.push(`<ellipse cx="25" cy="16" rx="1" ry="0.6" fill="${SKIN_SHADOW}"/>`);
+  parts.push(`<ellipse cx="25" cy="16.5" rx="1" ry="0.6" fill="${SKIN_SHADOW}"/>`);
   // Mouth
-  parts.push(`<path d="M22,18.5 Q25,20 28,18.5" fill="none" stroke="${MOUTH}" stroke-width="0.8" stroke-linecap="round"/>`);
+  parts.push(`<path d="M22,19 Q25,20.5 28,19" fill="none" stroke="${MOUTH}" stroke-width="0.8" stroke-linecap="round"/>`);
   // Cheek blush
-  parts.push(`<ellipse cx="17.5" cy="16" rx="2" ry="1.2" fill="#E8A090" opacity="0.2"/>`);
-  parts.push(`<ellipse cx="32.5" cy="16" rx="2" ry="1.2" fill="#E8A090" opacity="0.2"/>`);
+  parts.push(`<ellipse cx="17" cy="16" rx="2" ry="1.2" fill="#E8A090" opacity="0.2"/>`);
+  parts.push(`<ellipse cx="33" cy="16" rx="2" ry="1.2" fill="#E8A090" opacity="0.2"/>`);
   return parts.join('');
 }
 
 function sleepingHeadShape(): string {
   const parts: string[] = [];
-  // Same hair
-  parts.push(`<ellipse cx="25" cy="10" rx="12" ry="10" fill="${HAIR}"/>`);
-  parts.push(`<ellipse cx="22" cy="6" rx="6" ry="4" fill="${HAIR_HI}" opacity="0.6"/>`);
-  parts.push(`<ellipse cx="30" cy="7" rx="4" ry="3" fill="${HAIR_DARK}" opacity="0.5"/>`);
+  // Back hair
+  parts.push(`<path d="M11,14 C11,3 15,-1 25,-1 C35,-1 39,3 39,14 C39,18 37,20 35,21 L15,21 C13,20 11,18 11,14 Z" fill="${HAIR}" stroke="${HAIR_DARK}" stroke-width="0.6"/>`);
+  parts.push(`<path d="M11,14 C10,10 11,6 14,4 C12,8 12,12 13,15 Z" fill="${HAIR_DARK}" opacity="0.5"/>`);
+  parts.push(`<path d="M39,14 C40,10 39,6 36,4 C38,8 38,12 37,15 Z" fill="${HAIR_DARK}" opacity="0.5"/>`);
+  parts.push(`<path d="M18,1 C22,-1 28,-1 32,1 C29,0 22,0 18,1 Z" fill="${HAIR_HI}" opacity="0.6"/>`);
   // Face
-  parts.push(`<ellipse cx="25" cy="13" rx="9" ry="8" fill="${SKIN}"/>`);
-  parts.push(`<ellipse cx="23" cy="11" rx="5" ry="4" fill="${SKIN_HI}" opacity="0.4"/>`);
-  // Closed eyes — curved lines
+  parts.push(`<ellipse cx="25" cy="14" rx="10" ry="8.5" fill="${SKIN}"/>`);
+  parts.push(`<ellipse cx="23" cy="12" rx="5" ry="4" fill="${SKIN_HI}" opacity="0.35"/>`);
+  // Messy sleep bangs
+  parts.push(`<g class="hair-bangs">`);
+  parts.push(`<path d="M14,8 C15,4 18,2 22,1.5 C19,3 17,5.5 16,9 Z" fill="${HAIR}" stroke="${HAIR_DARK}" stroke-width="0.4"/>`);
+  parts.push(`<path d="M22,1.5 C26,0.5 30,1 33,3 C30,2.5 26,3 23,5 C22,3 22,2 22,1.5 Z" fill="${HAIR}" stroke="${HAIR_DARK}" stroke-width="0.4"/>`);
+  parts.push(`<path d="M33,3 C36,5 37,8 37,10 C36,7 34,5 31,4.5 Z" fill="${HAIR_HI}" stroke="${HAIR_DARK}" stroke-width="0.3"/>`);
+  parts.push(`<path d="M16,9 C17,7 19,6 21,6.5" fill="none" stroke="${HAIR}" stroke-width="1.2" stroke-linecap="round"/>`);
+  parts.push(`<path d="M21,6 C23,5 26,5 28,5.5" fill="none" stroke="${HAIR}" stroke-width="0.8" stroke-linecap="round"/>`);
+  parts.push(`</g>`);
+  // Closed eyes
   parts.push(`<path d="M18,13 Q20,14.5 22,13" fill="none" stroke="${EYELID}" stroke-width="1.2" stroke-linecap="round"/>`);
   parts.push(`<path d="M28,13 Q30,14.5 32,13" fill="none" stroke="${EYELID}" stroke-width="1.2" stroke-linecap="round"/>`);
   // Nose
-  parts.push(`<ellipse cx="25" cy="16" rx="1" ry="0.6" fill="${SKIN_SHADOW}"/>`);
+  parts.push(`<ellipse cx="25" cy="16.5" rx="1" ry="0.6" fill="${SKIN_SHADOW}"/>`);
   // Peaceful mouth
-  parts.push(`<path d="M23,18.5 Q25,19.5 27,18.5" fill="none" stroke="${MOUTH_SLEEP}" stroke-width="0.7" stroke-linecap="round"/>`);
+  parts.push(`<path d="M23,19 Q25,20 27,19" fill="none" stroke="${MOUTH_SLEEP}" stroke-width="0.7" stroke-linecap="round"/>`);
   // Cheek blush
-  parts.push(`<ellipse cx="17.5" cy="16" rx="2" ry="1.2" fill="#E8A090" opacity="0.25"/>`);
-  parts.push(`<ellipse cx="32.5" cy="16" rx="2" ry="1.2" fill="#E8A090" opacity="0.25"/>`);
+  parts.push(`<ellipse cx="17" cy="16" rx="2" ry="1.2" fill="#E8A090" opacity="0.25"/>`);
+  parts.push(`<ellipse cx="33" cy="16" rx="2" ry="1.2" fill="#E8A090" opacity="0.25"/>`);
   return parts.join('');
 }
 

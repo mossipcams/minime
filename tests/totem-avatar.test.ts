@@ -134,6 +134,17 @@ describe('Totem Avatar', () => {
     expect(totemStyles).toMatch(/totem-blink[\s\S]*?opacity:\s*1[\s\S]*?opacity:\s*0/);
   });
 
+  it('head has path-based hair with stroke outline and bangs overlay', () => {
+    const svg = getTotemSvg('idle');
+    // Hair should use path shapes (not just ellipses) for a proper silhouette
+    const headSection = svg.slice(svg.indexOf('totem-head'), svg.indexOf('</g>', svg.indexOf('totem-head')));
+    expect(headSection).toContain('<path');
+    // Hair should have a defining stroke for crisp edges
+    expect(headSection).toContain('stroke=');
+    // Should have a bangs/fringe element overlaying the forehead
+    expect(headSection).toContain('hair-bangs');
+  });
+
   it('totemStyles uses custom cubic-bezier easing', () => {
     expect(totemStyles).toContain('cubic-bezier');
   });
