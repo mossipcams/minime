@@ -111,4 +111,20 @@ describe('Presence State Machine', () => {
     state = changeRoom(state, 'kitchen');
     expect(state.animation).toBe('walking');
   });
+
+  it('full room transition takes at least 4 seconds of simulated time', () => {
+    let state = createInitialState('office');
+    state = changeRoom(state, 'kitchen');
+    // Simulate 3 seconds of 16ms frames
+    for (let i = 0; i < Math.floor(3000 / 16); i++) {
+      state = tick(state, 16);
+    }
+    // Should still be transitioning, not idle yet
+    expect(state.phase).not.toBe(PresencePhase.IDLE);
+  });
+
+  it('living_room uses watching animation', () => {
+    const state = createInitialState('living_room');
+    expect(state.animation).toBe('watching');
+  });
 });

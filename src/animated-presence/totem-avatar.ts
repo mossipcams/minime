@@ -1,6 +1,6 @@
-export type Activity = 'idle' | 'walking' | 'studying' | 'cooking' | 'sleeping';
+export type Activity = 'idle' | 'walking' | 'studying' | 'cooking' | 'sleeping' | 'watching';
 
-const ACTIVITIES: Activity[] = ['idle', 'walking', 'studying', 'cooking', 'sleeping'];
+const ACTIVITIES: Activity[] = ['idle', 'walking', 'studying', 'cooking', 'sleeping', 'watching'];
 const P = 3;
 const W = 16 * P;
 const H = 24 * P;
@@ -279,8 +279,45 @@ function blanketProp(): string {
   return rows.join('');
 }
 
+
+function remoteProp(): string {
+  // TV remote held loosely in right hand
+  const rows: string[] = [];
+  rows.push(r(12, 14, PHONE_BODY), r(13, 14, PHONE_BODY));
+  rows.push(r(12, 15, PHONE_BODY), r(13, 15, PHONE_BODY));
+  rows.push(r(12, 16, PHONE_BODY));
+  return `<g class="totem-prop">${rows.join('')}</g>`;
+}
+
+function drinkProp(): string {
+  // Small drink/cup on the left side
+  const rows: string[] = [];
+  rows.push(r(1, 18, PAN), r(2, 18, PAN_DARK));
+  rows.push(r(1, 19, PAN), r(2, 19, PAN));
+  rows.push(r(1, 20, PAN_DARK), r(2, 20, PAN));
+  return `<g class="totem-prop">${rows.join('')}</g>`;
+}
+
 function groundShadow(): string {
   return `<ellipse class="totem-shadow" cx="${8 * P}" cy="${22.5 * P}" rx="${3.5 * P}" ry="${0.8 * P}" fill="#000" opacity="0.15"/>`;
+}
+
+
+function codeFloat(): string {
+  return `<g class="totem-code-float">
+    <text x="${1 * P}" y="${2 * P}" fill="#7ABCE0" font-size="${P * 2.5}px" font-family="monospace" font-weight="bold" opacity="0">&lt;/&gt;</text>
+    <text x="${12 * P}" y="${4 * P}" fill="#A0D070" font-size="${P * 2}px" font-family="monospace" font-weight="bold" opacity="0">{ }</text>
+    <text x="${2 * P}" y="${6 * P}" fill="#D0A0E0" font-size="${P * 1.5}px" font-family="monospace" font-weight="bold" opacity="0">( )</text>
+  </g>`;
+}
+
+
+function steamFloat(): string {
+  return `<g class="totem-steam-float">
+    <text x="${13 * P}" y="${4 * P}" fill="#E8E8E8" font-size="${P * 2}px" font-family="sans-serif" opacity="0">~</text>
+    <text x="${14 * P}" y="${6 * P}" fill="#D0D0D0" font-size="${P * 1.5}px" font-family="sans-serif" opacity="0">~</text>
+    <text x="${12 * P}" y="${8 * P}" fill="#C0C0C0" font-size="${P * 1.8}px" font-family="sans-serif" opacity="0">~</text>
+  </g>`;
 }
 
 function sleepingZzz(): string {
@@ -325,6 +362,16 @@ export function getTotemSvg(activity: string): string {
     parts.push(`<g class="totem-left-arm">${leftArmPixels()}</g>`);
     parts.push(`<g class="totem-right-arm">${rightArmPixels()}</g>`);
     parts.push(`<g class="totem-head">${headPixels()}${blinkOverlay()}</g>`);
+  } else if (act === 'watching') {
+    // Sitting relaxed, remote in hand, looking toward TV
+    parts.push(`<g class="totem-left-leg">${leftLegPixels()}</g>`);
+    parts.push(`<g class="totem-right-leg">${rightLegPixels()}</g>`);
+    parts.push(`<g class="totem-body">${bodyPixels()}</g>`);
+    parts.push(`<g class="totem-left-arm">${leftArmPixels()}</g>`);
+    parts.push(`<g class="totem-right-arm">${rightArmPixels()}</g>`);
+    parts.push(`<g class="totem-head">${headPixels()}${blinkOverlay()}</g>`);
+    parts.push(remoteProp());
+    parts.push(drinkProp());
   } else if (act === 'idle') {
     parts.push(`<g class="totem-left-leg">${leftLegPixels()}</g>`);
     parts.push(`<g class="totem-right-leg">${rightLegPixels()}</g>`);
@@ -348,6 +395,14 @@ export function getTotemSvg(activity: string): string {
 
   if (act === 'sleeping') {
     parts.push(sleepingZzz());
+  }
+
+  if (act === 'studying') {
+    parts.push(codeFloat());
+  }
+
+  if (act === 'cooking') {
+    parts.push(steamFloat());
   }
 
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" class="totem-avatar totem-${act}" shape-rendering="crispEdges">
@@ -656,6 +711,131 @@ export const totemStyles = `
   @keyframes totem-cook-hold {
     0%, 100% { transform: rotate(-10deg) translateY(-${P}px); }
     50% { transform: rotate(-6deg) translateY(-${Math.round(P * 0.5)}px); }
+  }
+
+
+
+  /* ===== STUDYING CODE FLOAT ===== */
+  .totem-studying .totem-code-float text:nth-child(1) {
+    animation: totem-code-1 3s ease-in-out infinite;
+  }
+  .totem-studying .totem-code-float text:nth-child(2) {
+    animation: totem-code-2 3s ease-in-out infinite;
+    animation-delay: 0.8s;
+  }
+  .totem-studying .totem-code-float text:nth-child(3) {
+    animation: totem-code-3 3s ease-in-out infinite;
+    animation-delay: 1.6s;
+  }
+  @keyframes totem-code-1 {
+    0% { opacity: 0; transform: translate(0, 0); }
+    15% { opacity: 0.9; transform: translate(${P * 0.5}px, -${P}px); }
+    85% { opacity: 0.5; transform: translate(${P}px, -${P * 4}px); }
+    100% { opacity: 0; transform: translate(${P * 1.2}px, -${P * 5}px); }
+  }
+  @keyframes totem-code-2 {
+    0% { opacity: 0; transform: translate(0, 0); }
+    15% { opacity: 0.8; transform: translate(-${P * 0.3}px, -${P * 0.5}px); }
+    85% { opacity: 0.4; transform: translate(-${P}px, -${P * 3}px); }
+    100% { opacity: 0; transform: translate(-${P * 1.2}px, -${P * 4}px); }
+  }
+  @keyframes totem-code-3 {
+    0% { opacity: 0; transform: translate(0, 0); }
+    15% { opacity: 0.7; transform: translate(${P * 0.2}px, -${P * 0.3}px); }
+    85% { opacity: 0.35; transform: translate(${P * 0.5}px, -${P * 2.5}px); }
+    100% { opacity: 0; transform: translate(${P * 0.7}px, -${P * 3}px); }
+  }
+
+
+  /* ===== COOKING STEAM FLOAT ===== */
+  .totem-cooking .totem-steam-float text:nth-child(1) {
+    animation: totem-steam-1 2.5s ease-in-out infinite;
+  }
+  .totem-cooking .totem-steam-float text:nth-child(2) {
+    animation: totem-steam-2 2.5s ease-in-out infinite;
+    animation-delay: 0.7s;
+  }
+  .totem-cooking .totem-steam-float text:nth-child(3) {
+    animation: totem-steam-3 2.5s ease-in-out infinite;
+    animation-delay: 1.4s;
+  }
+  @keyframes totem-steam-1 {
+    0% { opacity: 0; transform: translate(0, 0) scaleX(1); }
+    15% { opacity: 0.7; transform: translate(${P * 0.3}px, -${P}px) scaleX(1.1); }
+    85% { opacity: 0.2; transform: translate(-${P * 0.5}px, -${P * 4}px) scaleX(1.4); }
+    100% { opacity: 0; transform: translate(-${P * 0.7}px, -${P * 5}px) scaleX(1.5); }
+  }
+  @keyframes totem-steam-2 {
+    0% { opacity: 0; transform: translate(0, 0) scaleX(1); }
+    15% { opacity: 0.6; transform: translate(${P * 0.5}px, -${P * 0.5}px) scaleX(1.1); }
+    85% { opacity: 0.15; transform: translate(${P}px, -${P * 3}px) scaleX(1.3); }
+    100% { opacity: 0; transform: translate(${P * 1.2}px, -${P * 4}px) scaleX(1.5); }
+  }
+  @keyframes totem-steam-3 {
+    0% { opacity: 0; transform: translate(0, 0) scaleX(1); }
+    15% { opacity: 0.5; transform: translate(-${P * 0.2}px, -${P * 0.3}px) scaleX(1.05); }
+    85% { opacity: 0.1; transform: translate(${P * 0.3}px, -${P * 2.5}px) scaleX(1.3); }
+    100% { opacity: 0; transform: translate(${P * 0.5}px, -${P * 3}px) scaleX(1.4); }
+  }
+
+  /* ===== WATCHING - Relaxed sitting, occasional reactions ===== */
+  .totem-watching .totem-left-leg {
+    transform: rotate(80deg);
+    transform-origin: ${6.5 * P}px ${16 * P}px;
+  }
+  .totem-watching .totem-right-leg {
+    transform: rotate(80deg);
+    transform-origin: ${8.5 * P}px ${16 * P}px;
+  }
+  .totem-watching .totem-character {
+    animation: totem-watch-settle 4s ease-in-out infinite;
+  }
+  .totem-watching .totem-head {
+    animation: totem-watch-head 5s ease-in-out infinite;
+    transform-origin: ${8 * P}px ${8 * P}px;
+  }
+  .totem-watching .totem-body {
+    animation: totem-breathe 3.5s ease-in-out infinite, totem-watch-lean 6s ease-in-out infinite;
+    animation-delay: 0s, 0.5s;
+    transform-origin: ${8 * P}px ${15 * P}px;
+  }
+  .totem-watching .totem-left-arm {
+    animation: totem-watch-arm-l 5s ease-in-out infinite;
+    transform-origin: ${4 * P}px ${9 * P}px;
+  }
+  .totem-watching .totem-right-arm {
+    animation: totem-watch-arm-r 7s ease-in-out infinite;
+    transform-origin: ${11 * P}px ${9 * P}px;
+  }
+  .totem-watching .totem-shadow {
+    transform: scaleX(1.2);
+    opacity: 0.12;
+  }
+  @keyframes totem-watch-settle {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(${Math.round(P * 0.2)}px); }
+  }
+  @keyframes totem-watch-head {
+    0%, 100% { transform: rotate(0deg); }
+    20% { transform: rotate(3deg); }
+    50% { transform: rotate(1deg); }
+    70% { transform: rotate(-2deg); }
+    90% { transform: rotate(4deg); }
+  }
+  @keyframes totem-watch-lean {
+    0%, 100% { transform: rotate(0deg); }
+    40% { transform: rotate(2deg); }
+    60% { transform: rotate(-1deg); }
+  }
+  @keyframes totem-watch-arm-l {
+    0%, 100% { transform: rotate(0deg); }
+    30% { transform: rotate(-2deg); }
+    60% { transform: rotate(1deg); }
+  }
+  @keyframes totem-watch-arm-r {
+    0%, 85%, 100% { transform: rotate(0deg); }
+    88% { transform: rotate(-8deg); }
+    92% { transform: rotate(0deg); }
   }
 
   /* ===== SLEEPING - Enhanced deep breathing + blanket ripple + twitch + sinusoidal Z ===== */

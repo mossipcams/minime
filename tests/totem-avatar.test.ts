@@ -3,7 +3,7 @@ import { getTotemSvg, totemStyles } from '../src/animated-presence/totem-avatar'
 import type { Activity } from '../src/animated-presence/totem-avatar';
 
 describe('Totem Avatar', () => {
-  const activities: Activity[] = ['idle', 'walking', 'studying', 'cooking', 'sleeping'];
+  const activities: Activity[] = ['idle', 'walking', 'studying', 'cooking', 'sleeping', 'watching'];
 
   it('exports getTotemSvg as a function', () => {
     expect(typeof getTotemSvg).toBe('function');
@@ -41,10 +41,20 @@ describe('Totem Avatar', () => {
   });
 
   it('non-sleeping activities do not include zzz', () => {
-    for (const activity of ['idle', 'walking', 'studying', 'cooking'] as Activity[]) {
+    for (const activity of ['idle', 'walking', 'studying', 'cooking', 'watching'] as Activity[]) {
       const svg = getTotemSvg(activity);
       expect(svg).not.toContain('totem-zzz');
     }
+  });
+
+  it('studying activity has floating code indicator', () => {
+    const svg = getTotemSvg('studying');
+    expect(svg).toContain('totem-code-float');
+  });
+
+  it('cooking activity has floating steam indicator', () => {
+    const svg = getTotemSvg('cooking');
+    expect(svg).toContain('totem-steam-float');
   });
 
   it('falls back to idle for unknown activity', () => {

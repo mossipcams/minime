@@ -9,13 +9,13 @@ const ROOM_ANIMATIONS: Record<string, string> = {
   office: 'studying',
   kitchen: 'cooking',
   bedroom: 'sleeping',
-  living_room: 'idle',
+  living_room: 'watching',
 };
 
-const WALK_SPEED = 0.06;
+const WALK_SPEED = 0.025;
 const EXIT_EDGE = 110;
 const ENTER_EDGE = -10;
-const CROSSFADE_DURATION = 400;
+const CROSSFADE_DURATION = 800;
 const MAX_DELTA = 200;
 const DEFAULT_X = 35;
 
