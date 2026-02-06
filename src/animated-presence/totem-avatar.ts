@@ -363,16 +363,20 @@ export const totemStyles = `
     image-rendering: pixelated;
   }
 
-  /* ===== EYE BLINK ===== */
+  /* ===== EYE BLINK - Enhanced multi-frame ===== */
   .totem-blink {
     opacity: 0;
   }
   .totem-avatar:not(.totem-sleeping) .totem-blink {
-    animation: totem-blink 4s step-end infinite;
+    animation: totem-blink 5s step-end infinite;
   }
   @keyframes totem-blink {
-    0%, 90%, 100% { opacity: 0; }
-    93%, 97% { opacity: 1; }
+    0%, 82%, 100% { opacity: 0; }
+    84% { opacity: 1; }
+    86% { opacity: 0; }
+    88% { opacity: 0.3; }
+    90% { opacity: 1; }
+    94% { opacity: 0; }
   }
 
   /* ===== GROUND SHADOW ===== */
@@ -380,37 +384,48 @@ export const totemStyles = `
     transform-origin: ${8 * P}px ${22.5 * P}px;
   }
 
-  /* ===== IDLE — bob + breathe + gentle sway ===== */
+  /* ===== IDLE - Enhanced bob + breathe + weight shift + look around ===== */
   .totem-idle .totem-character {
-    animation: totem-bob 2.5s ease-in-out infinite;
+    animation: totem-bob 2.8s cubic-bezier(0.45, 0, 0.55, 1) infinite;
   }
   .totem-idle .totem-head {
-    animation: totem-idle-head 5s ease-in-out infinite;
+    animation: totem-idle-head 6s ease-in-out infinite;
     transform-origin: ${8 * P}px ${8 * P}px;
   }
   .totem-idle .totem-body {
-    animation: totem-breathe 3s ease-in-out infinite;
+    animation: totem-breathe 3s ease-in-out infinite, totem-weight-shift 4s ease-in-out infinite;
+    animation-delay: 0s, 0.5s;
     transform-origin: ${8 * P}px ${15 * P}px;
   }
   .totem-idle .totem-left-arm {
-    animation: totem-idle-arm-l 3s ease-in-out infinite;
+    animation: totem-idle-arm-l 3.2s ease-in-out infinite;
     transform-origin: ${4 * P}px ${9 * P}px;
   }
   .totem-idle .totem-right-arm {
-    animation: totem-idle-arm-r 3s ease-in-out infinite;
+    animation: totem-idle-arm-r 2.8s ease-in-out infinite;
     transform-origin: ${11 * P}px ${9 * P}px;
   }
   .totem-idle .totem-shadow {
-    animation: totem-shadow-idle 2.5s ease-in-out infinite;
+    animation: totem-shadow-idle 2.8s ease-in-out infinite;
   }
   @keyframes totem-bob {
     0%, 100% { transform: translateY(0); }
+    25% { transform: translateY(-0.5px); }
     50% { transform: translateY(-${P}px); }
+    75% { transform: translateY(-0.5px); }
   }
   @keyframes totem-idle-head {
     0%, 100% { transform: rotate(0deg); }
-    30% { transform: rotate(1.5deg); }
-    70% { transform: rotate(-1.5deg); }
+    15% { transform: rotate(2deg); }
+    35% { transform: rotate(1deg); }
+    50% { transform: rotate(-2.5deg); }
+    70% { transform: rotate(-1deg); }
+    85% { transform: rotate(1.5deg); }
+  }
+  @keyframes totem-weight-shift {
+    0%, 100% { transform: translateX(0); }
+    40% { transform: translateX(${P * 0.3}px); }
+    60% { transform: translateX(-${P * 0.2}px); }
   }
   @keyframes totem-breathe {
     0%, 100% { transform: scaleY(1); }
@@ -429,48 +444,68 @@ export const totemStyles = `
     50% { transform: scaleX(0.9); opacity: 0.1; }
   }
 
-  /* ===== WALKING — full walk cycle ===== */
+  /* ===== WALKING - Enhanced squash/stretch bob + lean + overshoot swing + stride ===== */
   .totem-walking .totem-character {
-    animation: totem-walk-bob 0.35s ease-in-out infinite;
+    animation: totem-walk-bob 0.4s cubic-bezier(0.34, 1.2, 0.64, 1) infinite;
   }
   .totem-walking .totem-head {
-    animation: totem-walk-head 0.35s ease-in-out infinite;
+    animation: totem-walk-lean 0.4s ease-in-out infinite;
+    transform-origin: ${8 * P}px ${8 * P}px;
   }
   .totem-walking .totem-left-arm {
-    animation: totem-arm-swing-l 0.35s ease-in-out infinite alternate;
+    animation: totem-arm-swing-l 0.4s ease-in-out infinite alternate;
     transform-origin: ${4 * P}px ${9 * P}px;
   }
   .totem-walking .totem-right-arm {
-    animation: totem-arm-swing-r 0.35s ease-in-out infinite alternate;
+    animation: totem-arm-swing-r 0.4s ease-in-out infinite alternate;
     transform-origin: ${11 * P}px ${9 * P}px;
   }
   .totem-walking .totem-left-leg {
-    animation: totem-leg-l 0.35s ease-in-out infinite alternate;
+    animation: totem-stride-l 0.4s ease-in-out infinite alternate;
     transform-origin: ${7 * P}px ${16 * P}px;
   }
   .totem-walking .totem-right-leg {
-    animation: totem-leg-r 0.35s ease-in-out infinite alternate;
+    animation: totem-stride-r 0.4s ease-in-out infinite alternate;
     transform-origin: ${8 * P}px ${16 * P}px;
   }
   .totem-walking .totem-shadow {
-    animation: totem-shadow-walk 0.35s ease-in-out infinite;
+    animation: totem-shadow-walk 0.4s ease-in-out infinite;
   }
   @keyframes totem-walk-bob {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-${P}px); }
+    0%, 100% { transform: translateY(0) scaleY(1); }
+    20% { transform: translateY(${P * 0.3}px) scaleY(0.97); }
+    50% { transform: translateY(-${P}px) scaleY(1.02); }
+    80% { transform: translateY(${P * 0.2}px) scaleY(0.98); }
   }
-  @keyframes totem-walk-head {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-${Math.round(P * 0.5)}px); }
+  @keyframes totem-walk-lean {
+    0%, 100% { transform: rotate(0deg) translateY(0); }
+    50% { transform: rotate(3deg) translateY(-${P * 0.3}px); }
   }
   @keyframes totem-arm-swing-l {
-    0% { transform: rotate(-22deg); }
+    0% { transform: rotate(-25deg); }
+    70% { transform: rotate(28deg); }
     100% { transform: rotate(22deg); }
   }
   @keyframes totem-arm-swing-r {
-    0% { transform: rotate(22deg); }
+    0% { transform: rotate(25deg); }
+    70% { transform: rotate(-28deg); }
     100% { transform: rotate(-22deg); }
   }
+  @keyframes totem-stride-l {
+    0% { transform: rotate(-18deg) translateY(0); }
+    30% { transform: rotate(0deg) translateY(-${P * 0.5}px); }
+    50% { transform: rotate(18deg) translateY(0); }
+    80% { transform: rotate(0deg) translateY(${P * 0.3}px); }
+    100% { transform: rotate(-18deg) translateY(0); }
+  }
+  @keyframes totem-stride-r {
+    0% { transform: rotate(18deg) translateY(0); }
+    30% { transform: rotate(0deg) translateY(-${P * 0.5}px); }
+    50% { transform: rotate(-18deg) translateY(0); }
+    80% { transform: rotate(0deg) translateY(${P * 0.3}px); }
+    100% { transform: rotate(18deg) translateY(0); }
+  }
+  /* Keep old keyframes for backward compat */
   @keyframes totem-leg-l {
     0% { transform: rotate(-14deg); }
     100% { transform: rotate(14deg); }
@@ -484,7 +519,7 @@ export const totemStyles = `
     50% { transform: scaleX(0.8); opacity: 0.08; }
   }
 
-  /* ===== STUDYING — seated, typing on laptop ===== */
+  /* ===== STUDYING - Enhanced burst/pause typing + nod + rock ===== */
   .totem-studying .totem-left-leg {
     transform: rotate(80deg);
     transform-origin: ${6.5 * P}px ${16 * P}px;
@@ -497,19 +532,20 @@ export const totemStyles = `
     animation: totem-study-settle 3s ease-in-out infinite;
   }
   .totem-studying .totem-head {
-    animation: totem-study-head 2.5s ease-in-out infinite;
+    animation: totem-study-head 2.5s ease-in-out infinite, totem-study-nod 3s ease-in-out infinite;
     transform-origin: ${8 * P}px ${8 * P}px;
   }
   .totem-studying .totem-body {
-    animation: totem-study-lean 4s ease-in-out infinite;
+    animation: totem-study-lean 4s ease-in-out infinite, totem-study-rock 5s ease-in-out infinite;
+    animation-delay: 0s, 1s;
     transform-origin: ${8 * P}px ${15 * P}px;
   }
   .totem-studying .totem-left-arm {
-    animation: totem-type-l 0.25s ease-in-out infinite alternate;
+    animation: totem-type-l 2s ease-in-out infinite;
     transform-origin: ${4 * P}px ${9 * P}px;
   }
   .totem-studying .totem-right-arm {
-    animation: totem-type-r 0.25s ease-in-out infinite alternate;
+    animation: totem-type-r 2s ease-in-out infinite;
     transform-origin: ${11 * P}px ${9 * P}px;
     animation-delay: 0.08s;
   }
@@ -526,22 +562,46 @@ export const totemStyles = `
     30% { transform: rotate(-2deg) translateY(${Math.round(P * 0.5)}px); }
     70% { transform: rotate(1deg) translateY(0); }
   }
+  @keyframes totem-study-nod {
+    0%, 100% { transform: translateY(0); }
+    20% { transform: translateY(${P * 0.3}px); }
+    25%, 45% { transform: translateY(0); }
+    45% { transform: translateY(${P * 0.5}px); }
+    55% { transform: translateY(${P * 0.2}px); }
+  }
+  @keyframes totem-study-rock {
+    0%, 100% { transform: rotate(0deg); }
+    30% { transform: rotate(1deg); }
+    70% { transform: rotate(-0.8deg); }
+  }
   @keyframes totem-study-lean {
     0%, 100% { transform: rotate(0deg); }
     50% { transform: rotate(1.5deg); }
   }
   @keyframes totem-type-l {
-    0% { transform: rotate(-6deg) translateY(0); }
-    100% { transform: rotate(4deg) translateY(-${P}px); }
+    0%, 55%, 75%, 100% { transform: rotate(-6deg) translateY(0); }
+    10% { transform: rotate(5deg) translateY(-${P}px); }
+    20% { transform: rotate(-4deg) translateY(0); }
+    30% { transform: rotate(6deg) translateY(-${P}px); }
+    40% { transform: rotate(-3deg) translateY(0); }
+    50% { transform: rotate(5deg) translateY(-${P}px); }
+    80% { transform: rotate(-5deg) translateY(0); }
+    90% { transform: rotate(4deg) translateY(-${P}px); }
   }
   @keyframes totem-type-r {
-    0% { transform: rotate(6deg) translateY(0); }
-    100% { transform: rotate(-4deg) translateY(-${P}px); }
+    0%, 55%, 75%, 100% { transform: rotate(6deg) translateY(0); }
+    10% { transform: rotate(-4deg) translateY(-${P}px); }
+    20% { transform: rotate(5deg) translateY(0); }
+    30% { transform: rotate(-5deg) translateY(-${P}px); }
+    40% { transform: rotate(4deg) translateY(0); }
+    50% { transform: rotate(-6deg) translateY(-${P}px); }
+    80% { transform: rotate(6deg) translateY(0); }
+    90% { transform: rotate(-5deg) translateY(-${P}px); }
   }
 
-  /* ===== COOKING — stir pan + hold spatula ===== */
+  /* ===== COOKING - Enhanced wind-up stir + weight shift + spatula flip ===== */
   .totem-cooking .totem-character {
-    animation: totem-cook-sway 1.5s ease-in-out infinite;
+    animation: totem-cook-weight 2s ease-in-out infinite;
   }
   .totem-cooking .totem-head {
     animation: totem-cook-head 2s ease-in-out infinite;
@@ -552,19 +612,20 @@ export const totemStyles = `
     transform-origin: ${8 * P}px ${15 * P}px;
   }
   .totem-cooking .totem-right-arm {
-    animation: totem-stir 0.7s ease-in-out infinite;
+    animation: totem-stir 0.9s cubic-bezier(0.45, 0, 0.55, 1) infinite;
     transform-origin: ${11 * P}px ${9 * P}px;
   }
   .totem-cooking .totem-left-arm {
-    animation: totem-cook-hold 1.2s ease-in-out infinite;
+    animation: totem-spatula-flip 2.5s ease-in-out infinite;
     transform-origin: ${4 * P}px ${9 * P}px;
   }
   .totem-cooking .totem-shadow {
-    animation: totem-shadow-idle 1.5s ease-in-out infinite;
+    animation: totem-shadow-idle 2s ease-in-out infinite;
   }
-  @keyframes totem-cook-sway {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-${Math.round(P * 0.5)}px); }
+  @keyframes totem-cook-weight {
+    0%, 100% { transform: translateX(0); }
+    30% { transform: translateX(${P * 0.5}px); }
+    70% { transform: translateX(-${P * 0.3}px); }
   }
   @keyframes totem-cook-head {
     0%, 100% { transform: rotate(0deg); }
@@ -573,17 +634,31 @@ export const totemStyles = `
     75% { transform: rotate(3deg); }
   }
   @keyframes totem-stir {
-    0% { transform: rotate(0deg) translateY(-${P}px); }
-    25% { transform: rotate(14deg) translateY(-${P * 2}px); }
-    50% { transform: rotate(0deg) translateY(-${P}px); }
-    75% { transform: rotate(-14deg) translateY(-${P * 2}px); }
+    0%, 100% { transform: rotate(0deg) translateY(-${P}px); }
+    15% { transform: rotate(-8deg) translateY(-${P * 1.5}px); }
+    30% { transform: rotate(-16deg) translateY(-${P * 2}px); }
+    45% { transform: rotate(-8deg) translateY(-${P * 2.5}px); }
+    60% { transform: rotate(16deg) translateY(-${P * 1.5}px); }
+    75% { transform: rotate(10deg) translateY(-${P}px); }
+    85% { transform: rotate(4deg) translateY(-${P * 0.5}px); }
+  }
+  @keyframes totem-spatula-flip {
+    0%, 100% { transform: rotate(-10deg) translateY(-${P}px); }
+    40% { transform: rotate(-8deg) translateY(-${P * 0.5}px); }
+    45% { transform: rotate(-20deg) translateY(-${P * 2}px); }
+    55% { transform: rotate(-15deg) translateY(-${P * 1.5}px); }
+  }
+  /* Keep old keyframes for backward compat */
+  @keyframes totem-cook-sway {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-${Math.round(P * 0.5)}px); }
   }
   @keyframes totem-cook-hold {
     0%, 100% { transform: rotate(-10deg) translateY(-${P}px); }
     50% { transform: rotate(-6deg) translateY(-${Math.round(P * 0.5)}px); }
   }
 
-  /* ===== SLEEPING — lay down + pillow + blanket + zzz ===== */
+  /* ===== SLEEPING - Enhanced deep breathing + blanket ripple + twitch + sinusoidal Z ===== */
   .totem-sleeping {
     transform: rotate(-90deg) scale(0.9);
     transform-origin: center center;
@@ -592,15 +667,16 @@ export const totemStyles = `
     opacity: 0;
   }
   .totem-sleeping .totem-blanket {
-    animation: totem-sleep-breathe 3s ease-in-out infinite;
+    animation: totem-blanket-ripple 4s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+    animation-delay: 0.5s;
     transform-origin: ${8 * P}px ${15 * P}px;
   }
   .totem-sleeping .totem-body {
-    animation: totem-sleep-breathe 3s ease-in-out infinite;
+    animation: totem-sleep-deep 4s cubic-bezier(0.45, 0, 0.55, 1) infinite;
     transform-origin: ${8 * P}px ${12 * P}px;
   }
   .totem-sleeping .totem-left-arm {
-    animation: totem-sleep-arm 4s ease-in-out infinite;
+    animation: totem-sleep-arm 4s ease-in-out infinite, totem-sleep-twitch 7s ease-in-out infinite;
     transform-origin: ${4 * P}px ${9 * P}px;
   }
   .totem-sleeping .totem-zzz text:nth-child(1) {
@@ -614,30 +690,47 @@ export const totemStyles = `
     animation: totem-zzz-3 2.5s ease-in-out infinite;
     animation-delay: 1.2s;
   }
-  @keyframes totem-sleep-breathe {
-    0%, 100% { transform: scaleY(1); }
-    50% { transform: scaleY(1.04); }
+  @keyframes totem-sleep-deep {
+    0%, 100% { transform: scaleY(1) scaleX(1); }
+    20% { transform: scaleY(1.05) scaleX(0.98); }
+    40% { transform: scaleY(1.06) scaleX(0.97); }
+    60% { transform: scaleY(1.03) scaleX(0.99); }
+  }
+  @keyframes totem-blanket-ripple {
+    0%, 100% { transform: scaleY(1) translateY(0); }
+    30% { transform: scaleY(1.02) translateY(-${P * 0.2}px); }
+    60% { transform: scaleY(0.99) translateY(${P * 0.1}px); }
+  }
+  @keyframes totem-sleep-twitch {
+    0%, 90%, 100% { transform: translate(0, 0); }
+    93% { transform: translate(${P * 0.3}px, -${P * 0.2}px); }
+    96% { transform: translate(-${P * 0.2}px, ${P * 0.1}px); }
   }
   @keyframes totem-sleep-arm {
     0%, 100% { transform: rotate(0deg); }
     50% { transform: rotate(-3deg); }
   }
+  /* Keep old breathing for backward compat */
+  @keyframes totem-sleep-breathe {
+    0%, 100% { transform: scaleY(1); }
+    50% { transform: scaleY(1.04); }
+  }
   @keyframes totem-zzz {
     0% { opacity: 0; transform: translate(0, 0); }
-    15% { opacity: 1; }
-    85% { opacity: 0.7; }
+    15% { opacity: 1; transform: translate(${P * 0.3}px, -${P * 0.5}px); }
+    85% { opacity: 0.7; transform: translate(${P * 0.7}px, -${P * 3.5}px); }
     100% { opacity: 0; transform: translate(${P}px, -${P * 4}px); }
   }
   @keyframes totem-zzz-2 {
     0% { opacity: 0; transform: translate(0, 0); }
-    15% { opacity: 0.9; }
-    85% { opacity: 0.6; }
+    15% { opacity: 0.9; transform: translate(-${P * 0.2}px, -${P * 0.3}px); }
+    85% { opacity: 0.6; transform: translate(-${P * 0.8}px, -${P * 2.7}px); }
     100% { opacity: 0; transform: translate(-${P}px, -${P * 3}px); }
   }
   @keyframes totem-zzz-3 {
     0% { opacity: 0; transform: translate(0, 0); }
-    15% { opacity: 0.7; }
-    85% { opacity: 0.5; }
+    15% { opacity: 0.7; transform: translate(${P * 0.1}px, -${P * 0.2}px); }
+    85% { opacity: 0.5; transform: translate(${P * 0.4}px, -${P * 1.8}px); }
     100% { opacity: 0; transform: translate(${Math.round(P * 0.5)}px, -${P * 2}px); }
   }
 `;

@@ -73,4 +73,53 @@ describe('Totem Avatar', () => {
     const svg = getTotemSvg('idle');
     expect(svg).toContain('crispEdges');
   });
+
+  it('totemStyles contains enhanced idle animations', () => {
+    expect(totemStyles).toContain('totem-bob');        // kept
+    expect(totemStyles).toContain('totem-idle-head');   // kept
+    expect(totemStyles).toContain('totem-weight-shift');// new
+    expect(totemStyles).toContain('totem-breathe');     // kept
+  });
+
+  it('totemStyles contains enhanced walking animations', () => {
+    expect(totemStyles).toContain('totem-walk-bob');    // kept
+    expect(totemStyles).toContain('totem-arm-swing');   // kept (substring match)
+    expect(totemStyles).toContain('totem-stride-l');    // new
+    expect(totemStyles).toContain('totem-stride-r');    // new
+    expect(totemStyles).toContain('totem-walk-lean');   // new
+  });
+
+  it('totemStyles contains enhanced studying animations', () => {
+    expect(totemStyles).toContain('totem-type');        // kept (substring)
+    expect(totemStyles).toContain('totem-study-nod');   // new
+    expect(totemStyles).toContain('totem-study-rock');  // new
+  });
+
+  it('totemStyles contains enhanced cooking animations', () => {
+    expect(totemStyles).toContain('totem-stir');        // kept (substring)
+    expect(totemStyles).toContain('totem-cook-weight'); // new
+    expect(totemStyles).toContain('totem-spatula-flip');// new
+  });
+
+  it('totemStyles contains enhanced sleeping animations', () => {
+    expect(totemStyles).toContain('totem-zzz');         // kept (substring)
+    expect(totemStyles).toContain('totem-sleep-deep');  // new
+    expect(totemStyles).toContain('totem-blanket-ripple'); // new
+    expect(totemStyles).toContain('totem-sleep-twitch');// new
+  });
+
+  it('totemStyles uses multi-frame blink animation', () => {
+    // Blink should have more than 2 opacity stops for natural feel
+    expect(totemStyles).toContain('totem-blink');
+    // Should have at least close-open-close pattern
+    expect(totemStyles).toMatch(/totem-blink[\s\S]*?opacity:\s*1[\s\S]*?opacity:\s*0/);
+  });
+
+  it('totemStyles uses custom cubic-bezier easing', () => {
+    expect(totemStyles).toContain('cubic-bezier');
+  });
+
+  it('totemStyles uses animation-delay for overlapping action', () => {
+    expect(totemStyles).toContain('animation-delay');
+  });
 });
