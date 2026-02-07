@@ -85,32 +85,32 @@ function px(gx: number, gy: number, gw: number, gh: number, fill: string): strin
 
 const AWAKE_HEAD = [
   '...HHHHHH...',   // row 2: hair crown
-  '..HHHhHHHH..',   // row 3: hair with highlight
-  '.HHhHHgHHhH.',   // row 4: hair textured wide
+  '..HHhHHhHH..',   // row 3: hair symmetric highlights
+  '.HHhHHHHhHH.',   // row 4: hair textured wide
   'HHgHHHHHHgHH',   // row 5: hair full width
   'HHHHHHHHHHHH',   // row 6: hair bottom fringe
-  '.HsSSSSSSsH.',   // row 7: forehead, hair sideburns
-  '.LSLLLLLSLS.',   // row 8: upper face highlights
-  '.SSwESSSwES.',   // row 9: eyes (white + pupil + shadow)
-  '.SSNLLLNSs..',   // row 10: nose bridge + highlights
-  '.lSLSMLSLl..',   // row 11: mouth + cheek highlights
-  '..slSSSSls..',   // row 12: jaw shadow edges
-  '...sSlls....',   // row 13: chin shadow detail
+  '.HsSSSSSSsH.',   // row 7: forehead + sideburns
+  '.LSLLLLLLSL.',   // row 8: upper face highlights
+  '..SWESSEWS..',   // row 9: eyes symmetric (WE mirrored)
+  '.SSSLNNLSSS.',   // row 10: nose centered
+  '.sSLSMMSLSs.',   // row 11: mouth centered
+  '..sSSSSSSs..',   // row 12: jaw shadow
+  '....sSSs....',   // row 13: chin
 ];
 
 const SLEEP_HEAD = [
   '...HHHHHH...',   // row 2: hair crown
-  '..HHHhHHHH..',   // row 3: hair with highlight
-  '.HHhHHgHHhH.',   // row 4: hair textured wide
+  '..HHhHHhHH..',   // row 3: hair symmetric highlights
+  '.HHhHHHHhHH.',   // row 4: hair textured wide
   'HHgHHHHHHgHH',   // row 5: hair full width
   'HHHHHHHHHHHH',   // row 6: hair bottom fringe
-  '.HsSSSSSSsH.',   // row 7: forehead, hair sideburns
-  '.LSLLLLLSLS.',   // row 8: upper face highlights
-  '.SSEESSEESS.',   // row 9: closed eyes (2px dashes)
-  '.SSNLLLNSs..',   // row 10: nose bridge
-  '.lSLSMLSLl..',   // row 11: mouth
-  '..slSSSSls..',   // row 12: jaw shadow
-  '...sSlls....',   // row 13: chin shadow
+  '.HsSSSSSSsH.',   // row 7: forehead + sideburns
+  '.LSLLLLLLSL.',   // row 8: upper face highlights
+  '..SEESSEES..',   // row 9: closed eyes symmetric
+  '.SSSLNNLSSS.',   // row 10: nose centered
+  '.sSLSMMSLSs.',   // row 11: mouth centered
+  '..sSSSSSSs..',   // row 12: jaw shadow
+  '....sSSs....',   // row 13: chin
 ];
 
 function awakeHead(): string {
@@ -140,7 +140,7 @@ const BODY_BMP = [
   'BBcBZBcBBd',   // row 19: highlights + zip
   'BBBBZBBBBd',   // row 20: mid torso
   'bBcBBBcBBb',   // row 21: pocket detail
-  'bBBBBBBBBb',   // row 22: lower torso
+  'bBcBBBBcBb',   // row 22: lower torso + pocket highlights
   '.dBBBBBBd.',   // row 23: bottom taper
   '..dBBBBd..',   // row 24: waist
 ];
@@ -189,11 +189,11 @@ function rightArm(): string {
 
 const LEFT_LEG_BMP = [
   'pPPP',   // row 25: waistband highlight
-  'PPPP',   // row 26: upper thigh
+  'PPPq',   // row 26: upper thigh shadow
   'PPPq',   // row 27: thigh shadow
-  'PPPq',   // row 28: knee area
-  'pPPq',   // row 29: shin highlight + shadow
-  'PPPP',   // row 30: lower shin
+  'pPPq',   // row 28: knee highlight + shadow
+  'pPPP',   // row 29: shin highlight
+  'PPPq',   // row 30: lower shin shadow
   'PPPP',   // row 31: ankle
   'FFFF',   // row 32: shoe upper
   'FFFe',   // row 33: shoe detail
@@ -208,11 +208,11 @@ function leftLeg(): string {
 
 const RIGHT_LEG_BMP = [
   'PPPp',   // row 25: waistband
-  'PPPP',   // row 26: upper thigh
-  'qPPP',   // row 27: thigh shadow other side
-  'qPPP',   // row 28: knee area
-  'qPPp',   // row 29: shin
-  'PPPP',   // row 30: lower shin
+  'qPPP',   // row 26: upper thigh shadow
+  'qPPP',   // row 27: thigh shadow
+  'qPPp',   // row 28: knee shadow + highlight
+  'PPPp',   // row 29: shin highlight
+  'qPPP',   // row 30: lower shin shadow
   'PPPP',   // row 31: ankle
   'FFFF',   // row 32: shoe upper
   'eFFF',   // row 33: shoe detail
