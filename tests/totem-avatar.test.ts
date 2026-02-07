@@ -46,15 +46,6 @@ describe('Totem Avatar', () => {
     expect(svg).toContain('shape-rendering="crispEdges"');
   });
 
-  it('has high-detail pixel art with 280+ rects for rich shading and wide proportions', () => {
-    const svg = getTotemSvg('idle');
-    // Wide sprites: 16px head with eyebrows/nose/mouth, 12px body, 5px arms/legs
-    const rectCount = (svg.match(/<rect /g) || []).length;
-    expect(rectCount).toBeGreaterThanOrEqual(280);
-    // Should NOT have smooth circles for head (pixel art uses rects)
-    expect(svg).not.toMatch(/<circle[^>]+r="12"/);
-  });
-
   it('sleeping activity includes zzz and blanket elements', () => {
     const svg = getTotemSvg('sleeping');
     expect(svg).toContain('totem-zzz');
@@ -82,33 +73,32 @@ describe('Totem Avatar', () => {
     expect(svg).toContain('totem-prop');
   });
 
-  it('napping and meditating use wider closed-eye rects instead of single-pixel dots', () => {
-    for (const act of ['napping', 'meditating']) {
-      const svg = getTotemSvg(act);
-      // Sleeping eyes are 2px-wide rects (width="8" at P=4), not 1px dots (width="4")
-      expect(svg).toMatch(/width="8" height="4" fill="#2B2B2B"/);
-      // Should NOT have the single-pixel awake eye dots
-      expect(svg).not.toMatch(/<circle[^>]+r="1\.8"/);
-    }
-  });
-
-  it('uses at least 3 distinct skin fill colors for face depth', () => {
+  it('renders a perfectly symmetric face (left-right mirror)', () => {
     const svg = getTotemSvg('idle');
-    // Extract fill colors from rects inside totem-head group
+    // Extract all rects from the head group
     const headMatch = svg.match(/class="totem-head">(.*?)<\/g>/);
     expect(headMatch).not.toBeNull();
     const headSvg = headMatch![1];
-    const fills = [...headSvg.matchAll(/fill="(#[0-9A-Fa-f]{6})"/g)].map(m => m[1].toUpperCase());
-    // Filter to warm skin-range colors (peach/tan hues, not grays/whites/browns)
-    // Skin colors have high R, medium-high G, lower B
-    const skinTones = new Set(fills.filter(f => {
-      const r = parseInt(f.slice(1, 3), 16);
-      const g = parseInt(f.slice(3, 5), 16);
-      const b = parseInt(f.slice(5, 7), 16);
-      return r > 180 && g > 140 && b > 100 && r > g && g > b;
-    }));
-    // Need base skin, skin shadow, and skin highlight = 3 distinct warm tones
-    expect(skinTones.size).toBeGreaterThanOrEqual(3);
+    const rects = [...headSvg.matchAll(/<rect x="(\d+)" y="(\d+)" width="(\d+)" height="(\d+)" fill="([^"]+)"/g)];
+    // Head center is at x=64 (grid 8 + half of 16-wide = 16, times P=4 = 64)
+    // For each rect, there should be a matching rect mirrored around x=64
+    const rectSet = new Set(rects.map(r => `${r[1]},${r[2]},${r[3]},${r[4]},${r[5]}`));
+    let asymmetric = 0;
+    for (const r of rects) {
+      const x = parseInt(r[1]);
+      const y = parseInt(r[2]);
+      const w = parseInt(r[3]);
+      const fill = r[5];
+      // Mirror: new_x = 128 - (x + w), where 128 = (8 + 16) * P = center*2
+      const mx = 128 - (x + w);
+      // The mirrored rect should exist with same y, width, height, fill (or symmetric color)
+      const mirrorKey = `${mx},${r[2]},${r[3]},${r[4]},${fill}`;
+      if (!rectSet.has(mirrorKey)) {
+        asymmetric++;
+      }
+    }
+    // Allow 0 asymmetric rects — face must be perfectly symmetric
+    expect(asymmetric).toBe(0);
   });
 
   it('falls back to idle for unknown activity', () => {

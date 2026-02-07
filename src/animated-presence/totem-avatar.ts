@@ -84,47 +84,47 @@ function px(gx: number, gy: number, gw: number, gh: number, fill: string): strin
 // ===== HEAD at grid (8, 2), 16 wide =====
 
 const AWAKE_HEAD = [
-  '......HHHH......',   // row 2: hair tip
-  '....HHHhHHHH....',   // row 3: hair crown highlights
-  '...HHHhHHhHHH...',   // row 4: hair wider
-  '..HHhHHHHHHhHH..',   // row 5: hair full
-  '.HHgHHHHHHHHgHH.',   // row 6: hair widest
-  'HgHHHHHHHHHHHHgH',   // row 7: hair texture
-  'HHHhHHHHHHHhHHHH',   // row 8: hair bottom with highlights
-  'HHHHHHHHHHHHHHHH',   // row 9: hair bottom fringe
-  '.HsLSSSSSSSSLsH.',   // row 8: forehead + sideburns + highlights
-  '..LSsLLLLLLsLS..',   // row 9: upper face highlights
-  '..sHHHSSSSHHHs..',   // row 10: eyebrows (hair-colored)
-  '..SWWEESSEEWWS..',   // row 11: eyes (2W+2E each, mirrored)
-  '..SwwSlLLlSwwS..',   // row 12: under-eye with cheek highlights
-  '...SSSLNNLSSS...',   // row 13: nose bridge
-  '...SSLSNNSLS...',   // row 14: nose tip
-  '...sSLSMMSLSs...',   // row 15: mouth + cheek highlights
-  '...sSSSSSSSSs...',   // row 15: jaw shadow
-  '....ssSSSSss....',   // row 16: lower jaw
-  '......sSSs......',   // row 17: chin
+  '......HHHH......',   // hair tip
+  '....HHHHHHHH....',   // hair crown
+  '...HHHhHHhHHH...',   // hair wider
+  '..HHhHHHHHHhHH..',   // hair full
+  '.HHgHHHHHHHHgHH.',   // hair widest
+  'HgHHHHHHHHHHHHgH',   // hair texture
+  'HHHHhHHHHHHhHHHH',   // hair bottom
+  'HHHHHHHHHHHHHHHH',   // fringe
+  '.HSSSSSSSSSSSSH.',   // forehead + sideburns
+  '..SSSSSSSSSSSS..',   // upper face
+  '..SHHSSSSSSHHS..',   // eyebrows
+  '..SWEEWSSWEEWS..',   // eyes (white-pupil-pupil-white)
+  '..SSSSSSSSSSSS..',   // cheeks
+  '...SSSSNNSSSS...',   // nose
+  '...SSSSMMSSSS...',   // mouth
+  '...SSSSSSSSSS...',   // lower face
+  '....sSSSSSSs....',   // jaw
+  '.....sSSSSs.....',   // lower jaw
+  '......sSSs......',   // chin
 ];
 
 const SLEEP_HEAD = [
-  '......HHHH......',   // row 2: hair tip
-  '....HHHhHHHH....',   // row 3: hair crown highlights
-  '...HHHhHHhHHH...',   // row 4: hair wider
-  '..HHhHHHHHHhHH..',   // row 5: hair full
-  '.HHgHHHHHHHHgHH.',   // row 6: hair widest
-  'HgHHHHHHHHHHHHgH',   // row 7: hair texture
-  'HHHhHHHHHHHhHHHH',   // row 8: hair bottom with highlights
-  'HHHHHHHHHHHHHHHH',   // row 9: hair bottom fringe
-  '.HsLSSSSSSSSLsH.',   // row 8: forehead + sideburns
-  '..LSsLLLLLLsLS..',   // row 9: upper face highlights
-  '..sHHHSSSSHHHs..',   // row 10: eyebrows
-  '..SEESSSSSEESS..',   // row 11: closed eyes (2px dashes)
-  '..SssSlLLlSssS..',   // row 12: under-eye with cheek highlights
-  '...SSSLNNLSSS...',   // row 13: nose bridge
-  '...SSLSNNSLS...',   // row 14: nose tip
-  '...sSLSMMSLSs...',   // row 15: mouth
-  '...sSSSSSSSSs...',   // row 15: jaw shadow
-  '....ssSSSSss....',   // row 16: lower jaw
-  '......sSSs......',   // row 17: chin
+  '......HHHH......',   // hair tip
+  '....HHHHHHHH....',   // hair crown
+  '...HHHhHHhHHH...',   // hair wider
+  '..HHhHHHHHHhHH..',   // hair full
+  '.HHgHHHHHHHHgHH.',   // hair widest
+  'HgHHHHHHHHHHHHgH',   // hair texture
+  'HHHHhHHHHHHhHHHH',   // hair bottom
+  'HHHHHHHHHHHHHHHH',   // fringe
+  '.HSSSSSSSSSSSSH.',   // forehead + sideburns
+  '..SSSSSSSSSSSS..',   // upper face
+  '..SHHSSSSSSHHS..',   // eyebrows
+  '..SSEESSSSEESS..',   // closed eyes
+  '..SSSSSSSSSSSS..',   // cheeks
+  '...SSSSNNSSSS...',   // nose
+  '...SSSSMMSSSS...',   // mouth
+  '...SSSSSSSSSS...',   // lower face
+  '....sSSSSSSs....',   // jaw
+  '.....sSSSSs.....',   // lower jaw
+  '......sSSs......',   // chin
 ];
 
 function awakeHead(): string {
