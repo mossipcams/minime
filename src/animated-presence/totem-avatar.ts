@@ -86,45 +86,45 @@ function px(gx: number, gy: number, gw: number, gh: number, fill: string): strin
 const AWAKE_HEAD = [
   '......HHHH......',   // hair tip
   '....HHHHHHHH....',   // hair crown
-  '...HHHhHHhHHH...',   // hair wider
+  '...HHHhHHhHHH...',   // hair texture
   '..HHhHHHHHHhHH..',   // hair full
   '.HHgHHHHHHHHgHH.',   // hair widest
-  'HgHHHHHHHHHHHHgH',   // hair texture
+  'HgHHHHHHHHHHHHgH',   // hair full width
   'HHHHhHHHHHHhHHHH',   // hair bottom
   'HHHHHHHHHHHHHHHH',   // fringe
   '.HLSSSSSSSSSSLH.',   // forehead + sideburns
-  '..LSSSSSSSSSSL..',   // upper face glow
-  '..SHHHSSSSHHHS..',   // eyebrows
-  '..SWEEWSSWEEWS..',   // eyes
-  '..SLSSSSSSSSLS..',   // cheeks
-  '...SSSSNNSSSS...',   // nose
-  '...SSSSMMSSSS...',   // mouth
-  '...sSSSSSSSSs...',   // lower face
-  '....sSSSSSSs....',   // jaw
-  '.....sSSSSs.....',   // lower jaw
-  '......sSSs......',   // chin
+  '.lSSSSSSSSSSSSl.',   // upper face round
+  '.lSHHHSSSSHHHSl.',   // eyebrows
+  '.lSWEEWSSWEEWSl.',   // eyes
+  '.lSLSSSSSSSSLSl.',   // cheeks
+  '..SSSSSNNSSSSS..',   // nose
+  '..SSSSSMMSSSSS..',   // mouth
+  '..sSSSSSSSSSSs..',   // lower face
+  '...sSSSSSSSSs...',   // jaw
+  '....sSSSSSSs....',   // lower jaw
+  '.....sSSSSs.....',   // chin
 ];
 
 const SLEEP_HEAD = [
   '......HHHH......',   // hair tip
   '....HHHHHHHH....',   // hair crown
-  '...HHHhHHhHHH...',   // hair wider
+  '...HHHhHHhHHH...',   // hair texture
   '..HHhHHHHHHhHH..',   // hair full
   '.HHgHHHHHHHHgHH.',   // hair widest
-  'HgHHHHHHHHHHHHgH',   // hair texture
+  'HgHHHHHHHHHHHHgH',   // hair full width
   'HHHHhHHHHHHhHHHH',   // hair bottom
   'HHHHHHHHHHHHHHHH',   // fringe
   '.HLSSSSSSSSSSLH.',   // forehead + sideburns
-  '..LSSSSSSSSSSL..',   // upper face glow
-  '..SHHHSSSSHHHS..',   // eyebrows
-  '..SSEESSSSEESS..',   // closed eyes
-  '..SLSSSSSSSSLS..',   // cheeks
-  '...SSSSNNSSSS...',   // nose
-  '...SSSSMMSSSS...',   // mouth
-  '...sSSSSSSSSs...',   // lower face
-  '....sSSSSSSs....',   // jaw
-  '.....sSSSSs.....',   // lower jaw
-  '......sSSs......',   // chin
+  '.lSSSSSSSSSSSSl.',   // upper face round
+  '.lSHHHSSSSHHHSl.',   // eyebrows
+  '.lSSEESSSSEESSl.',   // closed eyes
+  '.lSLSSSSSSSSLSl.',   // cheeks
+  '..SSSSSNNSSSSS..',   // nose
+  '..SSSSSMMSSSSS..',   // mouth
+  '..sSSSSSSSSSSs..',   // lower face
+  '...sSSSSSSSSs...',   // jaw
+  '....sSSSSSSs....',   // lower jaw
+  '.....sSSSSs.....',   // chin
 ];
 
 function awakeHead(): string {

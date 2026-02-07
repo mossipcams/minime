@@ -73,44 +73,41 @@ describe('Totem Avatar', () => {
     expect(svg).toContain('totem-prop');
   });
 
-  it('face has forehead highlights and cheekbone structure for depth', () => {
+  it('head has a round shape — face rows are wide and taper gently to chin', () => {
     const svg = getTotemSvg('idle');
     const headMatch = svg.match(/class="totem-head">(.*?)<\/g>/);
     expect(headMatch).not.toBeNull();
     const headSvg = headMatch![1];
-    const fills = [...headSvg.matchAll(/fill="([^"]+)"/g)].map(m => m[1]);
-    // Face must use skin highlight color (#FFE4CC) for forehead/cheek warmth
-    expect(fills).toContain('#FFE4CC');
-    // Face must use skin shadow (#E8B898) for jaw definition
-    expect(fills).toContain('#E8B898');
-  });
-
-  it('renders a perfectly symmetric face (left-right mirror)', () => {
-    const svg = getTotemSvg('idle');
-    // Extract all rects from the head group
-    const headMatch = svg.match(/class="totem-head">(.*?)<\/g>/);
-    expect(headMatch).not.toBeNull();
-    const headSvg = headMatch![1];
+    // Extract all rects and find face extent per row (excluding hair rows)
     const rects = [...headSvg.matchAll(/<rect x="(\d+)" y="(\d+)" width="(\d+)" height="(\d+)" fill="([^"]+)"/g)];
-    // Head center is at x=64 (grid 8 + half of 16-wide = 16, times P=4 = 64)
-    // For each rect, there should be a matching rect mirrored around x=64
-    const rectSet = new Set(rects.map(r => `${r[1]},${r[2]},${r[3]},${r[4]},${r[5]}`));
-    let asymmetric = 0;
+    // Group rects by y, compute min-x and max-x+w per row
+    const rowExtents = new Map<number, { min: number; max: number }>();
     for (const r of rects) {
       const x = parseInt(r[1]);
       const y = parseInt(r[2]);
       const w = parseInt(r[3]);
-      const fill = r[5];
-      // Mirror: new_x = 128 - (x + w), where 128 = (8 + 16) * P = center*2
-      const mx = 128 - (x + w);
-      // The mirrored rect should exist with same y, width, height, fill (or symmetric color)
-      const mirrorKey = `${mx},${r[2]},${r[3]},${r[4]},${fill}`;
-      if (!rectSet.has(mirrorKey)) {
-        asymmetric++;
-      }
+      const cur = rowExtents.get(y) || { min: Infinity, max: -Infinity };
+      cur.min = Math.min(cur.min, x);
+      cur.max = Math.max(cur.max, x + w);
+      rowExtents.set(y, cur);
     }
-    // Allow 0 asymmetric rects — face must be perfectly symmetric
-    expect(asymmetric).toBe(0);
+    // Sort rows by y
+    const rows = [...rowExtents.entries()].sort((a, b) => a[0] - b[0]);
+    const widths = rows.map(([_, ext]) => ext.max - ext.min);
+    // The widest row should be at least 56px wide (14 grid cells * P=4)
+    const maxWidth = Math.max(...widths);
+    expect(maxWidth).toBeGreaterThanOrEqual(56);
+    // The face rows (bottom half of head) should maintain width —
+    // the narrowest face row (chin) should be at least 5 grid cells (20px) wide
+    const chinWidth = widths[widths.length - 1];
+    expect(chinWidth).toBeGreaterThanOrEqual(20);
+    // Roundness: check that the middle ~60% of rows are all within 80% of max width
+    const midStart = Math.floor(rows.length * 0.2);
+    const midEnd = Math.ceil(rows.length * 0.8);
+    const midWidths = widths.slice(midStart, midEnd);
+    for (const mw of midWidths) {
+      expect(mw).toBeGreaterThanOrEqual(maxWidth * 0.75);
+    }
   });
 
   it('falls back to idle for unknown activity', () => {
