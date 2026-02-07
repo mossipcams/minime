@@ -20,27 +20,26 @@ const ACTIVITIES: Activity[] = [
 const W = 50;
 const H = 75;
 
-// Character palette
-const HAIR = '#3C2D1E';
-const HAIR_DARK = '#2A1E12';
-const HAIR_HI = '#5A4430';
-const SKIN = '#E4B898';
-const SKIN_HI = '#F2D0B4';
-const EYES = '#1C1C1C';
-const BROW = '#2E2010';
-const MOUTH = '#B87868';
-const MOUTH_SLEEP = '#A87068';
-const HOODIE = '#506878';
-const HOODIE_DARK = '#3C5060';
-const HOODIE_HI = '#627888';
-const HOODIE_LOGO = '#B8A040';
-const PANTS = '#3A3A4A';
-const PANTS_DARK = '#2C2C3A';
-const SHOES = '#5A4030';
-const SHOES_DARK = '#3C2A1C';
-const SHOES_SOLE = '#2E1E12';
+// ===== FLAT/MINIMAL COLOR PALETTE =====
+const SKIN = '#F5C7A8';
+const SKIN_HI = '#FDDCC6';
+const HAIR = '#3D2B1F';
+const HAIR_DARK = '#2C1E14';
+const HAIR_HI = '#5C4333';
+const EYES = '#2B2B2B';
+const BROW = '#3D2B1F';
+const BLUSH = '#F09090';
+const MOUTH = '#C27060';
+const MOUTH_SLEEP = '#B06858';
+const HOODIE = '#6C8EAD';
+const HOODIE_DARK = '#536E88';
+const HOODIE_HI = '#82A3BF';
+const PANTS = '#3A3A48';
+const PANTS_DARK = '#2C2C38';
+const SHOES = '#E8E4DC';
+const SHOES_SOLE = '#3A3A3A';
 const WHITE = '#F0EEE8';
-const EYELID = '#C0A078';
+const EYELID = '#D4A880';
 
 // Prop palettes
 const PAN = '#787880';
@@ -60,58 +59,37 @@ const BLANKET = '#6A5C94';
 const BLANKET_DARK = '#584C84';
 const BLANKET_HI = '#7C6CA4';
 
-// ===== CONNECTED BODY PARTS =====
-// Design: Chibi style — overlapping shapes, no gaps, no separate neck
-// Head ~30% height (y0-22), Body ~38% (y19-48), Legs ~32% (y46-68)
+// ===== FLAT HEAD — large round, minimal features =====
 
 function headShape(): string {
   const p: string[] = [];
-  // Hair back — wide silhouette extending beyond the face on all sides
+  // Hair back — rounded silhouette
   p.push(`<g class="hair-back">`);
-  p.push(`<path d="M10,16 C10,2 15,-3 25,-3 C35,-3 40,2 40,16 C40,21 38,23 35,24 L15,24 C12,23 10,21 10,16 Z" fill="${HAIR}"/>`);
-  // Hair volume on sides — extends past face edge
-  p.push(`<path d="M10,16 C9,12 10,7 12,4 L13,16 Z" fill="${HAIR_DARK}" opacity="0.6"/>`);
-  p.push(`<path d="M40,16 C41,12 40,7 38,4 L37,16 Z" fill="${HAIR_DARK}" opacity="0.6"/>`);
+  p.push(`<ellipse cx="25" cy="13" rx="14" ry="15" fill="${HAIR}"/>`);
+  p.push(`<ellipse cx="25" cy="10" rx="12" ry="10" fill="${HAIR_DARK}" opacity="0.3"/>`);
   p.push(`</g>`);
-  // Face — inset within the hair silhouette
-  p.push(`<ellipse cx="25" cy="15" rx="9" ry="8" fill="${SKIN}"/>`);
-  p.push(`<ellipse cx="23" cy="13" rx="4" ry="3" fill="${SKIN_HI}" opacity="0.25"/>`);
-  // Side hair pieces draping alongside face
-  p.push(`<g class="hair-sides">`);
-  p.push(`<path d="M10,10 C10,14 11,19 13,22 L14,22 C12,18 11,14 12,10 Z" fill="${HAIR}"/>`);
-  p.push(`<path d="M40,10 C40,14 39,19 37,22 L36,22 C38,18 39,14 38,10 Z" fill="${HAIR}"/>`);
+  // Face — large round, inset within hair
+  p.push(`<ellipse cx="25" cy="15" rx="11" ry="11" fill="${SKIN}"/>`);
+  p.push(`<ellipse cx="23" cy="13" rx="5" ry="4" fill="${SKIN_HI}" opacity="0.2"/>`);
+  // Hair front — bangs and framing
+  p.push(`<g class="hair-front">`);
+  p.push(`<path d="M11,10 C11,2 17,-3 25,-3 C33,-3 39,2 39,10 C39,13 37,15 35,16 L33,12 C33,8 30,5 25,5 C20,5 17,8 17,12 L15,16 C13,15 11,13 11,10 Z" fill="${HAIR}"/>`);
+  p.push(`<path d="M15,16 C14,13 14,9 16,6 C17,8 17,11 17,14 Z" fill="${HAIR_HI}" opacity="0.3"/>`);
+  p.push(`<path d="M35,16 C36,13 36,9 34,6 C33,8 33,11 33,14 Z" fill="${HAIR_HI}" opacity="0.3"/>`);
   p.push(`</g>`);
-  // Hair bangs — chunky, overlaying the forehead
-  p.push(`<g class="hair-bangs">`);
-  p.push(`<path d="M14,11 C15,5 18,1 22,0 C19,3 17,6 16,11 Z" fill="${HAIR}"/>`);
-  p.push(`<path d="M22,0 C26,-1 30,0 33,2 C30,1 26,2 24,5 Z" fill="${HAIR}"/>`);
-  p.push(`<path d="M33,2 C36,4 38,7 38,11 C37,8 35,5 32,4 Z" fill="${HAIR_DARK}"/>`);
-  // Extra bang wisps for texture
-  p.push(`<path d="M16,11 C17,8 19,6 21,6" fill="none" stroke="${HAIR}" stroke-width="1.5" stroke-linecap="round"/>`);
-  p.push(`<path d="M21,5 C24,4 27,4 29,5" fill="none" stroke="${HAIR}" stroke-width="1" stroke-linecap="round"/>`);
-  p.push(`</g>`);
-  // Hair shine/highlight streak along the crown
-  p.push(`<g class="hair-shine">`);
-  p.push(`<path d="M18,-1 C22,-3 28,-3 32,-1 C29,-1.5 22,-1.5 18,-1 Z" fill="${HAIR_HI}" opacity="0.7"/>`);
-  p.push(`<path d="M15,3 C18,1 22,0 26,0 C23,1 19,2 16,4 Z" fill="${HAIR_HI}" opacity="0.4"/>`);
-  p.push(`</g>`);
-  // Eyebrows — short arched strokes for expression
-  p.push(`<path d="M17,10.5 Q19.5,9 22,10.5" fill="none" stroke="${BROW}" stroke-width="1" stroke-linecap="round"/>`);
-  p.push(`<path d="M28,10.5 Q30.5,9 33,10.5" fill="none" stroke="${BROW}" stroke-width="1" stroke-linecap="round"/>`);
-  // Eyes — compound shapes: outer eye, iris, double highlights
-  p.push(`<ellipse cx="19.5" cy="14" rx="2.2" ry="2.8" fill="${EYES}"/>`);
-  p.push(`<ellipse cx="20" cy="13.8" rx="1.2" ry="1.5" fill="#2C3848" opacity="0.6"/>`);
-  p.push(`<circle cx="19" cy="13" r="0.9" fill="#FFF" opacity="0.9"/>`);
-  p.push(`<circle cx="20.5" cy="15" r="0.4" fill="#FFF" opacity="0.5"/>`);
-  p.push(`<ellipse cx="30.5" cy="14" rx="2.2" ry="2.8" fill="${EYES}"/>`);
-  p.push(`<ellipse cx="31" cy="13.8" rx="1.2" ry="1.5" fill="#2C3848" opacity="0.6"/>`);
-  p.push(`<circle cx="30" cy="13" r="0.9" fill="#FFF" opacity="0.9"/>`);
-  p.push(`<circle cx="31.5" cy="15" r="0.4" fill="#FFF" opacity="0.5"/>`);
+  // Eyebrows — thin arcs
+  p.push(`<path d="M18,12 Q20.5,10.5 23,12" fill="none" stroke="${BROW}" stroke-width="0.8" stroke-linecap="round"/>`);
+  p.push(`<path d="M27,12 Q29.5,10.5 32,12" fill="none" stroke="${BROW}" stroke-width="0.8" stroke-linecap="round"/>`);
+  // Eyes — simple dots with single highlight
+  p.push(`<circle cx="20.5" cy="15" r="1.8" fill="${EYES}"/>`);
+  p.push(`<circle cx="29.5" cy="15" r="1.8" fill="${EYES}"/>`);
+  p.push(`<circle cx="20" cy="14.3" r="0.6" fill="#FFF" opacity="0.85"/>`);
+  p.push(`<circle cx="29" cy="14.3" r="0.6" fill="#FFF" opacity="0.85"/>`);
   // Cheek blush
-  p.push(`<ellipse cx="16" cy="17" rx="2.2" ry="1.3" fill="#E88880" opacity="0.18"/>`);
-  p.push(`<ellipse cx="34" cy="17" rx="2.2" ry="1.3" fill="#E88880" opacity="0.18"/>`);
-  // Mouth
-  p.push(`<path d="M22,20 Q25,22 28,20" fill="none" stroke="${MOUTH}" stroke-width="1" stroke-linecap="round"/>`);
+  p.push(`<ellipse cx="16" cy="18" rx="2.5" ry="1.2" fill="${BLUSH}" opacity="0.15"/>`);
+  p.push(`<ellipse cx="34" cy="18" rx="2.5" ry="1.2" fill="${BLUSH}" opacity="0.15"/>`);
+  // Mouth — tiny arc
+  p.push(`<path d="M23,20.5 Q25,22 27,20.5" fill="none" stroke="${MOUTH}" stroke-width="0.8" stroke-linecap="round"/>`);
   return p.join('');
 }
 
@@ -119,45 +97,32 @@ function sleepingHeadShape(): string {
   const p: string[] = [];
   // Hair back
   p.push(`<g class="hair-back">`);
-  p.push(`<path d="M10,16 C10,2 15,-3 25,-3 C35,-3 40,2 40,16 C40,21 38,23 35,24 L15,24 C12,23 10,21 10,16 Z" fill="${HAIR}"/>`);
-  p.push(`<path d="M10,16 C9,12 10,7 12,4 L13,16 Z" fill="${HAIR_DARK}" opacity="0.6"/>`);
-  p.push(`<path d="M40,16 C41,12 40,7 38,4 L37,16 Z" fill="${HAIR_DARK}" opacity="0.6"/>`);
+  p.push(`<ellipse cx="25" cy="13" rx="14" ry="15" fill="${HAIR}"/>`);
+  p.push(`<ellipse cx="25" cy="10" rx="12" ry="10" fill="${HAIR_DARK}" opacity="0.3"/>`);
   p.push(`</g>`);
   // Face
-  p.push(`<ellipse cx="25" cy="15" rx="9" ry="8" fill="${SKIN}"/>`);
-  p.push(`<ellipse cx="23" cy="13" rx="4" ry="3" fill="${SKIN_HI}" opacity="0.25"/>`);
-  // Side hair
-  p.push(`<g class="hair-sides">`);
-  p.push(`<path d="M10,10 C10,14 11,19 13,22 L14,22 C12,18 11,14 12,10 Z" fill="${HAIR}"/>`);
-  p.push(`<path d="M40,10 C40,14 39,19 37,22 L36,22 C38,18 39,14 38,10 Z" fill="${HAIR}"/>`);
+  p.push(`<ellipse cx="25" cy="15" rx="11" ry="11" fill="${SKIN}"/>`);
+  p.push(`<ellipse cx="23" cy="13" rx="5" ry="4" fill="${SKIN_HI}" opacity="0.2"/>`);
+  // Hair front — messy
+  p.push(`<g class="hair-front">`);
+  p.push(`<path d="M11,10 C11,2 17,-3 25,-3 C33,-3 39,2 39,10 C39,13 37,15 35,16 L33,12 C33,8 30,5 25,5 C20,5 17,8 17,12 L15,16 C13,15 11,13 11,10 Z" fill="${HAIR}"/>`);
+  p.push(`<path d="M15,16 C14,13 14,9 16,6 C17,8 17,11 17,14 Z" fill="${HAIR_HI}" opacity="0.3"/>`);
   p.push(`</g>`);
-  // Messy bangs
-  p.push(`<g class="hair-bangs">`);
-  p.push(`<path d="M14,11 C15,5 18,1 22,0 C19,3 17,6 16,11 Z" fill="${HAIR}"/>`);
-  p.push(`<path d="M22,0 C26,-1 30,0 33,2 C30,1 26,2 24,5 Z" fill="${HAIR}"/>`);
-  p.push(`<path d="M33,2 C36,4 38,7 38,11 C37,8 35,5 32,4 Z" fill="${HAIR_DARK}"/>`);
-  p.push(`<path d="M16,11 C17,8 19,6 21,6" fill="none" stroke="${HAIR}" stroke-width="1.5" stroke-linecap="round"/>`);
-  p.push(`</g>`);
-  // Hair shine
-  p.push(`<g class="hair-shine">`);
-  p.push(`<path d="M18,-1 C22,-3 28,-3 32,-1 C29,-1.5 22,-1.5 18,-1 Z" fill="${HAIR_HI}" opacity="0.7"/>`);
-  p.push(`</g>`);
-  // Closed eyes
-  p.push(`<path d="M17,14 Q19.5,16 22,14" fill="none" stroke="${EYELID}" stroke-width="1.3" stroke-linecap="round"/>`);
-  p.push(`<path d="M28,14 Q30.5,16 32,14" fill="none" stroke="${EYELID}" stroke-width="1.3" stroke-linecap="round"/>`);
+  // Closed eyes — curved arcs
+  p.push(`<path d="M18,15 Q20.5,17 23,15" fill="none" stroke="${EYELID}" stroke-width="1.2" stroke-linecap="round"/>`);
+  p.push(`<path d="M27,15 Q29.5,17 32,15" fill="none" stroke="${EYELID}" stroke-width="1.2" stroke-linecap="round"/>`);
   // Cheek blush (more visible when sleeping)
-  p.push(`<ellipse cx="16" cy="17" rx="2.2" ry="1.3" fill="#E88880" opacity="0.22"/>`);
-  p.push(`<ellipse cx="34" cy="17" rx="2.2" ry="1.3" fill="#E88880" opacity="0.22"/>`);
+  p.push(`<ellipse cx="16" cy="18" rx="2.5" ry="1.2" fill="${BLUSH}" opacity="0.2"/>`);
+  p.push(`<ellipse cx="34" cy="18" rx="2.5" ry="1.2" fill="${BLUSH}" opacity="0.2"/>`);
   // Peaceful mouth
-  p.push(`<path d="M23,20 Q25,21 27,20" fill="none" stroke="${MOUTH_SLEEP}" stroke-width="0.8" stroke-linecap="round"/>`);
+  p.push(`<path d="M23.5,20.5 Q25,21.5 26.5,20.5" fill="none" stroke="${MOUTH_SLEEP}" stroke-width="0.7" stroke-linecap="round"/>`);
   return p.join('');
 }
 
 function blinkOverlay(): string {
-  // Eyelid-colored arcs that cover the eyes when blinking
   return `<g class="totem-blink">
-    <ellipse cx="19.5" cy="14" rx="2.8" ry="3.2" fill="${SKIN}"/>
-    <ellipse cx="30.5" cy="14" rx="2.8" ry="3.2" fill="${SKIN}"/>
+    <ellipse cx="20.5" cy="15" rx="2.5" ry="2.8" fill="${SKIN}"/>
+    <ellipse cx="29.5" cy="15" rx="2.5" ry="2.8" fill="${SKIN}"/>
   </g>`;
 }
 
@@ -174,54 +139,45 @@ function svgDefs(): string {
   </defs>`;
 }
 
-// ===== BODY (connected torso — path extends up under head, no separate neck) =====
+// ===== BODY — clean rounded torso =====
 
 function bodyShape(): string {
   const p: string[] = [];
-  // Torso — single path from shoulders up into neck/chin area, down to waist
-  // Extends up to y=19 to overlap under the head (head bottom ~y=22)
-  p.push(`<path d="M14,22 C14,19 18,18 25,18 C32,18 36,19 36,22 L36,46 C36,48 33,48 25,48 C17,48 14,48 14,46 Z" fill="url(#hoodie-grad)"/>`);
-  // Hoodie collar at neck overlap zone
-  p.push(`<path d="M18,21 Q25,24 32,21" fill="${HOODIE_HI}" stroke="none"/>`);
+  // Torso — single rounded path, overlaps under head
+  p.push(`<path d="M15,22 C15,19 19,18 25,18 C31,18 35,19 35,22 L35,46 C35,48 32,48 25,48 C18,48 15,48 15,46 Z" fill="url(#hoodie-grad)"/>`);
+  // Collar
+  p.push(`<path d="M19,21 Q25,24 31,21" fill="${HOODIE_HI}" stroke="none"/>`);
   // Side shading
-  p.push(`<path d="M14,22 C14,19 16,18 19,18 L19,46 C17,46 14,46 14,46 Z" fill="${HOODIE_DARK}" opacity="0.4"/>`);
-  p.push(`<path d="M36,22 C36,19 34,18 31,18 L31,46 C33,46 36,46 36,46 Z" fill="${HOODIE_DARK}" opacity="0.4"/>`);
-  // Logo
-  p.push(`<circle cx="25" cy="34" r="2" fill="${HOODIE_LOGO}"/>`);
-  // Pants transition — overlaps bottom of hoodie
-  p.push(`<rect x="15" y="44" width="20" height="6" rx="2" fill="url(#pants-grad)"/>`);
-  p.push(`<rect x="15" y="44" width="5" height="6" rx="1" fill="${PANTS_DARK}" opacity="0.4"/>`);
-  p.push(`<rect x="30" y="44" width="5" height="6" rx="1" fill="${PANTS_DARK}" opacity="0.4"/>`);
+  p.push(`<path d="M15,22 L15,46 C15,46 17,46 19,46 L19,18 C17,18 15,19 15,22 Z" fill="${HOODIE_DARK}" opacity="0.3"/>`);
+  p.push(`<path d="M35,22 L35,46 C35,46 33,46 31,46 L31,18 C33,18 35,19 35,22 Z" fill="${HOODIE_DARK}" opacity="0.3"/>`);
+  // Pants transition
+  p.push(`<rect x="16" y="44" width="18" height="6" rx="2" fill="url(#pants-grad)"/>`);
   return p.join('');
 }
 
-// ===== ARMS (paths that emerge from torso shoulders) =====
+// ===== ARMS — simple paths from shoulders =====
 
 function leftArmShape(): string {
   const p: string[] = [];
-  // Arm — path starting inside the torso at the shoulder, curving out
-  p.push(`<path d="M16,22 C12,23 9,26 9,30 L9,39 C9,41 10,42 12,42 C14,42 15,41 15,39 L15,30 C15,27 16,25 16,22 Z" fill="${HOODIE}"/>`);
-  // Inner shadow
-  p.push(`<path d="M16,22 C12,23 9,26 9,30 L9,33 C10,31 12,29 15,28 L15,22 Z" fill="${HOODIE_DARK}" opacity="0.3"/>`);
-  // Hand
-  p.push(`<ellipse cx="12" cy="43" rx="3" ry="2.2" fill="${SKIN}"/>`);
+  p.push(`<path d="M17,22 C13,23 10,26 10,30 L10,39 C10,41 11,42 13,42 C15,42 16,41 16,39 L16,30 C16,27 17,25 17,22 Z" fill="${HOODIE}"/>`);
+  p.push(`<path d="M17,22 C13,23 10,26 10,30 L10,33 C11,31 13,29 16,28 L16,22 Z" fill="${HOODIE_DARK}" opacity="0.25"/>`);
+  p.push(`<ellipse cx="13" cy="43" rx="2.8" ry="2" fill="${SKIN}"/>`);
   return p.join('');
 }
 
 function rightArmShape(): string {
   const p: string[] = [];
-  p.push(`<path d="M34,22 C38,23 41,26 41,30 L41,39 C41,41 40,42 38,42 C36,42 35,41 35,39 L35,30 C35,27 34,25 34,22 Z" fill="${HOODIE}"/>`);
-  p.push(`<path d="M34,22 C38,23 41,26 41,30 L41,33 C40,31 38,29 35,28 L35,22 Z" fill="${HOODIE_DARK}" opacity="0.3"/>`);
-  p.push(`<ellipse cx="38" cy="43" rx="3" ry="2.2" fill="${SKIN}"/>`);
+  p.push(`<path d="M33,22 C37,23 40,26 40,30 L40,39 C40,41 39,42 37,42 C35,42 34,41 34,39 L34,30 C34,27 33,25 33,22 Z" fill="${HOODIE}"/>`);
+  p.push(`<path d="M33,22 C37,23 40,26 40,30 L40,33 C39,31 37,29 34,28 L34,22 Z" fill="${HOODIE_DARK}" opacity="0.25"/>`);
+  p.push(`<ellipse cx="37" cy="43" rx="2.8" ry="2" fill="${SKIN}"/>`);
   return p.join('');
 }
 
 function rightArmWithPanShape(): string {
   const p: string[] = [];
-  // Arm
-  p.push(`<path d="M34,22 C38,23 41,26 41,30 L41,39 C41,41 40,42 38,42 C36,42 35,41 35,39 L35,30 C35,27 34,25 34,22 Z" fill="${HOODIE}"/>`);
-  p.push(`<path d="M34,22 C38,23 41,26 41,30 L41,33 C40,31 38,29 35,28 L35,22 Z" fill="${HOODIE_DARK}" opacity="0.3"/>`);
-  p.push(`<ellipse cx="38" cy="43" rx="3" ry="2.2" fill="${SKIN}"/>`);
+  p.push(`<path d="M33,22 C37,23 40,26 40,30 L40,39 C40,41 39,42 37,42 C35,42 34,41 34,39 L34,30 C34,27 33,25 33,22 Z" fill="${HOODIE}"/>`);
+  p.push(`<path d="M33,22 C37,23 40,26 40,30 L40,33 C39,31 37,29 34,28 L34,22 Z" fill="${HOODIE_DARK}" opacity="0.25"/>`);
+  p.push(`<ellipse cx="37" cy="43" rx="2.8" ry="2" fill="${SKIN}"/>`);
   // Frying pan
   p.push(`<ellipse cx="43" cy="39" rx="5" ry="4" fill="${PAN}"/>`);
   p.push(`<ellipse cx="43" cy="39" rx="4" ry="3" fill="${PAN_DARK}"/>`);
@@ -233,38 +189,37 @@ function rightArmWithPanShape(): string {
 
 function leftArmWithSpatulaShape(): string {
   const p: string[] = [];
-  p.push(`<path d="M16,22 C12,23 9,26 9,30 L9,39 C9,41 10,42 12,42 C14,42 15,41 15,39 L15,30 C15,27 16,25 16,22 Z" fill="${HOODIE}"/>`);
-  p.push(`<path d="M16,22 C12,23 9,26 9,30 L9,33 C10,31 12,29 15,28 L15,22 Z" fill="${HOODIE_DARK}" opacity="0.3"/>`);
-  p.push(`<ellipse cx="12" cy="43" rx="3" ry="2.2" fill="${SKIN}"/>`);
+  p.push(`<path d="M17,22 C13,23 10,26 10,30 L10,39 C10,41 11,42 13,42 C15,42 16,41 16,39 L16,30 C16,27 17,25 17,22 Z" fill="${HOODIE}"/>`);
+  p.push(`<path d="M17,22 C13,23 10,26 10,30 L10,33 C11,31 13,29 16,28 L16,22 Z" fill="${HOODIE_DARK}" opacity="0.25"/>`);
+  p.push(`<ellipse cx="13" cy="43" rx="2.8" ry="2" fill="${SKIN}"/>`);
   // Spatula
-  p.push(`<rect x="6" y="33" width="2" height="8" rx="1" fill="${PAN_HANDLE}"/>`);
-  p.push(`<rect x="4" y="29" width="6" height="5" rx="2" fill="${PAN}"/>`);
+  p.push(`<rect x="7" y="33" width="2" height="8" rx="1" fill="${PAN_HANDLE}"/>`);
+  p.push(`<rect x="5" y="29" width="6" height="5" rx="2" fill="${PAN}"/>`);
   return p.join('');
 }
 
-// ===== LEGS (overlap into pants area) =====
+// ===== LEGS — simple rounded rects =====
 
 function leftLegShape(): string {
   const p: string[] = [];
-  // Pants leg — starts inside pants zone for overlap
-  p.push(`<rect x="16" y="47" width="8" height="15" rx="3" fill="${PANTS}"/>`);
-  p.push(`<rect x="16" y="47" width="3" height="15" rx="1" fill="${PANTS_DARK}" opacity="0.3"/>`);
-  // Shoe — connected to leg bottom
-  p.push(`<path d="M15,62 L24,62 C26,62 26,66 23,66 L16,66 C14,66 14,62 15,62 Z" fill="${SHOES}"/>`);
-  p.push(`<rect x="14" y="64.5" width="12" height="1.5" rx="0.5" fill="${SHOES_SOLE}"/>`);
+  p.push(`<rect x="17" y="47" width="7" height="15" rx="3" fill="${PANTS}"/>`);
+  p.push(`<rect x="17" y="47" width="2.5" height="15" rx="1" fill="${PANTS_DARK}" opacity="0.25"/>`);
+  // Shoe
+  p.push(`<path d="M16,62 L24,62 C26,62 26,66 23,66 L17,66 C15,66 15,62 16,62 Z" fill="${SHOES}"/>`);
+  p.push(`<rect x="15" y="64.5" width="11" height="1.5" rx="0.5" fill="${SHOES_SOLE}"/>`);
   return p.join('');
 }
 
 function rightLegShape(): string {
   const p: string[] = [];
-  p.push(`<rect x="26" y="47" width="8" height="15" rx="3" fill="${PANTS}"/>`);
-  p.push(`<rect x="31" y="47" width="3" height="15" rx="1" fill="${PANTS_DARK}" opacity="0.3"/>`);
-  p.push(`<path d="M25,62 L34,62 C36,62 36,66 34,66 L27,66 C25,66 25,62 25,62 Z" fill="${SHOES}"/>`);
-  p.push(`<rect x="25" y="64.5" width="12" height="1.5" rx="0.5" fill="${SHOES_SOLE}"/>`);
+  p.push(`<rect x="26" y="47" width="7" height="15" rx="3" fill="${PANTS}"/>`);
+  p.push(`<rect x="30.5" y="47" width="2.5" height="15" rx="1" fill="${PANTS_DARK}" opacity="0.25"/>`);
+  p.push(`<path d="M25,62 L33,62 C35,62 35,66 33,66 L27,66 C25,66 25,62 25,62 Z" fill="${SHOES}"/>`);
+  p.push(`<rect x="25" y="64.5" width="11" height="1.5" rx="0.5" fill="${SHOES_SOLE}"/>`);
   return p.join('');
 }
 
-// ===== PROPS =====
+// ===== PROPS (unchanged logic, same objects) =====
 
 function phoneProp(): string {
   const p: string[] = [];

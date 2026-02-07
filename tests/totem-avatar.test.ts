@@ -151,38 +151,32 @@ describe('Totem Avatar', () => {
     expect(rightArm).toContain('<path');
   });
 
-  it('hair extends wider than the face and has chunky bangs overlaying forehead', () => {
+  it('hair has back layer and front layer for flat design', () => {
     const svg = getTotemSvg('idle');
-    // Extract the full totem-head group content (may contain nested groups)
     const headStart = svg.indexOf('totem-head');
     const headSection = svg.slice(headStart, headStart + 2000);
-    // Hair back silhouette should exist
+    // Flat design uses simple back + front hair layers
     expect(headSection).toContain('hair-back');
-    // Side hair pieces that drape past the face
-    expect(headSection).toContain('hair-sides');
-    // Bangs layered on top of forehead
-    expect(headSection).toContain('hair-bangs');
-    // Should have a highlight/shine streak
-    expect(headSection).toContain('hair-shine');
+    expect(headSection).toContain('hair-front');
   });
 
-  it('eyes are compound shapes with iris hint and double highlights', () => {
+  it('eyes are simple dot circles for flat minimal style', () => {
     const svg = getTotemSvg('idle');
-    // Count eye-related elements: should have outer eye ellipses, iris hints, and 2 highlights per eye
-    const eyeEllipses = (svg.match(/<ellipse[^>]*ry="2\.8"/g) || []).length;
-    expect(eyeEllipses).toBeGreaterThanOrEqual(2); // two outer eye shapes
-    // Should have white highlight circles (at least 2 per eye = 4 total)
+    // Flat design uses simple filled circles for eyes
+    const eyeDots = (svg.match(/<circle[^>]*fill="#2B2B2B"/g) || []).length;
+    expect(eyeDots).toBeGreaterThanOrEqual(2); // two eye dots
+    // Should have small highlight circles (one per eye)
     const highlights = (svg.match(/<circle[^>]*fill="#FFF"/g) || []).length;
-    expect(highlights).toBeGreaterThanOrEqual(4);
+    expect(highlights).toBeGreaterThanOrEqual(2);
   });
 
   it('face has eyebrows and cheek blush for personality', () => {
     const svg = getTotemSvg('idle');
-    // Eyebrows — stroke arcs above the eyes
-    const browMatches = (svg.match(/stroke="#2E2010"/g) || []).length;
+    // Eyebrows — stroke arcs above the eyes (new palette)
+    const browMatches = (svg.match(/stroke="#3D2B1F"/g) || []).length;
     expect(browMatches).toBeGreaterThanOrEqual(2); // two eyebrows
-    // Cheek blush — warm pink ovals
-    const blushMatches = (svg.match(/#E88880/g) || []).length;
+    // Cheek blush — soft pink ovals (new palette)
+    const blushMatches = (svg.match(/#F09090/g) || []).length;
     expect(blushMatches).toBeGreaterThanOrEqual(2); // two cheeks
   });
 
