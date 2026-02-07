@@ -19,12 +19,10 @@ describe('Dog Avatar', () => {
     expect(svg).toContain('dog-idle');
   });
 
-  it('uses geometric shapes (circles, rects, ellipses) and no pixel art', () => {
+  it('uses pixel art viewBox 128x80 with crispEdges rendering', () => {
     const svg = getDogSvg('idle');
-    const hasSmooth = svg.includes('<circle') || svg.includes('<ellipse') || (/<rect[^>]+rx="/.test(svg));
-    expect(hasSmooth).toBe(true);
-    expect(svg).not.toContain('crispEdges');
-    expect(svg).not.toContain('image-rendering');
+    expect(svg).toContain('viewBox="0 0 128 80"');
+    expect(svg).toContain('shape-rendering="crispEdges"');
   });
 
   it('standing poses have separate body, head, legs-front, legs-back, ear, tail, tongue groups', () => {

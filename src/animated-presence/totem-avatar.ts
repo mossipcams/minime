@@ -1,4 +1,4 @@
-// Minimal geometric human avatar — viewBox 0 0 50 75
+// Pixel art human avatar — viewBox 0 0 128 192, P=4 (32x48 logical grid)
 export type Activity = 'idle' | 'walking'
   | 'studying' | 'reading' | 'thinking' | 'coffee-break' | 'whiteboarding' | 'phone-call'
   | 'cooking' | 'eating' | 'coffee-making' | 'washing-dishes' | 'snacking' | 'baking'
@@ -13,8 +13,9 @@ const ACTIVITIES: Activity[] = [
   'sleeping', 'reading-bed', 'meditating', 'getting-dressed', 'morning-stretch', 'phone-bed',
 ];
 
-const W = 50;
-const H = 75;
+const W = 128;
+const H = 192;
+const P = 4; // pixel size in viewBox units
 
 // Palette
 const SKIN = '#FFD5B8';
@@ -34,60 +35,114 @@ const PAN_HANDLE = '#5E4428';
 const PHONE_BODY = '#282838';
 const PHONE_SCREEN = '#4C7AA8';
 
+// ===== PIXEL HELPERS =====
+
+/** Emit a rect at grid position (gx, gy) spanning gw x gh logical pixels */
+function px(gx: number, gy: number, gw: number, gh: number, fill: string): string {
+  return `<rect x="${gx * P}" y="${gy * P}" width="${gw * P}" height="${gh * P}" fill="${fill}"/>`;
+}
+
 // ===== HEAD =====
 
+function hairPixels(): string {
+  // Cap covering top of head, rows 2-5
+  return [
+    px(13, 2, 6, 1, HAIR),   // narrow top
+    px(12, 3, 8, 1, HAIR),   // wider
+    px(11, 4, 10, 1, HAIR),  // full cap
+    px(11, 5, 10, 1, HAIR),  // full cap
+  ].join('');
+}
+
+function headSkinPixels(): string {
+  // Oval face, rows 5-13
+  return [
+    px(12, 6, 8, 1, SKIN),   // top of face
+    px(11, 7, 10, 6, SKIN),  // main face block
+    px(12, 13, 8, 1, SKIN),  // chin
+  ].join('');
+}
+
+function awakeEyePixels(): string {
+  return [
+    px(13, 10, 1, 1, EYES),
+    px(18, 10, 1, 1, EYES),
+  ].join('');
+}
+
+function sleepingEyePixels(): string {
+  // Closed eyes: horizontal dashes (2px wide each)
+  return [
+    px(13, 10, 2, 1, EYES),
+    px(17, 10, 2, 1, EYES),
+  ].join('');
+}
+
 function awakeHead(): string {
-  const p: string[] = [];
-  p.push(`<circle cx="25" cy="18" r="12" fill="${SKIN}"/>`);
-  p.push(`<path class="totem-hair" d="M13,16 Q13,4 25,4 Q37,4 37,16 Q34,10 25,10 Q16,10 13,16 Z" fill="${HAIR}"/>`);
-  p.push(`<circle cx="20" cy="20" r="1.8" fill="${EYES}"/>`);
-  p.push(`<circle cx="30" cy="20" r="1.8" fill="${EYES}"/>`);
-  return p.join('');
+  return hairPixels() + headSkinPixels() + awakeEyePixels();
 }
 
 function sleepingHead(): string {
-  const p: string[] = [];
-  p.push(`<circle cx="25" cy="18" r="12" fill="${SKIN}"/>`);
-  p.push(`<path class="totem-hair" d="M13,16 Q13,4 25,4 Q37,4 37,16 Q34,10 25,10 Q16,10 13,16 Z" fill="${HAIR}"/>`);
-  p.push(`<path d="M17,20 Q20,23 23,20" fill="none" stroke="${EYES}" stroke-width="1.5" stroke-linecap="round"/>`);
-  p.push(`<path d="M27,20 Q30,23 33,20" fill="none" stroke="${EYES}" stroke-width="1.5" stroke-linecap="round"/>`);
-  return p.join('');
+  return hairPixels() + headSkinPixels() + sleepingEyePixels();
 }
 
 // ===== BODY PARTS =====
 
 function bodyRect(): string {
-  return `<rect x="17" y="30" width="16" height="20" rx="5" fill="${HOODIE}"/>`;
+  return [
+    px(12, 14, 8, 1, HOODIE),  // shoulders (narrow)
+    px(11, 15, 10, 8, HOODIE), // torso
+    px(12, 23, 8, 1, HOODIE),  // taper
+  ].join('');
 }
+
 function leftArm(): string {
-  return `<rect x="9" y="32" width="8" height="5" rx="2.5" fill="${HOODIE}"/>`;
+  return [
+    px(8, 15, 3, 4, HOODIE),  // sleeve
+    px(8, 19, 2, 1, SKIN),    // hand
+  ].join('');
 }
+
 function rightArm(): string {
-  return `<rect x="33" y="32" width="8" height="5" rx="2.5" fill="${HOODIE}"/>`;
+  return [
+    px(21, 15, 3, 4, HOODIE),
+    px(22, 19, 2, 1, SKIN),
+  ].join('');
 }
+
 function leftLeg(): string {
-  return `<rect x="18" y="50" width="6" height="14" rx="2.5" fill="${PANTS}"/><rect x="17" y="62" width="7" height="4" rx="2" fill="${SHOES}"/>`;
+  return [
+    px(12, 24, 4, 10, PANTS),
+    px(12, 34, 4, 2, SHOES),
+  ].join('');
 }
+
 function rightLeg(): string {
-  return `<rect x="26" y="50" width="6" height="14" rx="2.5" fill="${PANTS}"/><rect x="26" y="62" width="7" height="4" rx="2" fill="${SHOES}"/>`;
+  return [
+    px(16, 24, 4, 10, PANTS),
+    px(16, 34, 4, 2, SHOES),
+  ].join('');
 }
+
 function groundShadow(): string {
-  return `<ellipse class="totem-shadow" cx="25" cy="68" rx="12" ry="2.5" fill="#000" opacity="0.12"/>`;
+  return `<ellipse class="totem-shadow" cx="64" cy="180" rx="30" ry="6" fill="#000" opacity="0.12"/>`;
 }
 
 // ===== SLEEPING EXTRAS =====
 
 function pillow(): string {
-  return `<rect x="10" y="14" width="30" height="10" rx="5" fill="${PILLOW_FILL}"/>`;
+  return px(8, 11, 16, 3, PILLOW_FILL);
 }
+
 function blanket(): string {
-  return `<g class="totem-blanket"><rect x="10" y="32" width="30" height="28" rx="4" fill="${BLANKET_COLOR}"/><rect x="10" y="32" width="30" height="6" rx="3" fill="${BLANKET_HI}"/></g>`;
+  return `<g class="totem-blanket">${px(8, 22, 16, 10, BLANKET_COLOR)}${px(8, 22, 16, 2, BLANKET_HI)}</g>`;
 }
+
 function sleepingZzz(): string {
   return `<g class="totem-zzz">
-    <text x="38" y="5" fill="${WHITE}" font-size="7px" font-family="monospace" opacity="0">Z</text>
-    <text x="40" y="13" fill="${WHITE}" font-size="6px" font-family="monospace" opacity="0">z</text>
-    <text x="38" y="19" fill="${WHITE}" font-size="5px" font-family="monospace" opacity="0">z</text>
+    <text x="100" y="12" fill="${WHITE}" font-size="18px" font-family="monospace" opacity="0">Z</text>
+    <text x="104" y="32" fill="${WHITE}" font-size="15px" font-family="monospace" opacity="0">z</text>
+    <text x="100" y="48" fill="${WHITE}" font-size="12px" font-family="monospace" opacity="0">z</text>
   </g>`;
 }
 
@@ -95,57 +150,58 @@ function sleepingZzz(): string {
 
 function codeFloat(): string {
   return `<g class="totem-code-float">
-    <text x="3" y="6" fill="#7ABCE0" font-size="7px" font-family="monospace" opacity="0">&lt;/&gt;</text>
-    <text x="38" y="10" fill="#A0D070" font-size="6px" font-family="monospace" opacity="0">{ }</text>
+    <text x="8" y="15" fill="#7ABCE0" font-size="18px" font-family="monospace" opacity="0">&lt;/&gt;</text>
+    <text x="97" y="25" fill="#A0D070" font-size="15px" font-family="monospace" opacity="0">{ }</text>
   </g>`;
 }
+
 function steamFloat(): string {
   return `<g class="totem-steam-float">
-    <text x="38" y="10" fill="#E8E8E8" font-size="6px" font-family="sans-serif" opacity="0">~</text>
-    <text x="40" y="16" fill="#D0D0D0" font-size="5px" font-family="sans-serif" opacity="0">~</text>
+    <text x="97" y="25" fill="#E8E8E8" font-size="15px" font-family="sans-serif" opacity="0">~</text>
+    <text x="102" y="40" fill="#D0D0D0" font-size="12px" font-family="sans-serif" opacity="0">~</text>
   </g>`;
 }
 
 // ===== PROPS =====
 
 function laptopProp(): string {
-  return `<g class="totem-prop"><rect x="13" y="35" width="24" height="7" rx="1.5" fill="${LAPTOP_FRAME}"/><rect x="14.5" y="36" width="21" height="5" rx="1" fill="${LAPTOP_SCREEN}"/><rect x="12" y="42" width="26" height="3" rx="1.5" fill="${LAPTOP_FRAME}"/></g>`;
+  return `<g class="totem-prop">${px(10, 22, 12, 2, LAPTOP_FRAME)}${px(11, 22, 10, 1, LAPTOP_SCREEN)}${px(9, 24, 14, 1, LAPTOP_FRAME)}</g>`;
 }
 function panProp(): string {
-  return `<g class="totem-prop"><ellipse cx="40" cy="40" rx="5" ry="3" fill="${PAN}"/><rect x="44" y="39" width="4" height="2.5" rx="1" fill="${PAN_HANDLE}"/></g>`;
+  return `<g class="totem-prop">${px(22, 20, 4, 2, PAN)}${px(26, 20, 2, 1, PAN_HANDLE)}</g>`;
 }
 function phoneProp(): string {
-  return `<g class="totem-prop"><rect x="39" y="39" width="5" height="8" rx="1.2" fill="${PHONE_BODY}"/><rect x="40" y="40.5" width="3" height="5" rx="0.6" fill="${PHONE_SCREEN}"/></g>`;
+  return `<g class="totem-prop">${px(22, 18, 2, 4, PHONE_BODY)}${px(22, 19, 2, 2, PHONE_SCREEN)}</g>`;
 }
 function bookProp(): string {
-  return `<g class="totem-prop"><rect x="6" y="35" width="8" height="10" rx="1.5" fill="#5A3020"/><rect x="7.5" y="36" width="5.5" height="8" rx="0.8" fill="#E8D8C0"/></g>`;
+  return `<g class="totem-prop">${px(5, 18, 3, 4, '#5A3020')}${px(6, 19, 2, 3, '#E8D8C0')}</g>`;
 }
 function mugProp(): string {
-  return `<g class="totem-prop"><rect x="39" y="36" width="6" height="7" rx="2" fill="#A05830"/><path d="M45,38 Q48,39.5 45,41" fill="none" stroke="#8A4820" stroke-width="1.2" stroke-linecap="round"/></g>`;
+  return `<g class="totem-prop">${px(22, 17, 3, 3, '#A05830')}${px(25, 18, 1, 1, '#8A4820')}</g>`;
 }
 function remoteProp(): string {
-  return `<g class="totem-prop"><rect x="39" y="41" width="3.5" height="7" rx="1.2" fill="${PHONE_BODY}"/><circle cx="40.8" cy="43" r="0.7" fill="#E06060"/></g>`;
+  return `<g class="totem-prop">${px(22, 20, 2, 3, PHONE_BODY)}${px(22, 21, 1, 1, '#E06060')}</g>`;
 }
 function controllerProp(): string {
-  return `<g class="totem-prop"><rect x="13" y="42" width="10" height="5" rx="2" fill="${PHONE_BODY}"/><circle cx="16" cy="44.5" r="1" fill="#A04040"/><circle cx="20" cy="44.5" r="1" fill="#4060A0"/></g>`;
+  return `<g class="totem-prop">${px(10, 22, 5, 2, PHONE_BODY)}${px(11, 22, 1, 1, '#A04040')}${px(13, 22, 1, 1, '#4060A0')}</g>`;
 }
 function plateProp(): string {
-  return `<g class="totem-prop"><ellipse cx="12" cy="43" rx="6" ry="2" fill="${PAN}"/><ellipse cx="12" cy="42.5" rx="4.5" ry="1.5" fill="#E8E4DC"/></g>`;
+  return `<g class="totem-prop">${px(6, 22, 5, 1, PAN)}${px(7, 21, 3, 1, '#E8E4DC')}</g>`;
 }
 function spongeProp(): string {
-  return `<g class="totem-prop"><rect x="5" y="38" width="5.5" height="4" rx="1.5" fill="#E8D040"/></g>`;
+  return `<g class="totem-prop">${px(5, 19, 3, 2, '#E8D040')}</g>`;
 }
 function bowlProp(): string {
-  return `<g class="totem-prop"><ellipse cx="19" cy="38" rx="6" ry="3" fill="${PAN}"/><ellipse cx="19" cy="37.5" rx="4" ry="2" fill="#C8A040" opacity="0.6"/></g>`;
+  return `<g class="totem-prop">${px(11, 19, 5, 2, PAN)}${px(12, 19, 3, 1, '#C8A040')}</g>`;
 }
 function markerProp(): string {
-  return `<g class="totem-prop"><rect x="40" y="14" width="2.2" height="6" rx="0.8" fill="#E06060"/></g>`;
+  return `<g class="totem-prop">${px(23, 7, 1, 3, '#E06060')}</g>`;
 }
 function shirtProp(): string {
-  return `<g class="totem-prop"><rect x="2" y="28" width="6" height="6" rx="1.5" fill="#6080A0"/><rect x="42" y="28" width="6" height="6" rx="1.5" fill="#6080A0"/></g>`;
+  return `<g class="totem-prop">${px(3, 16, 3, 3, '#6080A0')}${px(26, 16, 3, 3, '#6080A0')}</g>`;
 }
 function phoneUpProp(): string {
-  return `<g class="totem-prop"><rect x="19" y="8" width="12" height="6" rx="1.5" fill="${PHONE_BODY}"/><rect x="20" y="9" width="10" height="4" rx="1" fill="${PHONE_SCREEN}"/></g>`;
+  return `<g class="totem-prop">${px(12, 4, 5, 2, PHONE_BODY)}${px(13, 4, 3, 1, PHONE_SCREEN)}</g>`;
 }
 
 // ===== POSE BUILDER =====
@@ -174,8 +230,14 @@ const PROP_MAP: Partial<Record<Activity, () => string>> = {
   'getting-dressed': shirtProp, snacking: plateProp,
 };
 
+const svgCache = new Map<Activity, string>();
+
 export function getTotemSvg(activity: string): string {
   const act = (ACTIVITIES.includes(activity as Activity) ? activity : 'idle') as Activity;
+
+  const cached = svgCache.get(act);
+  if (cached) return cached;
+
   const parts: string[] = [groundShadow(), '<g class="totem-character">'];
 
   if (act === 'sleeping') {
@@ -196,13 +258,16 @@ export function getTotemSvg(activity: string): string {
   if (act === 'studying') parts.push(codeFloat());
   if (act === 'cooking' || act === 'coffee-making') parts.push(steamFloat());
 
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" class="totem-avatar totem-${act}">${parts.join('')}</svg>`;
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" shape-rendering="crispEdges" class="totem-avatar totem-${act}">${parts.join('')}</svg>`;
+  svgCache.set(act, svg);
+  return svg;
 }
 
 // ===== STYLES =====
+// Coordinates scaled by 2.56x from old 50x75 viewBox to 128x192
 
 export const totemStyles = `
-  .totem-avatar { width: 100%; height: auto; display: block; }
+  .totem-avatar { width: 100%; height: auto; display: block; image-rendering: pixelated; image-rendering: crisp-edges; }
 
   /* ===== EYE BLINK ===== */
   .totem-blink { opacity: 0; }
@@ -217,7 +282,7 @@ export const totemStyles = `
     94% { opacity: 0; }
   }
 
-  .totem-shadow { transform-origin: 25px 68px; }
+  .totem-shadow { transform-origin: 64px 180px; }
 
   /* ===== IDLE ===== */
   .totem-idle .totem-character {
@@ -225,26 +290,26 @@ export const totemStyles = `
   }
   .totem-idle .totem-head {
     animation: totem-head-tilt 6s ease-in-out infinite;
-    transform-origin: 25px 30px;
+    transform-origin: 64px 77px;
   }
   .totem-idle .totem-body {
     animation: totem-breathe 3s ease-in-out infinite;
-    transform-origin: 25px 48px;
+    transform-origin: 64px 123px;
   }
   .totem-idle .totem-left-arm {
     animation: totem-idle-arm-l 3.2s ease-in-out infinite;
-    transform-origin: 13px 32px;
+    transform-origin: 33px 82px;
   }
   .totem-idle .totem-right-arm {
     animation: totem-idle-arm-r 2.8s ease-in-out infinite;
-    transform-origin: 37px 32px;
+    transform-origin: 95px 82px;
   }
   .totem-idle .totem-shadow {
     animation: totem-shadow-idle 2.8s ease-in-out infinite;
   }
   @keyframes totem-bob {
     0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-2px); }
+    50% { transform: translateY(-5px); }
   }
   @keyframes totem-head-tilt {
     0%, 100% { transform: rotate(0deg); }
@@ -275,26 +340,26 @@ export const totemStyles = `
   }
   .totem-walking .totem-left-arm {
     animation: totem-arm-swing-l 0.4s ease-in-out infinite alternate;
-    transform-origin: 13px 32px;
+    transform-origin: 33px 82px;
   }
   .totem-walking .totem-right-arm {
     animation: totem-arm-swing-r 0.4s ease-in-out infinite alternate;
-    transform-origin: 37px 32px;
+    transform-origin: 95px 82px;
   }
   .totem-walking .totem-left-leg {
     animation: totem-stride-l 0.4s ease-in-out infinite alternate;
-    transform-origin: 21px 50px;
+    transform-origin: 54px 128px;
   }
   .totem-walking .totem-right-leg {
     animation: totem-stride-r 0.4s ease-in-out infinite alternate;
-    transform-origin: 29px 50px;
+    transform-origin: 74px 128px;
   }
   .totem-walking .totem-shadow {
     animation: totem-shadow-walk 0.4s ease-in-out infinite;
   }
   @keyframes totem-walk-bounce {
     0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-2px); }
+    50% { transform: translateY(-5px); }
   }
   @keyframes totem-arm-swing-l {
     0% { transform: rotate(-25deg); }
@@ -323,20 +388,20 @@ export const totemStyles = `
   }
   .totem-studying .totem-head {
     animation: totem-head-tilt 4s ease-in-out infinite;
-    transform-origin: 25px 30px;
+    transform-origin: 64px 77px;
   }
   .totem-studying .totem-body {
     animation: totem-breathe 3s ease-in-out infinite;
-    transform-origin: 25px 48px;
+    transform-origin: 64px 123px;
   }
   .totem-studying .totem-left-arm {
     animation: totem-type-l 2s ease-in-out infinite;
-    transform-origin: 13px 32px;
+    transform-origin: 33px 82px;
   }
   .totem-studying .totem-right-arm {
     animation: totem-type-r 2s ease-in-out infinite;
     animation-delay: 0.08s;
-    transform-origin: 37px 32px;
+    transform-origin: 95px 82px;
   }
   @keyframes totem-type-l {
     0%, 55%, 100% { transform: rotate(-5deg); }
@@ -357,11 +422,11 @@ export const totemStyles = `
   }
   .totem-cooking .totem-right-arm {
     animation: totem-stir 1s cubic-bezier(0.45, 0, 0.55, 1) infinite;
-    transform-origin: 37px 32px;
+    transform-origin: 95px 82px;
   }
   .totem-cooking .totem-body {
     animation: totem-breathe 3s ease-in-out infinite;
-    transform-origin: 25px 48px;
+    transform-origin: 64px 123px;
   }
   @keyframes totem-stir {
     0%, 100% { transform: rotate(0deg); }
@@ -379,15 +444,15 @@ export const totemStyles = `
   }
   @keyframes totem-code-1 {
     0% { opacity: 0; transform: translate(0, 0); }
-    15% { opacity: 0.9; transform: translate(1.5px, -2px); }
-    85% { opacity: 0.5; transform: translate(3px, -10px); }
-    100% { opacity: 0; transform: translate(4px, -13px); }
+    15% { opacity: 0.9; transform: translate(4px, -5px); }
+    85% { opacity: 0.5; transform: translate(8px, -26px); }
+    100% { opacity: 0; transform: translate(10px, -33px); }
   }
   @keyframes totem-code-2 {
     0% { opacity: 0; transform: translate(0, 0); }
-    15% { opacity: 0.8; transform: translate(-1px, -1.5px); }
-    85% { opacity: 0.4; transform: translate(-3px, -8px); }
-    100% { opacity: 0; transform: translate(-4px, -10px); }
+    15% { opacity: 0.8; transform: translate(-3px, -4px); }
+    85% { opacity: 0.4; transform: translate(-8px, -20px); }
+    100% { opacity: 0; transform: translate(-10px, -26px); }
   }
 
   /* ===== STEAM FLOAT ===== */
@@ -402,15 +467,15 @@ export const totemStyles = `
   }
   @keyframes totem-steam-1 {
     0% { opacity: 0; transform: translate(0, 0); }
-    15% { opacity: 0.7; transform: translate(1px, -2px); }
-    85% { opacity: 0.2; transform: translate(-1.5px, -10px); }
-    100% { opacity: 0; transform: translate(-2px, -13px); }
+    15% { opacity: 0.7; transform: translate(3px, -5px); }
+    85% { opacity: 0.2; transform: translate(-4px, -26px); }
+    100% { opacity: 0; transform: translate(-5px, -33px); }
   }
   @keyframes totem-steam-2 {
     0% { opacity: 0; transform: translate(0, 0); }
-    15% { opacity: 0.6; transform: translate(1.5px, -1.5px); }
-    85% { opacity: 0.15; transform: translate(3px, -8px); }
-    100% { opacity: 0; transform: translate(4px, -10px); }
+    15% { opacity: 0.6; transform: translate(4px, -4px); }
+    85% { opacity: 0.15; transform: translate(8px, -20px); }
+    100% { opacity: 0; transform: translate(10px, -26px); }
   }
 
   /* ===== SLEEPING ===== */
@@ -421,11 +486,11 @@ export const totemStyles = `
   .totem-sleeping .totem-shadow { opacity: 0; }
   .totem-sleeping .totem-blanket {
     animation: totem-blanket-breathe 4s cubic-bezier(0.45, 0, 0.55, 1) infinite;
-    transform-origin: 25px 47px;
+    transform-origin: 64px 120px;
   }
   .totem-sleeping .totem-body {
     animation: totem-breathe 4s cubic-bezier(0.45, 0, 0.55, 1) infinite;
-    transform-origin: 25px 38px;
+    transform-origin: 64px 97px;
   }
   .totem-sleeping .totem-zzz text:nth-child(1) {
     animation: totem-zzz 2.5s ease-in-out infinite;
@@ -444,31 +509,31 @@ export const totemStyles = `
   }
   @keyframes totem-zzz {
     0% { opacity: 0; transform: translate(0, 0); }
-    15% { opacity: 1; transform: translate(1px, -1.5px); }
-    85% { opacity: 0.7; transform: translate(2px, -9px); }
-    100% { opacity: 0; transform: translate(3px, -10px); }
+    15% { opacity: 1; transform: translate(3px, -4px); }
+    85% { opacity: 0.7; transform: translate(5px, -23px); }
+    100% { opacity: 0; transform: translate(8px, -26px); }
   }
   @keyframes totem-zzz-2 {
     0% { opacity: 0; transform: translate(0, 0); }
-    15% { opacity: 0.9; transform: translate(-0.6px, -1px); }
-    85% { opacity: 0.6; transform: translate(-2.5px, -7px); }
-    100% { opacity: 0; transform: translate(-3px, -8px); }
+    15% { opacity: 0.9; transform: translate(-2px, -3px); }
+    85% { opacity: 0.6; transform: translate(-6px, -18px); }
+    100% { opacity: 0; transform: translate(-8px, -20px); }
   }
   @keyframes totem-zzz-3 {
     0% { opacity: 0; transform: translate(0, 0); }
-    15% { opacity: 0.7; transform: translate(0.3px, -0.6px); }
-    85% { opacity: 0.5; transform: translate(1.2px, -5px); }
-    100% { opacity: 0; transform: translate(1.5px, -6px); }
+    15% { opacity: 0.7; transform: translate(1px, -2px); }
+    85% { opacity: 0.5; transform: translate(3px, -13px); }
+    100% { opacity: 0; transform: translate(4px, -15px); }
   }
 
   /* ===== NAPPING/MEDITATING ===== */
   .totem-napping .totem-body, .totem-meditating .totem-body {
     animation: totem-breathe 3.5s ease-in-out infinite;
-    transform-origin: 25px 48px;
+    transform-origin: 64px 123px;
   }
   .totem-napping .totem-head, .totem-meditating .totem-head {
     animation: totem-head-tilt 8s ease-in-out infinite;
-    transform-origin: 25px 30px;
+    transform-origin: 64px 77px;
   }
 
   /* ===== READING ===== */
@@ -477,11 +542,11 @@ export const totemStyles = `
   }
   .totem-reading .totem-head, .totem-reading-couch .totem-head {
     animation: totem-head-tilt 4s ease-in-out infinite;
-    transform-origin: 25px 30px;
+    transform-origin: 64px 77px;
   }
   .totem-reading .totem-body, .totem-reading-couch .totem-body {
     animation: totem-breathe 3.5s ease-in-out infinite;
-    transform-origin: 25px 48px;
+    transform-origin: 64px 123px;
   }
 
   /* ===== WATCHING ===== */
@@ -490,10 +555,10 @@ export const totemStyles = `
   }
   .totem-watching .totem-head {
     animation: totem-head-tilt 5s ease-in-out infinite;
-    transform-origin: 25px 30px;
+    transform-origin: 64px 77px;
   }
   .totem-watching .totem-body {
     animation: totem-breathe 3.5s ease-in-out infinite;
-    transform-origin: 25px 48px;
+    transform-origin: 64px 123px;
   }
 `;

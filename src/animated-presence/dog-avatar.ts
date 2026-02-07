@@ -1,118 +1,110 @@
-// Minimal geometric dachshund avatar — viewBox 0 0 40 25
+// Pixel art dachshund avatar — viewBox 0 0 128 80, P=4 (32x20 logical grid)
 export type DogActivity = 'idle' | 'walking' | 'studying' | 'cooking' | 'sleeping';
 
 const ACTIVITIES: DogActivity[] = ['idle', 'walking', 'studying', 'cooking', 'sleeping'];
-const W = 40;
-const H = 25;
+const W = 128;
+const H = 80;
+const P = 4; // pixel size in viewBox units
 
 // Palette
 const BLACK = '#1A1A1A';
-const BLACK_HI = '#2D2D2D';
 const TAN = '#C8943C';
 const NOSE = '#2D2D2D';
 const EYE_HI = '#FFF';
 const TONGUE = '#D85858';
 
-// ===== BODY PARTS =====
+// ===== PIXEL HELPERS =====
+
+function px(gx: number, gy: number, gw: number, gh: number, fill: string): string {
+  return `<rect x="${gx * P}" y="${gy * P}" width="${gw * P}" height="${gh * P}" fill="${fill}"/>`;
+}
+
+// ===== STANDING BODY PARTS =====
 
 function groundShadow(): string {
-  return `<ellipse class="dog-shadow" cx="20" cy="22.5" rx="11" ry="1.5" fill="#000" opacity="0.1"/>`;
+  return `<ellipse class="dog-shadow" cx="64" cy="72" rx="35" ry="5" fill="#000" opacity="0.1"/>`;
 }
 
 function bodyShape(): string {
-  const p: string[] = [];
-  // Long capsule body
-  p.push(`<rect x="8" y="8" width="24" height="9" rx="4.5" fill="${BLACK}"/>`);
-  // Tan belly stripe
-  p.push(`<rect x="10" y="14" width="20" height="3" rx="2" fill="${TAN}"/>`);
-  return p.join('');
+  return [
+    px(6, 5, 16, 4, BLACK),   // long capsule body
+    px(7, 9, 14, 2, TAN),     // tan belly stripe
+  ].join('');
 }
 
 function headShape(): string {
-  const p: string[] = [];
-  p.push(`<circle cx="7" cy="10" r="5" fill="${BLACK}"/>`);
-  // Snout
-  p.push(`<ellipse cx="2.5" cy="12" rx="2.5" ry="1.5" fill="${BLACK}"/>`);
-  // Nose
-  p.push(`<circle cx="1" cy="11.5" r="1" fill="${NOSE}"/>`);
-  // Eye
-  p.push(`<circle cx="6" cy="8.5" r="1.2" fill="${EYE_HI}"/>`);
-  return p.join('');
+  return [
+    px(2, 4, 5, 5, BLACK),    // head block
+    px(0, 7, 3, 2, BLACK),    // snout
+    px(0, 7, 1, 1, NOSE),     // nose
+    px(4, 5, 1, 1, EYE_HI),   // eye
+  ].join('');
 }
 
 function earShape(): string {
-  return `<g class="dog-ear"><ellipse cx="9" cy="5" rx="2.5" ry="3.5" transform="rotate(-15, 9, 5)" fill="${BLACK}"/></g>`;
+  return `<g class="dog-ear">${px(5, 2, 2, 3, BLACK)}</g>`;
 }
 
 function tailShape(): string {
-  return `<g class="dog-tail"><path d="M32,10 Q35,5 35.5,7.5 Q35.5,9 33,11" fill="none" stroke="${BLACK}" stroke-width="2" stroke-linecap="round"/></g>`;
+  return `<g class="dog-tail">${px(22, 4, 1, 1, BLACK)}${px(23, 3, 1, 2, BLACK)}${px(24, 4, 1, 1, BLACK)}</g>`;
 }
 
 function tongueShape(): string {
-  return `<g class="dog-tongue" style="opacity: 0"><path d="M1.5,13 Q1.5,15.5 2.5,15.5 Q3.5,15.5 3.5,13" fill="${TONGUE}"/></g>`;
+  return `<g class="dog-tongue" style="opacity: 0">${px(1, 9, 1, 2, TONGUE)}</g>`;
 }
 
 function frontLegs(): string {
-  const p: string[] = [];
-  p.push(`<rect x="10" y="16" width="3" height="5" rx="1.5" fill="${BLACK}"/>`);
-  p.push(`<rect x="14" y="16" width="3" height="5" rx="1.5" fill="${BLACK}"/>`);
-  return p.join('');
+  return [
+    px(7, 10, 2, 4, BLACK),
+    px(10, 10, 2, 4, BLACK),
+  ].join('');
 }
 
 function backLegs(): string {
-  const p: string[] = [];
-  p.push(`<rect x="25" y="16" width="3" height="5" rx="1.5" fill="${BLACK}"/>`);
-  p.push(`<rect x="29" y="16" width="3" height="5" rx="1.5" fill="${BLACK}"/>`);
-  return p.join('');
+  return [
+    px(17, 10, 2, 4, BLACK),
+    px(20, 10, 2, 4, BLACK),
+  ].join('');
 }
 
 // ===== SLEEPING (curled up) =====
 
 function sleepingShape(): string {
-  const p: string[] = [];
-  // Curled oval body
-  p.push(`<ellipse cx="20" cy="14" rx="9" ry="7" fill="${BLACK}"/>`);
-  // Tan belly inside curl
-  p.push(`<ellipse cx="20" cy="16" rx="5" ry="3.5" fill="${TAN}"/>`);
-  // Head tucked in
-  p.push(`<circle cx="14" cy="12" r="4" fill="${BLACK}"/>`);
-  // Closed eye arc
-  p.push(`<path d="M13,11 Q15,12.5 17,11" fill="none" stroke="${BLACK_HI}" stroke-width="0.7" stroke-linecap="round"/>`);
-  // Nose
-  p.push(`<circle cx="11" cy="12.5" r="0.8" fill="${NOSE}"/>`);
-  // Tail curled around
-  p.push(`<path d="M28,10 Q30,8 29,12" fill="none" stroke="${BLACK}" stroke-width="1.5" stroke-linecap="round"/>`);
-  return p.join('');
+  return [
+    px(10, 5, 8, 6, BLACK),   // curled oval body
+    px(11, 8, 6, 3, TAN),     // tan belly inside curl
+    px(8, 5, 4, 4, BLACK),    // head tucked
+    px(7, 7, 1, 1, NOSE),     // nose
+    px(19, 4, 2, 1, BLACK),   // tail curled
+    px(20, 5, 1, 1, BLACK),
+  ].join('');
 }
 
 // ===== SITTING (cooking) =====
 
 function sittingShape(): string {
-  const p: string[] = [];
-  // Body angled up
-  p.push(`<ellipse cx="18" cy="14" rx="6" ry="7" fill="${BLACK}" transform="rotate(-10, 18, 14)"/>`);
-  // Belly
-  p.push(`<ellipse cx="19" cy="16" rx="4" ry="4" fill="${TAN}" transform="rotate(-10, 19, 16)"/>`);
-  // Head looking up
-  p.push(`<circle cx="13" cy="7" r="4" fill="${BLACK}"/>`);
-  // Eye
-  p.push(`<circle cx="12.5" cy="5.5" r="1" fill="${EYE_HI}"/>`);
-  // Nose
-  p.push(`<circle cx="9.5" cy="6" r="0.8" fill="${NOSE}"/>`);
-  // Ear
-  p.push(`<ellipse cx="15" cy="3.5" rx="2" ry="3" transform="rotate(-10, 15, 3.5)" fill="${BLACK}"/>`);
-  // Front legs tucked
-  p.push(`<rect x="15" y="19" width="3" height="3.5" rx="1.5" fill="${BLACK}"/>`);
-  p.push(`<rect x="19" y="19" width="3" height="3.5" rx="1.5" fill="${BLACK}"/>`);
-  // Tongue (excited)
-  p.push(`<path d="M9.5,8 Q9.5,10 10.5,10 Q11.5,10 11.5,8" fill="${TONGUE}"/>`);
-  return p.join('');
+  return [
+    px(10, 5, 5, 6, BLACK),   // body angled up
+    px(11, 8, 4, 3, TAN),     // belly
+    px(8, 2, 4, 4, BLACK),    // head looking up
+    px(9, 3, 1, 1, EYE_HI),   // eye
+    px(7, 3, 1, 1, NOSE),     // nose
+    px(11, 1, 2, 3, BLACK),   // ear
+    px(11, 12, 2, 2, BLACK),  // front leg tucked
+    px(14, 12, 2, 2, BLACK),  // back leg tucked
+    px(7, 5, 2, 2, TONGUE),   // tongue (excited)
+  ].join('');
 }
 
 // ===== MAIN EXPORT =====
 
+const svgCache = new Map<DogActivity, string>();
+
 export function getDogSvg(activity: string): string {
   const act = (ACTIVITIES.includes(activity as DogActivity) ? activity : 'idle') as DogActivity;
+
+  const cached = svgCache.get(act);
+  if (cached) return cached;
 
   const parts: string[] = [groundShadow(), '<g class="dog-character">'];
 
@@ -120,7 +112,7 @@ export function getDogSvg(activity: string): string {
     parts.push(`<g class="dog-body">${sleepingShape()}</g>`);
   } else if (act === 'cooking') {
     parts.push(`<g class="dog-body">${sittingShape()}</g>`);
-    parts.push(`<g class="dog-tail"><path d="M22,10 Q24.5,7 24,9.5" fill="none" stroke="${BLACK}" stroke-width="1.5" stroke-linecap="round"/></g>`);
+    parts.push(`<g class="dog-tail">${px(15, 4, 1, 1, BLACK)}${px(16, 3, 1, 2, BLACK)}</g>`);
   } else {
     // idle, walking, studying — standing pose
     parts.push(`<g class="dog-body">${bodyShape()}</g>`);
@@ -134,13 +126,16 @@ export function getDogSvg(activity: string): string {
 
   parts.push('</g>');
 
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" class="dog-avatar dog-${act}">${parts.join('')}</svg>`;
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" shape-rendering="crispEdges" class="dog-avatar dog-${act}">${parts.join('')}</svg>`;
+  svgCache.set(act, svg);
+  return svg;
 }
 
 // ===== STYLES =====
+// Coordinates scaled by 3.2x from old 40x25 viewBox to 128x80
 
 export const dogStyles = `
-  .dog-avatar { width: 100%; height: auto; display: block; }
+  .dog-avatar { width: 100%; height: auto; display: block; image-rendering: pixelated; image-rendering: crisp-edges; }
 
   @keyframes dog-tail-wag {
     0%, 100% { transform: rotate(-15deg); }
@@ -155,11 +150,11 @@ export const dogStyles = `
   }
   @keyframes dog-trot {
     0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-2px); }
+    50% { transform: translateY(-6px); }
   }
   @keyframes dog-ear-bounce {
     0%, 100% { transform: translateY(0); }
-    40% { transform: translateY(-3px); }
+    40% { transform: translateY(-10px); }
   }
   @keyframes dog-leg-trot-front {
     0% { transform: rotate(-15deg); }
@@ -171,8 +166,8 @@ export const dogStyles = `
   }
   @keyframes dog-sniff {
     0%, 100% { transform: translateY(0); }
-    15% { transform: translateY(-1.5px); }
-    35% { transform: translateY(-1px); }
+    15% { transform: translateY(-5px); }
+    35% { transform: translateY(-3px); }
   }
   @keyframes dog-tongue-pant {
     0%, 40%, 60%, 100% { opacity: 0; }
@@ -180,13 +175,13 @@ export const dogStyles = `
   }
   @keyframes dog-ear-twitch {
     0%, 85%, 100% { transform: translateY(0); }
-    88% { transform: translateY(-2px); }
-    95% { transform: translateY(-1.5px); }
+    88% { transform: translateY(-6px); }
+    95% { transform: translateY(-5px); }
   }
   @keyframes dog-dream-twitch {
     0%, 88%, 100% { transform: translateX(0); }
-    90% { transform: translateX(1px); }
-    93% { transform: translateX(-0.6px); }
+    90% { transform: translateX(3px); }
+    93% { transform: translateX(-2px); }
   }
   @keyframes dog-nose-nuzzle {
     0%, 92%, 100% { transform: rotate(0deg); }
@@ -194,33 +189,33 @@ export const dogStyles = `
   }
   @keyframes dog-paw-tap {
     0%, 45%, 55%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-2px); }
+    50% { transform: translateY(-6px); }
   }
   @keyframes dog-beg-nod {
     0%, 100% { transform: translateY(0); }
-    30% { transform: translateY(-2px); }
-    70% { transform: translateY(-1.5px); }
+    30% { transform: translateY(-6px); }
+    70% { transform: translateY(-5px); }
   }
 
   /* ===== IDLE ===== */
   .dog-idle .dog-tail {
     animation: dog-tail-wag 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) infinite;
-    transform-origin: 32px 10px;
+    transform-origin: 102px 32px;
   }
   .dog-idle .dog-head {
     animation: dog-sniff 2s ease-in-out infinite;
-    transform-origin: 8px 10px;
+    transform-origin: 26px 32px;
   }
   .dog-idle .dog-tongue {
     animation: dog-tongue-pant 1.5s ease-in-out infinite;
   }
   .dog-idle .dog-ear {
     animation: dog-ear-twitch 3s ease-in-out infinite;
-    transform-origin: 8px 5px;
+    transform-origin: 26px 16px;
   }
   .dog-idle .dog-body {
     animation: dog-breathe 3s cubic-bezier(0.45, 0, 0.55, 1) infinite;
-    transform-origin: 20px 16px;
+    transform-origin: 64px 51px;
   }
 
   /* ===== WALKING ===== */
@@ -229,43 +224,43 @@ export const dogStyles = `
   }
   .dog-walking .dog-ear {
     animation: dog-ear-bounce 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) infinite;
-    transform-origin: 8px 5px;
+    transform-origin: 26px 16px;
   }
   .dog-walking .dog-tail {
     animation: dog-tail-wag 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) infinite;
-    transform-origin: 32px 10px;
+    transform-origin: 102px 32px;
   }
   .dog-walking .dog-tongue {
     animation: dog-tongue-pant 0.8s ease-in-out infinite;
   }
   .dog-walking .dog-legs-front {
     animation: dog-leg-trot-front 0.3s ease-in-out infinite alternate;
-    transform-origin: 12px 16px;
+    transform-origin: 38px 51px;
   }
   .dog-walking .dog-legs-back {
     animation: dog-leg-trot-back 0.3s ease-in-out infinite alternate;
-    transform-origin: 28px 16px;
+    transform-origin: 90px 51px;
   }
 
   /* ===== STUDYING ===== */
   .dog-studying .dog-body {
     animation: dog-breathe 4s cubic-bezier(0.45, 0, 0.55, 1) infinite;
-    transform-origin: 20px 16px;
+    transform-origin: 64px 51px;
   }
   .dog-studying .dog-tail {
     animation: dog-tail-wag 2s ease-in-out infinite;
-    transform-origin: 32px 10px;
+    transform-origin: 102px 32px;
   }
   .dog-studying .dog-ear {
     animation: dog-ear-twitch 4s ease-in-out infinite;
     animation-delay: 1s;
-    transform-origin: 8px 5px;
+    transform-origin: 26px 16px;
   }
 
   /* ===== COOKING ===== */
   .dog-cooking .dog-tail {
     animation: dog-tail-wag 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) infinite;
-    transform-origin: 22px 10px;
+    transform-origin: 70px 32px;
   }
   .dog-cooking .dog-body {
     animation: dog-beg-nod 1s cubic-bezier(0.45, 0, 0.55, 1) infinite;
@@ -274,8 +269,8 @@ export const dogStyles = `
   /* ===== SLEEPING ===== */
   .dog-sleeping .dog-body {
     animation: dog-breathe 4s cubic-bezier(0.45, 0, 0.55, 1) infinite, dog-dream-twitch 6s ease-in-out infinite, dog-nose-nuzzle 5s ease-in-out infinite;
-    transform-origin: 20px 14px;
+    transform-origin: 64px 45px;
   }
 
-  .dog-shadow { transform-origin: 20px 22.5px; }
+  .dog-shadow { transform-origin: 64px 72px; }
 `;

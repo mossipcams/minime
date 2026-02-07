@@ -40,16 +40,19 @@ describe('Totem Avatar', () => {
     expect(svg).toContain('totem-character');
   });
 
-  it('uses geometric shapes (circles and rounded rects) for body parts', () => {
+  it('uses pixel art viewBox 128x192 with crispEdges rendering', () => {
     const svg = getTotemSvg('idle');
-    // Head is a circle
-    expect(svg).toMatch(/<circle[^>]+cx="25"[^>]+cy="18"[^>]+r="12"/);
-    // Body, arms, legs use rounded rects
-    const roundedRects = svg.match(/<rect[^>]+rx="/g) || [];
-    expect(roundedRects.length).toBeGreaterThanOrEqual(5);
-    // No pixel art hints
-    expect(svg).not.toContain('crispEdges');
-    expect(svg).not.toContain('image-rendering');
+    expect(svg).toContain('viewBox="0 0 128 192"');
+    expect(svg).toContain('shape-rendering="crispEdges"');
+  });
+
+  it('uses pixel art rects without rounded corners for body parts', () => {
+    const svg = getTotemSvg('idle');
+    // Should have plain rects (no rx) for pixel art
+    const plainRects = (svg.match(/<rect /g) || []).length;
+    expect(plainRects).toBeGreaterThanOrEqual(5);
+    // Should NOT have smooth circles for head (pixel art uses rects)
+    expect(svg).not.toMatch(/<circle[^>]+r="12"/);
   });
 
   it('sleeping activity includes zzz and blanket elements', () => {
@@ -79,13 +82,13 @@ describe('Totem Avatar', () => {
     expect(svg).toContain('totem-prop');
   });
 
-  it('napping and meditating use closed-eye arcs instead of dots', () => {
+  it('napping and meditating use wider closed-eye rects instead of single-pixel dots', () => {
     for (const act of ['napping', 'meditating']) {
       const svg = getTotemSvg(act);
-      // Should have closed-eye arc paths, not circle dots for eyes
-      expect(svg).toContain('stroke-linecap="round"');
-      // Should NOT have the normal eye dots (r="1.8" circles)
-      expect(svg).not.toMatch(/r="1\.8".*fill="#2B2B2B"/);
+      // Sleeping eyes are 2px-wide rects (width="8" at P=4), not 1px dots (width="4")
+      expect(svg).toMatch(/width="8" height="4" fill="#2B2B2B"/);
+      // Should NOT have the single-pixel awake eye dots
+      expect(svg).not.toMatch(/<circle[^>]+r="1\.8"/);
     }
   });
 
