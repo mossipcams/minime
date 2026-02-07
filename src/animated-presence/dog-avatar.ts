@@ -1,4 +1,5 @@
 // Pixel art dachshund avatar — viewBox 0 0 128 80, P=4 (32x20 logical grid)
+// Black and tan dachshund: long body, short legs, floppy ears
 export type DogActivity = 'idle' | 'walking' | 'studying' | 'cooking' | 'sleeping';
 
 const ACTIVITIES: DogActivity[] = ['idle', 'walking', 'studying', 'cooking', 'sleeping'];
@@ -6,14 +7,14 @@ const W = 128;
 const H = 80;
 const P = 4;
 
-// Extended palette
+// Black and tan dachshund palette
 const COLORS: Record<string, string> = {
   'K': '#1A1A1A',   // black body
-  'k': '#2D2D2D',   // dark highlight
-  'T': '#D4943C',   // tan (orange)
-  't': '#C07830',   // tan shadow (darker orange)
-  'O': '#E0A848',   // tan highlight (bright orange)
-  'N': '#2D2D2D',   // nose
+  'k': '#2D2D2D',   // black highlight
+  'T': '#D4943C',   // tan (rich reddish-brown)
+  't': '#C07830',   // tan shadow
+  'O': '#E0A848',   // tan highlight (bright)
+  'N': '#1A1A1A',   // nose (black)
   'W': '#FFFFFF',   // eye white
   'R': '#D85858',   // tongue
 };
@@ -42,148 +43,154 @@ function px(gx: number, gy: number, gw: number, gh: number, fill: string): strin
   return `<rect x="${gx * P}" y="${gy * P}" width="${gw * P}" height="${gh * P}" fill="${fill}"/>`;
 }
 
-// ===== STANDING BODY =====
+// ===== STANDING BODY (very long, low) =====
+// 20 wide at grid (5, 5) — elongated sausage shape
 
 const BODY_BMP = [
-  '..kKKKKKKKKKKKk..',   // row 5: body top with highlights
-  '.KKKKKKKKKKKKKKK..',   // row 6: full body black
-  '.KKKKKKKkKKKKKKK..',   // row 7: body with shading
-  '.KKKKKKKKKKKKKkK..',   // row 8: body black
-  '..tTTOTTTTOTTt...',   // row 9: tan belly with orange highlights
-  '..OTTTTTTTTTTOt..',   // row 10: tan belly bright edges
+  '.kKKKKKKKKKKKKKKKKk.',   // row 5: body top highlights
+  'KKKKKKKKKKKKKKKKKKKK',   // row 6: full body black
+  'KKKKKkKKKKKKKKkKKKKK',   // row 7: body with shading
+  'KKKKKKKKKKKKKKKKKKkK',   // row 8: body black
+  'tTOTTTTTTTTTTTTOTTt.',   // row 9: tan belly with orange highlights
+  '.OTTTTTTTTTTTTTTTOt.',   // row 10: tan belly bright edges
 ];
 
 function bodyShape(): string {
   return renderBitmap(5, 5, BODY_BMP);
 }
 
-// ===== HEAD =====
+// ===== HEAD (side profile, facing left) =====
+// 7 wide at grid (0, 3)
 
 const HEAD_BMP = [
-  '.KKkK.',   // row 4: head top with highlight
-  'KTKKKK',   // row 5: tan eyebrow dot
-  'KKWKKK',   // row 6: eye white
-  'KKKKkK',   // row 7: head with shading
-  'KKTTKK',   // row 8: tan muzzle markings
+  '..kKK..',   // row 3: top of head
+  '.KKKKKK',   // row 4: head wide (connects to body)
+  'KKTKKWK',   // row 5: tan eyebrow dot + eye white
+  'KKKKKKK',   // row 6: face
+  'NTTKKkK',   // row 7: nose + tan muzzle + highlight
+  '.TKKk..',   // row 8: tan jaw
 ];
 
 const SNOUT_BMP = [
-  'NTK',   // row 7: nose + tan snout
-  'TKK',   // row 8: tan snout
+  'NK',   // row 7: nose detail
 ];
 
 function headShape(): string {
-  return renderBitmap(2, 4, HEAD_BMP) + renderBitmap(0, 7, SNOUT_BMP);
+  return renderBitmap(0, 3, HEAD_BMP) + renderBitmap(0, 8, SNOUT_BMP);
 }
 
-// ===== EAR =====
+// ===== FLOPPY EAR (hangs down from top of head) =====
+// 2 wide at grid (5, 1) — long dachshund ear
 
 const EAR_BMP = [
-  '.K',   // row 2: ear tip
-  'KK',   // row 3: ear
+  '.K',   // row 1: ear top
+  'KK',   // row 2: ear upper
+  'KK',   // row 3: ear mid
   'Kk',   // row 4: ear with highlight
+  '.k',   // row 5: ear tip (hanging down)
 ];
 
 function earShape(): string {
-  return `<g class="dog-ear">${renderBitmap(5, 2, EAR_BMP)}</g>`;
+  return `<g class="dog-ear">${renderBitmap(5, 1, EAR_BMP)}</g>`;
 }
 
-// ===== TAIL =====
+// ===== TAIL (curves up from rear) =====
+// 3 wide at grid (24, 3)
 
 const TAIL_BMP = [
-  '.K.',   // row 3: tail top
-  'KkK',   // row 4: tail with highlight
-  '.K.',   // row 5: tail bottom
+  '..K',   // row 3: tail tip up
+  '.KK',   // row 4: tail mid
+  'KkK',   // row 5: tail base with highlight
 ];
 
 function tailShape(): string {
-  return `<g class="dog-tail">${renderBitmap(22, 3, TAIL_BMP)}</g>`;
+  return `<g class="dog-tail">${renderBitmap(24, 3, TAIL_BMP)}</g>`;
 }
 
 function tongueShape(): string {
-  return `<g class="dog-tongue" style="opacity: 0">${px(1, 9, 1, 2, COLORS['R'])}</g>`;
+  return `<g class="dog-tongue" style="opacity: 0">${px(0, 9, 1, 1, COLORS['R'])}</g>`;
 }
 
-// ===== LEGS =====
+// ===== LEGS (very short — dachshund!) =====
+// Only 2 rows tall: black upper, tan paws
 
 const FRONT_LEGS_BMP = [
   'KK.KK',   // row 11: upper legs black
-  'KK.KK',   // row 12: mid legs
-  'TT.TT',   // row 13: tan lower legs
-  'Tt.tT',   // row 14: tan paws with shadow
+  'Tt.tT',   // row 12: tan paws
 ];
 
 function frontLegs(): string {
-  return renderBitmap(7, 11, FRONT_LEGS_BMP);
+  return renderBitmap(8, 11, FRONT_LEGS_BMP);
 }
 
 const BACK_LEGS_BMP = [
   'KK.KK',   // row 11: upper legs black
-  'KK.KK',   // row 12: mid legs
-  'TT.TT',   // row 13: tan lower legs
-  'tT.Tt',   // row 14: tan paws
+  'tT.Tt',   // row 12: tan paws
 ];
 
 function backLegs(): string {
-  return renderBitmap(17, 11, BACK_LEGS_BMP);
+  return renderBitmap(19, 11, BACK_LEGS_BMP);
 }
 
 function groundShadow(): string {
-  return `<ellipse class="dog-shadow" cx="64" cy="68" rx="35" ry="4" fill="#000" opacity="0.1"/>`;
+  return `<ellipse class="dog-shadow" cx="64" cy="56" rx="40" ry="4" fill="#000" opacity="0.1"/>`;
 }
 
-// ===== SLEEPING (curled up) =====
+// ===== SLEEPING (curled up into oval) =====
 
 const SLEEPING_BMP = [
-  '....KKK.....',   // row 4: head top
-  '..KKKKKKK...',   // row 5: head + body start
-  '.KKKKKKKKKK.',   // row 6: curled body
-  'NKKKKKkKKKKK',   // row 7: nose, body with highlight
-  '.KKtOTTOtKKK',   // row 8: tan belly with orange
-  '..KOTTTTOkK.',   // row 9: orange belly edges
-  '...kKKKKK...',   // row 10: body bottom
-  '....KK......',   // row 11: tail
+  '.....KKK........',   // row 4: head top
+  '...KKKKKKKK.....',   // row 5: head + body curve
+  '..KKTKKKKKKKKK..',   // row 6: tan brow, curled body
+  '.NKKKKKKKKKKKKK.',   // row 7: nose, body
+  '.TKKtOTTTOtKKKK.',   // WAIT wrong width
 ];
 
+// Let me redo sleeping more carefully as inline
 function sleepingShape(): string {
-  return renderBitmap(8, 4, SLEEPING_BMP);
+  const parts: string[] = [];
+  // Curled oval body
+  parts.push(renderBitmap(6, 4, [
+    '...KKKK.....',   // row 4: head top
+    '.KKKKKKKKKK.',   // row 5: head + body
+    'KKTKKKKKKKKK',   // row 6: tan brow, body
+    'KKWKKKKKKKKKK'.slice(0,12),   // row 7: eye, body
+    'KKKtOTTOtKKK',   // row 8: tan belly
+    '.KOTTTTTOkK.',   // row 9: orange belly
+    '..kKKKKKKK..',   // row 10: body bottom
+    '...KK.......',   // row 11: tail
+  ]));
+  // Nose
+  parts.push(px(6, 7, 1, 1, COLORS['N']));
+  return parts.join('');
 }
 
-// ===== SITTING (cooking) =====
+// ===== SITTING (begging pose for cooking) =====
 
-const SITTING_BMP = [
-  '....KK..',   // row 1: ear
-  '...KKKK.',   // row 2: ear + head top
-  '.NKWKKKK',   // row 3: nose, eye, head
-  '.KKKKKKK',   // row 4: head + body
-  'RKKKKKKKK',  // WAIT this is 9 chars
-];
-
-// Let me redo sitting more carefully
 function sittingShape(): string {
   const parts: string[] = [];
   // Head looking up
   parts.push(renderBitmap(8, 2, [
-    '..KK.',   // row 2: ear tip
-    '.KKKK',   // row 3: ear + head
-    'KWKKK',   // row 4: eye, head
-    'KKKKK',   // row 5: head
+    '..KKK.',   // row 2: ear + top
+    '.KKKKK',   // row 3: head
+    'KKTWKK',   // row 4: tan brow + eye
+    'KKKKKK',   // row 5: face
   ]));
   // Nose
   parts.push(px(7, 4, 1, 1, COLORS['N']));
-  // Body angled
+  // Body angled down
   parts.push(renderBitmap(10, 5, [
-    'KKKkK',   // row 5: body top with highlight
-    'KKKKK',   // row 6: body
-    'KKkKK',   // row 7: body shading
-    'tOTOt',   // row 8: tan belly with orange
-    'OTTOt',   // row 9: tan belly
-    'KKKKK',   // row 10: body bottom
+    'KKKkKK',   // row 5: body top
+    'KKKKKK',   // row 6: body
+    'KKkKKK',   // row 7: body shading
+    'tOTTOt',   // row 8: tan belly
+    'OTTTOt',   // row 9: belly
+    'KKKKKK',   // row 10: body bottom
   ]));
   // Front legs tucked
   parts.push(renderBitmap(11, 11, [
     'KK.KK',   // row 11: tucked legs
-    'kk.kk',   // row 12: paws
+    'Tt.tT',   // row 12: tan paws
   ]));
   // Tongue
   parts.push(px(7, 5, 1, 2, COLORS['R']));
@@ -206,7 +213,7 @@ export function getDogSvg(activity: string): string {
     parts.push(`<g class="dog-body">${sleepingShape()}</g>`);
   } else if (act === 'cooking') {
     parts.push(`<g class="dog-body">${sittingShape()}</g>`);
-    parts.push(`<g class="dog-tail">${renderBitmap(15, 3, ['.K', 'Kk', '.K'])}</g>`);
+    parts.push(`<g class="dog-tail">${renderBitmap(16, 3, ['.K', 'Kk', '.K'])}</g>`);
   } else {
     parts.push(`<g class="dog-body">${bodyShape()}</g>`);
     parts.push(`<g class="dog-head">${headShape()}</g>`);
@@ -242,24 +249,24 @@ export const dogStyles = `
   }
   @keyframes dog-trot {
     0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-4px); }
+    50% { transform: translateY(-3px); }
   }
   @keyframes dog-ear-bounce {
     0%, 100% { transform: translateY(0); }
-    40% { transform: translateY(-6px); }
+    40% { transform: translateY(-4px); }
   }
   @keyframes dog-leg-trot-front {
-    0% { transform: rotate(-15deg); }
-    100% { transform: rotate(15deg); }
+    0% { transform: rotate(-12deg); }
+    100% { transform: rotate(12deg); }
   }
   @keyframes dog-leg-trot-back {
-    0% { transform: rotate(15deg); }
-    100% { transform: rotate(-15deg); }
+    0% { transform: rotate(12deg); }
+    100% { transform: rotate(-12deg); }
   }
   @keyframes dog-sniff {
     0%, 100% { transform: translateY(0); }
-    15% { transform: translateY(-3px); }
-    35% { transform: translateY(-2px); }
+    15% { transform: translateY(-2px); }
+    35% { transform: translateY(-1px); }
   }
   @keyframes dog-tongue-pant {
     0%, 40%, 60%, 100% { opacity: 0; }
@@ -267,8 +274,8 @@ export const dogStyles = `
   }
   @keyframes dog-ear-twitch {
     0%, 85%, 100% { transform: translateY(0); }
-    88% { transform: translateY(-4px); }
-    95% { transform: translateY(-3px); }
+    88% { transform: translateY(-3px); }
+    95% { transform: translateY(-2px); }
   }
   @keyframes dog-dream-twitch {
     0%, 88%, 100% { transform: translateX(0); }
@@ -281,7 +288,7 @@ export const dogStyles = `
   }
   @keyframes dog-paw-tap {
     0%, 45%, 55%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-4px); }
+    50% { transform: translateY(-3px); }
   }
   @keyframes dog-beg-nod {
     0%, 100% { transform: translateY(0); }
@@ -292,22 +299,22 @@ export const dogStyles = `
   /* ===== IDLE ===== */
   .dog-idle .dog-tail {
     animation: dog-tail-wag 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) infinite;
-    transform-origin: 92px 20px;
+    transform-origin: 100px 20px;
   }
   .dog-idle .dog-head {
     animation: dog-sniff 2s ease-in-out infinite;
-    transform-origin: 20px 28px;
+    transform-origin: 16px 28px;
   }
   .dog-idle .dog-tongue {
     animation: dog-tongue-pant 1.5s ease-in-out infinite;
   }
   .dog-idle .dog-ear {
     animation: dog-ear-twitch 3s ease-in-out infinite;
-    transform-origin: 24px 12px;
+    transform-origin: 24px 8px;
   }
   .dog-idle .dog-body {
     animation: dog-breathe 3s cubic-bezier(0.45, 0, 0.55, 1) infinite;
-    transform-origin: 56px 40px;
+    transform-origin: 56px 36px;
   }
 
   /* ===== WALKING ===== */
@@ -316,43 +323,43 @@ export const dogStyles = `
   }
   .dog-walking .dog-ear {
     animation: dog-ear-bounce 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) infinite;
-    transform-origin: 24px 12px;
+    transform-origin: 24px 8px;
   }
   .dog-walking .dog-tail {
     animation: dog-tail-wag 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) infinite;
-    transform-origin: 92px 20px;
+    transform-origin: 100px 20px;
   }
   .dog-walking .dog-tongue {
     animation: dog-tongue-pant 0.8s ease-in-out infinite;
   }
   .dog-walking .dog-legs-front {
     animation: dog-leg-trot-front 0.3s ease-in-out infinite alternate;
-    transform-origin: 36px 44px;
+    transform-origin: 40px 44px;
   }
   .dog-walking .dog-legs-back {
     animation: dog-leg-trot-back 0.3s ease-in-out infinite alternate;
-    transform-origin: 76px 44px;
+    transform-origin: 84px 44px;
   }
 
   /* ===== STUDYING ===== */
   .dog-studying .dog-body {
     animation: dog-breathe 4s cubic-bezier(0.45, 0, 0.55, 1) infinite;
-    transform-origin: 56px 40px;
+    transform-origin: 56px 36px;
   }
   .dog-studying .dog-tail {
     animation: dog-tail-wag 2s ease-in-out infinite;
-    transform-origin: 92px 20px;
+    transform-origin: 100px 20px;
   }
   .dog-studying .dog-ear {
     animation: dog-ear-twitch 4s ease-in-out infinite;
     animation-delay: 1s;
-    transform-origin: 24px 12px;
+    transform-origin: 24px 8px;
   }
 
   /* ===== COOKING ===== */
   .dog-cooking .dog-tail {
     animation: dog-tail-wag 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) infinite;
-    transform-origin: 64px 20px;
+    transform-origin: 68px 16px;
   }
   .dog-cooking .dog-body {
     animation: dog-beg-nod 1s cubic-bezier(0.45, 0, 0.55, 1) infinite;
@@ -364,5 +371,5 @@ export const dogStyles = `
     transform-origin: 56px 36px;
   }
 
-  .dog-shadow { transform-origin: 64px 68px; }
+  .dog-shadow { transform-origin: 64px 56px; }
 `;
