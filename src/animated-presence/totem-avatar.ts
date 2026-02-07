@@ -20,7 +20,7 @@ const ACTIVITIES: Activity[] = [
 const W = 50;
 const H = 75;
 
-// ===== ICON-STYLE PALETTE — flat, high-contrast, minimal =====
+// ===== FLAT ILLUSTRATION PALETTE — same colors, polished shapes =====
 const SKIN = '#F5C7A8';
 const HAIR = '#3D2B1F';
 const EYES = '#2B2B2B';
@@ -31,6 +31,7 @@ const HOODIE = '#6C8EAD';
 const PANTS = '#3A3A48';
 const SHOES = '#E8E4DC';
 const WHITE = '#F0EEE8';
+const CHEEK = '#E8A090';
 
 // Prop palettes
 const PAN = '#787880';
@@ -49,222 +50,248 @@ const PILLOW_SHADE = '#C8B898';
 const BLANKET = '#6A5C94';
 const BLANKET_HI = '#7C6CA4';
 
-// ===== HEAD — large circle, bold features, icon-clean =====
-// Head: cx=25 cy=18 r=13 (y=5..31, x=12..38)
-// Hair extends to x=10..40, y=-1 for volume
+// ===== HEAD — slightly wider ellipse, asymmetric hair, rosy cheeks =====
 
 function headShape(): string {
   const p: string[] = [];
-  // Face — big round circle
-  p.push(`<circle cx="25" cy="18" r="13" fill="${SKIN}"/>`);
-  // Hair — single bold dome cap extending beyond head
-  p.push(`<g class="totem-hair"><path d="M10,19 C10,4 16,-1 25,-1 C34,-1 40,4 40,19 Q34,10 25,10 Q16,10 10,19 Z" fill="${HAIR}"/></g>`);
-  // Brows — bold arcs
-  p.push(`<path d="M16,15 Q20,13 24,15" fill="none" stroke="${BROW}" stroke-width="1.5" stroke-linecap="round"/>`);
-  p.push(`<path d="M26,15 Q30,13 34,15" fill="none" stroke="${BROW}" stroke-width="1.5" stroke-linecap="round"/>`);
-  // Eyes — large bold dots (r=3.5, dominant feature)
-  p.push(`<circle cx="20" cy="20" r="3.5" fill="${EYES}"/>`);
-  p.push(`<circle cx="30" cy="20" r="3.5" fill="${EYES}"/>`);
-  p.push(`<circle cx="19" cy="19" r="1" fill="#FFF" opacity="0.9"/>`);
-  p.push(`<circle cx="29" cy="19" r="1" fill="#FFF" opacity="0.9"/>`);
-  // Mouth — simple arc
-  p.push(`<path d="M22,26 Q25,28 28,26" fill="none" stroke="${MOUTH}" stroke-width="1.5" stroke-linecap="round"/>`);
+  // Face — wider ellipse for a more designed feel
+  p.push(`<ellipse cx="25" cy="18" rx="14" ry="12.5" fill="${SKIN}"/>`);
+  // Hair — asymmetric side-swept style with part line
+  p.push(`<g class="totem-hair">`);
+  p.push(`<path d="M10,18 C10,3 16,-2 25,-2 C34,-2 40,3 40,18 Q36,8 25,8 Q14,8 10,18 Z" fill="${HAIR}"/>`);
+  // Side sweep falling over right side
+  p.push(`<path d="M25,-2 C30,-2 36,1 38,8 Q36,5 32,6 Q28,7 25,5 Z" fill="${HAIR}"/>`);
+  p.push(`</g>`);
+  // Brows — clean arcs with confident weight
+  p.push(`<path d="M16,14 Q19.5,12 23,14" fill="none" stroke="${BROW}" stroke-width="1.6" stroke-linecap="round"/>`);
+  p.push(`<path d="M27,14 Q30.5,12 34,14" fill="none" stroke="${BROW}" stroke-width="1.6" stroke-linecap="round"/>`);
+  // Eyes — bold dots, spaced for wider head
+  p.push(`<circle cx="19.5" cy="19" r="3.5" fill="${EYES}"/>`);
+  p.push(`<circle cx="30.5" cy="19" r="3.5" fill="${EYES}"/>`);
+  // Eye highlights
+  p.push(`<circle cx="18.5" cy="18" r="1.2" fill="#FFF" opacity="0.9"/>`);
+  p.push(`<circle cx="29.5" cy="18" r="1.2" fill="#FFF" opacity="0.9"/>`);
+  // Rosy cheeks for warmth
+  p.push(`<circle cx="14" cy="22" r="2.5" fill="${CHEEK}" opacity="0.3"/>`);
+  p.push(`<circle cx="36" cy="22" r="2.5" fill="${CHEEK}" opacity="0.3"/>`);
+  // Mouth — refined smile curve
+  p.push(`<path d="M22,25 Q25,27.5 28,25" fill="none" stroke="${MOUTH}" stroke-width="1.4" stroke-linecap="round"/>`);
   return p.join('');
 }
 
 function sleepingHeadShape(): string {
   const p: string[] = [];
-  p.push(`<circle cx="25" cy="18" r="13" fill="${SKIN}"/>`);
-  p.push(`<g class="totem-hair"><path d="M10,19 C10,4 16,-1 25,-1 C34,-1 40,4 40,19 Q34,10 25,10 Q16,10 10,19 Z" fill="${HAIR}"/></g>`);
-  // Closed eyes — bold curved arcs
-  p.push(`<path d="M17,20 Q20,23 23,20" fill="none" stroke="${EYELID}" stroke-width="1.5" stroke-linecap="round"/>`);
-  p.push(`<path d="M27,20 Q30,23 33,20" fill="none" stroke="${EYELID}" stroke-width="1.5" stroke-linecap="round"/>`);
+  p.push(`<ellipse cx="25" cy="18" rx="14" ry="12.5" fill="${SKIN}"/>`);
+  p.push(`<g class="totem-hair">`);
+  p.push(`<path d="M10,18 C10,3 16,-2 25,-2 C34,-2 40,3 40,18 Q36,8 25,8 Q14,8 10,18 Z" fill="${HAIR}"/>`);
+  p.push(`<path d="M25,-2 C30,-2 36,1 38,8 Q36,5 32,6 Q28,7 25,5 Z" fill="${HAIR}"/>`);
+  p.push(`</g>`);
+  // Closed eyes — soft curved arcs
+  p.push(`<path d="M16,19 Q19.5,22 23,19" fill="none" stroke="${EYELID}" stroke-width="1.5" stroke-linecap="round"/>`);
+  p.push(`<path d="M27,19 Q30.5,22 33,19" fill="none" stroke="${EYELID}" stroke-width="1.5" stroke-linecap="round"/>`);
+  // Rosy cheeks
+  p.push(`<circle cx="14" cy="22" r="2.5" fill="${CHEEK}" opacity="0.3"/>`);
+  p.push(`<circle cx="36" cy="22" r="2.5" fill="${CHEEK}" opacity="0.3"/>`);
   // Peaceful mouth
-  p.push(`<path d="M23,26 Q25,27.5 27,26" fill="none" stroke="${MOUTH}" stroke-width="1.2" stroke-linecap="round"/>`);
+  p.push(`<path d="M23,25 Q25,26.5 27,25" fill="none" stroke="${MOUTH}" stroke-width="1.2" stroke-linecap="round"/>`);
   return p.join('');
 }
 
 function blinkOverlay(): string {
-  // Skin-colored circles that cover eyes during blink
   return `<g class="totem-blink">
-    <circle cx="20" cy="20" r="4.5" fill="${SKIN}"/>
-    <circle cx="30" cy="20" r="4.5" fill="${SKIN}"/>
+    <circle cx="19.5" cy="19" r="5" fill="${SKIN}"/>
+    <circle cx="30.5" cy="19" r="5" fill="${SKIN}"/>
   </g>`;
 }
 
-// ===== BODY — flat filled, narrower than head =====
-// Body: x=18..32 (14 wide) vs head 26 wide — clear chibi proportions
+// ===== BODY — rounded shoulders, collar detail, proper proportions =====
 
 function bodyShape(): string {
   const p: string[] = [];
-  // Torso — single path, flat fill, overlaps under head
-  p.push(`<path d="M18,28 C18,25 21,24 25,24 C29,24 32,25 32,28 L32,48 C32,49 29,49 25,49 C21,49 18,49 18,48 Z" fill="${HOODIE}"/>`);
-  // Pants — flat rect
-  p.push(`<rect x="19" y="46" width="12" height="6" rx="2" fill="${PANTS}"/>`);
+  // Torso — rounded shoulders that flow naturally, slightly wider
+  p.push(`<path d="M16,28 C16,24 20,22 25,22 C30,22 34,24 34,28 L34,48 C34,49.5 30,50 25,50 C20,50 16,49.5 16,48 Z" fill="${HOODIE}"/>`);
+  // Collar/neckline detail
+  p.push(`<path d="M21,23 Q25,26 29,23" fill="none" stroke="${SKIN}" stroke-width="1" stroke-linecap="round" opacity="0.6"/>`);
+  // Pants with hip curve
+  p.push(`<path d="M17,46 C17,45 20,44 25,44 C30,44 33,45 33,46 L33,52 C33,53 30,53 25,53 C20,53 17,53 17,52 Z" fill="${PANTS}"/>`);
   return p.join('');
 }
 
-// ===== ARMS — simple flat paths =====
+// ===== ARMS — smoother curves, tapered forearms, rounded-rect hands =====
 
 function leftArmShape(): string {
   const p: string[] = [];
-  p.push(`<path d="M18,29 C14,30 11,33 11,37 L11,41 C11,42 12,43 14,43 C15,43 16,42 16,41 L16,37 C16,34 17,32 18,29 Z" fill="${HOODIE}"/>`);
-  p.push(`<circle cx="13" cy="44" r="2.5" fill="${SKIN}"/>`);
+  p.push(`<path d="M16,28 C12,29.5 9,33 9,37 L9,41 C9,42.5 10.5,43.5 12.5,43.5 C14,43.5 15.5,42.5 15.5,41 L15.5,36 C15.5,33 16,31 16,28 Z" fill="${HOODIE}"/>`);
+  // Rounded-rect hand
+  p.push(`<rect x="9" y="42" width="5.5" height="4" rx="2" fill="${SKIN}"/>`);
   return p.join('');
 }
 
 function rightArmShape(): string {
   const p: string[] = [];
-  p.push(`<path d="M32,29 C36,30 39,33 39,37 L39,41 C39,42 38,43 36,43 C35,43 34,42 34,41 L34,37 C34,34 33,32 32,29 Z" fill="${HOODIE}"/>`);
-  p.push(`<circle cx="37" cy="44" r="2.5" fill="${SKIN}"/>`);
+  p.push(`<path d="M34,28 C38,29.5 41,33 41,37 L41,41 C41,42.5 39.5,43.5 37.5,43.5 C36,43.5 34.5,42.5 34.5,41 L34.5,36 C34.5,33 34,31 34,28 Z" fill="${HOODIE}"/>`);
+  // Rounded-rect hand
+  p.push(`<rect x="35.5" y="42" width="5.5" height="4" rx="2" fill="${SKIN}"/>`);
   return p.join('');
 }
 
 function rightArmWithPanShape(): string {
   const p: string[] = [];
-  p.push(`<path d="M32,29 C36,30 39,33 39,37 L39,41 C39,42 38,43 36,43 C35,43 34,42 34,41 L34,37 C34,34 33,32 32,29 Z" fill="${HOODIE}"/>`);
-  p.push(`<circle cx="37" cy="44" r="2.5" fill="${SKIN}"/>`);
-  p.push(`<ellipse cx="43" cy="39" rx="5" ry="4" fill="${PAN}"/>`);
-  p.push(`<ellipse cx="43" cy="39" rx="4" ry="3" fill="${PAN_DARK}"/>`);
-  p.push(`<ellipse cx="43" cy="38" rx="2.5" ry="2" fill="${FOOD_EGG}"/>`);
-  p.push(`<circle cx="43" cy="38" r="1" fill="${FOOD_YLK}"/>`);
-  p.push(`<rect x="47" y="37" width="2" height="4" rx="1" fill="${PAN_HANDLE}"/>`);
+  p.push(`<path d="M34,28 C38,29.5 41,33 41,37 L41,41 C41,42.5 39.5,43.5 37.5,43.5 C36,43.5 34.5,42.5 34.5,41 L34.5,36 C34.5,33 34,31 34,28 Z" fill="${HOODIE}"/>`);
+  p.push(`<rect x="35.5" y="42" width="5.5" height="4" rx="2" fill="${SKIN}"/>`);
+  // Pan — cleaner shapes with consistent stroke
+  p.push(`<ellipse cx="43" cy="39" rx="5.5" ry="3.5" fill="${PAN}"/>`);
+  p.push(`<ellipse cx="43" cy="39" rx="4.5" ry="2.5" fill="${PAN_DARK}"/>`);
+  p.push(`<ellipse cx="43" cy="38.5" rx="2.5" ry="1.8" fill="${FOOD_EGG}"/>`);
+  p.push(`<circle cx="43" cy="38.5" r="1" fill="${FOOD_YLK}"/>`);
+  p.push(`<rect x="47.5" y="37.5" width="2" height="3.5" rx="1" fill="${PAN_HANDLE}"/>`);
   return p.join('');
 }
 
 function leftArmWithSpatulaShape(): string {
   const p: string[] = [];
-  p.push(`<path d="M18,29 C14,30 11,33 11,37 L11,41 C11,42 12,43 14,43 C15,43 16,42 16,41 L16,37 C16,34 17,32 18,29 Z" fill="${HOODIE}"/>`);
-  p.push(`<circle cx="13" cy="44" r="2.5" fill="${SKIN}"/>`);
-  p.push(`<rect x="7" y="33" width="2" height="8" rx="1" fill="${PAN_HANDLE}"/>`);
-  p.push(`<rect x="5" y="29" width="6" height="5" rx="2" fill="${PAN}"/>`);
+  p.push(`<path d="M16,28 C12,29.5 9,33 9,37 L9,41 C9,42.5 10.5,43.5 12.5,43.5 C14,43.5 15.5,42.5 15.5,41 L15.5,36 C15.5,33 16,31 16,28 Z" fill="${HOODIE}"/>`);
+  p.push(`<rect x="9" y="42" width="5.5" height="4" rx="2" fill="${SKIN}"/>`);
+  // Spatula
+  p.push(`<rect x="6" y="33" width="2" height="9" rx="1" fill="${PAN_HANDLE}"/>`);
+  p.push(`<path d="M4,28 L10,28 L10,33 Q7,34 4,33 Z" fill="${PAN}" rx="1.5"/>`);
   return p.join('');
 }
 
-// ===== LEGS — simple rects + ellipse shoes =====
+// ===== LEGS — tapered paths + proper shoe shapes =====
 
 function leftLegShape(): string {
   const p: string[] = [];
-  p.push(`<rect x="19" y="50" width="6" height="13" rx="3" fill="${PANTS}"/>`);
-  p.push(`<ellipse cx="22" cy="64" rx="4.5" ry="2.5" fill="${SHOES}"/>`);
+  // Tapered leg — wider at thigh, narrower at ankle
+  p.push(`<path d="M19,51 C19,50 20,49 22,49 C24,49 25,50 25,51 L24.5,62 C24.5,63 23.5,63.5 22,63.5 C20.5,63.5 19.5,63 19.5,62 Z" fill="${PANTS}"/>`);
+  // Shoe — proper shape with flat bottom and rounded toe
+  p.push(`<path d="M18,62 C18,61 19.5,60.5 22,60.5 C24,60.5 25,61 25.5,62 L25.5,64 C25.5,65.5 24,66 22,66 C19,66 17,65.5 17,64 Z" fill="${SHOES}"/>`);
   return p.join('');
 }
 
 function rightLegShape(): string {
   const p: string[] = [];
-  p.push(`<rect x="25" y="50" width="6" height="13" rx="3" fill="${PANTS}"/>`);
-  p.push(`<ellipse cx="28" cy="64" rx="4.5" ry="2.5" fill="${SHOES}"/>`);
+  // Tapered leg
+  p.push(`<path d="M25,51 C25,50 26,49 28,49 C30,49 31,50 31,51 L30.5,62 C30.5,63 29.5,63.5 28,63.5 C26.5,63.5 25.5,63 25.5,62 Z" fill="${PANTS}"/>`);
+  // Shoe
+  p.push(`<path d="M24.5,62 C24.5,61 26,60.5 28,60.5 C30,60.5 31.5,61 32,62 L32,64 C32,65.5 30.5,66 28,66 C25.5,66 24,65.5 24,64 Z" fill="${SHOES}"/>`);
   return p.join('');
 }
 
-// ===== PROPS =====
+// ===== PROPS — cleaned up with consistent proportions =====
 
 function phoneProp(): string {
   const p: string[] = [];
-  p.push(`<rect x="39" y="39" width="5" height="8" rx="1" fill="${PHONE_BODY}"/>`);
-  p.push(`<rect x="40" y="40.5" width="3" height="5" rx="0.5" fill="${PHONE_SCREEN}"/>`);
-  p.push(`<rect x="40" y="40.5" width="3" height="5" rx="0.5" fill="${PHONE_SCREEN}" opacity="0.2"><animate attributeName="opacity" values="0.15;0.3;0.18;0.25;0.15" dur="3s" repeatCount="indefinite"/></rect>`);
+  p.push(`<rect x="39" y="39" width="5" height="8" rx="1.2" fill="${PHONE_BODY}"/>`);
+  p.push(`<rect x="40" y="40.5" width="3" height="5" rx="0.6" fill="${PHONE_SCREEN}"/>`);
+  p.push(`<rect x="40" y="40.5" width="3" height="5" rx="0.6" fill="${PHONE_SCREEN}" opacity="0.2"><animate attributeName="opacity" values="0.15;0.3;0.18;0.25;0.15" dur="3s" repeatCount="indefinite"/></rect>`);
   return `<g class="totem-prop">${p.join('')}</g>`;
 }
 
 function laptopProp(): string {
   const p: string[] = [];
-  p.push(`<rect x="14" y="33" width="22" height="8" rx="1.5" fill="${LAPTOP_FRAME}"/>`);
-  p.push(`<rect x="15.5" y="34" width="19" height="6" rx="1" fill="${LAPTOP_SCREEN}"/>`);
-  p.push(`<rect x="14" y="41" width="22" height="3" rx="1" fill="${LAPTOP_FRAME}"/>`);
-  p.push(`<rect x="16" y="41.5" width="18" height="2" rx="0.5" fill="${LAPTOP_KEY}"/>`);
-  p.push(`<rect x="15.5" y="34" width="19" height="6" rx="1" fill="${LAPTOP_GLOW}" opacity="0.12"><animate attributeName="opacity" values="0.08;0.18;0.1;0.15;0.08" dur="3s" repeatCount="indefinite"/></rect>`);
+  // Screen
+  p.push(`<rect x="13" y="33" width="24" height="8" rx="1.5" fill="${LAPTOP_FRAME}"/>`);
+  p.push(`<rect x="14.5" y="34" width="21" height="6" rx="1" fill="${LAPTOP_SCREEN}"/>`);
+  // Base
+  p.push(`<rect x="12" y="41" width="26" height="3" rx="1.5" fill="${LAPTOP_FRAME}"/>`);
+  p.push(`<rect x="14" y="41.5" width="22" height="2" rx="0.5" fill="${LAPTOP_KEY}"/>`);
+  // Glow
+  p.push(`<rect x="14.5" y="34" width="21" height="6" rx="1" fill="${LAPTOP_GLOW}" opacity="0.12"><animate attributeName="opacity" values="0.08;0.18;0.1;0.15;0.08" dur="3s" repeatCount="indefinite"/></rect>`);
   return `<g class="totem-prop">${p.join('')}</g>`;
 }
 
 function pillowProp(): string {
   const p: string[] = [];
-  p.push(`<rect x="8" y="18" width="34" height="8" rx="4" fill="${PILLOW_FILL}"/>`);
-  p.push(`<rect x="8" y="18" width="6" height="8" rx="3" fill="${PILLOW_SHADE}" opacity="0.5"/>`);
-  p.push(`<rect x="36" y="18" width="6" height="8" rx="3" fill="${PILLOW_SHADE}" opacity="0.5"/>`);
+  p.push(`<path d="M8,18 Q8,16 12,16 L38,16 Q42,16 42,18 L42,24 Q42,26 38,26 L12,26 Q8,26 8,24 Z" fill="${PILLOW_FILL}"/>`);
+  p.push(`<path d="M8,18 Q8,16 12,16 L14,16 Q10,16 10,18 L10,24 Q10,26 14,26 L12,26 Q8,26 8,24 Z" fill="${PILLOW_SHADE}" opacity="0.5"/>`);
+  p.push(`<path d="M36,16 L38,16 Q42,16 42,18 L42,24 Q42,26 38,26 L36,26 Q40,26 40,24 L40,18 Q40,16 36,16 Z" fill="${PILLOW_SHADE}" opacity="0.5"/>`);
   return p.join('');
 }
 
 function blanketProp(): string {
   const p: string[] = [];
-  p.push(`<rect x="12" y="32" width="26" height="28" rx="3" fill="${BLANKET}"/>`);
-  p.push(`<rect x="13" y="32" width="24" height="4" rx="2" fill="${BLANKET_HI}"/>`);
+  p.push(`<path d="M10,32 Q10,30 13,30 L37,30 Q40,30 40,32 L40,58 Q40,60 37,60 L13,60 Q10,60 10,58 Z" fill="${BLANKET}"/>`);
+  p.push(`<path d="M11,32 Q11,30 14,30 L36,30 Q39,30 39,32 L39,35 Q39,36 36,36 L14,36 Q11,36 11,35 Z" fill="${BLANKET_HI}"/>`);
   return p.join('');
 }
 
 function remoteProp(): string {
   const p: string[] = [];
-  p.push(`<rect x="39" y="41" width="3" height="7" rx="1" fill="${PHONE_BODY}"/>`);
-  p.push(`<circle cx="40.5" cy="43" r="0.6" fill="#E06060"/>`);
+  p.push(`<rect x="39" y="41" width="3.5" height="7" rx="1.2" fill="${PHONE_BODY}"/>`);
+  p.push(`<circle cx="40.8" cy="43" r="0.7" fill="#E06060"/>`);
   return `<g class="totem-prop">${p.join('')}</g>`;
 }
 
 function drinkProp(): string {
   const p: string[] = [];
-  p.push(`<rect x="4" y="54" width="5" height="7" rx="1" fill="${PAN}"/>`);
-  p.push(`<path d="M9,56 Q12,57 9,59" fill="none" stroke="${PAN_DARK}" stroke-width="1"/>`);
+  p.push(`<path d="M4,54 L4,60 Q4,61 5,61 L8,61 Q9,61 9,60 L9,54 Z" fill="${PAN}"/>`);
+  p.push(`<path d="M9,56 Q12,57 9,59" fill="none" stroke="${PAN_DARK}" stroke-width="1" stroke-linecap="round"/>`);
   return `<g class="totem-prop">${p.join('')}</g>`;
 }
 
 function bookProp(): string {
   const p: string[] = [];
-  p.push(`<rect x="7" y="34" width="8" height="10" rx="1" fill="#5A3020"/>`);
-  p.push(`<rect x="8" y="35" width="6" height="8" rx="0.5" fill="#E8D8C0"/>`);
+  p.push(`<rect x="6" y="34" width="8" height="10" rx="1.5" fill="#5A3020"/>`);
+  p.push(`<rect x="7.5" y="35" width="5.5" height="8" rx="0.8" fill="#E8D8C0"/>`);
+  p.push(`<path d="M10.2,37 L11.5,37 M10.2,38.5 L12,38.5 M10.2,40 L11,40" stroke="#C0B090" stroke-width="0.5"/>`);
   return `<g class="totem-prop">${p.join('')}</g>`;
 }
 
 function mugProp(): string {
   const p: string[] = [];
-  p.push(`<rect x="39" y="35" width="5" height="6" rx="1" fill="#A05830"/>`);
-  p.push(`<path d="M44,36.5 Q47,37.5 44,39.5" fill="none" stroke="#8A4820" stroke-width="1.2"/>`);
+  p.push(`<path d="M39,35 L39,41 Q39,42 40,42 L43,42 Q44,42 44,41 L44,35 Z" fill="#A05830"/>`);
+  p.push(`<path d="M44,36.5 Q47,37.5 44,39.5" fill="none" stroke="#8A4820" stroke-width="1.2" stroke-linecap="round"/>`);
   return `<g class="totem-prop">${p.join('')}</g>`;
 }
 
 function markerProp(): string {
   const p: string[] = [];
-  p.push(`<rect x="40" y="14" width="2" height="6" rx="0.8" fill="#E06060"/>`);
-  p.push(`<rect x="40" y="20" width="2" height="3" rx="0.8" fill="#C0C0C0"/>`);
+  p.push(`<rect x="40" y="14" width="2.2" height="6" rx="0.8" fill="#E06060"/>`);
+  p.push(`<path d="M40.3,20 L42,20 L41.1,23 Z" fill="#C0C0C0"/>`);
   return `<g class="totem-prop">${p.join('')}</g>`;
 }
 
 function plateProp(): string {
   const p: string[] = [];
-  p.push(`<ellipse cx="12" cy="43" rx="6" ry="2" fill="${PAN}"/>`);
+  p.push(`<ellipse cx="12" cy="43" rx="6.5" ry="2" fill="${PAN}"/>`);
+  p.push(`<ellipse cx="12" cy="42.5" rx="5" ry="1.5" fill="#E8E4DC"/>`);
   p.push(`<ellipse cx="12" cy="42" rx="3" ry="1.2" fill="#C8A040"/>`);
   return `<g class="totem-prop">${p.join('')}</g>`;
 }
 
 function spongeProp(): string {
-  return `<g class="totem-prop"><rect x="6" y="38" width="5" height="4" rx="1.5" fill="#E8D040"/></g>`;
+  return `<g class="totem-prop"><rect x="5" y="38" width="5.5" height="4" rx="1.5" fill="#E8D040"/><rect x="5" y="38" width="5.5" height="1.5" rx="0.8" fill="#D0C030"/></g>`;
 }
 
 function bowlProp(): string {
   const p: string[] = [];
-  p.push(`<path d="M13,36 Q13,42 19,42 Q25,42 25,36" fill="${PAN}"/>`);
+  p.push(`<path d="M13,36 Q13,43 19,43 Q25,43 25,36" fill="${PAN}"/>`);
   p.push(`<ellipse cx="19" cy="36" rx="6" ry="1.5" fill="${PAN_DARK}"/>`);
+  p.push(`<ellipse cx="19" cy="36.5" rx="4" ry="1" fill="#C8A040" opacity="0.6"/>`);
   return `<g class="totem-prop">${p.join('')}</g>`;
 }
 
 function controllerProp(): string {
   const p: string[] = [];
-  p.push(`<rect x="13" y="43" width="10" height="4" rx="2" fill="${PHONE_BODY}"/>`);
-  p.push(`<circle cx="16" cy="44.5" r="1" fill="#A04040"/>`);
-  p.push(`<circle cx="20" cy="44.5" r="1" fill="#4060A0"/>`);
+  p.push(`<path d="M13,43 Q13,41 15,41 L21,41 Q23,41 23,43 L23,46 Q23,47 21,47 L15,47 Q13,47 13,46 Z" fill="${PHONE_BODY}"/>`);
+  p.push(`<circle cx="16" cy="44" r="1.2" fill="#A04040"/>`);
+  p.push(`<circle cx="20" cy="44" r="1.2" fill="#4060A0"/>`);
   return `<g class="totem-prop">${p.join('')}</g>`;
 }
 
 function shirtProp(): string {
   const p: string[] = [];
-  p.push(`<rect x="3" y="28" width="5" height="6" rx="1" fill="#6080A0"/>`);
-  p.push(`<rect x="42" y="28" width="5" height="6" rx="1" fill="#6080A0"/>`);
+  p.push(`<path d="M2,28 L7,28 Q8,28 8,29 L8,33 Q8,34 7,34 L2,34 Q1,34 1,33 L1,29 Q1,28 2,28 Z" fill="#6080A0"/>`);
+  p.push(`<path d="M42,28 L47,28 Q48,28 48,29 L48,33 Q48,34 47,34 L42,34 Q41,34 41,33 L41,29 Q41,28 42,28 Z" fill="#6080A0"/>`);
   return `<g class="totem-prop">${p.join('')}</g>`;
 }
 
 function phoneUpProp(): string {
   const p: string[] = [];
-  p.push(`<rect x="20" y="8" width="10" height="6" rx="1.5" fill="${PHONE_BODY}"/>`);
-  p.push(`<rect x="21" y="9" width="8" height="4" rx="1" fill="${PHONE_SCREEN}"/>`);
-  p.push(`<rect x="21" y="9" width="8" height="4" rx="1" fill="${PHONE_SCREEN}" opacity="0.25"><animate attributeName="opacity" values="0.2;0.35;0.22;0.3;0.2" dur="3s" repeatCount="indefinite"/></rect>`);
+  p.push(`<rect x="19" y="8" width="12" height="6" rx="1.5" fill="${PHONE_BODY}"/>`);
+  p.push(`<rect x="20" y="9" width="10" height="4" rx="1" fill="${PHONE_SCREEN}"/>`);
+  p.push(`<rect x="20" y="9" width="10" height="4" rx="1" fill="${PHONE_SCREEN}" opacity="0.25"><animate attributeName="opacity" values="0.2;0.35;0.22;0.3;0.2" dur="3s" repeatCount="indefinite"/></rect>`);
   return `<g class="totem-prop">${p.join('')}</g>`;
 }
 
@@ -276,7 +303,7 @@ function nappingZzz(): string {
 }
 
 function groundShadow(): string {
-  return `<ellipse class="totem-shadow" cx="25" cy="68" rx="10" ry="2" fill="#000" opacity="0.15"/>`;
+  return `<ellipse class="totem-shadow" cx="25" cy="68" rx="12" ry="2.5" fill="#000" opacity="0.12"/>`;
 }
 
 function codeFloat(): string {
@@ -473,11 +500,11 @@ export const totemStyles = `
   }
   .totem-idle .totem-left-arm {
     animation: totem-idle-arm-l 3.2s ease-in-out infinite;
-    transform-origin: 18px 29px;
+    transform-origin: 16px 28px;
   }
   .totem-idle .totem-right-arm {
     animation: totem-idle-arm-r 2.8s ease-in-out infinite;
-    transform-origin: 32px 29px;
+    transform-origin: 34px 28px;
   }
   .totem-idle .totem-shadow {
     animation: totem-shadow-idle 2.8s ease-in-out infinite;
@@ -514,8 +541,8 @@ export const totemStyles = `
     50% { transform: rotate(3deg); }
   }
   @keyframes totem-shadow-idle {
-    0%, 100% { transform: scaleX(1); opacity: 0.15; }
-    50% { transform: scaleX(0.9); opacity: 0.1; }
+    0%, 100% { transform: scaleX(1); opacity: 0.12; }
+    50% { transform: scaleX(0.9); opacity: 0.08; }
   }
 
   /* ===== WALKING ===== */
@@ -528,11 +555,11 @@ export const totemStyles = `
   }
   .totem-walking .totem-left-arm {
     animation: totem-arm-swing-l 0.4s ease-in-out infinite alternate;
-    transform-origin: 18px 29px;
+    transform-origin: 16px 28px;
   }
   .totem-walking .totem-right-arm {
     animation: totem-arm-swing-r 0.4s ease-in-out infinite alternate;
-    transform-origin: 32px 29px;
+    transform-origin: 34px 28px;
   }
   .totem-walking .totem-left-leg {
     animation: totem-stride-l 0.4s ease-in-out infinite alternate;
@@ -580,8 +607,8 @@ export const totemStyles = `
     100% { transform: rotate(18deg) translateY(0); }
   }
   @keyframes totem-shadow-walk {
-    0%, 100% { transform: scaleX(1); opacity: 0.15; }
-    50% { transform: scaleX(0.8); opacity: 0.08; }
+    0%, 100% { transform: scaleX(1); opacity: 0.12; }
+    50% { transform: scaleX(0.8); opacity: 0.06; }
   }
 
   /* ===== STUDYING ===== */
@@ -607,16 +634,16 @@ export const totemStyles = `
   }
   .totem-studying .totem-left-arm {
     animation: totem-type-l 2s ease-in-out infinite;
-    transform-origin: 18px 29px;
+    transform-origin: 16px 28px;
   }
   .totem-studying .totem-right-arm {
     animation: totem-type-r 2s ease-in-out infinite;
-    transform-origin: 32px 29px;
+    transform-origin: 34px 28px;
     animation-delay: 0.08s;
   }
   .totem-studying .totem-shadow {
     transform: scaleX(1.2);
-    opacity: 0.12;
+    opacity: 0.1;
   }
   @keyframes totem-study-settle {
     0%, 100% { transform: translateY(0); }
@@ -678,11 +705,11 @@ export const totemStyles = `
   }
   .totem-cooking .totem-right-arm {
     animation: totem-stir 0.9s cubic-bezier(0.45, 0, 0.55, 1) infinite;
-    transform-origin: 32px 29px;
+    transform-origin: 34px 28px;
   }
   .totem-cooking .totem-left-arm {
     animation: totem-spatula-flip 2.5s ease-in-out infinite;
-    transform-origin: 18px 29px;
+    transform-origin: 16px 28px;
   }
   .totem-cooking .totem-shadow {
     animation: totem-shadow-idle 2s ease-in-out infinite;
@@ -799,15 +826,15 @@ export const totemStyles = `
   }
   .totem-watching .totem-left-arm {
     animation: totem-watch-arm-l 5s ease-in-out infinite;
-    transform-origin: 18px 29px;
+    transform-origin: 16px 28px;
   }
   .totem-watching .totem-right-arm {
     animation: totem-watch-arm-r 7s ease-in-out infinite;
-    transform-origin: 32px 29px;
+    transform-origin: 34px 28px;
   }
   .totem-watching .totem-shadow {
     transform: scaleX(1.2);
-    opacity: 0.12;
+    opacity: 0.1;
   }
   @keyframes totem-watch-settle {
     0%, 100% { transform: translateY(0); }
@@ -855,7 +882,7 @@ export const totemStyles = `
   }
   .totem-sleeping .totem-left-arm {
     animation: totem-sleep-arm 4s ease-in-out infinite, totem-sleep-twitch 7s ease-in-out infinite;
-    transform-origin: 18px 29px;
+    transform-origin: 16px 28px;
   }
   .totem-sleeping .totem-zzz text:nth-child(1) {
     animation: totem-zzz 2.5s ease-in-out infinite;
@@ -917,7 +944,7 @@ export const totemStyles = `
   }
   .totem-reading .totem-left-arm {
     animation: totem-read-arm 5s ease-in-out infinite;
-    transform-origin: 18px 29px;
+    transform-origin: 16px 28px;
   }
   .totem-reading .totem-body {
     animation: totem-breathe 3.5s ease-in-out infinite;

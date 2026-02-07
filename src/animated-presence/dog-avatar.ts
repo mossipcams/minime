@@ -1,4 +1,4 @@
-// Smooth SVG dachshund avatar
+// Smooth SVG dachshund avatar — modern flat illustration style
 // ViewBox: 40x25
 
 export type DogActivity = 'idle' | 'walking' | 'studying' | 'cooking' | 'sleeping';
@@ -16,126 +16,129 @@ const NOSE = '#2D2D2D';
 const EYE_HI = '#FFF';
 const TONGUE = '#D85858';
 
-// === SMOOTH BODY PARTS ===
+// === POLISHED BODY PARTS ===
 
 function bodyShape(): string {
   const parts: string[] = [];
-  // Long dachshund body — elongated ellipse
-  parts.push(`<ellipse cx="20" cy="12" rx="12" ry="5" fill="${BLACK}"/>`);
-  // Belly highlight
-  parts.push(`<ellipse cx="20" cy="14" rx="10" ry="3" fill="${TAN_DARK}"/>`);
-  // Tan belly center
-  parts.push(`<ellipse cx="20" cy="14.5" rx="8" ry="2" fill="${TAN}"/>`);
-  // Back highlight
-  parts.push(`<ellipse cx="20" cy="9.5" rx="8" ry="2" fill="${BLACK_HI}" opacity="0.4"/>`);
+  // Long dachshund body — smooth capsule with refined arch
+  parts.push(`<path d="M8,12 Q8,7 14,7 L26,7 Q32,7 32,12 L32,14 Q32,17 26,17 L14,17 Q8,17 8,14 Z" fill="${BLACK}"/>`);
+  // Belly underside — visible below body
+  parts.push(`<path d="M10,14 Q10,17.5 14,17.5 L26,17.5 Q30,17.5 30,14" fill="${TAN_DARK}"/>`);
+  // Tan belly center highlight
+  parts.push(`<path d="M12,14.5 Q12,17 15,17 L25,17 Q28,17 28,14.5" fill="${TAN}"/>`);
+  // Back highlight — subtle sheen
+  parts.push(`<ellipse cx="20" cy="9" rx="8" ry="1.5" fill="${BLACK_HI}" opacity="0.35"/>`);
   return parts.join('');
 }
 
 function headShape(): string {
   const parts: string[] = [];
-  // Head
-  parts.push(`<circle cx="6" cy="10" r="4" fill="${BLACK}"/>`);
-  // Snout
-  parts.push(`<ellipse cx="3" cy="11.5" rx="3" ry="2" fill="${BLACK}"/>`);
-  // Snout tan
-  parts.push(`<ellipse cx="3.5" cy="12" rx="2" ry="1.2" fill="${TAN}"/>`);
-  // Nose
-  parts.push(`<ellipse cx="1.5" cy="11" rx="1" ry="0.7" fill="${NOSE}"/>`);
-  // Eye
-  parts.push(`<circle cx="5.5" cy="9" r="1.2" fill="${BLACK}"/>`);
-  parts.push(`<circle cx="5.8" cy="8.7" r="0.5" fill="${EYE_HI}"/>`);
+  // Head — slightly oblong, not a perfect circle
+  parts.push(`<ellipse cx="6" cy="10" rx="4.5" ry="4" fill="${BLACK}"/>`);
+  // Snout — cleaner transition from head
+  parts.push(`<path d="M3.5,9.5 Q0.5,10.5 0.5,12 Q0.5,13 2,13.5 L5,13 Q6,12.5 6,11.5 Z" fill="${BLACK}"/>`);
+  // Snout tan marking — refined shape
+  parts.push(`<path d="M2,11.5 Q1.5,12 2,12.8 L4.5,12.5 Q5,12 4.5,11.5 Z" fill="${TAN}"/>`);
+  // Nose — more defined
+  parts.push(`<ellipse cx="1.2" cy="11" rx="1.1" ry="0.8" fill="${NOSE}"/>`);
+  parts.push(`<ellipse cx="1.2" cy="10.8" rx="0.5" ry="0.3" fill="${BLACK}" opacity="0.4"/>`);
+  // Eye — larger, more expressive
+  parts.push(`<circle cx="5.5" cy="8.5" r="1.4" fill="${BLACK}"/>`);
+  parts.push(`<circle cx="5.8" cy="8.2" r="0.6" fill="${EYE_HI}"/>`);
   return parts.join('');
 }
 
 function earShape(): string {
-  return `<g class="dog-ear"><path d="M8,6 Q9,3 7,4 Q5,5 7,7 Z" fill="${BLACK}"/><path d="M10,6 Q11,3 9,4 Q7,5 9,7 Z" fill="${BLACK}"/></g>`;
+  // More defined floppy ear shapes with better curves
+  return `<g class="dog-ear"><path d="M8,6 Q9.5,2 7.5,3 Q5,4.5 7,7.5 Z" fill="${BLACK}"/><path d="M10,6 Q11.5,2 9.5,3 Q7,4.5 9,7.5 Z" fill="${BLACK}"/></g>`;
 }
 
 function tailShape(): string {
-  return `<g class="dog-tail"><path d="M32,9 Q35,5 34,8 Q33,11 32,10" fill="${BLACK}" stroke="${BLACK}" stroke-width="1.5" stroke-linecap="round"/></g>`;
+  // More confident upward curve
+  return `<g class="dog-tail"><path d="M32,10 Q34,5.5 35,7 Q35.5,9 33,11" fill="none" stroke="${BLACK}" stroke-width="2" stroke-linecap="round"/></g>`;
 }
 
 function tongueShape(): string {
-  return `<g class="dog-tongue" style="opacity: 0"><ellipse cx="2" cy="14" rx="1.2" ry="1.8" fill="${TONGUE}"/></g>`;
+  return `<g class="dog-tongue" style="opacity: 0"><path d="M1.5,13 Q1.5,15.5 2.5,15.5 Q3.5,15.5 3.5,13" fill="${TONGUE}"/></g>`;
 }
 
 function frontLegShape(): string {
   const parts: string[] = [];
-  // Two front legs
-  parts.push(`<rect x="9" y="15" width="2.5" height="6" rx="1.2" fill="${BLACK}"/>`);
-  parts.push(`<rect x="13" y="15" width="2.5" height="6" rx="1.2" fill="${BLACK}"/>`);
-  // Paws
-  parts.push(`<ellipse cx="10.2" cy="21" rx="1.5" ry="0.8" fill="${BLACK_HI}"/>`);
-  parts.push(`<ellipse cx="14.2" cy="21" rx="1.5" ry="0.8" fill="${BLACK_HI}"/>`);
+  // Two front legs — tapered with cleaner paw shapes
+  parts.push(`<path d="M10,15 L10,20 Q10,21 10.5,21 L12,21 Q12.5,21 12.5,20 L12.5,15 Z" fill="${BLACK}"/>`);
+  parts.push(`<path d="M14,15 L14,20 Q14,21 14.5,21 L16,21 Q16.5,21 16.5,20 L16.5,15 Z" fill="${BLACK}"/>`);
+  // Paws — slightly wider, rounded
+  parts.push(`<ellipse cx="11.2" cy="21.2" rx="1.8" ry="0.8" fill="${BLACK_HI}"/>`);
+  parts.push(`<ellipse cx="15.2" cy="21.2" rx="1.8" ry="0.8" fill="${BLACK_HI}"/>`);
   return parts.join('');
 }
 
 function backLegShape(): string {
   const parts: string[] = [];
-  // Two back legs
-  parts.push(`<rect x="25" y="15" width="2.5" height="6" rx="1.2" fill="${BLACK}"/>`);
-  parts.push(`<rect x="29" y="15" width="2.5" height="6" rx="1.2" fill="${BLACK}"/>`);
+  // Two back legs — tapered
+  parts.push(`<path d="M25,15 L25,20 Q25,21 25.5,21 L27,21 Q27.5,21 27.5,20 L27.5,15 Z" fill="${BLACK}"/>`);
+  parts.push(`<path d="M29,15 L29,20 Q29,21 29.5,21 L31,21 Q31.5,21 31.5,20 L31.5,15 Z" fill="${BLACK}"/>`);
   // Paws
-  parts.push(`<ellipse cx="26.2" cy="21" rx="1.5" ry="0.8" fill="${BLACK_HI}"/>`);
-  parts.push(`<ellipse cx="30.2" cy="21" rx="1.5" ry="0.8" fill="${BLACK_HI}"/>`);
+  parts.push(`<ellipse cx="26.2" cy="21.2" rx="1.8" ry="0.8" fill="${BLACK_HI}"/>`);
+  parts.push(`<ellipse cx="30.2" cy="21.2" rx="1.8" ry="0.8" fill="${BLACK_HI}"/>`);
   return parts.join('');
 }
 
-// === SLEEPING POSE (curled up) ===
+// === SLEEPING POSE (curled up) — tighter, more natural ===
 
 function sleepingShape(): string {
   const parts: string[] = [];
-  // Curled body — circular shape
-  parts.push(`<ellipse cx="20" cy="14" rx="8" ry="6" fill="${BLACK}"/>`);
+  // Curled body — tighter oval for natural curl
+  parts.push(`<path d="M14,9 Q28,6 28,14 Q28,20 20,20 Q12,20 12,14 Q12,9 14,9 Z" fill="${BLACK}"/>`);
   // Belly visible inside curl
-  parts.push(`<ellipse cx="19" cy="15" rx="5" ry="3.5" fill="${TAN_DARK}"/>`);
-  parts.push(`<ellipse cx="19" cy="15.5" rx="3.5" ry="2.5" fill="${TAN}"/>`);
-  // Head tucked in
-  parts.push(`<circle cx="14" cy="12" r="3.5" fill="${BLACK}"/>`);
+  parts.push(`<ellipse cx="20" cy="15.5" rx="5" ry="3.5" fill="${TAN_DARK}"/>`);
+  parts.push(`<ellipse cx="20" cy="16" rx="3.5" ry="2.5" fill="${TAN}"/>`);
+  // Head tucked in close — nose toward belly
+  parts.push(`<ellipse cx="14" cy="12" rx="3.8" ry="3.3" fill="${BLACK}"/>`);
   // Snout tucked
-  parts.push(`<ellipse cx="12" cy="13" rx="2" ry="1.2" fill="${TAN}"/>`);
-  parts.push(`<ellipse cx="11" cy="12.5" rx="0.8" ry="0.5" fill="${NOSE}"/>`);
-  // Closed eye
-  parts.push(`<path d="M14,11 Q15,12 16,11" fill="none" stroke="${BLACK_HI}" stroke-width="0.6" stroke-linecap="round"/>`);
-  // Tail curled around
-  parts.push(`<path d="M27,10 Q30,8 28,12 Q26,15 27,11" fill="${BLACK}" stroke="${BLACK}" stroke-width="1" stroke-linecap="round"/>`);
+  parts.push(`<path d="M11,12.5 Q10,13.5 11.5,14 L13,13.5 Q13.5,13 13,12.5 Z" fill="${TAN}"/>`);
+  parts.push(`<ellipse cx="10.8" cy="12.5" rx="0.9" ry="0.6" fill="${NOSE}"/>`);
+  // Closed eye — gentle arc
+  parts.push(`<path d="M14,11 Q15.5,12.2 17,11" fill="none" stroke="${BLACK_HI}" stroke-width="0.7" stroke-linecap="round"/>`);
+  // Tail curled around body
+  parts.push(`<path d="M26,10 Q29,8 28,11 Q27,14 26,12" fill="none" stroke="${BLACK}" stroke-width="1.5" stroke-linecap="round"/>`);
   return parts.join('');
 }
 
-// === COOKING POSE (sitting, looking up) ===
+// === COOKING POSE (sitting, looking up) — better posture ===
 
 function sittingShape(): string {
   const parts: string[] = [];
-  // Body angled up
-  parts.push(`<ellipse cx="18" cy="15" rx="5" ry="6" fill="${BLACK}" transform="rotate(-15, 18, 15)"/>`);
+  // Body angled up — more natural sit
+  parts.push(`<ellipse cx="18" cy="15" rx="5.5" ry="6.5" fill="${BLACK}" transform="rotate(-12, 18, 15)"/>`);
   // Belly
-  parts.push(`<ellipse cx="19" cy="16" rx="3.5" ry="4" fill="${TAN_DARK}" transform="rotate(-15, 19, 16)"/>`);
-  parts.push(`<ellipse cx="19.5" cy="16.5" rx="2.5" ry="3" fill="${TAN}" transform="rotate(-15, 19.5, 16.5)"/>`);
-  // Head looking up
-  parts.push(`<circle cx="13" cy="8" r="3.5" fill="${BLACK}"/>`);
-  // Snout up
-  parts.push(`<ellipse cx="11" cy="7" rx="2.5" ry="1.5" fill="${BLACK}"/>`);
-  parts.push(`<ellipse cx="11.5" cy="7.5" rx="1.5" ry="0.8" fill="${TAN}"/>`);
+  parts.push(`<ellipse cx="19" cy="16" rx="4" ry="4.5" fill="${TAN_DARK}" transform="rotate(-12, 19, 16)"/>`);
+  parts.push(`<ellipse cx="19.5" cy="16.5" rx="3" ry="3.5" fill="${TAN}" transform="rotate(-12, 19.5, 16.5)"/>`);
+  // Head looking up — bigger, more expressive
+  parts.push(`<ellipse cx="13" cy="7.5" rx="4" ry="3.5" fill="${BLACK}"/>`);
+  // Snout pointing up
+  parts.push(`<path d="M10.5,6 Q8.5,5.5 9,7 L11,8 Q11.5,7 11,6 Z" fill="${BLACK}"/>`);
+  parts.push(`<path d="M10,6.8 Q9.5,7 10,7.5 L11,7.3 Q11.2,7 10.8,6.8 Z" fill="${TAN}"/>`);
   // Nose
-  parts.push(`<ellipse cx="9.5" cy="6.8" rx="0.8" ry="0.5" fill="${NOSE}"/>`);
-  // Eye looking up
-  parts.push(`<circle cx="12.5" cy="6.5" r="1" fill="${BLACK}"/>`);
-  parts.push(`<circle cx="12.8" cy="6.2" r="0.4" fill="${EYE_HI}"/>`);
-  // Ears flopping
-  parts.push(`<path d="M14,5 Q15,2 13,3 Q11,4 13,6 Z" fill="${BLACK}"/>`);
-  // Seated legs
-  parts.push(`<rect x="15" y="19" width="2.5" height="3" rx="1" fill="${BLACK}"/>`);
-  parts.push(`<rect x="19" y="19" width="2.5" height="3" rx="1" fill="${BLACK}"/>`);
+  parts.push(`<ellipse cx="9.3" cy="6.5" rx="0.9" ry="0.6" fill="${NOSE}"/>`);
+  // Eye — big and eager
+  parts.push(`<circle cx="12.5" cy="6" r="1.2" fill="${BLACK}"/>`);
+  parts.push(`<circle cx="12.8" cy="5.7" r="0.5" fill="${EYE_HI}"/>`);
+  // Ears flopping — more character
+  parts.push(`<path d="M14,4.5 Q15.5,1.5 13.5,2.5 Q11.5,3.5 13,6 Z" fill="${BLACK}"/>`);
+  // Seated legs — tucked under
+  parts.push(`<path d="M15,19 L15,21.5 Q15,22.2 15.5,22.2 L17.5,22.2 Q18,22.2 18,21.5 L18,19 Z" fill="${BLACK}"/>`);
+  parts.push(`<path d="M19,19 L19,21.5 Q19,22.2 19.5,22.2 L21.5,22.2 Q22,22.2 22,21.5 L22,19 Z" fill="${BLACK}"/>`);
   // Paws
-  parts.push(`<ellipse cx="16.2" cy="22" rx="1.5" ry="0.7" fill="${BLACK_HI}"/>`);
-  parts.push(`<ellipse cx="20.2" cy="22" rx="1.5" ry="0.7" fill="${BLACK_HI}"/>`);
-  // Tongue (visible in cooking)
-  parts.push(`<ellipse cx="10" cy="9" rx="0.8" ry="1.2" fill="${TONGUE}"/>`);
+  parts.push(`<ellipse cx="16.5" cy="22.3" rx="1.6" ry="0.7" fill="${BLACK_HI}"/>`);
+  parts.push(`<ellipse cx="20.5" cy="22.3" rx="1.6" ry="0.7" fill="${BLACK_HI}"/>`);
+  // Tongue (visible in cooking — excited panting)
+  parts.push(`<path d="M9.5,8.5 Q9.5,10 10.5,10 Q11.5,10 11.5,8.5" fill="${TONGUE}"/>`);
   return parts.join('');
 }
 
 function groundShadow(): string {
-  return `<ellipse class="dog-shadow" cx="20" cy="22.5" rx="10" ry="1.5" fill="#000" opacity="0.12"/>`;
+  return `<ellipse class="dog-shadow" cx="20" cy="22.5" rx="11" ry="1.5" fill="#000" opacity="0.1"/>`;
 }
 
 // === MAIN EXPORT ===
@@ -149,7 +152,7 @@ export function getDogSvg(activity: string): string {
     parts.push(`<g class="dog-body">${sleepingShape()}</g>`);
   } else if (act === 'cooking') {
     parts.push(`<g class="dog-body">${sittingShape()}</g>`);
-    parts.push(`<g class="dog-tail"><path d="M22,10 Q24,7 23,11" fill="${BLACK}" stroke="${BLACK}" stroke-width="1" stroke-linecap="round"/></g>`);
+    parts.push(`<g class="dog-tail"><path d="M22,10 Q24.5,6.5 24,9 Q23.5,11 22,11" fill="none" stroke="${BLACK}" stroke-width="1.5" stroke-linecap="round"/></g>`);
   } else {
     // idle, walking, studying — standing pose
     parts.push(`<g class="dog-body">${bodyShape()}</g>`);
