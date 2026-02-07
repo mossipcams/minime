@@ -92,6 +92,25 @@ describe('Totem Avatar', () => {
     }
   });
 
+  it('uses at least 3 distinct skin fill colors for face depth', () => {
+    const svg = getTotemSvg('idle');
+    // Extract fill colors from rects inside totem-head group
+    const headMatch = svg.match(/class="totem-head">(.*?)<\/g>/);
+    expect(headMatch).not.toBeNull();
+    const headSvg = headMatch![1];
+    const fills = [...headSvg.matchAll(/fill="(#[0-9A-Fa-f]{6})"/g)].map(m => m[1].toUpperCase());
+    // Filter to warm skin-range colors (peach/tan hues, not grays/whites/browns)
+    // Skin colors have high R, medium-high G, lower B
+    const skinTones = new Set(fills.filter(f => {
+      const r = parseInt(f.slice(1, 3), 16);
+      const g = parseInt(f.slice(3, 5), 16);
+      const b = parseInt(f.slice(5, 7), 16);
+      return r > 180 && g > 140 && b > 100 && r > g && g > b;
+    }));
+    // Need base skin, skin shadow, and skin highlight = 3 distinct warm tones
+    expect(skinTones.size).toBeGreaterThanOrEqual(3);
+  });
+
   it('falls back to idle for unknown activity', () => {
     const svg = getTotemSvg('unknown');
     expect(svg).toContain('totem-idle');

@@ -21,6 +21,7 @@ const P = 4;
 const COLORS: Record<string, string> = {
   'S': '#FFD5B8',   // skin
   's': '#E8B898',   // skin shadow
+  'L': '#FFE4CC',   // skin highlight
   'H': '#3D2B1F',   // hair
   'h': '#5A4030',   // hair highlight
   'E': '#2B2B2B',   // eyes/pupils
@@ -78,12 +79,12 @@ const AWAKE_HEAD = [
   '.HHhHHH.',   // row 4: hair with highlight
   'HHhHHhHH',   // row 5: hair textured
   'HHHHHHHH',   // row 6: hair bottom fringe
-  '.SSSSSS.',   // row 7: forehead
-  'SSSSSSSS',   // row 8: upper face
+  '.LSSSSL.',   // row 7: forehead highlights
+  'SLSLLSLS',   // row 8: upper face highlights
   'SWESSWES',   // row 9: eyes (white + pupil)
-  'SSSSSSSS',   // row 10: mid face
+  'SSSLSLSS',   // row 10: cheek highlights
   '.sSSSSs.',   // row 11: jaw shadow edges
-  '..SSSS..',   // row 12: chin
+  '..sSss..',   // row 12: chin shadow
 ];
 
 const SLEEP_HEAD = [
@@ -91,12 +92,12 @@ const SLEEP_HEAD = [
   '.HHhHHH.',
   'HHhHHhHH',
   'HHHHHHHH',
-  '.SSSSSS.',
-  'SSSSSSSS',
+  '.LSSSSL.',   // forehead highlights
+  'SLSLLSLS',   // upper face highlights
   'SEESSEES',   // closed eyes: 2px dashes
-  'SSSSSSSS',
+  'SSSLSLSS',   // cheek highlights
   '.sSSSSs.',
-  '..SSSS..',
+  '..sSss..',   // chin shadow
 ];
 
 function awakeHead(): string {
@@ -130,7 +131,7 @@ const LEFT_ARM_BMP = [
   'BBb',   // row 15
   'BBb',   // row 16
   'BBb',   // row 17
-  'Ss.',   // row 18: hand
+  'LS.',   // row 18: hand highlight
 ];
 
 function leftArm(): string {
@@ -144,7 +145,7 @@ const RIGHT_ARM_BMP = [
   'bBB',   // row 15
   'bBB',   // row 16
   'bBB',   // row 17
-  '.sS',   // row 18: hand
+  '.sL',   // row 18: hand highlight
 ];
 
 function rightArm(): string {
