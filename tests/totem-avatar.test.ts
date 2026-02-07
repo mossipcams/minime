@@ -151,14 +151,46 @@ describe('Totem Avatar', () => {
     expect(rightArm).toContain('<path');
   });
 
-  it('face uses minimal detail (no separate eyebrow/nose/cheek elements)', () => {
+  it('hair extends wider than the face and has chunky bangs overlaying forehead', () => {
     const svg = getTotemSvg('idle');
-    const headSection = svg.slice(svg.indexOf('totem-head'), svg.indexOf('</g>', svg.indexOf('totem-head')));
-    // Should have eyes
-    expect(headSection).toContain('fill=');
-    // Should NOT have overly detailed features that blur at small sizes
-    expect(headSection).not.toContain('eyebrow');
-    expect(headSection).not.toContain('cheek-blush');
+    // Extract the full totem-head group content (may contain nested groups)
+    const headStart = svg.indexOf('totem-head');
+    const headSection = svg.slice(headStart, headStart + 2000);
+    // Hair back silhouette should exist
+    expect(headSection).toContain('hair-back');
+    // Side hair pieces that drape past the face
+    expect(headSection).toContain('hair-sides');
+    // Bangs layered on top of forehead
+    expect(headSection).toContain('hair-bangs');
+    // Should have a highlight/shine streak
+    expect(headSection).toContain('hair-shine');
+  });
+
+  it('eyes are compound shapes with iris hint and double highlights', () => {
+    const svg = getTotemSvg('idle');
+    // Count eye-related elements: should have outer eye ellipses, iris hints, and 2 highlights per eye
+    const eyeEllipses = (svg.match(/<ellipse[^>]*ry="2\.8"/g) || []).length;
+    expect(eyeEllipses).toBeGreaterThanOrEqual(2); // two outer eye shapes
+    // Should have white highlight circles (at least 2 per eye = 4 total)
+    const highlights = (svg.match(/<circle[^>]*fill="#FFF"/g) || []).length;
+    expect(highlights).toBeGreaterThanOrEqual(4);
+  });
+
+  it('face has eyebrows and cheek blush for personality', () => {
+    const svg = getTotemSvg('idle');
+    // Eyebrows — stroke arcs above the eyes
+    const browMatches = (svg.match(/stroke="#2E2010"/g) || []).length;
+    expect(browMatches).toBeGreaterThanOrEqual(2); // two eyebrows
+    // Cheek blush — warm pink ovals
+    const blushMatches = (svg.match(/#E88880/g) || []).length;
+    expect(blushMatches).toBeGreaterThanOrEqual(2); // two cheeks
+  });
+
+  it('body uses gradient shading for depth', () => {
+    const svg = getTotemSvg('idle');
+    // Should have a linearGradient definition for the hoodie
+    expect(svg).toContain('<linearGradient');
+    expect(svg).toContain('hoodie-grad');
   });
 
   it('totemStyles uses custom cubic-bezier easing', () => {
