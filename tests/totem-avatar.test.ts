@@ -46,11 +46,11 @@ describe('Totem Avatar', () => {
     expect(svg).toContain('shape-rendering="crispEdges"');
   });
 
-  it('uses pixel art rects without rounded corners for body parts', () => {
+  it('has detailed pixel art with many rects for shading and texture', () => {
     const svg = getTotemSvg('idle');
-    // Should have plain rects (no rx) for pixel art
-    const plainRects = (svg.match(/<rect /g) || []).length;
-    expect(plainRects).toBeGreaterThanOrEqual(5);
+    // Detailed pixel art should have 40+ rects (hair texture, face shading, body detail)
+    const rectCount = (svg.match(/<rect /g) || []).length;
+    expect(rectCount).toBeGreaterThanOrEqual(40);
     // Should NOT have smooth circles for head (pixel art uses rects)
     expect(svg).not.toMatch(/<circle[^>]+r="12"/);
   });

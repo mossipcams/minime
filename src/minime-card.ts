@@ -289,8 +289,8 @@ export class MiniMeCard extends LitElement {
 
     .avatar {
       position: absolute;
-      bottom: 4px;
-      width: 96px;
+      bottom: 10px;
+      width: 56px;
       z-index: 2;
       transform: translateX(-50%);
       image-rendering: pixelated;
@@ -299,8 +299,8 @@ export class MiniMeCard extends LitElement {
 
     .dog-avatar-wrap {
       position: absolute;
-      bottom: 8px;
-      width: 64px;
+      bottom: 12px;
+      width: 38px;
       z-index: 2;
       transform: translateX(-50%);
       image-rendering: pixelated;
