@@ -92,17 +92,17 @@ const AWAKE_HEAD = [
   'HgHHHHHHHHHHHHgH',   // hair full width
   'HHHHhHHHHHHhHHHH',   // hair bottom
   'HHHHHHHHHHHHHHHH',   // fringe
-  '.HLSSSSSSSSSSLH.',   // forehead + sideburns
-  '.lSSSSSSSSSSSSl.',   // upper face round
-  '.lSHHHSSSSHHHSl.',   // eyebrows
-  '.lSWEEWSSWEEWSl.',   // eyes
-  '.lSLSSSSSSSSLSl.',   // cheeks
-  '..SSSSSNNSSSSS..',   // nose
-  '..SSSSSMMSSSSS..',   // mouth
-  '..sSSSSSSSSSSs..',   // lower face
-  '...sSSSSSSSSs...',   // jaw
-  '....sSSSSSSs....',   // lower jaw
-  '.....sSSSSs.....',   // chin
+  'sHLSSSSSSSSSSLHs',   // forehead + sideburns
+  'lSSSSSSSSSSSSSSl',   // upper face round
+  'lSSHHHSSSSHHHSSl',   // eyebrows
+  'lSSWEEWSSWEEWSSl',   // eyes
+  'lSSLSSSSSSSSLSSl',   // cheeks
+  '.sSSSSSNNSSSSSs.',   // nose
+  '.sSSSSSMMSSSSSs.',   // mouth
+  '.sSSSSSSSSSSSSs.',   // lower face
+  '..sSSSSSSSSSSs..',   // jaw
+  '...sSSSSSSSSs...',   // lower jaw
+  '....sSSSSSSs....',   // chin
 ];
 
 const SLEEP_HEAD = [
@@ -114,17 +114,17 @@ const SLEEP_HEAD = [
   'HgHHHHHHHHHHHHgH',   // hair full width
   'HHHHhHHHHHHhHHHH',   // hair bottom
   'HHHHHHHHHHHHHHHH',   // fringe
-  '.HLSSSSSSSSSSLH.',   // forehead + sideburns
-  '.lSSSSSSSSSSSSl.',   // upper face round
-  '.lSHHHSSSSHHHSl.',   // eyebrows
-  '.lSSEESSSSEESSl.',   // closed eyes
-  '.lSLSSSSSSSSLSl.',   // cheeks
-  '..SSSSSNNSSSSS..',   // nose
-  '..SSSSSMMSSSSS..',   // mouth
-  '..sSSSSSSSSSSs..',   // lower face
-  '...sSSSSSSSSs...',   // jaw
-  '....sSSSSSSs....',   // lower jaw
-  '.....sSSSSs.....',   // chin
+  'sHLSSSSSSSSSSLHs',   // forehead + sideburns
+  'lSSSSSSSSSSSSSSl',   // upper face round
+  'lSSHHHSSSSHHHSSl',   // eyebrows
+  'lSSSEESSSSEESSSl',   // closed eyes
+  'lSSLSSSSSSSSLSSl',   // cheeks
+  '.sSSSSSNNSSSSSs.',   // nose
+  '.sSSSSSMMSSSSSs.',   // mouth
+  '.sSSSSSSSSSSSSs.',   // lower face
+  '..sSSSSSSSSSSs..',   // jaw
+  '...sSSSSSSSSs...',   // lower jaw
+  '....sSSSSSSs....',   // chin
 ];
 
 function awakeHead(): string {
