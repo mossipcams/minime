@@ -20,26 +20,17 @@ const ACTIVITIES: Activity[] = [
 const W = 50;
 const H = 75;
 
-// ===== FLAT/MINIMAL COLOR PALETTE =====
+// ===== ICON-STYLE PALETTE — flat, high-contrast, minimal =====
 const SKIN = '#F5C7A8';
-const SKIN_HI = '#FDDCC6';
 const HAIR = '#3D2B1F';
-const HAIR_DARK = '#2C1E14';
-const HAIR_HI = '#5C4333';
 const EYES = '#2B2B2B';
 const BROW = '#3D2B1F';
-const BLUSH = '#F09090';
 const MOUTH = '#C27060';
-const MOUTH_SLEEP = '#B06858';
-const HOODIE = '#6C8EAD';
-const HOODIE_DARK = '#536E88';
-const HOODIE_HI = '#82A3BF';
-const PANTS = '#3A3A48';
-const PANTS_DARK = '#2C2C38';
-const SHOES = '#E8E4DC';
-const SHOES_SOLE = '#3A3A3A';
-const WHITE = '#F0EEE8';
 const EYELID = '#D4A880';
+const HOODIE = '#6C8EAD';
+const PANTS = '#3A3A48';
+const SHOES = '#E8E4DC';
+const WHITE = '#F0EEE8';
 
 // Prop palettes
 const PAN = '#787880';
@@ -56,129 +47,83 @@ const PHONE_SCREEN = '#4C7AA8';
 const PILLOW_FILL = '#E0D4BC';
 const PILLOW_SHADE = '#C8B898';
 const BLANKET = '#6A5C94';
-const BLANKET_DARK = '#584C84';
 const BLANKET_HI = '#7C6CA4';
 
-// ===== FLAT HEAD — large round, minimal features =====
+// ===== HEAD — large circle, bold features, icon-clean =====
+// Head: cx=25 cy=18 r=13 (y=5..31, x=12..38)
+// Hair extends to x=10..40, y=-1 for volume
 
 function headShape(): string {
   const p: string[] = [];
-  // Hair back — rounded silhouette
-  p.push(`<g class="hair-back">`);
-  p.push(`<ellipse cx="25" cy="13" rx="14" ry="15" fill="${HAIR}"/>`);
-  p.push(`<ellipse cx="25" cy="10" rx="12" ry="10" fill="${HAIR_DARK}" opacity="0.3"/>`);
-  p.push(`</g>`);
-  // Face — large round, inset within hair
-  p.push(`<ellipse cx="25" cy="15" rx="11" ry="11" fill="${SKIN}"/>`);
-  p.push(`<ellipse cx="23" cy="13" rx="5" ry="4" fill="${SKIN_HI}" opacity="0.2"/>`);
-  // Hair front — bangs and framing
-  p.push(`<g class="hair-front">`);
-  p.push(`<path d="M11,10 C11,2 17,-3 25,-3 C33,-3 39,2 39,10 C39,13 37,15 35,16 L33,12 C33,8 30,5 25,5 C20,5 17,8 17,12 L15,16 C13,15 11,13 11,10 Z" fill="${HAIR}"/>`);
-  p.push(`<path d="M15,16 C14,13 14,9 16,6 C17,8 17,11 17,14 Z" fill="${HAIR_HI}" opacity="0.3"/>`);
-  p.push(`<path d="M35,16 C36,13 36,9 34,6 C33,8 33,11 33,14 Z" fill="${HAIR_HI}" opacity="0.3"/>`);
-  p.push(`</g>`);
-  // Eyebrows — thin arcs
-  p.push(`<path d="M18,12 Q20.5,10.5 23,12" fill="none" stroke="${BROW}" stroke-width="0.8" stroke-linecap="round"/>`);
-  p.push(`<path d="M27,12 Q29.5,10.5 32,12" fill="none" stroke="${BROW}" stroke-width="0.8" stroke-linecap="round"/>`);
-  // Eyes — simple dots with single highlight
-  p.push(`<circle cx="20.5" cy="15" r="1.8" fill="${EYES}"/>`);
-  p.push(`<circle cx="29.5" cy="15" r="1.8" fill="${EYES}"/>`);
-  p.push(`<circle cx="20" cy="14.3" r="0.6" fill="#FFF" opacity="0.85"/>`);
-  p.push(`<circle cx="29" cy="14.3" r="0.6" fill="#FFF" opacity="0.85"/>`);
-  // Cheek blush
-  p.push(`<ellipse cx="16" cy="18" rx="2.5" ry="1.2" fill="${BLUSH}" opacity="0.15"/>`);
-  p.push(`<ellipse cx="34" cy="18" rx="2.5" ry="1.2" fill="${BLUSH}" opacity="0.15"/>`);
-  // Mouth — tiny arc
-  p.push(`<path d="M23,20.5 Q25,22 27,20.5" fill="none" stroke="${MOUTH}" stroke-width="0.8" stroke-linecap="round"/>`);
+  // Face — big round circle
+  p.push(`<circle cx="25" cy="18" r="13" fill="${SKIN}"/>`);
+  // Hair — single bold dome cap extending beyond head
+  p.push(`<g class="totem-hair"><path d="M10,19 C10,4 16,-1 25,-1 C34,-1 40,4 40,19 Q34,10 25,10 Q16,10 10,19 Z" fill="${HAIR}"/></g>`);
+  // Brows — bold arcs
+  p.push(`<path d="M16,15 Q20,13 24,15" fill="none" stroke="${BROW}" stroke-width="1.5" stroke-linecap="round"/>`);
+  p.push(`<path d="M26,15 Q30,13 34,15" fill="none" stroke="${BROW}" stroke-width="1.5" stroke-linecap="round"/>`);
+  // Eyes — large bold dots (r=3.5, dominant feature)
+  p.push(`<circle cx="20" cy="20" r="3.5" fill="${EYES}"/>`);
+  p.push(`<circle cx="30" cy="20" r="3.5" fill="${EYES}"/>`);
+  p.push(`<circle cx="19" cy="19" r="1" fill="#FFF" opacity="0.9"/>`);
+  p.push(`<circle cx="29" cy="19" r="1" fill="#FFF" opacity="0.9"/>`);
+  // Mouth — simple arc
+  p.push(`<path d="M22,26 Q25,28 28,26" fill="none" stroke="${MOUTH}" stroke-width="1.5" stroke-linecap="round"/>`);
   return p.join('');
 }
 
 function sleepingHeadShape(): string {
   const p: string[] = [];
-  // Hair back
-  p.push(`<g class="hair-back">`);
-  p.push(`<ellipse cx="25" cy="13" rx="14" ry="15" fill="${HAIR}"/>`);
-  p.push(`<ellipse cx="25" cy="10" rx="12" ry="10" fill="${HAIR_DARK}" opacity="0.3"/>`);
-  p.push(`</g>`);
-  // Face
-  p.push(`<ellipse cx="25" cy="15" rx="11" ry="11" fill="${SKIN}"/>`);
-  p.push(`<ellipse cx="23" cy="13" rx="5" ry="4" fill="${SKIN_HI}" opacity="0.2"/>`);
-  // Hair front — messy
-  p.push(`<g class="hair-front">`);
-  p.push(`<path d="M11,10 C11,2 17,-3 25,-3 C33,-3 39,2 39,10 C39,13 37,15 35,16 L33,12 C33,8 30,5 25,5 C20,5 17,8 17,12 L15,16 C13,15 11,13 11,10 Z" fill="${HAIR}"/>`);
-  p.push(`<path d="M15,16 C14,13 14,9 16,6 C17,8 17,11 17,14 Z" fill="${HAIR_HI}" opacity="0.3"/>`);
-  p.push(`</g>`);
-  // Closed eyes — curved arcs
-  p.push(`<path d="M18,15 Q20.5,17 23,15" fill="none" stroke="${EYELID}" stroke-width="1.2" stroke-linecap="round"/>`);
-  p.push(`<path d="M27,15 Q29.5,17 32,15" fill="none" stroke="${EYELID}" stroke-width="1.2" stroke-linecap="round"/>`);
-  // Cheek blush (more visible when sleeping)
-  p.push(`<ellipse cx="16" cy="18" rx="2.5" ry="1.2" fill="${BLUSH}" opacity="0.2"/>`);
-  p.push(`<ellipse cx="34" cy="18" rx="2.5" ry="1.2" fill="${BLUSH}" opacity="0.2"/>`);
+  p.push(`<circle cx="25" cy="18" r="13" fill="${SKIN}"/>`);
+  p.push(`<g class="totem-hair"><path d="M10,19 C10,4 16,-1 25,-1 C34,-1 40,4 40,19 Q34,10 25,10 Q16,10 10,19 Z" fill="${HAIR}"/></g>`);
+  // Closed eyes — bold curved arcs
+  p.push(`<path d="M17,20 Q20,23 23,20" fill="none" stroke="${EYELID}" stroke-width="1.5" stroke-linecap="round"/>`);
+  p.push(`<path d="M27,20 Q30,23 33,20" fill="none" stroke="${EYELID}" stroke-width="1.5" stroke-linecap="round"/>`);
   // Peaceful mouth
-  p.push(`<path d="M23.5,20.5 Q25,21.5 26.5,20.5" fill="none" stroke="${MOUTH_SLEEP}" stroke-width="0.7" stroke-linecap="round"/>`);
+  p.push(`<path d="M23,26 Q25,27.5 27,26" fill="none" stroke="${MOUTH}" stroke-width="1.2" stroke-linecap="round"/>`);
   return p.join('');
 }
 
 function blinkOverlay(): string {
+  // Skin-colored circles that cover eyes during blink
   return `<g class="totem-blink">
-    <ellipse cx="20.5" cy="15" rx="2.5" ry="2.8" fill="${SKIN}"/>
-    <ellipse cx="29.5" cy="15" rx="2.5" ry="2.8" fill="${SKIN}"/>
+    <circle cx="20" cy="20" r="4.5" fill="${SKIN}"/>
+    <circle cx="30" cy="20" r="4.5" fill="${SKIN}"/>
   </g>`;
 }
 
-function svgDefs(): string {
-  return `<defs>
-    <linearGradient id="hoodie-grad" x1="0.2" y1="0" x2="0.8" y2="1">
-      <stop offset="0%" stop-color="${HOODIE_HI}"/>
-      <stop offset="100%" stop-color="${HOODIE_DARK}"/>
-    </linearGradient>
-    <linearGradient id="pants-grad" x1="0.3" y1="0" x2="0.7" y2="1">
-      <stop offset="0%" stop-color="${PANTS}"/>
-      <stop offset="100%" stop-color="${PANTS_DARK}"/>
-    </linearGradient>
-  </defs>`;
-}
-
-// ===== BODY — clean rounded torso =====
+// ===== BODY — flat filled, narrower than head =====
+// Body: x=18..32 (14 wide) vs head 26 wide — clear chibi proportions
 
 function bodyShape(): string {
   const p: string[] = [];
-  // Torso — single rounded path, overlaps under head
-  p.push(`<path d="M15,22 C15,19 19,18 25,18 C31,18 35,19 35,22 L35,46 C35,48 32,48 25,48 C18,48 15,48 15,46 Z" fill="url(#hoodie-grad)"/>`);
-  // Collar
-  p.push(`<path d="M19,21 Q25,24 31,21" fill="${HOODIE_HI}" stroke="none"/>`);
-  // Side shading
-  p.push(`<path d="M15,22 L15,46 C15,46 17,46 19,46 L19,18 C17,18 15,19 15,22 Z" fill="${HOODIE_DARK}" opacity="0.3"/>`);
-  p.push(`<path d="M35,22 L35,46 C35,46 33,46 31,46 L31,18 C33,18 35,19 35,22 Z" fill="${HOODIE_DARK}" opacity="0.3"/>`);
-  // Pants transition
-  p.push(`<rect x="16" y="44" width="18" height="6" rx="2" fill="url(#pants-grad)"/>`);
+  // Torso — single path, flat fill, overlaps under head
+  p.push(`<path d="M18,28 C18,25 21,24 25,24 C29,24 32,25 32,28 L32,48 C32,49 29,49 25,49 C21,49 18,49 18,48 Z" fill="${HOODIE}"/>`);
+  // Pants — flat rect
+  p.push(`<rect x="19" y="46" width="12" height="6" rx="2" fill="${PANTS}"/>`);
   return p.join('');
 }
 
-// ===== ARMS — simple paths from shoulders =====
+// ===== ARMS — simple flat paths =====
 
 function leftArmShape(): string {
   const p: string[] = [];
-  p.push(`<path d="M17,22 C13,23 10,26 10,30 L10,39 C10,41 11,42 13,42 C15,42 16,41 16,39 L16,30 C16,27 17,25 17,22 Z" fill="${HOODIE}"/>`);
-  p.push(`<path d="M17,22 C13,23 10,26 10,30 L10,33 C11,31 13,29 16,28 L16,22 Z" fill="${HOODIE_DARK}" opacity="0.25"/>`);
-  p.push(`<ellipse cx="13" cy="43" rx="2.8" ry="2" fill="${SKIN}"/>`);
+  p.push(`<path d="M18,29 C14,30 11,33 11,37 L11,41 C11,42 12,43 14,43 C15,43 16,42 16,41 L16,37 C16,34 17,32 18,29 Z" fill="${HOODIE}"/>`);
+  p.push(`<circle cx="13" cy="44" r="2.5" fill="${SKIN}"/>`);
   return p.join('');
 }
 
 function rightArmShape(): string {
   const p: string[] = [];
-  p.push(`<path d="M33,22 C37,23 40,26 40,30 L40,39 C40,41 39,42 37,42 C35,42 34,41 34,39 L34,30 C34,27 33,25 33,22 Z" fill="${HOODIE}"/>`);
-  p.push(`<path d="M33,22 C37,23 40,26 40,30 L40,33 C39,31 37,29 34,28 L34,22 Z" fill="${HOODIE_DARK}" opacity="0.25"/>`);
-  p.push(`<ellipse cx="37" cy="43" rx="2.8" ry="2" fill="${SKIN}"/>`);
+  p.push(`<path d="M32,29 C36,30 39,33 39,37 L39,41 C39,42 38,43 36,43 C35,43 34,42 34,41 L34,37 C34,34 33,32 32,29 Z" fill="${HOODIE}"/>`);
+  p.push(`<circle cx="37" cy="44" r="2.5" fill="${SKIN}"/>`);
   return p.join('');
 }
 
 function rightArmWithPanShape(): string {
   const p: string[] = [];
-  p.push(`<path d="M33,22 C37,23 40,26 40,30 L40,39 C40,41 39,42 37,42 C35,42 34,41 34,39 L34,30 C34,27 33,25 33,22 Z" fill="${HOODIE}"/>`);
-  p.push(`<path d="M33,22 C37,23 40,26 40,30 L40,33 C39,31 37,29 34,28 L34,22 Z" fill="${HOODIE_DARK}" opacity="0.25"/>`);
-  p.push(`<ellipse cx="37" cy="43" rx="2.8" ry="2" fill="${SKIN}"/>`);
-  // Frying pan
+  p.push(`<path d="M32,29 C36,30 39,33 39,37 L39,41 C39,42 38,43 36,43 C35,43 34,42 34,41 L34,37 C34,34 33,32 32,29 Z" fill="${HOODIE}"/>`);
+  p.push(`<circle cx="37" cy="44" r="2.5" fill="${SKIN}"/>`);
   p.push(`<ellipse cx="43" cy="39" rx="5" ry="4" fill="${PAN}"/>`);
   p.push(`<ellipse cx="43" cy="39" rx="4" ry="3" fill="${PAN_DARK}"/>`);
   p.push(`<ellipse cx="43" cy="38" rx="2.5" ry="2" fill="${FOOD_EGG}"/>`);
@@ -189,37 +134,30 @@ function rightArmWithPanShape(): string {
 
 function leftArmWithSpatulaShape(): string {
   const p: string[] = [];
-  p.push(`<path d="M17,22 C13,23 10,26 10,30 L10,39 C10,41 11,42 13,42 C15,42 16,41 16,39 L16,30 C16,27 17,25 17,22 Z" fill="${HOODIE}"/>`);
-  p.push(`<path d="M17,22 C13,23 10,26 10,30 L10,33 C11,31 13,29 16,28 L16,22 Z" fill="${HOODIE_DARK}" opacity="0.25"/>`);
-  p.push(`<ellipse cx="13" cy="43" rx="2.8" ry="2" fill="${SKIN}"/>`);
-  // Spatula
+  p.push(`<path d="M18,29 C14,30 11,33 11,37 L11,41 C11,42 12,43 14,43 C15,43 16,42 16,41 L16,37 C16,34 17,32 18,29 Z" fill="${HOODIE}"/>`);
+  p.push(`<circle cx="13" cy="44" r="2.5" fill="${SKIN}"/>`);
   p.push(`<rect x="7" y="33" width="2" height="8" rx="1" fill="${PAN_HANDLE}"/>`);
   p.push(`<rect x="5" y="29" width="6" height="5" rx="2" fill="${PAN}"/>`);
   return p.join('');
 }
 
-// ===== LEGS — simple rounded rects =====
+// ===== LEGS — simple rects + ellipse shoes =====
 
 function leftLegShape(): string {
   const p: string[] = [];
-  p.push(`<rect x="17" y="47" width="7" height="15" rx="3" fill="${PANTS}"/>`);
-  p.push(`<rect x="17" y="47" width="2.5" height="15" rx="1" fill="${PANTS_DARK}" opacity="0.25"/>`);
-  // Shoe
-  p.push(`<path d="M16,62 L24,62 C26,62 26,66 23,66 L17,66 C15,66 15,62 16,62 Z" fill="${SHOES}"/>`);
-  p.push(`<rect x="15" y="64.5" width="11" height="1.5" rx="0.5" fill="${SHOES_SOLE}"/>`);
+  p.push(`<rect x="19" y="50" width="6" height="13" rx="3" fill="${PANTS}"/>`);
+  p.push(`<ellipse cx="22" cy="64" rx="4.5" ry="2.5" fill="${SHOES}"/>`);
   return p.join('');
 }
 
 function rightLegShape(): string {
   const p: string[] = [];
-  p.push(`<rect x="26" y="47" width="7" height="15" rx="3" fill="${PANTS}"/>`);
-  p.push(`<rect x="30.5" y="47" width="2.5" height="15" rx="1" fill="${PANTS_DARK}" opacity="0.25"/>`);
-  p.push(`<path d="M25,62 L33,62 C35,62 35,66 33,66 L27,66 C25,66 25,62 25,62 Z" fill="${SHOES}"/>`);
-  p.push(`<rect x="25" y="64.5" width="11" height="1.5" rx="0.5" fill="${SHOES_SOLE}"/>`);
+  p.push(`<rect x="25" y="50" width="6" height="13" rx="3" fill="${PANTS}"/>`);
+  p.push(`<ellipse cx="28" cy="64" rx="4.5" ry="2.5" fill="${SHOES}"/>`);
   return p.join('');
 }
 
-// ===== PROPS (unchanged logic, same objects) =====
+// ===== PROPS =====
 
 function phoneProp(): string {
   const p: string[] = [];
@@ -233,8 +171,6 @@ function laptopProp(): string {
   const p: string[] = [];
   p.push(`<rect x="14" y="33" width="22" height="8" rx="1.5" fill="${LAPTOP_FRAME}"/>`);
   p.push(`<rect x="15.5" y="34" width="19" height="6" rx="1" fill="${LAPTOP_SCREEN}"/>`);
-  p.push(`<rect x="17" y="35.5" width="8" height="0.8" rx="0.4" fill="${LAPTOP_GLOW}" opacity="0.6"/>`);
-  p.push(`<rect x="17" y="37.5" width="12" height="0.8" rx="0.4" fill="${LAPTOP_GLOW}" opacity="0.4"/>`);
   p.push(`<rect x="14" y="41" width="22" height="3" rx="1" fill="${LAPTOP_FRAME}"/>`);
   p.push(`<rect x="16" y="41.5" width="18" height="2" rx="0.5" fill="${LAPTOP_KEY}"/>`);
   p.push(`<rect x="15.5" y="34" width="19" height="6" rx="1" fill="${LAPTOP_GLOW}" opacity="0.12"><animate attributeName="opacity" values="0.08;0.18;0.1;0.15;0.08" dur="3s" repeatCount="indefinite"/></rect>`);
@@ -252,10 +188,7 @@ function pillowProp(): string {
 function blanketProp(): string {
   const p: string[] = [];
   p.push(`<rect x="12" y="32" width="26" height="28" rx="3" fill="${BLANKET}"/>`);
-  for (let y = 35; y < 58; y += 4) {
-    p.push(`<rect x="14" y="${y}" width="22" height="1.5" rx="0.5" fill="${(y % 8 === 3) ? BLANKET_HI : BLANKET_DARK}" opacity="0.4"/>`);
-  }
-  p.push(`<rect x="13" y="32" width="24" height="3" rx="1.5" fill="${BLANKET_HI}"/>`);
+  p.push(`<rect x="13" y="32" width="24" height="4" rx="2" fill="${BLANKET_HI}"/>`);
   return p.join('');
 }
 
@@ -277,7 +210,6 @@ function bookProp(): string {
   const p: string[] = [];
   p.push(`<rect x="7" y="34" width="8" height="10" rx="1" fill="#5A3020"/>`);
   p.push(`<rect x="8" y="35" width="6" height="8" rx="0.5" fill="#E8D8C0"/>`);
-  p.push(`<line x1="11" y1="35" x2="11" y2="43" stroke="#5A3020" stroke-width="0.5"/>`);
   return `<g class="totem-prop">${p.join('')}</g>`;
 }
 
@@ -285,7 +217,6 @@ function mugProp(): string {
   const p: string[] = [];
   p.push(`<rect x="39" y="35" width="5" height="6" rx="1" fill="#A05830"/>`);
   p.push(`<path d="M44,36.5 Q47,37.5 44,39.5" fill="none" stroke="#8A4820" stroke-width="1.2"/>`);
-  p.push(`<path d="M40,34 Q39,30 41,27" fill="none" stroke="#FFF" stroke-width="0.8" stroke-linecap="round" opacity="0"><animate attributeName="opacity" values="0;0.2;0.12;0.06;0" dur="2.5s" repeatCount="indefinite"/></path>`);
   return `<g class="totem-prop">${p.join('')}</g>`;
 }
 
@@ -299,23 +230,18 @@ function markerProp(): string {
 function plateProp(): string {
   const p: string[] = [];
   p.push(`<ellipse cx="12" cy="43" rx="6" ry="2" fill="${PAN}"/>`);
-  p.push(`<ellipse cx="11" cy="42" rx="2" ry="1" fill="#C8A040"/>`);
-  p.push(`<ellipse cx="14" cy="42" rx="1.5" ry="0.8" fill="#80B060"/>`);
+  p.push(`<ellipse cx="12" cy="42" rx="3" ry="1.2" fill="#C8A040"/>`);
   return `<g class="totem-prop">${p.join('')}</g>`;
 }
 
 function spongeProp(): string {
-  const p: string[] = [];
-  p.push(`<rect x="6" y="38" width="5" height="4" rx="1.5" fill="#E8D040"/>`);
-  p.push(`<rect x="7" y="39" width="3" height="2" rx="0.8" fill="#D8C030"/>`);
-  return `<g class="totem-prop">${p.join('')}</g>`;
+  return `<g class="totem-prop"><rect x="6" y="38" width="5" height="4" rx="1.5" fill="#E8D040"/></g>`;
 }
 
 function bowlProp(): string {
   const p: string[] = [];
   p.push(`<path d="M13,36 Q13,42 19,42 Q25,42 25,36" fill="${PAN}"/>`);
   p.push(`<ellipse cx="19" cy="36" rx="6" ry="1.5" fill="${PAN_DARK}"/>`);
-  p.push(`<ellipse cx="19" cy="35.5" rx="4.5" ry="1" fill="#E8D8C0"/>`);
   return `<g class="totem-prop">${p.join('')}</g>`;
 }
 
@@ -350,7 +276,7 @@ function nappingZzz(): string {
 }
 
 function groundShadow(): string {
-  return `<ellipse class="totem-shadow" cx="25" cy="69" rx="11" ry="2" fill="#000" opacity="0.15"/>`;
+  return `<ellipse class="totem-shadow" cx="25" cy="68" rx="10" ry="2" fill="#000" opacity="0.15"/>`;
 }
 
 function codeFloat(): string {
@@ -393,7 +319,7 @@ function standardPose(head: string, leftArm: string, rightArm: string): string {
 export function getTotemSvg(activity: string): string {
   const act = (ACTIVITIES.includes(activity as Activity) ? activity : 'idle') as Activity;
 
-  const parts: string[] = [svgDefs(), groundShadow(), `<g class="totem-character">`];
+  const parts: string[] = [groundShadow(), `<g class="totem-character">`];
   const awakeHead = `${headShape()}${blinkOverlay()}`;
   const sleepHead = sleepingHeadShape();
   const lArm = `<g class="totem-left-arm">${leftArmShape()}</g>`;
@@ -529,7 +455,7 @@ export const totemStyles = `
 
   /* ===== GROUND SHADOW ===== */
   .totem-shadow {
-    transform-origin: 25px 69px;
+    transform-origin: 25px 68px;
   }
 
   /* ===== IDLE ===== */
@@ -538,7 +464,7 @@ export const totemStyles = `
   }
   .totem-idle .totem-head {
     animation: totem-idle-head 6s ease-in-out infinite;
-    transform-origin: 25px 22px;
+    transform-origin: 25px 30px;
   }
   .totem-idle .totem-body {
     animation: totem-breathe 3s ease-in-out infinite, totem-weight-shift 4s ease-in-out infinite;
@@ -547,11 +473,11 @@ export const totemStyles = `
   }
   .totem-idle .totem-left-arm {
     animation: totem-idle-arm-l 3.2s ease-in-out infinite;
-    transform-origin: 16px 22px;
+    transform-origin: 18px 29px;
   }
   .totem-idle .totem-right-arm {
     animation: totem-idle-arm-r 2.8s ease-in-out infinite;
-    transform-origin: 34px 22px;
+    transform-origin: 32px 29px;
   }
   .totem-idle .totem-shadow {
     animation: totem-shadow-idle 2.8s ease-in-out infinite;
@@ -598,23 +524,23 @@ export const totemStyles = `
   }
   .totem-walking .totem-head {
     animation: totem-walk-lean 0.4s ease-in-out infinite;
-    transform-origin: 25px 22px;
+    transform-origin: 25px 30px;
   }
   .totem-walking .totem-left-arm {
     animation: totem-arm-swing-l 0.4s ease-in-out infinite alternate;
-    transform-origin: 16px 22px;
+    transform-origin: 18px 29px;
   }
   .totem-walking .totem-right-arm {
     animation: totem-arm-swing-r 0.4s ease-in-out infinite alternate;
-    transform-origin: 34px 22px;
+    transform-origin: 32px 29px;
   }
   .totem-walking .totem-left-leg {
     animation: totem-stride-l 0.4s ease-in-out infinite alternate;
-    transform-origin: 20px 50px;
+    transform-origin: 22px 50px;
   }
   .totem-walking .totem-right-leg {
     animation: totem-stride-r 0.4s ease-in-out infinite alternate;
-    transform-origin: 30px 50px;
+    transform-origin: 28px 50px;
   }
   .totem-walking .totem-shadow {
     animation: totem-shadow-walk 0.4s ease-in-out infinite;
@@ -661,18 +587,18 @@ export const totemStyles = `
   /* ===== STUDYING ===== */
   .totem-studying .totem-left-leg {
     transform: rotate(80deg);
-    transform-origin: 20px 50px;
+    transform-origin: 22px 50px;
   }
   .totem-studying .totem-right-leg {
     transform: rotate(80deg);
-    transform-origin: 30px 50px;
+    transform-origin: 28px 50px;
   }
   .totem-studying .totem-character {
     animation: totem-study-settle 3s ease-in-out infinite;
   }
   .totem-studying .totem-head {
     animation: totem-study-head 2.5s ease-in-out infinite, totem-study-nod 3s ease-in-out infinite;
-    transform-origin: 25px 22px;
+    transform-origin: 25px 30px;
   }
   .totem-studying .totem-body {
     animation: totem-study-lean 4s ease-in-out infinite, totem-study-rock 5s ease-in-out infinite;
@@ -681,11 +607,11 @@ export const totemStyles = `
   }
   .totem-studying .totem-left-arm {
     animation: totem-type-l 2s ease-in-out infinite;
-    transform-origin: 16px 22px;
+    transform-origin: 18px 29px;
   }
   .totem-studying .totem-right-arm {
     animation: totem-type-r 2s ease-in-out infinite;
-    transform-origin: 34px 22px;
+    transform-origin: 32px 29px;
     animation-delay: 0.08s;
   }
   .totem-studying .totem-shadow {
@@ -744,7 +670,7 @@ export const totemStyles = `
   }
   .totem-cooking .totem-head {
     animation: totem-cook-head 2s ease-in-out infinite;
-    transform-origin: 25px 22px;
+    transform-origin: 25px 30px;
   }
   .totem-cooking .totem-body {
     animation: totem-breathe 3s ease-in-out infinite;
@@ -752,11 +678,11 @@ export const totemStyles = `
   }
   .totem-cooking .totem-right-arm {
     animation: totem-stir 0.9s cubic-bezier(0.45, 0, 0.55, 1) infinite;
-    transform-origin: 34px 22px;
+    transform-origin: 32px 29px;
   }
   .totem-cooking .totem-left-arm {
     animation: totem-spatula-flip 2.5s ease-in-out infinite;
-    transform-origin: 16px 22px;
+    transform-origin: 18px 29px;
   }
   .totem-cooking .totem-shadow {
     animation: totem-shadow-idle 2s ease-in-out infinite;
@@ -853,18 +779,18 @@ export const totemStyles = `
   /* ===== WATCHING ===== */
   .totem-watching .totem-left-leg {
     transform: rotate(80deg);
-    transform-origin: 20px 50px;
+    transform-origin: 22px 50px;
   }
   .totem-watching .totem-right-leg {
     transform: rotate(80deg);
-    transform-origin: 30px 50px;
+    transform-origin: 28px 50px;
   }
   .totem-watching .totem-character {
     animation: totem-watch-settle 4s ease-in-out infinite;
   }
   .totem-watching .totem-head {
     animation: totem-watch-head 5s ease-in-out infinite;
-    transform-origin: 25px 22px;
+    transform-origin: 25px 30px;
   }
   .totem-watching .totem-body {
     animation: totem-breathe 3.5s ease-in-out infinite, totem-watch-lean 6s ease-in-out infinite;
@@ -873,11 +799,11 @@ export const totemStyles = `
   }
   .totem-watching .totem-left-arm {
     animation: totem-watch-arm-l 5s ease-in-out infinite;
-    transform-origin: 16px 22px;
+    transform-origin: 18px 29px;
   }
   .totem-watching .totem-right-arm {
     animation: totem-watch-arm-r 7s ease-in-out infinite;
-    transform-origin: 34px 22px;
+    transform-origin: 32px 29px;
   }
   .totem-watching .totem-shadow {
     transform: scaleX(1.2);
@@ -929,7 +855,7 @@ export const totemStyles = `
   }
   .totem-sleeping .totem-left-arm {
     animation: totem-sleep-arm 4s ease-in-out infinite, totem-sleep-twitch 7s ease-in-out infinite;
-    transform-origin: 16px 22px;
+    transform-origin: 18px 29px;
   }
   .totem-sleeping .totem-zzz text:nth-child(1) {
     animation: totem-zzz 2.5s ease-in-out infinite;
@@ -987,11 +913,11 @@ export const totemStyles = `
   }
   .totem-reading .totem-head {
     animation: totem-read-head 4s ease-in-out infinite;
-    transform-origin: 25px 22px;
+    transform-origin: 25px 30px;
   }
   .totem-reading .totem-left-arm {
     animation: totem-read-arm 5s ease-in-out infinite;
-    transform-origin: 16px 22px;
+    transform-origin: 18px 29px;
   }
   .totem-reading .totem-body {
     animation: totem-breathe 3.5s ease-in-out infinite;
@@ -1021,7 +947,7 @@ export const totemStyles = `
   }
   .totem-napping .totem-head {
     animation: totem-idle-head 8s ease-in-out infinite;
-    transform-origin: 25px 22px;
+    transform-origin: 25px 30px;
   }
 
   /* ===== COFFEE-MAKING STEAM ===== */

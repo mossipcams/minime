@@ -151,40 +151,50 @@ describe('Totem Avatar', () => {
     expect(rightArm).toContain('<path');
   });
 
-  it('hair has back layer and front layer for flat design', () => {
+  it('hair is a single bold cap shape', () => {
     const svg = getTotemSvg('idle');
     const headStart = svg.indexOf('totem-head');
     const headSection = svg.slice(headStart, headStart + 2000);
-    // Flat design uses simple back + front hair layers
-    expect(headSection).toContain('hair-back');
-    expect(headSection).toContain('hair-front');
+    // Icon style uses one simple hair shape
+    expect(headSection).toContain('totem-hair');
   });
 
-  it('eyes are simple dot circles for flat minimal style', () => {
+  it('eyes are large circles for chibi proportions', () => {
     const svg = getTotemSvg('idle');
-    // Flat design uses simple filled circles for eyes
-    const eyeDots = (svg.match(/<circle[^>]*fill="#2B2B2B"/g) || []).length;
-    expect(eyeDots).toBeGreaterThanOrEqual(2); // two eye dots
-    // Should have small highlight circles (one per eye)
+    // Chibi eyes must be large (r >= 3) to be the dominant facial feature
+    const circles = [...svg.matchAll(/<circle[^/]*\/>/g)];
+    const eyeCircles = circles.filter(m => m[0].includes('fill="#2B2B2B"'));
+    expect(eyeCircles.length).toBeGreaterThanOrEqual(2);
+    for (const m of eyeCircles) {
+      const rMatch = m[0].match(/r="([\d.]+)"/);
+      expect(rMatch).not.toBeNull();
+      expect(parseFloat(rMatch![1])).toBeGreaterThanOrEqual(3);
+    }
+    // Highlight circles (one per eye)
     const highlights = (svg.match(/<circle[^>]*fill="#FFF"/g) || []).length;
     expect(highlights).toBeGreaterThanOrEqual(2);
   });
 
-  it('face has eyebrows and cheek blush for personality', () => {
+  it('face has readable eyebrows with bold strokes', () => {
     const svg = getTotemSvg('idle');
-    // Eyebrows — stroke arcs above the eyes (new palette)
-    const browMatches = (svg.match(/stroke="#3D2B1F"/g) || []).length;
-    expect(browMatches).toBeGreaterThanOrEqual(2); // two eyebrows
-    // Cheek blush — soft pink ovals (new palette)
-    const blushMatches = (svg.match(/#F09090/g) || []).length;
-    expect(blushMatches).toBeGreaterThanOrEqual(2); // two cheeks
+    // Eyebrows — stroke arcs with readable width (>= 1.0)
+    const browPaths = [...svg.matchAll(/<path[^>]*stroke="#3D2B1F"[^>]*/g)];
+    expect(browPaths.length).toBeGreaterThanOrEqual(2);
+    for (const m of browPaths) {
+      const sw = m[0].match(/stroke-width="([\d.]+)"/);
+      expect(sw).not.toBeNull();
+      expect(parseFloat(sw![1])).toBeGreaterThanOrEqual(1.0);
+    }
   });
 
-  it('body uses gradient shading for depth', () => {
+  it('body uses flat solid fills with no gradients', () => {
     const svg = getTotemSvg('idle');
-    // Should have a linearGradient definition for the hoodie
-    expect(svg).toContain('<linearGradient');
-    expect(svg).toContain('hoodie-grad');
+    const bodyStart = svg.indexOf('totem-body');
+    const bodySection = svg.slice(bodyStart, svg.indexOf('</g>', bodyStart));
+    expect(bodySection).toContain('<path');
+    // No gradient references — pure flat fills
+    expect(bodySection).not.toContain('url(#');
+    expect(svg).not.toContain('<linearGradient');
   });
 
   it('totemStyles uses custom cubic-bezier easing', () => {
