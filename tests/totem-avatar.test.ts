@@ -73,6 +73,18 @@ describe('Totem Avatar', () => {
     expect(svg).toContain('totem-prop');
   });
 
+  it('face has forehead highlights and cheekbone structure for depth', () => {
+    const svg = getTotemSvg('idle');
+    const headMatch = svg.match(/class="totem-head">(.*?)<\/g>/);
+    expect(headMatch).not.toBeNull();
+    const headSvg = headMatch![1];
+    const fills = [...headSvg.matchAll(/fill="([^"]+)"/g)].map(m => m[1]);
+    // Face must use skin highlight color (#FFE4CC) for forehead/cheek warmth
+    expect(fills).toContain('#FFE4CC');
+    // Face must use skin shadow (#E8B898) for jaw definition
+    expect(fills).toContain('#E8B898');
+  });
+
   it('renders a perfectly symmetric face (left-right mirror)', () => {
     const svg = getTotemSvg('idle');
     // Extract all rects from the head group

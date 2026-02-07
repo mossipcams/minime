@@ -92,14 +92,14 @@ const AWAKE_HEAD = [
   'HgHHHHHHHHHHHHgH',   // hair texture
   'HHHHhHHHHHHhHHHH',   // hair bottom
   'HHHHHHHHHHHHHHHH',   // fringe
-  '.HSSSSSSSSSSSSH.',   // forehead + sideburns
-  '..SSSSSSSSSSSS..',   // upper face
-  '..SHHSSSSSSHHS..',   // eyebrows
-  '..SWEEWSSWEEWS..',   // eyes (white-pupil-pupil-white)
-  '..SSSSSSSSSSSS..',   // cheeks
+  '.HLSSSSSSSSSSLH.',   // forehead + sideburns
+  '..LSSSSSSSSSSL..',   // upper face glow
+  '..SHHHSSSSHHHS..',   // eyebrows
+  '..SWEEWSSWEEWS..',   // eyes
+  '..SLSSSSSSSSLS..',   // cheeks
   '...SSSSNNSSSS...',   // nose
   '...SSSSMMSSSS...',   // mouth
-  '...SSSSSSSSSS...',   // lower face
+  '...sSSSSSSSSs...',   // lower face
   '....sSSSSSSs....',   // jaw
   '.....sSSSSs.....',   // lower jaw
   '......sSSs......',   // chin
@@ -114,14 +114,14 @@ const SLEEP_HEAD = [
   'HgHHHHHHHHHHHHgH',   // hair texture
   'HHHHhHHHHHHhHHHH',   // hair bottom
   'HHHHHHHHHHHHHHHH',   // fringe
-  '.HSSSSSSSSSSSSH.',   // forehead + sideburns
-  '..SSSSSSSSSSSS..',   // upper face
-  '..SHHSSSSSSHHS..',   // eyebrows
+  '.HLSSSSSSSSSSLH.',   // forehead + sideburns
+  '..LSSSSSSSSSSL..',   // upper face glow
+  '..SHHHSSSSHHHS..',   // eyebrows
   '..SSEESSSSEESS..',   // closed eyes
-  '..SSSSSSSSSSSS..',   // cheeks
+  '..SLSSSSSSSSLS..',   // cheeks
   '...SSSSNNSSSS...',   // nose
   '...SSSSMMSSSS...',   // mouth
-  '...SSSSSSSSSS...',   // lower face
+  '...sSSSSSSSSs...',   // lower face
   '....sSSSSSSs....',   // jaw
   '.....sSSSSs.....',   // lower jaw
   '......sSSs......',   // chin
