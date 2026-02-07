@@ -81,160 +81,189 @@ function px(gx: number, gy: number, gw: number, gh: number, fill: string): strin
   return `<rect x="${gx * P}" y="${gy * P}" width="${gw * P}" height="${gh * P}" fill="${fill}"/>`;
 }
 
-// ===== HEAD (hair + face + eyes) at grid (10, 2), 12 wide =====
+// ===== HEAD at grid (8, 2), 16 wide =====
 
 const AWAKE_HEAD = [
-  '...HHHHHH...',   // row 2: hair crown
-  '..HHhHHhHH..',   // row 3: hair symmetric highlights
-  '.HHhHHHHhHH.',   // row 4: hair textured wide
-  'HHgHHHHHHgHH',   // row 5: hair full width
-  'HHHHHHHHHHHH',   // row 6: hair bottom fringe
-  '.HsSSSSSSsH.',   // row 7: forehead + sideburns
-  '.LSLLLLLLSL.',   // row 8: upper face highlights
-  '..SWESSEWS..',   // row 9: eyes symmetric (WE mirrored)
-  '.SSSLNNLSSS.',   // row 10: nose centered
-  '.sSLSMMSLSs.',   // row 11: mouth centered
-  '..sSSSSSSs..',   // row 12: jaw shadow
-  '....sSSs....',   // row 13: chin
+  '......HHHH......',   // row 2: hair tip
+  '....HHHhHHHH....',   // row 3: hair crown highlights
+  '...HHHhHHhHHH...',   // row 4: hair wider
+  '..HHhHHHHHHhHH..',   // row 5: hair full
+  '.HHgHHHHHHHHgHH.',   // row 6: hair widest
+  'HgHHHHHHHHHHHHgH',   // row 7: hair texture
+  'HHHhHHHHHHHhHHHH',   // row 8: hair bottom with highlights
+  'HHHHHHHHHHHHHHHH',   // row 9: hair bottom fringe
+  '.HsLSSSSSSSSLsH.',   // row 8: forehead + sideburns + highlights
+  '..LSsLLLLLLsLS..',   // row 9: upper face highlights
+  '..sHHHSSSSHHHs..',   // row 10: eyebrows (hair-colored)
+  '..SWWEESSEEWWS..',   // row 11: eyes (2W+2E each, mirrored)
+  '..SwwSlLLlSwwS..',   // row 12: under-eye with cheek highlights
+  '...SSSLNNLSSS...',   // row 13: nose bridge
+  '...SSLSNNSLS...',   // row 14: nose tip
+  '...sSLSMMSLSs...',   // row 15: mouth + cheek highlights
+  '...sSSSSSSSSs...',   // row 15: jaw shadow
+  '....ssSSSSss....',   // row 16: lower jaw
+  '......sSSs......',   // row 17: chin
 ];
 
 const SLEEP_HEAD = [
-  '...HHHHHH...',   // row 2: hair crown
-  '..HHhHHhHH..',   // row 3: hair symmetric highlights
-  '.HHhHHHHhHH.',   // row 4: hair textured wide
-  'HHgHHHHHHgHH',   // row 5: hair full width
-  'HHHHHHHHHHHH',   // row 6: hair bottom fringe
-  '.HsSSSSSSsH.',   // row 7: forehead + sideburns
-  '.LSLLLLLLSL.',   // row 8: upper face highlights
-  '..SEESSEES..',   // row 9: closed eyes symmetric
-  '.SSSLNNLSSS.',   // row 10: nose centered
-  '.sSLSMMSLSs.',   // row 11: mouth centered
-  '..sSSSSSSs..',   // row 12: jaw shadow
-  '....sSSs....',   // row 13: chin
+  '......HHHH......',   // row 2: hair tip
+  '....HHHhHHHH....',   // row 3: hair crown highlights
+  '...HHHhHHhHHH...',   // row 4: hair wider
+  '..HHhHHHHHHhHH..',   // row 5: hair full
+  '.HHgHHHHHHHHgHH.',   // row 6: hair widest
+  'HgHHHHHHHHHHHHgH',   // row 7: hair texture
+  'HHHhHHHHHHHhHHHH',   // row 8: hair bottom with highlights
+  'HHHHHHHHHHHHHHHH',   // row 9: hair bottom fringe
+  '.HsLSSSSSSSSLsH.',   // row 8: forehead + sideburns
+  '..LSsLLLLLLsLS..',   // row 9: upper face highlights
+  '..sHHHSSSSHHHs..',   // row 10: eyebrows
+  '..SEESSSSSEESS..',   // row 11: closed eyes (2px dashes)
+  '..SssSlLLlSssS..',   // row 12: under-eye with cheek highlights
+  '...SSSLNNLSSS...',   // row 13: nose bridge
+  '...SSLSNNSLS...',   // row 14: nose tip
+  '...sSLSMMSLSs...',   // row 15: mouth
+  '...sSSSSSSSSs...',   // row 15: jaw shadow
+  '....ssSSSSss....',   // row 16: lower jaw
+  '......sSSs......',   // row 17: chin
 ];
 
 function awakeHead(): string {
-  return renderBitmap(10, 2, AWAKE_HEAD);
+  return renderBitmap(8, 2, AWAKE_HEAD);
 }
 function sleepingHead(): string {
-  return renderBitmap(10, 2, SLEEP_HEAD);
+  return renderBitmap(8, 2, SLEEP_HEAD);
 }
 
-// ===== NECK at grid (13, 14), 6 wide =====
+// ===== NECK at grid (12, 19), 8 wide =====
 
 const NECK_BMP = [
-  '.LSSL.',   // row 14: neck highlight
-  '.lSSl.',   // row 15: neck shadow
+  '..LSSL..',   // row 19: neck highlight
+  '..SLLs..',   // row 20: neck mid
+  '..lSSl..',   // row 21: neck shadow
 ];
 
 function neck(): string {
-  return renderBitmap(13, 14, NECK_BMP);
+  return renderBitmap(12, 19, NECK_BMP);
 }
 
-// ===== BODY (hoodie torso) at grid (11, 15), 10 wide =====
+// ===== BODY (hoodie torso) at grid (10, 21), 12 wide =====
 
 const BODY_BMP = [
-  '.cBBBBBBc.',   // row 16: collar/hood rim
-  'cBBBZBBBBc',   // row 17: collar highlights + zip
-  'BBBBZBBBBd',   // row 18: upper torso
-  'BBcBZBcBBd',   // row 19: highlights + zip
-  'BBBBZBBBBd',   // row 20: mid torso
-  'bBcBBBcBBb',   // row 21: pocket detail
-  'bBcBBBBcBb',   // row 22: lower torso + pocket highlights
-  '.dBBBBBBd.',   // row 23: bottom taper
-  '..dBBBBd..',   // row 24: waist
+  '..cBBBBBBc..',   // row 21: hood rim
+  '.cBBBBBBBBc.',   // row 22: collar
+  'cBBBBZZBBBBc',   // row 23: upper torso + zip
+  'BBBcBZZBcBBd',   // row 24: highlights + zip
+  'BBcBBZZBBcBd',   // row 25: more highlights + zip
+  'BBBBBZZBBBBd',   // row 26: mid torso + zip
+  'bBcBBBBBBcBb',   // row 27: pocket highlights
+  'bBBcBBBBcBBb',   // row 28: pocket detail
+  'bBBBBBBBBBBb',   // row 29: lower torso
+  '.dBBcBBcBBd.',   // row 30: taper with detail
+  '..dBBBBBBd..',   // row 31: waist
 ];
 
 const BELT_BMP = [
-  '.qPPPPPPq.',   // row 25: belt/waistband
+  '.qPPPPPPPPq.',   // row 32: belt/waistband
 ];
 
 function bodyRect(): string {
-  return renderBitmap(11, 16, BODY_BMP) + renderBitmap(11, 25, BELT_BMP);
+  return renderBitmap(10, 21, BODY_BMP) + renderBitmap(10, 32, BELT_BMP);
 }
 
-// ===== LEFT ARM at grid (7, 16), 4 wide =====
+// ===== LEFT ARM at grid (5, 22), 5 wide =====
 
 const LEFT_ARM_BMP = [
-  '.cBB',   // row 17: shoulder cap
-  'BBBb',   // row 18: upper arm
-  'BBBb',   // row 19: mid arm
-  'bBBb',   // row 20: elbow shadow
-  'bBBd',   // row 21: lower arm
-  'bBBd',   // row 22: forearm
-  '.LSl',   // row 23: hand highlight + shadow
+  '.cBBB',   // row 22: shoulder cap
+  'BBcBb',   // row 23: upper arm highlight
+  'BBBBb',   // row 24: mid arm
+  'bBcBb',   // row 25: elbow highlight
+  'bBBBd',   // row 26: elbow shadow
+  'bBcBd',   // row 27: lower arm highlight
+  'bBBBd',   // row 28: forearm
+  'bBBBd',   // row 29: wrist
+  '.LSsl',   // row 30: hand highlight + shadow
 ];
 
 function leftArm(): string {
-  return renderBitmap(7, 17, LEFT_ARM_BMP);
+  return renderBitmap(5, 22, LEFT_ARM_BMP);
 }
 
-// ===== RIGHT ARM at grid (21, 16), 4 wide =====
+// ===== RIGHT ARM at grid (22, 22), 5 wide =====
 
 const RIGHT_ARM_BMP = [
-  'BBc.',   // row 17: shoulder cap
-  'bBBB',   // row 18: upper arm
-  'bBBB',   // row 19: mid arm
-  'bBBb',   // row 20: elbow shadow
-  'dBBb',   // row 21: lower arm
-  'dBBb',   // row 22: forearm
-  'lSL.',   // row 23: hand
+  'BBBc.',   // row 22: shoulder cap
+  'bBcBB',   // row 23: upper arm highlight
+  'bBBBB',   // row 24: mid arm
+  'bBcBb',   // row 25: elbow highlight
+  'dBBBb',   // row 26: elbow shadow
+  'dBcBb',   // row 27: lower arm highlight
+  'dBBBb',   // row 28: forearm
+  'dBBBb',   // row 29: wrist
+  'lsSL.',   // row 30: hand shadow + highlight
 ];
 
 function rightArm(): string {
-  return renderBitmap(21, 17, RIGHT_ARM_BMP);
+  return renderBitmap(22, 22, RIGHT_ARM_BMP);
 }
 
-// ===== LEFT LEG at grid (12, 23), 4 wide =====
+// ===== LEFT LEG at grid (11, 31), 5 wide =====
 
 const LEFT_LEG_BMP = [
-  'pPPP',   // row 25: waistband highlight
-  'PPPq',   // row 26: upper thigh shadow
-  'PPPq',   // row 27: thigh shadow
-  'pPPq',   // row 28: knee highlight + shadow
-  'pPPP',   // row 29: shin highlight
-  'PPPq',   // row 30: lower shin shadow
-  'PPPP',   // row 31: ankle
-  'FFFF',   // row 32: shoe upper
-  'FFFe',   // row 33: shoe detail
-  'fffe',   // row 34: sole
+  'pPPPP',   // row 33: waistband highlight
+  'PPPPq',   // row 34: upper thigh
+  'PPPPq',   // row 35: thigh shadow
+  'pPPPq',   // row 36: knee highlight + shadow
+  'pPPPP',   // row 37: shin highlight
+  'PPPPq',   // row 38: lower shin
+  'PPPPq',   // row 39: mid shin shadow
+  'pPPPP',   // row 40: lower shin highlight
+  'PPPPq',   // row 41: ankle shadow
+  'PPPPP',   // row 42: ankle
+  'FFFFF',   // row 43: shoe upper
+  'FFFfe',   // row 44: shoe mid
+  'FFFFe',   // row 45: shoe detail
+  'fffee',   // row 46: sole
 ];
 
 function leftLeg(): string {
-  return renderBitmap(12, 25, LEFT_LEG_BMP);
+  return renderBitmap(11, 33, LEFT_LEG_BMP);
 }
 
-// ===== RIGHT LEG at grid (17, 23), 4 wide =====
+// ===== RIGHT LEG at grid (17, 31), 5 wide =====
 
 const RIGHT_LEG_BMP = [
-  'PPPp',   // row 25: waistband
-  'qPPP',   // row 26: upper thigh shadow
-  'qPPP',   // row 27: thigh shadow
-  'qPPp',   // row 28: knee shadow + highlight
-  'PPPp',   // row 29: shin highlight
-  'qPPP',   // row 30: lower shin shadow
-  'PPPP',   // row 31: ankle
-  'FFFF',   // row 32: shoe upper
-  'eFFF',   // row 33: shoe detail
-  'efff',   // row 34: sole
+  'PPPPp',   // row 33: waistband
+  'qPPPP',   // row 34: upper thigh shadow
+  'qPPPP',   // row 35: thigh shadow
+  'qPPPp',   // row 36: knee
+  'PPPPp',   // row 37: shin highlight
+  'qPPPP',   // row 38: lower shin
+  'qPPPP',   // row 39: mid shin shadow
+  'PPPPp',   // row 40: lower shin highlight
+  'qPPPP',   // row 41: ankle shadow
+  'PPPPP',   // row 42: ankle
+  'FFFFF',   // row 43: shoe upper
+  'efFFe',   // row 44: shoe mid
+  'eFFFe',   // row 45: shoe detail
+  'eefff',   // row 46: sole
 ];
 
 function rightLeg(): string {
-  return renderBitmap(17, 25, RIGHT_LEG_BMP);
+  return renderBitmap(17, 33, RIGHT_LEG_BMP);
 }
 
 function groundShadow(): string {
-  return `<ellipse class="totem-shadow" cx="64" cy="148" rx="28" ry="5" fill="#000" opacity="0.12"/>`;
+  return `<ellipse class="totem-shadow" cx="64" cy="176" rx="30" ry="5" fill="#000" opacity="0.12"/>`;
 }
 
 // ===== SLEEPING EXTRAS =====
 
 function pillow(): string {
-  return px(6, 10, 20, 3, PILLOW_FILL);
+  return px(4, 14, 24, 3, PILLOW_FILL);
 }
 
 function blanket(): string {
-  return `<g class="totem-blanket">${px(6, 22, 20, 14, BLANKET_COLOR)}${px(6, 22, 20, 2, BLANKET_HI)}</g>`;
+  return `<g class="totem-blanket">${px(4, 28, 24, 16, BLANKET_COLOR)}${px(4, 28, 24, 2, BLANKET_HI)}</g>`;
 }
 
 function sleepingZzz(): string {
@@ -264,40 +293,40 @@ function steamFloat(): string {
 // ===== PROPS =====
 
 function laptopProp(): string {
-  return `<g class="totem-prop">${px(9, 22, 14, 2, LAPTOP_FRAME)}${px(10, 22, 12, 1, LAPTOP_SCREEN)}${px(8, 24, 16, 1, LAPTOP_FRAME)}</g>`;
+  return `<g class="totem-prop">${px(8, 28, 16, 2, LAPTOP_FRAME)}${px(9, 28, 14, 1, LAPTOP_SCREEN)}${px(7, 30, 18, 1, LAPTOP_FRAME)}</g>`;
 }
 function panProp(): string {
-  return `<g class="totem-prop">${px(23, 19, 4, 2, PAN)}${px(27, 19, 2, 1, PAN_HANDLE)}</g>`;
+  return `<g class="totem-prop">${px(25, 25, 4, 2, PAN)}${px(29, 25, 2, 1, PAN_HANDLE)}</g>`;
 }
 function phoneProp(): string {
-  return `<g class="totem-prop">${px(23, 18, 2, 4, PHONE_BODY)}${px(23, 19, 2, 2, PHONE_SCREEN)}</g>`;
+  return `<g class="totem-prop">${px(25, 24, 2, 4, PHONE_BODY)}${px(25, 25, 2, 2, PHONE_SCREEN)}</g>`;
 }
 function bookProp(): string {
-  return `<g class="totem-prop">${px(4, 18, 3, 4, '#5A3020')}${px(5, 19, 2, 3, '#E8D8C0')}</g>`;
+  return `<g class="totem-prop">${px(2, 24, 3, 4, '#5A3020')}${px(3, 25, 2, 3, '#E8D8C0')}</g>`;
 }
 function mugProp(): string {
-  return `<g class="totem-prop">${px(23, 17, 3, 3, '#A05830')}${px(26, 18, 1, 1, '#8A4820')}</g>`;
+  return `<g class="totem-prop">${px(25, 23, 3, 3, '#A05830')}${px(28, 24, 1, 1, '#8A4820')}</g>`;
 }
 function remoteProp(): string {
-  return `<g class="totem-prop">${px(23, 20, 2, 3, PHONE_BODY)}${px(23, 21, 1, 1, '#E06060')}</g>`;
+  return `<g class="totem-prop">${px(25, 26, 2, 3, PHONE_BODY)}${px(25, 27, 1, 1, '#E06060')}</g>`;
 }
 function controllerProp(): string {
-  return `<g class="totem-prop">${px(9, 22, 6, 2, PHONE_BODY)}${px(10, 22, 1, 1, '#A04040')}${px(13, 22, 1, 1, '#4060A0')}</g>`;
+  return `<g class="totem-prop">${px(8, 28, 6, 2, PHONE_BODY)}${px(9, 28, 1, 1, '#A04040')}${px(12, 28, 1, 1, '#4060A0')}</g>`;
 }
 function plateProp(): string {
-  return `<g class="totem-prop">${px(4, 22, 5, 1, PAN)}${px(5, 21, 3, 1, '#E8E4DC')}</g>`;
+  return `<g class="totem-prop">${px(2, 28, 5, 1, PAN)}${px(3, 27, 3, 1, '#E8E4DC')}</g>`;
 }
 function spongeProp(): string {
-  return `<g class="totem-prop">${px(4, 19, 3, 2, '#E8D040')}</g>`;
+  return `<g class="totem-prop">${px(2, 25, 3, 2, '#E8D040')}</g>`;
 }
 function bowlProp(): string {
-  return `<g class="totem-prop">${px(10, 20, 5, 2, PAN)}${px(11, 20, 3, 1, '#C8A040')}</g>`;
+  return `<g class="totem-prop">${px(9, 26, 5, 2, PAN)}${px(10, 26, 3, 1, '#C8A040')}</g>`;
 }
 function markerProp(): string {
-  return `<g class="totem-prop">${px(25, 6, 1, 3, '#E06060')}</g>`;
+  return `<g class="totem-prop">${px(27, 8, 1, 3, '#E06060')}</g>`;
 }
 function shirtProp(): string {
-  return `<g class="totem-prop">${px(2, 17, 3, 3, '#6080A0')}${px(27, 17, 3, 3, '#6080A0')}</g>`;
+  return `<g class="totem-prop">${px(1, 23, 3, 3, '#6080A0')}${px(28, 23, 3, 3, '#6080A0')}</g>`;
 }
 function phoneUpProp(): string {
   return `<g class="totem-prop">${px(13, 1, 5, 2, PHONE_BODY)}${px(14, 1, 3, 1, PHONE_SCREEN)}</g>`;
@@ -380,7 +409,7 @@ export const totemStyles = `
     94% { opacity: 0; }
   }
 
-  .totem-shadow { transform-origin: 64px 140px; }
+  .totem-shadow { transform-origin: 64px 176px; }
 
   /* ===== IDLE ===== */
   .totem-idle .totem-character {
@@ -388,7 +417,7 @@ export const totemStyles = `
   }
   .totem-idle .totem-head {
     animation: totem-head-tilt 6s ease-in-out infinite;
-    transform-origin: 64px 44px;
+    transform-origin: 64px 56px;
   }
   .totem-idle .totem-body {
     animation: totem-breathe 3s ease-in-out infinite;
@@ -396,11 +425,11 @@ export const totemStyles = `
   }
   .totem-idle .totem-left-arm {
     animation: totem-idle-arm-l 3.2s ease-in-out infinite;
-    transform-origin: 40px 64px;
+    transform-origin: 32px 92px;
   }
   .totem-idle .totem-right-arm {
     animation: totem-idle-arm-r 2.8s ease-in-out infinite;
-    transform-origin: 88px 64px;
+    transform-origin: 96px 92px;
   }
   .totem-idle .totem-shadow {
     animation: totem-shadow-idle 2.8s ease-in-out infinite;
@@ -438,19 +467,19 @@ export const totemStyles = `
   }
   .totem-walking .totem-left-arm {
     animation: totem-arm-swing-l 0.4s ease-in-out infinite alternate;
-    transform-origin: 40px 64px;
+    transform-origin: 32px 92px;
   }
   .totem-walking .totem-right-arm {
     animation: totem-arm-swing-r 0.4s ease-in-out infinite alternate;
-    transform-origin: 88px 64px;
+    transform-origin: 96px 92px;
   }
   .totem-walking .totem-left-leg {
     animation: totem-stride-l 0.4s ease-in-out infinite alternate;
-    transform-origin: 56px 92px;
+    transform-origin: 52px 128px;
   }
   .totem-walking .totem-right-leg {
     animation: totem-stride-r 0.4s ease-in-out infinite alternate;
-    transform-origin: 76px 92px;
+    transform-origin: 76px 128px;
   }
   .totem-walking .totem-shadow {
     animation: totem-shadow-walk 0.4s ease-in-out infinite;
@@ -486,7 +515,7 @@ export const totemStyles = `
   }
   .totem-studying .totem-head {
     animation: totem-head-tilt 4s ease-in-out infinite;
-    transform-origin: 64px 44px;
+    transform-origin: 64px 56px;
   }
   .totem-studying .totem-body {
     animation: totem-breathe 3s ease-in-out infinite;
@@ -494,12 +523,12 @@ export const totemStyles = `
   }
   .totem-studying .totem-left-arm {
     animation: totem-type-l 2s ease-in-out infinite;
-    transform-origin: 40px 64px;
+    transform-origin: 32px 92px;
   }
   .totem-studying .totem-right-arm {
     animation: totem-type-r 2s ease-in-out infinite;
     animation-delay: 0.08s;
-    transform-origin: 88px 64px;
+    transform-origin: 96px 92px;
   }
   @keyframes totem-type-l {
     0%, 55%, 100% { transform: rotate(-5deg); }
@@ -520,7 +549,7 @@ export const totemStyles = `
   }
   .totem-cooking .totem-right-arm {
     animation: totem-stir 1s cubic-bezier(0.45, 0, 0.55, 1) infinite;
-    transform-origin: 88px 64px;
+    transform-origin: 96px 92px;
   }
   .totem-cooking .totem-body {
     animation: totem-breathe 3s ease-in-out infinite;
@@ -584,7 +613,7 @@ export const totemStyles = `
   .totem-sleeping .totem-shadow { opacity: 0; }
   .totem-sleeping .totem-blanket {
     animation: totem-blanket-breathe 4s cubic-bezier(0.45, 0, 0.55, 1) infinite;
-    transform-origin: 64px 116px;
+    transform-origin: 64px 144px;
   }
   .totem-sleeping .totem-body {
     animation: totem-breathe 4s cubic-bezier(0.45, 0, 0.55, 1) infinite;
@@ -631,7 +660,7 @@ export const totemStyles = `
   }
   .totem-napping .totem-head, .totem-meditating .totem-head {
     animation: totem-head-tilt 8s ease-in-out infinite;
-    transform-origin: 64px 44px;
+    transform-origin: 64px 56px;
   }
 
   /* ===== READING ===== */
@@ -640,7 +669,7 @@ export const totemStyles = `
   }
   .totem-reading .totem-head, .totem-reading-couch .totem-head {
     animation: totem-head-tilt 4s ease-in-out infinite;
-    transform-origin: 64px 44px;
+    transform-origin: 64px 56px;
   }
   .totem-reading .totem-body, .totem-reading-couch .totem-body {
     animation: totem-breathe 3.5s ease-in-out infinite;
@@ -653,7 +682,7 @@ export const totemStyles = `
   }
   .totem-watching .totem-head {
     animation: totem-head-tilt 5s ease-in-out infinite;
-    transform-origin: 64px 44px;
+    transform-origin: 64px 56px;
   }
   .totem-watching .totem-body {
     animation: totem-breathe 3.5s ease-in-out infinite;

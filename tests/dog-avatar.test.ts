@@ -46,6 +46,22 @@ describe('Dog Avatar', () => {
     expect(dogStyles).not.toContain('.dog-sleeping { transform: rotate');
   });
 
+  it('has black and tan dachshund coloring with tan chest/belly markings', () => {
+    const svg = getDogSvg('idle');
+    // Black and tan: body has both black (#1A1A1A) and tan/orange fills
+    expect(svg).toMatch(/fill="#1A1A1A"/);  // black
+    // Tan chest color should be warm orange-ish (R > 180, G > 100, B < 100)
+    const fills = [...svg.matchAll(/fill="(#[0-9A-Fa-f]{6})"/g)].map(m => m[1].toUpperCase());
+    const tanColors = fills.filter(f => {
+      const r = parseInt(f.slice(1, 3), 16);
+      const g = parseInt(f.slice(3, 5), 16);
+      const b = parseInt(f.slice(5, 7), 16);
+      return r > 180 && g > 100 && b < 100;
+    });
+    // Should have multiple tan-colored rects for chest/belly
+    expect(tanColors.length).toBeGreaterThanOrEqual(3);
+  });
+
   it('falls back to idle for unknown activity', () => {
     const svg = getDogSvg('unknown');
     expect(svg).toContain('dog-idle');

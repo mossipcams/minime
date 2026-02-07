@@ -10,8 +10,9 @@ const P = 4;
 const COLORS: Record<string, string> = {
   'K': '#1A1A1A',   // black body
   'k': '#2D2D2D',   // dark highlight
-  'T': '#C8943C',   // tan
-  't': '#B08030',   // tan shadow
+  'T': '#D4943C',   // tan (orange)
+  't': '#C07830',   // tan shadow (darker orange)
+  'O': '#E0A848',   // tan highlight (bright orange)
   'N': '#2D2D2D',   // nose
   'W': '#FFFFFF',   // eye white
   'R': '#D85858',   // tongue
@@ -45,11 +46,11 @@ function px(gx: number, gy: number, gw: number, gh: number, fill: string): strin
 
 const BODY_BMP = [
   '..kKKKKKKKKKKKk..',   // row 5: body top with highlights
-  '.KKKKKKKKKKKKKKK..',   // row 6: full body
+  '.KKKKKKKKKKKKKKK..',   // row 6: full body black
   '.KKKKKKKkKKKKKKK..',   // row 7: body with shading
-  '.KKKKKKKKKKKKKkK..',   // row 8: body
-  '..tTTTTTTTTTTTt..',   // row 9: belly stripe with shadow edges
-  '..TTTTTTTTTTTTt..',   // row 10: belly stripe
+  '.KKKKKKKKKKKKKkK..',   // row 8: body black
+  '..tTTOTTTTOTTt...',   // row 9: tan belly with orange highlights
+  '..OTTTTTTTTTTOt..',   // row 10: tan belly bright edges
 ];
 
 function bodyShape(): string {
@@ -60,15 +61,15 @@ function bodyShape(): string {
 
 const HEAD_BMP = [
   '.KKkK.',   // row 4: head top with highlight
-  'KKKKKK',   // row 5: head
+  'KTKKKK',   // row 5: tan eyebrow dot
   'KKWKKK',   // row 6: eye white
   'KKKKkK',   // row 7: head with shading
-  'KKKKKK',   // row 8: head bottom
+  'KKTTKK',   // row 8: tan muzzle markings
 ];
 
 const SNOUT_BMP = [
-  'NKK',   // row 7: nose + snout
-  'KKK',   // row 8: snout
+  'NTK',   // row 7: nose + tan snout
+  'TKK',   // row 8: tan snout
 ];
 
 function headShape(): string {
@@ -106,10 +107,10 @@ function tongueShape(): string {
 // ===== LEGS =====
 
 const FRONT_LEGS_BMP = [
-  'KK.KK',   // row 11: upper legs
+  'KK.KK',   // row 11: upper legs black
   'KK.KK',   // row 12: mid legs
-  'KK.KK',   // row 13: lower legs
-  'kk.kk',   // row 14: paws (highlight)
+  'TT.TT',   // row 13: tan lower legs
+  'Tt.tT',   // row 14: tan paws with shadow
 ];
 
 function frontLegs(): string {
@@ -117,10 +118,10 @@ function frontLegs(): string {
 }
 
 const BACK_LEGS_BMP = [
-  'KK.KK',   // row 11
-  'KK.KK',   // row 12
-  'KK.KK',   // row 13
-  'kk.kk',   // row 14: paws
+  'KK.KK',   // row 11: upper legs black
+  'KK.KK',   // row 12: mid legs
+  'TT.TT',   // row 13: tan lower legs
+  'tT.Tt',   // row 14: tan paws
 ];
 
 function backLegs(): string {
@@ -138,8 +139,8 @@ const SLEEPING_BMP = [
   '..KKKKKKK...',   // row 5: head + body start
   '.KKKKKKKKKK.',   // row 6: curled body
   'NKKKKKkKKKKK',   // row 7: nose, body with highlight
-  '.KKtTTTTtKKK',   // row 8: belly
-  '..KTTTTTTkK.',   // row 9: belly center
+  '.KKtOTTOtKKK',   // row 8: tan belly with orange
+  '..KOTTTTOkK.',   // row 9: orange belly edges
   '...kKKKKK...',   // row 10: body bottom
   '....KK......',   // row 11: tail
 ];
@@ -175,8 +176,8 @@ function sittingShape(): string {
     'KKKkK',   // row 5: body top with highlight
     'KKKKK',   // row 6: body
     'KKkKK',   // row 7: body shading
-    'tTTTt',   // row 8: belly
-    'TTTTt',   // row 9: belly
+    'tOTOt',   // row 8: tan belly with orange
+    'OTTOt',   // row 9: tan belly
     'KKKKK',   // row 10: body bottom
   ]));
   // Front legs tucked

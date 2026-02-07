@@ -46,12 +46,11 @@ describe('Totem Avatar', () => {
     expect(svg).toContain('shape-rendering="crispEdges"');
   });
 
-  it('has high-detail pixel art with 180+ rects for rich shading and wide proportions', () => {
+  it('has high-detail pixel art with 280+ rects for rich shading and wide proportions', () => {
     const svg = getTotemSvg('idle');
-    // Dramatically detailed pixel art: wider head (12px), wider body (10px),
-    // wider arms (4px), wider legs (4px) with rich shading throughout
+    // Wide sprites: 16px head with eyebrows/nose/mouth, 12px body, 5px arms/legs
     const rectCount = (svg.match(/<rect /g) || []).length;
-    expect(rectCount).toBeGreaterThanOrEqual(180);
+    expect(rectCount).toBeGreaterThanOrEqual(280);
     // Should NOT have smooth circles for head (pixel art uses rects)
     expect(svg).not.toMatch(/<circle[^>]+r="12"/);
   });
