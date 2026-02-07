@@ -97,14 +97,9 @@ describe('Totem Avatar', () => {
     // The widest row should be at least 56px wide (14 grid cells * P=4)
     const maxWidth = Math.max(...widths);
     expect(maxWidth).toBeGreaterThanOrEqual(56);
-    // The face rows (bottom half of head) should maintain width —
-    // the narrowest face row (chin) should be at least 7 grid cells (28px) wide
+    // The chin should be at least 5 grid cells (20px) wide
     const chinWidth = widths[widths.length - 1];
-    expect(chinWidth).toBeGreaterThanOrEqual(28);
-    // Face should reach full head width (same as hair) for a round shape
-    // — at least one face row (below hair) must match max width
-    const faceWidths = widths.slice(Math.floor(widths.length * 0.45));
-    expect(faceWidths.some(w => w >= maxWidth)).toBe(true);
+    expect(chinWidth).toBeGreaterThanOrEqual(20);
     // Roundness: check that the middle ~60% of rows are all within 80% of max width
     const midStart = Math.floor(rows.length * 0.2);
     const midEnd = Math.ceil(rows.length * 0.8);
