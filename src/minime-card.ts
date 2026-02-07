@@ -55,6 +55,25 @@ export class MiniMeCard extends LitElement {
       return;
     }
 
+    // --- Dog entity ---
+    if (this._config.dog_entity) {
+      const dogEntity = hass.states[this._config.dog_entity];
+      if (dogEntity && dogEntity.state !== "unavailable" && dogEntity.state !== "not_home") {
+        const dogArea = (dogEntity.attributes?.area as string) || dogEntity.state;
+        const dogRoomKey = dogArea.toLowerCase().replace(/\s+/g, "_");
+        if (this._dogEntityState !== dogRoomKey) {
+          this._dogEntityState = dogRoomKey;
+          if (this._dogEngine) {
+            this._dogEngine.changeRoom(dogRoomKey);
+          }
+        }
+      } else {
+        if (this._dogEntityState !== undefined) {
+          this._dogEntityState = undefined;
+        }
+      }
+    }
+
     // Bermuda device_tracker: state is home/not_home, area is in attributes
     if (entity.state === "not_home") {
       if (this._entityState !== "not_home") {
@@ -81,24 +100,7 @@ export class MiniMeCard extends LitElement {
       }
     }
 
-    // --- Dog entity ---
-    if (this._config.dog_entity) {
-      const dogEntity = hass.states[this._config.dog_entity];
-      if (dogEntity && dogEntity.state !== "unavailable" && dogEntity.state !== "not_home") {
-        const dogArea = (dogEntity.attributes?.area as string) || dogEntity.state;
-        const dogRoomKey = dogArea.toLowerCase().replace(/\s+/g, "_");
-        if (this._dogEntityState !== dogRoomKey) {
-          this._dogEntityState = dogRoomKey;
-          if (this._dogEngine) {
-            this._dogEngine.changeRoom(dogRoomKey);
-          }
-        }
-      } else {
-        if (this._dogEntityState !== undefined) {
-          this._dogEntityState = undefined;
-        }
-      }
-    }
+
   }
 
   public getCardSize(): number {
@@ -165,9 +167,10 @@ export class MiniMeCard extends LitElement {
       `;
     }
 
-    // Not-home state: show dark house
+    // Not-home state: show dark house (with sleeping dog if dog is home)
     const isNotHome = this._entityState === "not_home";
     if (isNotHome) {
+      const dogHome = this._config.dog_entity && this._dogEntityState;
       const notHomeSvg = lofiRoomBackgrounds["not_home"];
       return html`
         <ha-card>
@@ -177,6 +180,7 @@ export class MiniMeCard extends LitElement {
                 ? html`<div class="room-bg">${unsafeHTML(notHomeSvg)}</div>`
                 : html`<div class="room-bg-fallback"></div>`}
             </div>
+            ${dogHome ? html`<div class="dog-avatar-wrap" style="left: 50%">${unsafeHTML(getDogSvg('sleeping'))}</div>` : ""}
           </div>
         </ha-card>
       `;

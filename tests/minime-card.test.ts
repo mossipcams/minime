@@ -117,6 +117,25 @@ describe('MiniMeCard', () => {
     document.body.removeChild(card);
   });
 
+  it('shows sleeping dog when person is not_home but dog is home', async () => {
+    card.setConfig({
+      type: 'custom:minime-card',
+      entity: 'device_tracker.phone',
+      dog_entity: 'device_tracker.rocky',
+    });
+    card.hass = mockHass({
+      'device_tracker.phone': { state: 'not_home' },
+      'device_tracker.rocky': { state: 'home', attributes: { area: 'Living Room' } },
+    });
+    document.body.appendChild(card);
+    await (card as any).updateComplete;
+    const shadow = card.shadowRoot!;
+    const dogWrap = shadow.querySelector('.dog-avatar-wrap');
+    expect(dogWrap).not.toBeNull();
+    expect(dogWrap!.innerHTML).toContain('dog-sleeping');
+    document.body.removeChild(card);
+  });
+
   it('does not render info or name elements in layout', async () => {
     card.setConfig({ type: 'custom:minime-card', entity: 'device_tracker.phone' });
     card.hass = mockHass({ 'device_tracker.phone': { state: 'home', attributes: { area: 'Office' } } });
