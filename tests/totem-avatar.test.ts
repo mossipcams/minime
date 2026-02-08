@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { getTotemSvg, totemStyles } from '../src/animated-presence/totem-avatar';
+import { getTotemSvg, totemStyles, AWAKE_HEAD, SLEEP_HEAD } from '../src/animated-presence/totem-avatar';
 import type { Activity } from '../src/animated-presence/totem-avatar';
 
 const activities: Activity[] = [
@@ -107,6 +107,37 @@ describe('Totem Avatar', () => {
     for (const mw of midWidths) {
       expect(mw).toBeGreaterThanOrEqual(maxWidth * 0.75);
     }
+  });
+
+  it('awake head uses subtle mouth shadow instead of lip color', () => {
+    // Mouth is row 14 (index 14) of the head bitmap
+    const mouthRow = AWAKE_HEAD[14];
+    // Should NOT contain 'M' (lip color)
+    expect(mouthRow).not.toContain('M');
+    // Should contain 'l' (skin mid-shadow) for subtle mouth mark
+    expect(mouthRow).toContain('l');
+  });
+
+  it('sleep head uses subtle mouth shadow instead of lip color', () => {
+    const mouthRow = SLEEP_HEAD[14];
+    expect(mouthRow).not.toContain('M');
+    expect(mouthRow).toContain('l');
+  });
+
+  it('hair is asymmetric — left and right edges differ in at least one row', () => {
+    const hairRows = AWAKE_HEAD.slice(0, 8);
+    let hasAsymmetry = false;
+    for (const row of hairRows) {
+      const leftEdge = row.search(/[^.]/);
+      const rightEdge = row.length - 1 - [...row].reverse().findIndex(c => c !== '.');
+      const leftPad = leftEdge;
+      const rightPad = row.length - 1 - rightEdge;
+      if (leftPad !== rightPad) {
+        hasAsymmetry = true;
+        break;
+      }
+    }
+    expect(hasAsymmetry).toBe(true);
   });
 
   it('falls back to idle for unknown activity', () => {

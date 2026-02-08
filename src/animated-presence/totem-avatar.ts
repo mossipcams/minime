@@ -83,44 +83,44 @@ function px(gx: number, gy: number, gw: number, gh: number, fill: string): strin
 
 // ===== HEAD at grid (8, 2), 16 wide =====
 
-const AWAKE_HEAD = [
-  '......hHHh......',   // hair tip
-  '....HHgHHgHH....',   // textured crown
-  '...HHhHHHHhHH...',   // hair volume
-  '..HHgHHHHHHgHH..',   // hair full
-  '.HHhHHHHHHHHhHH.',   // hair widest
-  'HgHHHgHHHHgHHHgH',   // textured full width
-  'HHhHHHHHHHHHHhHH',   // hair lower
-  'HHgHHHHHHHHHHgHH',   // fringe with depth
+export const AWAKE_HEAD = [
+  '.....hHHhH......',   // tuft shifted left
+  '...HHgHHHgHh....',   // crown with right wisp
+  '..HHhHHgHHHHH...',   // uneven volume
+  '.HHgHHHHHHhHHh..',   // left extends further
+  'HHhHHHHHHHHgHH..',   // left wider, right short
+  'HgHHhgHHHHhHHHgH',   // varied texture
+  'HHhHHgHHHHHHhHHH',   // lower hair, right extends
+  'HHgHhHHHHhHHgHH.',   // messy fringe
   'sHLSSSSSSSSSSLHs',   // forehead + sideburns
   'sLSSSSSSSSSSSSLs',   // upper face
   'sSSHHHSSSSHHHSSs',   // eyebrows
   'sSwWEEWSSWEEWwSs',   // eyes with socket shadow
   'sSLSSSSSSSSSSLSs',   // cheeks with highlight
   'sSSSSSlNNlSSSSSs',   // nose with bridge shadow
-  'sSSSSSsMMsSSSSSs',   // mouth with lip contour
+  'sSSSSSSllSSSSSSs',   // mouth shadow (subtle)
   '.sSSSSSSSSSSSSs.',   // lower face
   '..sSSSSSSSSSSs..',   // jaw
   '...sSSSSSSSSs...',   // lower jaw
   '....sSSSSSSs....',   // chin
 ];
 
-const SLEEP_HEAD = [
-  '......hHHh......',   // hair tip
-  '....HHgHHgHH....',   // textured crown
-  '...HHhHHHHhHH...',   // hair volume
-  '..HHgHHHHHHgHH..',   // hair full
-  '.HHhHHHHHHHHhHH.',   // hair widest
-  'HgHHHgHHHHgHHHgH',   // textured full width
-  'HHhHHHHHHHHHHhHH',   // hair lower
-  'HHgHHHHHHHHHHgHH',   // fringe with depth
+export const SLEEP_HEAD = [
+  '.....hHHhH......',   // tuft shifted left
+  '...HHgHHHgHh....',   // crown with right wisp
+  '..HHhHHgHHHHH...',   // uneven volume
+  '.HHgHHHHHHhHHh..',   // left extends further
+  'HHhHHHHHHHHgHH..',   // left wider, right short
+  'HgHHhgHHHHhHHHgH',   // varied texture
+  'HHhHHgHHHHHHhHHH',   // lower hair, right extends
+  'HHgHhHHHHhHHgHH.',   // messy fringe
   'sHLSSSSSSSSSSLHs',   // forehead + sideburns
   'sLSSSSSSSSSSSSLs',   // upper face
   'sSSHHHSSSSHHHSSs',   // eyebrows
   'sSwSEESSSSEESwSs',   // closed eyes with socket shadow
   'sSLSSSSSSSSSSLSs',   // cheeks with highlight
   'sSSSSSlNNlSSSSSs',   // nose with bridge shadow
-  'sSSSSSsMMsSSSSSs',   // mouth with lip contour
+  'sSSSSSSllSSSSSSs',   // mouth shadow (subtle)
   '.sSSSSSSSSSSSSs.',   // lower face
   '..sSSSSSSSSSSs..',   // jaw
   '...sSSSSSSSSs...',   // lower jaw
