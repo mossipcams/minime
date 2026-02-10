@@ -45,7 +45,7 @@ const t$2=globalThis,e$4=t$2.ShadowRoot&&(void 0===t$2.ShadyCSS||t$2.ShadyCSS.na
  * Copyright 2017 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
  */
-const t$1=globalThis,i$2=t=>t,s$1=t$1.trustedTypes,e$2=s$1?s$1.createPolicy("lit-html",{createHTML:t=>t}):void 0,h="$lit$",o$3=`lit$${Math.random().toFixed(9).slice(2)}$`,n$1="?"+o$3,r$2=`<${n$1}>`,l=document,c=()=>l.createComment(""),a=t=>null===t||"object"!=typeof t&&"function"!=typeof t,u=Array.isArray,d=t=>u(t)||"function"==typeof t?.[Symbol.iterator],f="[ \t\n\f\r]",v=/<(?:(!--|\/[^a-zA-Z])|(\/?[a-zA-Z][^>\s]*)|(\/?$))/g,_=/-->/g,m=/>/g,p=RegExp(`>|${f}(?:([^\\s"'>=/]+)(${f}*=${f}*(?:[^ \t\n\f\r"'\`<>=]|("|')|))|$)`,"g"),g=/'/g,$=/"/g,y=/^(?:script|style|textarea|title)$/i,x=t=>(i,...s)=>({_$litType$:t,strings:i,values:s}),b=x(1),E=Symbol.for("lit-noChange"),A=Symbol.for("lit-nothing"),C=new WeakMap,P$2=l.createTreeWalker(l,129);function V(t,i){if(!u(t)||!t.hasOwnProperty("raw"))throw Error("invalid template strings array");return void 0!==e$2?e$2.createHTML(i):i}const N=(t,i)=>{const s=t.length-1,e=[];let n,l=2===i?"<svg>":3===i?"<math>":"",c=v;for(let i=0;i<s;i++){const s=t[i];let a,u,d=-1,f=0;for(;f<s.length&&(c.lastIndex=f,u=c.exec(s),null!==u);)f=c.lastIndex,c===v?"!--"===u[1]?c=_:void 0!==u[1]?c=m:void 0!==u[2]?(y.test(u[2])&&(n=RegExp("</"+u[2],"g")),c=p):void 0!==u[3]&&(c=p):c===p?">"===u[0]?(c=n??v,d=-1):void 0===u[1]?d=-2:(d=c.lastIndex-u[2].length,a=u[1],c=void 0===u[3]?p:'"'===u[3]?$:g):c===$||c===g?c=p:c===_||c===m?c=v:(c=p,n=void 0);const x=c===p&&t[i+1].startsWith("/>")?" ":"";l+=c===v?s+r$2:d>=0?(e.push(a),s.slice(0,d)+h+s.slice(d)+o$3+x):s+o$3+(-2===d?i:x);}return [V(t,l+(t[s]||"<?>")+(2===i?"</svg>":3===i?"</math>":"")),e]};class S{constructor({strings:t,_$litType$:i},e){let r;this.parts=[];let l=0,a=0;const u=t.length-1,d=this.parts,[f,v]=N(t,i);if(this.el=S.createElement(f,e),P$2.currentNode=this.el.content,2===i||3===i){const t=this.el.content.firstChild;t.replaceWith(...t.childNodes);}for(;null!==(r=P$2.nextNode())&&d.length<u;){if(1===r.nodeType){if(r.hasAttributes())for(const t of r.getAttributeNames())if(t.endsWith(h)){const i=v[a++],s=r.getAttribute(t).split(o$3),e=/([.?@])?(.*)/.exec(i);d.push({type:1,index:l,name:e[2],strings:s,ctor:"."===e[1]?I:"?"===e[1]?L:"@"===e[1]?z:H$2}),r.removeAttribute(t);}else t.startsWith(o$3)&&(d.push({type:6,index:l}),r.removeAttribute(t));if(y.test(r.tagName)){const t=r.textContent.split(o$3),i=t.length-1;if(i>0){r.textContent=s$1?s$1.emptyScript:"";for(let s=0;s<i;s++)r.append(t[s],c()),P$2.nextNode(),d.push({type:2,index:++l});r.append(t[i],c());}}}else if(8===r.nodeType)if(r.data===n$1)d.push({type:2,index:l});else {let t=-1;for(;-1!==(t=r.data.indexOf(o$3,t+1));)d.push({type:7,index:l}),t+=o$3.length-1;}l++;}}static createElement(t,i){const s=l.createElement("template");return s.innerHTML=t,s}}function M(t,i,s=t,e){if(i===E)return i;let h=void 0!==e?s._$Co?.[e]:s._$Cl;const o=a(i)?void 0:i._$litDirective$;return h?.constructor!==o&&(h?._$AO?.(false),void 0===o?h=void 0:(h=new o(t),h._$AT(t,s,e)),void 0!==e?(s._$Co??=[])[e]=h:s._$Cl=h),void 0!==h&&(i=M(t,h._$AS(t,i.values),h,e)),i}class R{constructor(t,i){this._$AV=[],this._$AN=void 0,this._$AD=t,this._$AM=i;}get parentNode(){return this._$AM.parentNode}get _$AU(){return this._$AM._$AU}u(t){const{el:{content:i},parts:s}=this._$AD,e=(t?.creationScope??l).importNode(i,true);P$2.currentNode=e;let h=P$2.nextNode(),o=0,n=0,r=s[0];for(;void 0!==r;){if(o===r.index){let i;2===r.type?i=new k(h,h.nextSibling,this,t):1===r.type?i=new r.ctor(h,r.name,r.strings,this,t):6===r.type&&(i=new Z(h,this,t)),this._$AV.push(i),r=s[++n];}o!==r?.index&&(h=P$2.nextNode(),o++);}return P$2.currentNode=l,e}p(t){let i=0;for(const s of this._$AV) void 0!==s&&(void 0!==s.strings?(s._$AI(t,s,i),i+=s.strings.length-2):s._$AI(t[i])),i++;}}class k{get _$AU(){return this._$AM?._$AU??this._$Cv}constructor(t,i,s,e){this.type=2,this._$AH=A,this._$AN=void 0,this._$AA=t,this._$AB=i,this._$AM=s,this.options=e,this._$Cv=e?.isConnected??true;}get parentNode(){let t=this._$AA.parentNode;const i=this._$AM;return void 0!==i&&11===t?.nodeType&&(t=i.parentNode),t}get startNode(){return this._$AA}get endNode(){return this._$AB}_$AI(t,i=this){t=M(this,t,i),a(t)?t===A||null==t||""===t?(this._$AH!==A&&this._$AR(),this._$AH=A):t!==this._$AH&&t!==E&&this._(t):void 0!==t._$litType$?this.$(t):void 0!==t.nodeType?this.T(t):d(t)?this.k(t):this._(t);}O(t){return this._$AA.parentNode.insertBefore(t,this._$AB)}T(t){this._$AH!==t&&(this._$AR(),this._$AH=this.O(t));}_(t){this._$AH!==A&&a(this._$AH)?this._$AA.nextSibling.data=t:this.T(l.createTextNode(t)),this._$AH=t;}$(t){const{values:i,_$litType$:s}=t,e="number"==typeof s?this._$AC(t):(void 0===s.el&&(s.el=S.createElement(V(s.h,s.h[0]),this.options)),s);if(this._$AH?._$AD===e)this._$AH.p(i);else {const t=new R(e,this),s=t.u(this.options);t.p(i),this.T(s),this._$AH=t;}}_$AC(t){let i=C.get(t.strings);return void 0===i&&C.set(t.strings,i=new S(t)),i}k(t){u(this._$AH)||(this._$AH=[],this._$AR());const i=this._$AH;let s,e=0;for(const h of t)e===i.length?i.push(s=new k(this.O(c()),this.O(c()),this,this.options)):s=i[e],s._$AI(h),e++;e<i.length&&(this._$AR(s&&s._$AB.nextSibling,e),i.length=e);}_$AR(t=this._$AA.nextSibling,s){for(this._$AP?.(false,true,s);t!==this._$AB;){const s=i$2(t).nextSibling;i$2(t).remove(),t=s;}}setConnected(t){ void 0===this._$AM&&(this._$Cv=t,this._$AP?.(t));}}let H$2 = class H{get tagName(){return this.element.tagName}get _$AU(){return this._$AM._$AU}constructor(t,i,s,e,h){this.type=1,this._$AH=A,this._$AN=void 0,this.element=t,this.name=i,this._$AM=e,this.options=h,s.length>2||""!==s[0]||""!==s[1]?(this._$AH=Array(s.length-1).fill(new String),this.strings=s):this._$AH=A;}_$AI(t,i=this,s,e){const h=this.strings;let o=false;if(void 0===h)t=M(this,t,i,0),o=!a(t)||t!==this._$AH&&t!==E,o&&(this._$AH=t);else {const e=t;let n,r;for(t=h[0],n=0;n<h.length-1;n++)r=M(this,e[s+n],i,n),r===E&&(r=this._$AH[n]),o||=!a(r)||r!==this._$AH[n],r===A?t=A:t!==A&&(t+=(r??"")+h[n+1]),this._$AH[n]=r;}o&&!e&&this.j(t);}j(t){t===A?this.element.removeAttribute(this.name):this.element.setAttribute(this.name,t??"");}};class I extends H$2{constructor(){super(...arguments),this.type=3;}j(t){this.element[this.name]=t===A?void 0:t;}}class L extends H$2{constructor(){super(...arguments),this.type=4;}j(t){this.element.toggleAttribute(this.name,!!t&&t!==A);}}class z extends H$2{constructor(t,i,s,e,h){super(t,i,s,e,h),this.type=5;}_$AI(t,i=this){if((t=M(this,t,i,0)??A)===E)return;const s=this._$AH,e=t===A&&s!==A||t.capture!==s.capture||t.once!==s.once||t.passive!==s.passive,h=t!==A&&(s===A||e);e&&this.element.removeEventListener(this.name,this,s),h&&this.element.addEventListener(this.name,this,t),this._$AH=t;}handleEvent(t){"function"==typeof this._$AH?this._$AH.call(this.options?.host??this.element,t):this._$AH.handleEvent(t);}}class Z{constructor(t,i,s){this.element=t,this.type=6,this._$AN=void 0,this._$AM=i,this.options=s;}get _$AU(){return this._$AM._$AU}_$AI(t){M(this,t);}}const B=t$1.litHtmlPolyfillSupport;B?.(S,k),(t$1.litHtmlVersions??=[]).push("3.3.2");const D=(t,i,s)=>{const e=s?.renderBefore??i;let h=e._$litPart$;if(void 0===h){const t=s?.renderBefore??null;e._$litPart$=h=new k(i.insertBefore(c(),t),t,void 0,s??{});}return h._$AI(t),h};
+const t$1=globalThis,i$2=t=>t,s$1=t$1.trustedTypes,e$2=s$1?s$1.createPolicy("lit-html",{createHTML:t=>t}):void 0,h="$lit$",o$3=`lit$${Math.random().toFixed(9).slice(2)}$`,n$1="?"+o$3,r$2=`<${n$1}>`,l=document,c=()=>l.createComment(""),a=t=>null===t||"object"!=typeof t&&"function"!=typeof t,u=Array.isArray,d=t=>u(t)||"function"==typeof t?.[Symbol.iterator],f="[ \t\n\f\r]",v=/<(?:(!--|\/[^a-zA-Z])|(\/?[a-zA-Z][^>\s]*)|(\/?$))/g,_=/-->/g,m=/>/g,p=RegExp(`>|${f}(?:([^\\s"'>=/]+)(${f}*=${f}*(?:[^ \t\n\f\r"'\`<>=]|("|')|))|$)`,"g"),g=/'/g,$=/"/g,y=/^(?:script|style|textarea|title)$/i,x=t=>(i,...s)=>({_$litType$:t,strings:i,values:s}),b=x(1),E=Symbol.for("lit-noChange"),A=Symbol.for("lit-nothing"),C=new WeakMap,P$1=l.createTreeWalker(l,129);function V(t,i){if(!u(t)||!t.hasOwnProperty("raw"))throw Error("invalid template strings array");return void 0!==e$2?e$2.createHTML(i):i}const N=(t,i)=>{const s=t.length-1,e=[];let n,l=2===i?"<svg>":3===i?"<math>":"",c=v;for(let i=0;i<s;i++){const s=t[i];let a,u,d=-1,f=0;for(;f<s.length&&(c.lastIndex=f,u=c.exec(s),null!==u);)f=c.lastIndex,c===v?"!--"===u[1]?c=_:void 0!==u[1]?c=m:void 0!==u[2]?(y.test(u[2])&&(n=RegExp("</"+u[2],"g")),c=p):void 0!==u[3]&&(c=p):c===p?">"===u[0]?(c=n??v,d=-1):void 0===u[1]?d=-2:(d=c.lastIndex-u[2].length,a=u[1],c=void 0===u[3]?p:'"'===u[3]?$:g):c===$||c===g?c=p:c===_||c===m?c=v:(c=p,n=void 0);const x=c===p&&t[i+1].startsWith("/>")?" ":"";l+=c===v?s+r$2:d>=0?(e.push(a),s.slice(0,d)+h+s.slice(d)+o$3+x):s+o$3+(-2===d?i:x);}return [V(t,l+(t[s]||"<?>")+(2===i?"</svg>":3===i?"</math>":"")),e]};class S{constructor({strings:t,_$litType$:i},e){let r;this.parts=[];let l=0,a=0;const u=t.length-1,d=this.parts,[f,v]=N(t,i);if(this.el=S.createElement(f,e),P$1.currentNode=this.el.content,2===i||3===i){const t=this.el.content.firstChild;t.replaceWith(...t.childNodes);}for(;null!==(r=P$1.nextNode())&&d.length<u;){if(1===r.nodeType){if(r.hasAttributes())for(const t of r.getAttributeNames())if(t.endsWith(h)){const i=v[a++],s=r.getAttribute(t).split(o$3),e=/([.?@])?(.*)/.exec(i);d.push({type:1,index:l,name:e[2],strings:s,ctor:"."===e[1]?I:"?"===e[1]?L:"@"===e[1]?z:H$2}),r.removeAttribute(t);}else t.startsWith(o$3)&&(d.push({type:6,index:l}),r.removeAttribute(t));if(y.test(r.tagName)){const t=r.textContent.split(o$3),i=t.length-1;if(i>0){r.textContent=s$1?s$1.emptyScript:"";for(let s=0;s<i;s++)r.append(t[s],c()),P$1.nextNode(),d.push({type:2,index:++l});r.append(t[i],c());}}}else if(8===r.nodeType)if(r.data===n$1)d.push({type:2,index:l});else {let t=-1;for(;-1!==(t=r.data.indexOf(o$3,t+1));)d.push({type:7,index:l}),t+=o$3.length-1;}l++;}}static createElement(t,i){const s=l.createElement("template");return s.innerHTML=t,s}}function M(t,i,s=t,e){if(i===E)return i;let h=void 0!==e?s._$Co?.[e]:s._$Cl;const o=a(i)?void 0:i._$litDirective$;return h?.constructor!==o&&(h?._$AO?.(false),void 0===o?h=void 0:(h=new o(t),h._$AT(t,s,e)),void 0!==e?(s._$Co??=[])[e]=h:s._$Cl=h),void 0!==h&&(i=M(t,h._$AS(t,i.values),h,e)),i}class R{constructor(t,i){this._$AV=[],this._$AN=void 0,this._$AD=t,this._$AM=i;}get parentNode(){return this._$AM.parentNode}get _$AU(){return this._$AM._$AU}u(t){const{el:{content:i},parts:s}=this._$AD,e=(t?.creationScope??l).importNode(i,true);P$1.currentNode=e;let h=P$1.nextNode(),o=0,n=0,r=s[0];for(;void 0!==r;){if(o===r.index){let i;2===r.type?i=new k(h,h.nextSibling,this,t):1===r.type?i=new r.ctor(h,r.name,r.strings,this,t):6===r.type&&(i=new Z(h,this,t)),this._$AV.push(i),r=s[++n];}o!==r?.index&&(h=P$1.nextNode(),o++);}return P$1.currentNode=l,e}p(t){let i=0;for(const s of this._$AV) void 0!==s&&(void 0!==s.strings?(s._$AI(t,s,i),i+=s.strings.length-2):s._$AI(t[i])),i++;}}class k{get _$AU(){return this._$AM?._$AU??this._$Cv}constructor(t,i,s,e){this.type=2,this._$AH=A,this._$AN=void 0,this._$AA=t,this._$AB=i,this._$AM=s,this.options=e,this._$Cv=e?.isConnected??true;}get parentNode(){let t=this._$AA.parentNode;const i=this._$AM;return void 0!==i&&11===t?.nodeType&&(t=i.parentNode),t}get startNode(){return this._$AA}get endNode(){return this._$AB}_$AI(t,i=this){t=M(this,t,i),a(t)?t===A||null==t||""===t?(this._$AH!==A&&this._$AR(),this._$AH=A):t!==this._$AH&&t!==E&&this._(t):void 0!==t._$litType$?this.$(t):void 0!==t.nodeType?this.T(t):d(t)?this.k(t):this._(t);}O(t){return this._$AA.parentNode.insertBefore(t,this._$AB)}T(t){this._$AH!==t&&(this._$AR(),this._$AH=this.O(t));}_(t){this._$AH!==A&&a(this._$AH)?this._$AA.nextSibling.data=t:this.T(l.createTextNode(t)),this._$AH=t;}$(t){const{values:i,_$litType$:s}=t,e="number"==typeof s?this._$AC(t):(void 0===s.el&&(s.el=S.createElement(V(s.h,s.h[0]),this.options)),s);if(this._$AH?._$AD===e)this._$AH.p(i);else {const t=new R(e,this),s=t.u(this.options);t.p(i),this.T(s),this._$AH=t;}}_$AC(t){let i=C.get(t.strings);return void 0===i&&C.set(t.strings,i=new S(t)),i}k(t){u(this._$AH)||(this._$AH=[],this._$AR());const i=this._$AH;let s,e=0;for(const h of t)e===i.length?i.push(s=new k(this.O(c()),this.O(c()),this,this.options)):s=i[e],s._$AI(h),e++;e<i.length&&(this._$AR(s&&s._$AB.nextSibling,e),i.length=e);}_$AR(t=this._$AA.nextSibling,s){for(this._$AP?.(false,true,s);t!==this._$AB;){const s=i$2(t).nextSibling;i$2(t).remove(),t=s;}}setConnected(t){ void 0===this._$AM&&(this._$Cv=t,this._$AP?.(t));}}let H$2 = class H{get tagName(){return this.element.tagName}get _$AU(){return this._$AM._$AU}constructor(t,i,s,e,h){this.type=1,this._$AH=A,this._$AN=void 0,this.element=t,this.name=i,this._$AM=e,this.options=h,s.length>2||""!==s[0]||""!==s[1]?(this._$AH=Array(s.length-1).fill(new String),this.strings=s):this._$AH=A;}_$AI(t,i=this,s,e){const h=this.strings;let o=false;if(void 0===h)t=M(this,t,i,0),o=!a(t)||t!==this._$AH&&t!==E,o&&(this._$AH=t);else {const e=t;let n,r;for(t=h[0],n=0;n<h.length-1;n++)r=M(this,e[s+n],i,n),r===E&&(r=this._$AH[n]),o||=!a(r)||r!==this._$AH[n],r===A?t=A:t!==A&&(t+=(r??"")+h[n+1]),this._$AH[n]=r;}o&&!e&&this.j(t);}j(t){t===A?this.element.removeAttribute(this.name):this.element.setAttribute(this.name,t??"");}};class I extends H$2{constructor(){super(...arguments),this.type=3;}j(t){this.element[this.name]=t===A?void 0:t;}}class L extends H$2{constructor(){super(...arguments),this.type=4;}j(t){this.element.toggleAttribute(this.name,!!t&&t!==A);}}class z extends H$2{constructor(t,i,s,e,h){super(t,i,s,e,h),this.type=5;}_$AI(t,i=this){if((t=M(this,t,i,0)??A)===E)return;const s=this._$AH,e=t===A&&s!==A||t.capture!==s.capture||t.once!==s.once||t.passive!==s.passive,h=t!==A&&(s===A||e);e&&this.element.removeEventListener(this.name,this,s),h&&this.element.addEventListener(this.name,this,t),this._$AH=t;}handleEvent(t){"function"==typeof this._$AH?this._$AH.call(this.options?.host??this.element,t):this._$AH.handleEvent(t);}}class Z{constructor(t,i,s){this.element=t,this.type=6,this._$AN=void 0,this._$AM=i,this.options=s;}get _$AU(){return this._$AM._$AU}_$AI(t){M(this,t);}}const B=t$1.litHtmlPolyfillSupport;B?.(S,k),(t$1.litHtmlVersions??=[]).push("3.3.2");const D=(t,i,s)=>{const e=s?.renderBefore??i;let h=e._$litPart$;if(void 0===h){const t=s?.renderBefore??null;e._$litPart$=h=new k(i.insertBefore(c(),t),t,void 0,s??{});}return h._$AI(t),h};
 
 /**
  * @license
@@ -1363,9 +1363,8 @@ class PresenceEngine {
     }
 }
 
-const W$1 = 128;
-const H$1 = 176;
-const P$1 = 4;
+const W$1 = 96;
+const H$1 = 96;
 const KNOWN = new Set([
     'idle',
     'walking',
@@ -1394,47 +1393,17 @@ const KNOWN = new Set([
     'morning-stretch',
     'phone-bed',
 ]);
-const PALETTE = {
-    B: '#2B2A33',
-    b: '#3E3C49',
-    S: '#D6B789',
-    s: '#B99668',
-    j: '#8E6D48',
-    C: '#4D8A63',
-    c: '#3F7151',
-    E: '#13151D',
-    e: '#2A2F3A',
-    M: '#8A4F3B',
-    H: '#5D4A2D',
-    h: '#7A653E',
-    d: '#6B5035',
-    A: '#D4B25D',
-};
-function px$1(gx, gy, gw, gh, fill) {
-    return `<rect x="${gx * P$1}" y="${gy * P$1}" width="${gw * P$1}" height="${gh * P$1}" fill="${fill}"/>`;
-}
-function bitmap(gx, gy, rows) {
-    const rects = [];
-    for (let y = 0; y < rows.length; y++) {
-        const row = rows[y];
-        let x = 0;
-        while (x < row.length) {
-            const ch = row[x];
-            if (ch === '.') {
-                x++;
-                continue;
-            }
-            let end = x + 1;
-            while (end < row.length && row[end] === ch)
-                end++;
-            const fill = PALETTE[ch];
-            if (fill) {
-                rects.push(`<rect x="${(gx + x) * P$1}" y="${(gy + y) * P$1}" width="${(end - x) * P$1}" height="${P$1}" fill="${fill}"/>`);
-            }
-            x = end;
-        }
-    }
-    return rects.join('');
+const COLORS$1 = {
+    outline: '#121722',
+    skin: '#E8C7A4',
+    skinShade: '#D3AE88',
+    hair: '#5A3D2A',
+    shirt: '#4E7B9D',
+    shirtShade: '#3B6484',
+    pants: '#2F3A55',
+    accent: '#A45B46'};
+function px$1(x, y, w, h, fill) {
+    return `<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${fill}"/>`;
 }
 function normalize(activity) {
     if (!KNOWN.has(activity))
@@ -1473,113 +1442,63 @@ function normalize(activity) {
     return 'idle';
 }
 function baseShadow() {
-    return `<ellipse class="friendly-shadow" cx="64" cy="164" rx="28" ry="5" fill="#000" opacity="0.14"/>`;
+    return '<ellipse class="mini-shadow" cx="48" cy="86" rx="18" ry="4" fill="#000" opacity="0.14"/>';
 }
-function baseBody() {
-    const torso = bitmap(10, 22, [
-        '..bbbbbbbbbbbb..',
-        '..bCCCCCCCCCCb..',
-        '..bCCbbbbbbCCb..',
-        '..bCCbCCCCbCCb..',
-        '..bCCbCCCCbCCb..',
-        '..bCCbbbbbbCCb..',
-        '..bCCCCCCCCCCb..',
-        '..bbCCCCCCCCbb..',
-        '...bCCCCCCCCb...',
-        '...bCCCCCCCCb...',
-    ]);
-    const arms = bitmap(7, 23, [
-        's..............s',
-        'S..............S',
-        'S..............S',
-        's..............s',
-        's..............s',
-        'S..............S',
-        'S..............S',
-    ]);
-    const legs = bitmap(11, 32, [
-        '..BBBB..BBBB..',
-        '..BbbB..BbbB..',
-        '..BbbB..BbbB..',
-        '..BAAB..BAAB..',
-        '..BAAB..BAAB..',
-    ]);
-    return `${torso}${arms}${legs}`;
-}
-function baseHead() {
-    return bitmap(9, 10, [
-        '..AAAAAAAAAAAA..',
-        '.AAhhhhhhhhhhAA.',
-        '.AhHHHHHHHHHHhA.',
-        '.hHSSSSSSSSSSHh.',
-        '.hHSSSSSSSSSSHh.',
-        '.hHSSSSSSSSSSHh.',
-        '.hHSSSSSSSSSSHh.',
-        '.hHSSSSSSSSSSHh.',
-        '.AhHjjjjjjjjHhA.',
-        '.AAhhhhhhhhhhAA.',
-    ]);
-}
-function baseFace() {
+function body() {
     return [
-        px$1(12, 13, 8, 1, PALETTE.h),
-        px$1(13, 15, 2, 1, PALETTE.E),
-        px$1(17, 15, 2, 1, PALETTE.E),
-        px$1(15, 16, 2, 2, PALETTE.s),
-        px$1(14, 18, 4, 1, PALETTE.M),
-        px$1(13, 19, 6, 1, PALETTE.d),
-        px$1(12, 20, 8, 1, PALETTE.j),
+        px$1(34, 52, 28, 18, COLORS$1.shirt),
+        px$1(34, 68, 28, 2, COLORS$1.shirtShade),
+        px$1(34, 70, 12, 12, COLORS$1.pants),
+        px$1(50, 70, 12, 12, COLORS$1.pants),
+        px$1(30, 56, 4, 16, COLORS$1.skin),
+        px$1(62, 56, 4, 16, COLORS$1.skin),
     ].join('');
 }
-function propFor(activity) {
+function head() {
+    return [
+        px$1(30, 24, 36, 4, COLORS$1.hair),
+        px$1(28, 28, 40, 4, COLORS$1.hair),
+        px$1(28, 32, 40, 20, COLORS$1.skin),
+        px$1(30, 32, 36, 2, COLORS$1.skinShade),
+    ].join('');
+}
+function face() {
+    return [
+        px$1(34, 34, 6, 4, COLORS$1.outline),
+        px$1(56, 34, 6, 4, COLORS$1.outline),
+        px$1(46, 38, 4, 6, COLORS$1.skinShade),
+        px$1(44, 42, 8, 4, COLORS$1.accent),
+    ].join('');
+}
+function overlay(activity) {
+    if (activity === 'walking') {
+        return `<g class="mini-overlay-walking">${px$1(28, 72, 6, 2, '#BDD7F0')}${px$1(62, 72, 6, 2, '#BDD7F0')}</g>`;
+    }
     if (activity === 'studying') {
-        return `<g class="friendly-overlay-studying">${px$1(10, 32, 12, 2, '#2A3342')}${px$1(11, 32, 10, 1, '#4E6788')}</g>`;
+        return `<g class="mini-overlay-studying">${px$1(30, 72, 36, 4, '#2E415A')}${px$1(34, 70, 28, 2, '#6F8EAA')}</g>`;
     }
     if (activity === 'cooking') {
-        return `<g class="friendly-overlay-cooking">${px$1(21, 30, 4, 2, '#7A8799')}${px$1(25, 31, 3, 1, '#5F6A7A')}</g>`;
-    }
-    if (activity === 'walking') {
-        return `<g class="friendly-overlay-walking">${px$1(3, 24, 2, 1, '#C9D8EA')}${px$1(27, 27, 2, 1, '#C9D8EA')}</g>`;
+        return `<g class="mini-overlay-cooking">${px$1(62, 58, 4, 10, '#D1DCE8')}${px$1(66, 60, 3, 2, '#A6B7C8')}</g>`;
     }
     if (activity === 'sleeping') {
-        return `<g class="friendly-overlay-sleeping">${px$1(8, 28, 16, 5, '#7A8DB2')}${px$1(9, 28, 14, 1, '#A6B8D5')}<text x="100" y="56" fill="#C9D8EA" font-size="10">z</text></g>`;
+        return `<g class="mini-overlay-sleeping">${px$1(28, 66, 40, 12, '#8CA5C3')}${px$1(30, 66, 36, 2, '#C3D2E2')}<text x="72" y="28" fill="#DDE9F8" font-size="8">z</text></g>`;
     }
     if (activity === 'relaxing') {
-        return `<g class="friendly-overlay-relaxing">${px$1(23, 17, 3, 2, '#F2C9A7')}</g>`;
+        return `<g class="mini-overlay-relaxing">${px$1(66, 46, 4, 4, '#F3C6A3')}</g>`;
     }
     return '';
 }
-function renderBaseCharacter() {
+function character() {
     return [
-        '<g class="friendly-character">',
-        '<g class="friendly-base totem-base">',
-        '<g class="friendly-body totem-body">',
-        baseBody(),
+        '<g class="mini-character">',
+        '<g class="mini-base">',
+        '<g class="mini-body">',
+        body(),
         '</g>',
-        '<g class="totem-shoulders">',
-        px$1(10, 22, 2, 1, PALETTE.b),
-        px$1(20, 22, 2, 1, PALETTE.b),
-        px$1(12, 22, 8, 1, PALETTE.C),
-        '</g>',
-        '<g class="friendly-head totem-head">',
-        '<g class="friendly-hair totem-crown">',
-        baseHead(),
-        '</g>',
-        '<g class="friendly-face totem-face totem-mask">',
-        baseFace(),
-        '</g>',
-        '<g class="totem-glyphs">',
-        px$1(12, 16, 1, 1, PALETTE.A),
-        px$1(20, 16, 1, 1, PALETTE.A),
-        px$1(15, 18, 2, 1, PALETTE.A),
-        '</g>',
-        '<g class="totem-arms">',
-        px$1(8, 24, 1, 7, PALETTE.s),
-        px$1(23, 24, 1, 7, PALETTE.s),
-        '</g>',
-        '<g class="totem-legs">',
-        px$1(13, 32, 2, 5, PALETTE.B),
-        px$1(17, 32, 2, 5, PALETTE.B),
+        '<g class="mini-head">',
+        head(),
+        '<g class="mini-face">',
+        face(),
         '</g>',
         '</g>',
         '</g>',
@@ -1593,52 +1512,76 @@ function getFriendlyAvatarSvg(activity) {
     if (cached)
         return cached;
     const svg = [
-        `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W$1} ${H$1}" shape-rendering="crispEdges" class="friendly-avatar friendly-${act}">`,
+        `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W$1} ${H$1}" shape-rendering="crispEdges" class="friendly-avatar mini-avatar friendly-${act}">`,
         baseShadow(),
-        renderBaseCharacter(),
-        propFor(act),
+        character(),
+        overlay(act),
         '</svg>',
     ].join('');
     cache.set(act, svg);
     return svg;
 }
 const friendlyAvatarStyles = `
-  .friendly-avatar { width: 100%; height: auto; display: block; image-rendering: pixelated; image-rendering: crisp-edges; }
-  .friendly-shadow { transform-origin: 64px 164px; }
+  .friendly-avatar,
+  .mini-avatar {
+    --mini-avatar-size: 48px;
+    --mini-avatar-center-x: 48px;
+    --mini-avatar-contrast: #121722;
+    width: 100%;
+    height: auto;
+    display: block;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+  }
 
-  @keyframes friendly-bob {
+  .mini-shadow { transform-origin: var(--mini-avatar-center-x) 86px; }
+
+  @keyframes mini-bob {
     0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-3px); }
+    50% { transform: translateY(-1.5px); }
   }
-  @keyframes friendly-walk {
+
+  @keyframes mini-walk {
     0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-4px); }
+    50% { transform: translateY(-2px); }
   }
-  @keyframes friendly-breathe {
+
+  @keyframes mini-breathe {
     0%, 100% { transform: scaleY(1); }
-    50% { transform: scaleY(1.03); }
+    50% { transform: scaleY(1.02); }
   }
-  @keyframes friendly-nod {
+
+  @keyframes mini-nod {
     0%, 100% { transform: rotate(0deg); }
-    50% { transform: rotate(2deg); }
+    50% { transform: rotate(1.5deg); }
   }
-  @keyframes friendly-sway {
+
+  @keyframes mini-sway {
     0%, 100% { transform: rotate(0deg); }
-    50% { transform: rotate(-2deg); }
+    50% { transform: rotate(-1.5deg); }
   }
 
-  .friendly-idle .friendly-character { animation: friendly-bob 2.8s ease-in-out infinite; }
-  .friendly-idle .friendly-body { animation: friendly-breathe 3s ease-in-out infinite; transform-origin: 64px 112px; }
+  .friendly-idle .mini-character { animation: mini-bob 2.8s ease-in-out infinite; transform-origin: var(--mini-avatar-center-x) 62px; }
+  .friendly-idle .mini-body { animation: mini-breathe 3.2s ease-in-out infinite; transform-origin: var(--mini-avatar-center-x) 70px; }
 
-  .friendly-walking .friendly-character { animation: friendly-walk 0.45s cubic-bezier(0.34, 1.2, 0.64, 1) infinite; }
-  .friendly-walking .friendly-overlay-walking { animation: friendly-breathe 0.45s ease-in-out infinite; }
+  .friendly-walking .mini-character { animation: mini-walk 0.65s ease-in-out infinite; transform-origin: var(--mini-avatar-center-x) 66px; }
+  .friendly-walking .mini-overlay-walking { animation: mini-breathe 0.65s ease-in-out infinite; }
 
-  .friendly-studying .friendly-head { animation: friendly-nod 2.8s ease-in-out infinite; transform-origin: 64px 64px; }
-  .friendly-cooking .friendly-head { animation: friendly-nod 1.8s ease-in-out infinite; transform-origin: 64px 64px; }
-  .friendly-relaxing .friendly-character { animation: friendly-sway 3.2s ease-in-out infinite; transform-origin: 64px 96px; }
+  .friendly-studying .mini-head { animation: mini-nod 2.6s ease-in-out infinite; transform-origin: var(--mini-avatar-center-x) 42px; }
+  .friendly-cooking .mini-head { animation: mini-nod 2.2s ease-in-out infinite; transform-origin: var(--mini-avatar-center-x) 42px; }
+  .friendly-relaxing .mini-character { animation: mini-sway 3.4s ease-in-out infinite; transform-origin: var(--mini-avatar-center-x) 64px; }
 
-  .friendly-sleeping .friendly-character { transform: translateY(8px); }
-  .friendly-sleeping .friendly-face { opacity: 0.6; }
+  .friendly-sleeping .mini-character { transform: translateY(4px); }
+  .friendly-sleeping .mini-face { opacity: 0.7; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mini-character,
+    .mini-body,
+    .mini-head,
+    .mini-overlay-walking {
+      animation: none !important;
+    }
+  }
 `;
 
 const ACTIVITIES = ['idle', 'walking', 'studying', 'cooking', 'sleeping'];
@@ -2404,4 +2347,3 @@ window.customCards.push({
     name: 'MiniMe Card',
     description: 'Animated pixel art avatar showing your room presence',
 });
-//# sourceMappingURL=minime-card.js.map

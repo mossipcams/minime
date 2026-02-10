@@ -8,12 +8,11 @@ describe('release artifact', () => {
     const bundle = readFileSync(bundlePath, 'utf8');
 
     expect(bundle).toContain('friendly-avatar');
-    expect(bundle).toContain('totem-head');
-    expect(bundle).toContain('totem-body');
-    expect(bundle).toContain('totem-crown');
-    expect(bundle).toContain('totem-mask');
-    expect(bundle).toContain('totem-glyphs');
-    expect(bundle).toContain('totem-shoulders');
+    expect(bundle).toContain('mini-avatar');
+    expect(bundle).toContain('mini-head');
+    expect(bundle).toContain('mini-body');
+    expect(bundle).not.toContain('totem-head');
+    expect(bundle).not.toContain('totem-body');
     expect(bundle).not.toContain('totem-avatar');
   });
 });
