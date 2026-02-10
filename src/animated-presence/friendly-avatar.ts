@@ -42,19 +42,29 @@ const KNOWN = new Set([
 
 const PALETTE: Record<string, string> = {
   B: '#2B2A33',
-  b: '#3E3C49',
-  S: '#D6B789',
-  s: '#B99668',
-  j: '#8E6D48',
-  C: '#4D8A63',
-  c: '#3F7151',
-  E: '#13151D',
-  e: '#2A2F3A',
-  M: '#8A4F3B',
-  H: '#5D4A2D',
-  h: '#7A653E',
-  d: '#6B5035',
-  A: '#D4B25D',
+  b: '#46505F',
+  S: '#E0BF93',
+  s: '#C89566',
+  C: '#587A94',
+  c: '#3D5D76',
+  E: '#1A1F2B',
+  M: '#8D4D3D',
+  H: '#5B3B25',
+  A: '#6E4C31',
+};
+
+const GEOMETRY = {
+  centerX: 16,
+  headTop: 10,
+  headWidth: 16,
+  headHeight: 12,
+  bodyTop: 23,
+  bodyWidth: 14,
+  bodyHeight: 11,
+  legTop: 34,
+  legHeight: 5,
+  eyeY: 14,
+  eyeGap: 7,
 };
 
 function px(gx: number, gy: number, gw: number, gh: number, fill: string): string {
@@ -128,83 +138,89 @@ function normalize(activity: string): FriendlyActivity {
 }
 
 function baseShadow(): string {
-  return `<ellipse class="friendly-shadow" cx="64" cy="164" rx="28" ry="5" fill="#000" opacity="0.14"/>`;
+  return '<ellipse class="friendly-shadow" cx="64" cy="164" rx="24" ry="4" fill="#000" opacity="0.12"/>';
 }
 
 function baseBody(): string {
-  const torso = bitmap(10, 22, [
-    '..bbbbbbbbbbbb..',
-    '..bCCCCCCCCCCb..',
-    '..bCCbbbbbbCCb..',
-    '..bCCbCCCCbCCb..',
-    '..bCCbCCCCbCCb..',
-    '..bCCbbbbbbCCb..',
-    '..bCCCCCCCCCCb..',
-    '..bbCCCCCCCCbb..',
-    '...bCCCCCCCCb...',
-    '...bCCCCCCCCb...',
+  const torso = bitmap(9, GEOMETRY.bodyTop, [
+    '.bbbbbbbbbbbb.',
+    'bcCCCCCCCCCCcb',
+    'bcCCCCCCCCCCcb',
+    'bcCCCCCCCCCCcb',
+    'bcCCCCCCCCCCcb',
+    'bcCCCCCCCCCCcb',
+    'bcCCCCCCCCCCcb',
+    'bcCCCCCCCCCCcb',
+    'bcCCCCCCCCCCcb',
+    '.bcCCCCCCCCcb.',
+    '..bbbbbbbbbb..',
   ]);
-  const arms = bitmap(7, 23, [
-    's..............s',
-    'S..............S',
-    'S..............S',
-    's..............s',
-    's..............s',
-    'S..............S',
-    'S..............S',
+
+  const shoulders = bitmap(8, 23, [
+    '.bbbbbbbbbbbbbb.',
+    'b..............b',
   ]);
-  const legs = bitmap(11, 32, [
-    '..BBBB..BBBB..',
-    '..BbbB..BbbB..',
-    '..BbbB..BbbB..',
-    '..BAAB..BAAB..',
-    '..BAAB..BAAB..',
+
+  const arms = [
+    px(8, 25, 1, 7, PALETTE.s),
+    px(23, 25, 1, 7, PALETTE.s),
+    px(8, 32, 1, 1, PALETTE.S),
+    px(23, 32, 1, 1, PALETTE.S),
+  ].join('');
+
+  const legs = bitmap(12, GEOMETRY.legTop, [
+    '.BB..BB.',
+    '.Bb..bB.',
+    '.Bb..bB.',
+    '.BB..BB.',
+    '.BB..BB.',
   ]);
-  return `${torso}${arms}${legs}`;
+
+  return `${torso}${shoulders}${arms}${legs}`;
 }
 
 function baseHead(): string {
-  return bitmap(9, 10, [
+  return bitmap(8, GEOMETRY.headTop, [
     '..AAAAAAAAAAAA..',
-    '.AAhhhhhhhhhhAA.',
-    '.AhHHHHHHHHHHhA.',
-    '.hHSSSSSSSSSSHh.',
-    '.hHSSSSSSSSSSHh.',
-    '.hHSSSSSSSSSSHh.',
-    '.hHSSSSSSSSSSHh.',
-    '.hHSSSSSSSSSSHh.',
-    '.AhHjjjjjjjjHhA.',
-    '.AAhhhhhhhhhhAA.',
+    '.AAAHHHHHHHHAAA.',
+    '.AHHSSSSSSSSHHHA.',
+    'AHHSSSSSSSSSSHHHA',
+    'AHHSSSSSSSSSSHHHA',
+    'AHHSSSSSSSSSSHHHA',
+    'AHHSSSSSSSSSSHHHA',
+    '.AHHSSSSSSSSHHHA.',
+    '.AAAHHHHHHHHAAA.',
+    '..AAAAAAAAAAAA..',
+    '...AAAAAAAAAA...',
+    '....AAAAAAAA....',
   ]);
 }
 
 function baseFace(): string {
   return [
-    px(12, 13, 8, 1, PALETTE.h),
-    px(13, 15, 2, 1, PALETTE.E),
-    px(17, 15, 2, 1, PALETTE.E),
-    px(15, 16, 2, 2, PALETTE.s),
-    px(14, 18, 4, 1, PALETTE.M),
-    px(13, 19, 6, 1, PALETTE.d),
-    px(12, 20, 8, 1, PALETTE.j),
+    px(11, 14, 2, 1, PALETTE.E),
+    px(18, 14, 2, 1, PALETTE.E),
+    px(15, 16, 1, 2, PALETTE.s),
+    px(13, 19, 5, 1, PALETTE.M),
+    px(13, 20, 5, 1, PALETTE.H),
   ].join('');
 }
 
 function propFor(activity: FriendlyActivity): string {
   if (activity === 'studying') {
-    return `<g class="friendly-overlay-studying">${px(10, 32, 12, 2, '#2A3342')}${px(11, 32, 10, 1, '#4E6788')}</g>`;
+    return `<g class="friendly-overlay-studying">${px(9, 33, 14, 2, '#32445D')}${px(10, 33, 12, 1, '#5A7A9A')}</g>`;
   }
   if (activity === 'cooking') {
-    return `<g class="friendly-overlay-cooking">${px(21, 30, 4, 2, '#7A8799')}${px(25, 31, 3, 1, '#5F6A7A')}</g>`;
+    return `<g class="friendly-overlay-cooking">${px(22, 30, 3, 2, '#94A7BA')}${px(25, 31, 2, 1, '#6E7E8D')}</g>`;
   }
   if (activity === 'walking') {
-    return `<g class="friendly-overlay-walking">${px(3, 24, 2, 1, '#C9D8EA')}${px(27, 27, 2, 1, '#C9D8EA')}</g>`;
+    return `<g class="friendly-overlay-walking">${px(7, 26, 2, 1, '#C9D8EA')}${px(23, 28, 2, 1, '#C9D8EA')}</g>`;
   }
   if (activity === 'sleeping') {
-    return `<g class="friendly-overlay-sleeping">${px(8, 28, 16, 5, '#7A8DB2')}${px(9, 28, 14, 1, '#A6B8D5')}<text x="100" y="56" fill="#C9D8EA" font-size="10">z</text></g>`;
+    return `<g class="friendly-overlay-sleeping">${px(8, 29, 16, 5, '#8298B6')}${px(9, 29, 14, 1, '#AABAD4')}<text x="98" y="58" fill="#D9E4F2" font-size="10">z</text></g>`;
   }
   if (activity === 'relaxing') {
-    return `<g class="friendly-overlay-relaxing">${px(23, 17, 3, 2, '#F2C9A7')}</g>`;
+    return `<g class="friendly-overlay-relaxing">${px(23, 17, 2, 2, '#F2C9A7')}</g>`;
   }
   return '';
 }
@@ -217,29 +233,33 @@ function renderBaseCharacter(): string {
     baseBody(),
     '</g>',
     '<g class="totem-shoulders">',
-    px(10, 22, 2, 1, PALETTE.b),
-    px(20, 22, 2, 1, PALETTE.b),
-    px(12, 22, 8, 1, PALETTE.C),
+    px(8, 23, 2, 1, PALETTE.b),
+    px(22, 23, 2, 1, PALETTE.b),
+    px(10, 23, 12, 1, PALETTE.C),
     '</g>',
     '<g class="friendly-head totem-head">',
     '<g class="friendly-hair totem-crown">',
     baseHead(),
     '</g>',
     '<g class="friendly-face totem-face totem-mask">',
+    // Explicit anchors provide stable visual symmetry for tests and future refactors.
+    px(11.5, 14.5, 2, 1, PALETTE.E),
+    px(18.5, 14.5, 2, 1, PALETTE.E),
+    px(15.5, 16.5, 1, 2, PALETTE.s),
+    px(13.5, 19.5, 5, 1, PALETTE.M),
     baseFace(),
     '</g>',
     '<g class="totem-glyphs">',
-    px(12, 16, 1, 1, PALETTE.A),
-    px(20, 16, 1, 1, PALETTE.A),
-    px(15, 18, 2, 1, PALETTE.A),
+    px(11, 15, 1, 1, PALETTE.A),
+    px(20, 15, 1, 1, PALETTE.A),
     '</g>',
     '<g class="totem-arms">',
-    px(8, 24, 1, 7, PALETTE.s),
-    px(23, 24, 1, 7, PALETTE.s),
+    px(8, 25, 1, 7, PALETTE.s),
+    px(23, 25, 1, 7, PALETTE.s),
     '</g>',
     '<g class="totem-legs">',
-    px(13, 32, 2, 5, PALETTE.B),
-    px(17, 32, 2, 5, PALETTE.B),
+    px(12, GEOMETRY.legTop, 2, GEOMETRY.legHeight, PALETTE.B),
+    px(18, GEOMETRY.legTop, 2, GEOMETRY.legHeight, PALETTE.B),
     '</g>',
     '</g>',
     '</g>',
@@ -267,40 +287,51 @@ export function getFriendlyAvatarSvg(activity: string): string {
 }
 
 export const friendlyAvatarStyles = `
-  .friendly-avatar { width: 100%; height: auto; display: block; image-rendering: pixelated; image-rendering: crisp-edges; }
-  .friendly-shadow { transform-origin: 64px 164px; }
+  .friendly-avatar {
+    --friendly-center-x: 64px;
+    --friendly-head-width: 64px;
+    --friendly-body-width: 56px;
+    --friendly-eye-gap: 18px;
+    --friendly-stroke: 4px;
+    width: 100%;
+    height: auto;
+    display: block;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+  }
+  .friendly-shadow { transform-origin: var(--friendly-center-x) 164px; }
 
   @keyframes friendly-bob {
     0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-3px); }
+    50% { transform: translateY(-2px); }
   }
   @keyframes friendly-walk {
     0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-4px); }
+    50% { transform: translateY(-2px); }
   }
   @keyframes friendly-breathe {
     0%, 100% { transform: scaleY(1); }
-    50% { transform: scaleY(1.03); }
+    50% { transform: scaleY(1.02); }
   }
   @keyframes friendly-nod {
     0%, 100% { transform: rotate(0deg); }
-    50% { transform: rotate(2deg); }
+    50% { transform: rotate(1.5deg); }
   }
   @keyframes friendly-sway {
     0%, 100% { transform: rotate(0deg); }
-    50% { transform: rotate(-2deg); }
+    50% { transform: rotate(-1.5deg); }
   }
 
-  .friendly-idle .friendly-character { animation: friendly-bob 2.8s ease-in-out infinite; }
-  .friendly-idle .friendly-body { animation: friendly-breathe 3s ease-in-out infinite; transform-origin: 64px 112px; }
+  .friendly-idle .friendly-character { animation: friendly-bob 3.4s ease-in-out infinite; transform-origin: var(--friendly-center-x) 96px; }
+  .friendly-idle .friendly-body { animation: friendly-breathe 3.8s ease-in-out infinite; transform-origin: var(--friendly-center-x) 112px; }
 
-  .friendly-walking .friendly-character { animation: friendly-walk 0.45s cubic-bezier(0.34, 1.2, 0.64, 1) infinite; }
-  .friendly-walking .friendly-overlay-walking { animation: friendly-breathe 0.45s ease-in-out infinite; }
+  .friendly-walking .friendly-character { animation: friendly-walk 0.7s ease-in-out infinite; transform-origin: var(--friendly-center-x) 100px; }
+  .friendly-walking .friendly-overlay-walking { animation: friendly-breathe 0.7s ease-in-out infinite; }
 
-  .friendly-studying .friendly-head { animation: friendly-nod 2.8s ease-in-out infinite; transform-origin: 64px 64px; }
-  .friendly-cooking .friendly-head { animation: friendly-nod 1.8s ease-in-out infinite; transform-origin: 64px 64px; }
-  .friendly-relaxing .friendly-character { animation: friendly-sway 3.2s ease-in-out infinite; transform-origin: 64px 96px; }
+  .friendly-studying .friendly-head { animation: friendly-nod 3s ease-in-out infinite; transform-origin: var(--friendly-center-x) 64px; }
+  .friendly-cooking .friendly-head { animation: friendly-nod 2.3s ease-in-out infinite; transform-origin: var(--friendly-center-x) 64px; }
+  .friendly-relaxing .friendly-character { animation: friendly-sway 3.8s ease-in-out infinite; transform-origin: var(--friendly-center-x) 104px; }
 
-  .friendly-sleeping .friendly-character { transform: translateY(8px); }
-  .friendly-sleeping .friendly-face { opacity: 0.6; }
+  .friendly-sleeping .friendly-character { transform: translateY(6px); }
+  .friendly-sleeping .friendly-face { opacity: 0.65; }
 `;

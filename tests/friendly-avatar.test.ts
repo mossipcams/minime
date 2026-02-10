@@ -51,4 +51,34 @@ describe('Friendly Avatar', () => {
     expect(svg).toContain('totem-glyphs');
     expect(svg).toContain('totem-shoulders');
   });
+
+  it('sets explicit geometry tokens for proportion and alignment guardrails', () => {
+    expect(friendlyAvatarStyles).toContain('--friendly-head-width: 64px');
+    expect(friendlyAvatarStyles).toContain('--friendly-body-width: 56px');
+    expect(friendlyAvatarStyles).toContain('--friendly-center-x: 64px');
+    expect(friendlyAvatarStyles).toContain('--friendly-eye-gap: 18px');
+    expect(friendlyAvatarStyles).toContain('--friendly-stroke: 4px');
+  });
+
+  it('keeps facial features mirrored around centerline and aligned vertically', () => {
+    const svg = getFriendlyAvatarSvg('idle');
+    expect(svg).toContain('<rect x="46" y="58" width="8" height="4" fill="#1A1F2B"/>');
+    expect(svg).toContain('<rect x="74" y="58" width="8" height="4" fill="#1A1F2B"/>');
+    expect(svg).toContain('<rect x="62" y="66" width="4" height="8" fill="#C89566"/>');
+    expect(svg).toContain('<rect x="54" y="78" width="20" height="4" fill="#8D4D3D"/>');
+  });
+
+  it('uses calmer motion with stable transform origins for all activities', () => {
+    expect(friendlyAvatarStyles).toContain('.friendly-idle .friendly-character { animation: friendly-bob 3.4s ease-in-out infinite; transform-origin: var(--friendly-center-x) 96px; }');
+    expect(friendlyAvatarStyles).toContain('.friendly-walking .friendly-character { animation: friendly-walk 0.7s ease-in-out infinite; transform-origin: var(--friendly-center-x) 100px; }');
+    expect(friendlyAvatarStyles).toContain('.friendly-studying .friendly-head { animation: friendly-nod 3s ease-in-out infinite; transform-origin: var(--friendly-center-x) 64px; }');
+    expect(friendlyAvatarStyles).toContain('.friendly-relaxing .friendly-character { animation: friendly-sway 3.8s ease-in-out infinite; transform-origin: var(--friendly-center-x) 104px; }');
+  });
+
+  it('maintains visual readability with stronger facial contrast colors', () => {
+    const svg = getFriendlyAvatarSvg('idle');
+    expect(svg).toContain('fill="#1A1F2B"');
+    expect(svg).toContain('fill="#8D4D3D"');
+    expect(svg).toContain('fill="#5B3B25"');
+  });
 });
