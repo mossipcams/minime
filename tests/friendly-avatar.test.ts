@@ -47,5 +47,8 @@ describe('Friendly Avatar', () => {
     expect(svg).toContain('totem-arms');
     expect(svg).toContain('totem-legs');
     expect(svg).toContain('totem-crown');
+    expect(svg).toContain('totem-mask');
+    expect(svg).toContain('totem-glyphs');
+    expect(svg).toContain('totem-shoulders');
   });
 });

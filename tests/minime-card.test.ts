@@ -179,6 +179,9 @@ describe('MiniMeCard', () => {
     expect(avatar!.innerHTML).toContain('totem-head');
     expect(avatar!.innerHTML).toContain('totem-body');
     expect(avatar!.innerHTML).toContain('totem-crown');
+    expect(avatar!.innerHTML).toContain('totem-mask');
+    expect(avatar!.innerHTML).toContain('totem-glyphs');
+    expect(avatar!.innerHTML).toContain('totem-shoulders');
     expect(avatar!.innerHTML).not.toContain('totem-avatar');
     document.body.removeChild(card);
   });

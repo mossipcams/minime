@@ -11,6 +11,9 @@ describe('release artifact', () => {
     expect(bundle).toContain('totem-head');
     expect(bundle).toContain('totem-body');
     expect(bundle).toContain('totem-crown');
+    expect(bundle).toContain('totem-mask');
+    expect(bundle).toContain('totem-glyphs');
+    expect(bundle).toContain('totem-shoulders');
     expect(bundle).not.toContain('totem-avatar');
   });
 });
