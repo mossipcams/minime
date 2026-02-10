@@ -41,20 +41,20 @@ const KNOWN = new Set([
 ]);
 
 const PALETTE: Record<string, string> = {
-  B: '#2A3342',
-  b: '#3B4860',
-  S: '#F2C9A7',
-  s: '#D3AC8D',
-  j: '#BF9377',
-  C: '#7BC6A4',
-  c: '#63A98B',
-  E: '#1A2230',
-  e: '#243146',
-  M: '#C86F6F',
-  H: '#5B3829',
-  h: '#6F4533',
-  d: '#A77763',
-  A: '#F4D35E',
+  B: '#2B2A33',
+  b: '#3E3C49',
+  S: '#D6B789',
+  s: '#B99668',
+  j: '#8E6D48',
+  C: '#4D8A63',
+  c: '#3F7151',
+  E: '#13151D',
+  e: '#2A2F3A',
+  M: '#8A4F3B',
+  H: '#5D4A2D',
+  h: '#7A653E',
+  d: '#6B5035',
+  A: '#D4B25D',
 };
 
 function px(gx: number, gy: number, gw: number, gh: number, fill: string): string {
@@ -133,52 +133,60 @@ function baseShadow(): string {
 
 function baseBody(): string {
   const torso = bitmap(10, 22, [
-    '.....bbbbbb.....',
-    '...bbCCCCCCbb...',
+    '..bbbbbbbbbbbb..',
     '..bCCCCCCCCCCb..',
-    '..bCCCCCCCCCCb..',
+    '..bCCbbbbbbCCb..',
+    '..bCCbCCCCbCCb..',
+    '..bCCbCCCCbCCb..',
+    '..bCCbbbbbbCCb..',
     '..bCCCCCCCCCCb..',
     '..bbCCCCCCCCbb..',
-    '...bbCCCCCCbb...',
+    '...bCCCCCCCCb...',
+    '...bCCCCCCCCb...',
   ]);
-  const arms = bitmap(7, 24, [
+  const arms = bitmap(7, 23, [
+    's..............s',
+    'S..............S',
+    'S..............S',
+    's..............s',
     's..............s',
     'S..............S',
     'S..............S',
   ]);
-  const legs = bitmap(11, 29, [
-    '....B....B....',
-    '...bB....Bb...',
-    '..bbA....Abb..',
+  const legs = bitmap(11, 32, [
+    '..BBBB..BBBB..',
+    '..BbbB..BbbB..',
+    '..BbbB..BbbB..',
+    '..BAAB..BAAB..',
+    '..BAAB..BAAB..',
   ]);
   return `${torso}${arms}${legs}`;
 }
 
 function baseHead(): string {
   return bitmap(9, 10, [
-    '..hhHHHHHHhh..',
-    '.hHHHSSSSHHHh.',
-    '.HHSSSSSSSSHH.',
-    'HHSSSSSSSSSSHH',
-    'HHSSSSSSSSSSHH',
-    'HHSSSSSSSSSSHH',
-    'HHsSSSSSSSSsHH',
-    '.HHjSSSSSSjHH.',
-    '..hHHjjjjHHh..',
+    '..AAAAAAAAAAAA..',
+    '.AAhhhhhhhhhhAA.',
+    '.AhHHHHHHHHHHhA.',
+    '.hHSSSSSSSSSSHh.',
+    '.hHSSSSSSSSSSHh.',
+    '.hHSSSSSSSSSSHh.',
+    '.hHSSSSSSSSSSHh.',
+    '.hHSSSSSSSSSSHh.',
+    '.AhHjjjjjjjjHhA.',
+    '.AAhhhhhhhhhhAA.',
   ]);
 }
 
 function baseFace(): string {
   return [
-    px(12, 14, 2, 1, PALETTE.h),
-    px(18, 14, 2, 1, PALETTE.h),
-    px(13, 15, 1, 1, PALETTE.E),
-    px(18, 15, 1, 1, PALETTE.E),
-    px(15, 16, 2, 1, PALETTE.s),
-    px(15, 17, 2, 1, PALETTE.M),
-    px(13, 18, 6, 1, PALETTE.d),
-    px(14, 19, 4, 1, PALETTE.j),
-    px(12, 12, 8, 1, PALETTE.h),
+    px(12, 13, 8, 1, PALETTE.h),
+    px(13, 15, 2, 1, PALETTE.E),
+    px(17, 15, 2, 1, PALETTE.E),
+    px(15, 16, 2, 2, PALETTE.s),
+    px(14, 18, 4, 1, PALETTE.M),
+    px(13, 19, 6, 1, PALETTE.d),
+    px(12, 20, 8, 1, PALETTE.j),
   ].join('');
 }
 
@@ -204,19 +212,24 @@ function propFor(activity: FriendlyActivity): string {
 function renderBaseCharacter(): string {
   return [
     '<g class="friendly-character">',
-    '<g class="friendly-base">',
-    '<g class="friendly-body">',
+    '<g class="friendly-base totem-base">',
+    '<g class="friendly-body totem-body">',
     baseBody(),
     '</g>',
-    '<g class="friendly-head friendly-head-adult">',
-    '<g class="friendly-hair friendly-hair-messy">',
+    '<g class="friendly-head totem-head">',
+    '<g class="friendly-hair totem-crown">',
     baseHead(),
     '</g>',
-    '<g class="friendly-face friendly-jawline">',
+    '<g class="friendly-face totem-face">',
     baseFace(),
     '</g>',
-    '<g class="friendly-stubble">',
-    px(13, 19, 6, 1, PALETTE.d),
+    '<g class="totem-arms">',
+    px(8, 24, 1, 7, PALETTE.s),
+    px(23, 24, 1, 7, PALETTE.s),
+    '</g>',
+    '<g class="totem-legs">',
+    px(13, 32, 2, 5, PALETTE.B),
+    px(17, 32, 2, 5, PALETTE.B),
     '</g>',
     '</g>',
     '</g>',

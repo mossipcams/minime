@@ -39,11 +39,13 @@ describe('Friendly Avatar', () => {
     expect(svg).toContain('friendly-idle');
   });
 
-  it('renders adult male-coded facial markers for the 25-year-old avatar look', () => {
+  it('renders a blocky totem-style structure', () => {
     const svg = getFriendlyAvatarSvg('idle');
-    expect(svg).toContain('friendly-head-adult');
-    expect(svg).toContain('friendly-hair-messy');
-    expect(svg).toContain('friendly-jawline');
-    expect(svg).toContain('friendly-stubble');
+    expect(svg).toContain('totem-head');
+    expect(svg).toContain('totem-face');
+    expect(svg).toContain('totem-body');
+    expect(svg).toContain('totem-arms');
+    expect(svg).toContain('totem-legs');
+    expect(svg).toContain('totem-crown');
   });
 });

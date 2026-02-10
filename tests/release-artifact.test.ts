@@ -8,8 +8,9 @@ describe('release artifact', () => {
     const bundle = readFileSync(bundlePath, 'utf8');
 
     expect(bundle).toContain('friendly-avatar');
-    expect(bundle).toContain('friendly-head-adult');
-    expect(bundle).toContain('friendly-stubble');
+    expect(bundle).toContain('totem-head');
+    expect(bundle).toContain('totem-body');
+    expect(bundle).toContain('totem-crown');
     expect(bundle).not.toContain('totem-avatar');
   });
 });
