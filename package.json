@@ -4,7 +4,7 @@
   "description": "Animated pixel art Home Assistant avatar card",
   "type": "module",
   "scripts": {
-    "build": "rollup -c rollup.config.mjs",
+    "build": "rollup -c rollup.config.mjs && command cp -f dist/minime-card.js minime-card.js",
     "dev": "rollup -c rollup.config.mjs -w",
     "test": "vitest run",
     "test:watch": "vitest"
