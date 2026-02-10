@@ -176,6 +176,8 @@ describe('MiniMeCard', () => {
     const avatar = shadow.querySelector('.avatar');
     expect(avatar).not.toBeNull();
     expect(avatar!.innerHTML).toContain('friendly-avatar');
+    expect(avatar!.innerHTML).toContain('friendly-head-adult');
+    expect(avatar!.innerHTML).toContain('friendly-stubble');
     expect(avatar!.innerHTML).not.toContain('totem-avatar');
     document.body.removeChild(card);
   });

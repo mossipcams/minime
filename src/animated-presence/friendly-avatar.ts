@@ -45,11 +45,15 @@ const PALETTE: Record<string, string> = {
   b: '#3B4860',
   S: '#F2C9A7',
   s: '#D3AC8D',
+  j: '#BF9377',
   C: '#7BC6A4',
   c: '#63A98B',
   E: '#1A2230',
+  e: '#243146',
   M: '#C86F6F',
   H: '#5B3829',
+  h: '#6F4533',
+  d: '#A77763',
   A: '#F4D35E',
 };
 
@@ -152,24 +156,29 @@ function baseBody(): string {
 
 function baseHead(): string {
   return bitmap(9, 10, [
-    '....HHHHHH....',
-    '...HSSSSSSH...',
-    '..HSSSSSSSSH..',
-    '..HSSSSSSSSH..',
-    '..HSSSSSSSSH..',
-    '..HSSSSSSSSH..',
-    '..HSSSSSSSSH..',
-    '...HSSSSSSH...',
-    '....HHHHHH....',
+    '..hhHHHHHHhh..',
+    '.hHHHSSSSHHHh.',
+    '.HHSSSSSSSSHH.',
+    'HHSSSSSSSSSSHH',
+    'HHSSSSSSSSSSHH',
+    'HHSSSSSSSSSSHH',
+    'HHsSSSSSSSSsHH',
+    '.HHjSSSSSSjHH.',
+    '..hHHjjjjHHh..',
   ]);
 }
 
 function baseFace(): string {
   return [
+    px(12, 14, 2, 1, PALETTE.h),
+    px(18, 14, 2, 1, PALETTE.h),
     px(13, 15, 1, 1, PALETTE.E),
     px(18, 15, 1, 1, PALETTE.E),
+    px(15, 16, 2, 1, PALETTE.s),
     px(15, 17, 2, 1, PALETTE.M),
-    px(14, 16, 4, 1, PALETTE.s),
+    px(13, 18, 6, 1, PALETTE.d),
+    px(14, 19, 4, 1, PALETTE.j),
+    px(12, 12, 8, 1, PALETTE.h),
   ].join('');
 }
 
@@ -199,11 +208,16 @@ function renderBaseCharacter(): string {
     '<g class="friendly-body">',
     baseBody(),
     '</g>',
-    '<g class="friendly-head">',
+    '<g class="friendly-head friendly-head-adult">',
+    '<g class="friendly-hair friendly-hair-messy">',
     baseHead(),
     '</g>',
-    '<g class="friendly-face">',
+    '<g class="friendly-face friendly-jawline">',
     baseFace(),
+    '</g>',
+    '<g class="friendly-stubble">',
+    px(13, 19, 6, 1, PALETTE.d),
+    '</g>',
     '</g>',
     '</g>',
     '</g>',

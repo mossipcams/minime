@@ -38,4 +38,12 @@ describe('Friendly Avatar', () => {
     const svg = getFriendlyAvatarSvg('unknown');
     expect(svg).toContain('friendly-idle');
   });
+
+  it('renders adult male-coded facial markers for the 25-year-old avatar look', () => {
+    const svg = getFriendlyAvatarSvg('idle');
+    expect(svg).toContain('friendly-head-adult');
+    expect(svg).toContain('friendly-hair-messy');
+    expect(svg).toContain('friendly-jawline');
+    expect(svg).toContain('friendly-stubble');
+  });
 });
