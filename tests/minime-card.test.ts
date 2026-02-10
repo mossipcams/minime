@@ -182,6 +182,8 @@ describe('MiniMeCard', () => {
     expect(avatar!.innerHTML).toContain('mini-face');
     expect(avatar!.innerHTML).toContain('mini-torso');
     expect(avatar!.innerHTML).toContain('mini-legs');
+    expect(avatar!.innerHTML).toContain('mini-profile');
+    expect(avatar!.innerHTML).toContain('mini-tool-pickaxe');
     expect(avatar!.innerHTML).not.toContain('totem-head');
     expect(avatar!.innerHTML).not.toContain('totem-body');
     expect(avatar!.innerHTML).not.toContain('totem-avatar');

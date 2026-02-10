@@ -50,6 +50,7 @@ const COLORS = {
   pants: '#2A3350',
   boots: '#1B2336',
   mouth: '#A24C3C',
+  steel: '#A9B4C3',
 };
 
 function px(x: number, y: number, w: number, h: number, fill: string): string {
@@ -124,10 +125,16 @@ function head(): string {
 
 function face(): string {
   return [
-    px(38, 36, 6, 4, COLORS.outline),
-    px(52, 36, 6, 4, COLORS.outline),
-    px(46, 40, 4, 4, COLORS.skinShade),
-    px(44, 44, 8, 2, COLORS.mouth),
+    px(42, 36, 6, 4, COLORS.outline),
+    px(50, 40, 4, 4, COLORS.skinShade),
+    px(52, 45, 6, 2, COLORS.mouth),
+  ].join('');
+}
+
+function pickaxe(): string {
+  return [
+    px(60, 54, 2, 18, COLORS.hairLight),
+    px(58, 52, 8, 4, COLORS.steel),
   ].join('');
 }
 
@@ -183,7 +190,11 @@ function character(): string {
     '<g class="mini-head">',
     head(),
     '<g class="mini-face">',
+    '<g class="mini-profile">',
+    '<g class="mini-nose">',
     face(),
+    '</g>',
+    '</g>',
     '</g>',
     '</g>',
     '<g class="mini-body">',
@@ -192,6 +203,9 @@ function character(): string {
     '</g>',
     '<g class="mini-legs">',
     legs(),
+    '</g>',
+    '<g class="mini-tool mini-tool-pickaxe">',
+    pickaxe(),
     '</g>',
     '</g>',
     '</g>',

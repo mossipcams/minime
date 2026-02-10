@@ -1404,6 +1404,7 @@ const COLORS$1 = {
     pants: '#2A3350',
     boots: '#1B2336',
     mouth: '#A24C3C',
+    steel: '#A9B4C3',
 };
 function px$1(x, y, w, h, fill) {
     return `<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${fill}"/>`;
@@ -1463,10 +1464,15 @@ function head() {
 }
 function face() {
     return [
-        px$1(38, 36, 6, 4, COLORS$1.outline),
-        px$1(52, 36, 6, 4, COLORS$1.outline),
-        px$1(46, 40, 4, 4, COLORS$1.skinShade),
-        px$1(44, 44, 8, 2, COLORS$1.mouth),
+        px$1(42, 36, 6, 4, COLORS$1.outline),
+        px$1(50, 40, 4, 4, COLORS$1.skinShade),
+        px$1(52, 45, 6, 2, COLORS$1.mouth),
+    ].join('');
+}
+function pickaxe() {
+    return [
+        px$1(60, 54, 2, 18, COLORS$1.hairLight),
+        px$1(58, 52, 8, 4, COLORS$1.steel),
     ].join('');
 }
 function torso() {
@@ -1513,7 +1519,11 @@ function character() {
         '<g class="mini-head">',
         head(),
         '<g class="mini-face">',
+        '<g class="mini-profile">',
+        '<g class="mini-nose">',
         face(),
+        '</g>',
+        '</g>',
         '</g>',
         '</g>',
         '<g class="mini-body">',
@@ -1522,6 +1532,9 @@ function character() {
         '</g>',
         '<g class="mini-legs">',
         legs(),
+        '</g>',
+        '<g class="mini-tool mini-tool-pickaxe">',
+        pickaxe(),
         '</g>',
         '</g>',
         '</g>',

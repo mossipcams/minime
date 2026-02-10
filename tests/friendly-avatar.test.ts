@@ -22,8 +22,12 @@ describe('Friendly Avatar', () => {
     expect(svg).toContain('mini-hair');
     expect(svg).toContain('mini-head');
     expect(svg).toContain('mini-face');
+    expect(svg).toContain('mini-profile');
+    expect(svg).toContain('mini-nose');
     expect(svg).toContain('mini-torso');
     expect(svg).toContain('mini-legs');
+    expect(svg).toContain('mini-tool');
+    expect(svg).toContain('mini-tool-pickaxe');
     expect(svg).not.toContain('totem-head');
     expect(svg).not.toContain('totem-body');
   });
@@ -52,12 +56,14 @@ describe('Friendly Avatar', () => {
     expect(getFriendlyAvatarSvg('unknown')).toContain('friendly-idle');
   });
 
-  it('uses compact terraria-like proportions with mirrored face anchors', () => {
+  it('uses compact terraria-like proportions with side-facing profile anchors', () => {
     const svg = getFriendlyAvatarSvg('idle');
     expect(svg).toContain('viewBox="0 0 96 96"');
-    expect(svg).toContain('<rect x="38" y="36" width="6" height="4" fill="#121722"/>');
-    expect(svg).toContain('<rect x="52" y="36" width="6" height="4" fill="#121722"/>');
-    expect(svg).toContain('<rect x="44" y="44" width="8" height="2" fill="#A24C3C"/>');
+    expect(svg).toContain('<rect x="42" y="36" width="6" height="4" fill="#121722"/>');
+    expect(svg).toContain('<rect x="50" y="40" width="4" height="4" fill="#D6B28B"/>');
+    expect(svg).toContain('<rect x="52" y="45" width="6" height="2" fill="#A24C3C"/>');
+    expect(svg).toContain('<rect x="60" y="54" width="2" height="18" fill="#6B4A36"/>');
+    expect(svg).toContain('<rect x="58" y="52" width="8" height="4" fill="#A9B4C3"/>');
   });
 
   it('defines terraria sprite style tokens and reduced-motion fallback', () => {
