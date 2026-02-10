@@ -1395,13 +1395,16 @@ const KNOWN = new Set([
 ]);
 const COLORS$1 = {
     outline: '#121722',
-    skin: '#E8C7A4',
-    skinShade: '#D3AE88',
-    hair: '#5A3D2A',
-    shirt: '#4E7B9D',
-    shirtShade: '#3B6484',
-    pants: '#2F3A55',
-    accent: '#A45B46'};
+    skin: '#E8C8A3',
+    skinShade: '#D6B28B',
+    hairDark: '#3E2A1E',
+    hairLight: '#6B4A36',
+    shirt: '#4F7098',
+    shirtLight: '#7293BD',
+    pants: '#2A3350',
+    boots: '#1B2336',
+    mouth: '#A24C3C',
+};
 function px$1(x, y, w, h, fill) {
     return `<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${fill}"/>`;
 }
@@ -1442,49 +1445,61 @@ function normalize(activity) {
     return 'idle';
 }
 function baseShadow() {
-    return '<ellipse class="mini-shadow" cx="48" cy="86" rx="18" ry="4" fill="#000" opacity="0.14"/>';
+    return '<ellipse class="mini-shadow" cx="48" cy="86" rx="16" ry="4" fill="#000" opacity="0.16"/>';
 }
-function body() {
+function hair() {
     return [
-        px$1(34, 52, 28, 18, COLORS$1.shirt),
-        px$1(34, 68, 28, 2, COLORS$1.shirtShade),
-        px$1(34, 70, 12, 12, COLORS$1.pants),
-        px$1(50, 70, 12, 12, COLORS$1.pants),
-        px$1(30, 56, 4, 16, COLORS$1.skin),
-        px$1(62, 56, 4, 16, COLORS$1.skin),
+        px$1(34, 24, 28, 4, COLORS$1.hairDark),
+        px$1(32, 28, 32, 4, COLORS$1.hairLight),
+        px$1(32, 32, 6, 6, COLORS$1.hairDark),
+        px$1(58, 32, 6, 6, COLORS$1.hairDark),
     ].join('');
 }
 function head() {
     return [
-        px$1(30, 24, 36, 4, COLORS$1.hair),
-        px$1(28, 28, 40, 4, COLORS$1.hair),
-        px$1(28, 32, 40, 20, COLORS$1.skin),
-        px$1(30, 32, 36, 2, COLORS$1.skinShade),
+        px$1(34, 30, 28, 24, COLORS$1.skin),
+        px$1(36, 32, 24, 2, COLORS$1.skinShade),
     ].join('');
 }
 function face() {
     return [
-        px$1(34, 34, 6, 4, COLORS$1.outline),
-        px$1(56, 34, 6, 4, COLORS$1.outline),
-        px$1(46, 38, 4, 6, COLORS$1.skinShade),
-        px$1(44, 42, 8, 4, COLORS$1.accent),
+        px$1(38, 36, 6, 4, COLORS$1.outline),
+        px$1(52, 36, 6, 4, COLORS$1.outline),
+        px$1(46, 40, 4, 4, COLORS$1.skinShade),
+        px$1(44, 44, 8, 2, COLORS$1.mouth),
+    ].join('');
+}
+function torso() {
+    return [
+        px$1(36, 54, 24, 16, COLORS$1.shirt),
+        px$1(38, 56, 20, 4, COLORS$1.shirtLight),
+        px$1(32, 56, 4, 12, COLORS$1.skin),
+        px$1(60, 56, 4, 12, COLORS$1.skin),
+    ].join('');
+}
+function legs() {
+    return [
+        px$1(38, 70, 8, 12, COLORS$1.pants),
+        px$1(50, 70, 8, 12, COLORS$1.pants),
+        px$1(38, 80, 8, 2, COLORS$1.boots),
+        px$1(50, 80, 8, 2, COLORS$1.boots),
     ].join('');
 }
 function overlay(activity) {
     if (activity === 'walking') {
-        return `<g class="mini-overlay-walking">${px$1(28, 72, 6, 2, '#BDD7F0')}${px$1(62, 72, 6, 2, '#BDD7F0')}</g>`;
+        return `<g class="mini-overlay-walking">${px$1(32, 82, 6, 2, '#BFD9EF')}${px$1(58, 82, 6, 2, '#BFD9EF')}</g>`;
     }
     if (activity === 'studying') {
-        return `<g class="mini-overlay-studying">${px$1(30, 72, 36, 4, '#2E415A')}${px$1(34, 70, 28, 2, '#6F8EAA')}</g>`;
+        return `<g class="mini-overlay-studying">${px$1(30, 72, 36, 4, '#2C435E')}${px$1(34, 70, 28, 2, '#5E7E9C')}</g>`;
     }
     if (activity === 'cooking') {
-        return `<g class="mini-overlay-cooking">${px$1(62, 58, 4, 10, '#D1DCE8')}${px$1(66, 60, 3, 2, '#A6B7C8')}</g>`;
+        return `<g class="mini-overlay-cooking">${px$1(62, 56, 4, 10, '#D8E3EE')}${px$1(66, 58, 3, 2, '#9EB3C8')}</g>`;
     }
     if (activity === 'sleeping') {
-        return `<g class="mini-overlay-sleeping">${px$1(28, 66, 40, 12, '#8CA5C3')}${px$1(30, 66, 36, 2, '#C3D2E2')}<text x="72" y="28" fill="#DDE9F8" font-size="8">z</text></g>`;
+        return `<g class="mini-overlay-sleeping">${px$1(32, 66, 32, 12, '#8FA7C2')}${px$1(34, 66, 28, 2, '#C8D5E4')}<text x="70" y="28" fill="#E3EDF8" font-size="8">z</text></g>`;
     }
     if (activity === 'relaxing') {
-        return `<g class="mini-overlay-relaxing">${px$1(66, 46, 4, 4, '#F3C6A3')}</g>`;
+        return `<g class="mini-overlay-relaxing">${px$1(64, 46, 4, 4, '#F2C8A7')}</g>`;
     }
     return '';
 }
@@ -1492,13 +1507,21 @@ function character() {
     return [
         '<g class="mini-character">',
         '<g class="mini-base">',
-        '<g class="mini-body">',
-        body(),
+        '<g class="mini-hair">',
+        hair(),
         '</g>',
         '<g class="mini-head">',
         head(),
         '<g class="mini-face">',
         face(),
+        '</g>',
+        '</g>',
+        '<g class="mini-body">',
+        '<g class="mini-torso">',
+        torso(),
+        '</g>',
+        '<g class="mini-legs">',
+        legs(),
         '</g>',
         '</g>',
         '</g>',
@@ -1526,7 +1549,7 @@ const friendlyAvatarStyles = `
   .mini-avatar {
     --mini-avatar-size: 48px;
     --mini-avatar-center-x: 48px;
-    --mini-avatar-contrast: #121722;
+    --mini-outline: #121722;
     width: 100%;
     height: auto;
     display: block;
@@ -1536,9 +1559,9 @@ const friendlyAvatarStyles = `
 
   .mini-shadow { transform-origin: var(--mini-avatar-center-x) 86px; }
 
-  @keyframes mini-bob {
+  @keyframes mini-idle {
     0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-1.5px); }
+    50% { transform: translateY(-1px); }
   }
 
   @keyframes mini-walk {
@@ -1548,35 +1571,35 @@ const friendlyAvatarStyles = `
 
   @keyframes mini-breathe {
     0%, 100% { transform: scaleY(1); }
-    50% { transform: scaleY(1.02); }
+    50% { transform: scaleY(1.03); }
   }
 
   @keyframes mini-nod {
     0%, 100% { transform: rotate(0deg); }
-    50% { transform: rotate(1.5deg); }
+    50% { transform: rotate(1deg); }
   }
 
   @keyframes mini-sway {
     0%, 100% { transform: rotate(0deg); }
-    50% { transform: rotate(-1.5deg); }
+    50% { transform: rotate(-1.2deg); }
   }
 
-  .friendly-idle .mini-character { animation: mini-bob 2.8s ease-in-out infinite; transform-origin: var(--mini-avatar-center-x) 62px; }
-  .friendly-idle .mini-body { animation: mini-breathe 3.2s ease-in-out infinite; transform-origin: var(--mini-avatar-center-x) 70px; }
+  .friendly-idle .mini-character { animation: mini-idle 2.4s steps(2, end) infinite; transform-origin: var(--mini-avatar-center-x) 64px; }
+  .friendly-idle .mini-torso { animation: mini-breathe 3.1s steps(2, end) infinite; transform-origin: var(--mini-avatar-center-x) 70px; }
 
-  .friendly-walking .mini-character { animation: mini-walk 0.65s ease-in-out infinite; transform-origin: var(--mini-avatar-center-x) 66px; }
-  .friendly-walking .mini-overlay-walking { animation: mini-breathe 0.65s ease-in-out infinite; }
+  .friendly-walking .mini-character { animation: mini-walk 0.55s steps(2, end) infinite; transform-origin: var(--mini-avatar-center-x) 66px; }
+  .friendly-walking .mini-overlay-walking { animation: mini-breathe 0.55s steps(2, end) infinite; }
 
-  .friendly-studying .mini-head { animation: mini-nod 2.6s ease-in-out infinite; transform-origin: var(--mini-avatar-center-x) 42px; }
-  .friendly-cooking .mini-head { animation: mini-nod 2.2s ease-in-out infinite; transform-origin: var(--mini-avatar-center-x) 42px; }
-  .friendly-relaxing .mini-character { animation: mini-sway 3.4s ease-in-out infinite; transform-origin: var(--mini-avatar-center-x) 64px; }
+  .friendly-studying .mini-head { animation: mini-nod 2.4s steps(2, end) infinite; transform-origin: var(--mini-avatar-center-x) 42px; }
+  .friendly-cooking .mini-head { animation: mini-nod 2s steps(2, end) infinite; transform-origin: var(--mini-avatar-center-x) 42px; }
+  .friendly-relaxing .mini-character { animation: mini-sway 3.2s steps(2, end) infinite; transform-origin: var(--mini-avatar-center-x) 64px; }
 
   .friendly-sleeping .mini-character { transform: translateY(4px); }
-  .friendly-sleeping .mini-face { opacity: 0.7; }
+  .friendly-sleeping .mini-face { opacity: 0.65; }
 
   @media (prefers-reduced-motion: reduce) {
     .mini-character,
-    .mini-body,
+    .mini-torso,
     .mini-head,
     .mini-overlay-walking {
       animation: none !important;

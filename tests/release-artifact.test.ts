@@ -9,8 +9,10 @@ describe('release artifact', () => {
 
     expect(bundle).toContain('friendly-avatar');
     expect(bundle).toContain('mini-avatar');
+    expect(bundle).toContain('mini-hair');
     expect(bundle).toContain('mini-head');
-    expect(bundle).toContain('mini-body');
+    expect(bundle).toContain('mini-torso');
+    expect(bundle).toContain('mini-legs');
     expect(bundle).not.toContain('totem-head');
     expect(bundle).not.toContain('totem-body');
     expect(bundle).not.toContain('totem-avatar');
