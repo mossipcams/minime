@@ -1,5 +1,6 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { MiniMeCard } from '../src/minime-card';
+import { PresencePhase } from '../src/animated-presence/presence-states';
 
 function mockHass(states: Record<string, { state: string; attributes?: Record<string, unknown> }>): any {
   const fullStates: Record<string, any> = {};
@@ -133,6 +134,12 @@ describe('MiniMeCard', () => {
     const dogWrap = shadow.querySelector('.dog-avatar-wrap');
     expect(dogWrap).not.toBeNull();
     expect(dogWrap!.innerHTML).toContain('dog-sleeping');
+    // Dog should be positioned at 41% (centered on dog bed)
+    expect((dogWrap as HTMLElement).style.left).toBe('41%');
+    // Background should use the cutaway variant with warm interior
+    const roomBg = shadow.querySelector('.room-bg');
+    expect(roomBg).not.toBeNull();
+    expect(roomBg!.innerHTML).toContain('#2A1C10');
     document.body.removeChild(card);
   });
 
@@ -146,6 +153,30 @@ describe('MiniMeCard', () => {
     expect(shadow.querySelector('.name')).toBeNull();
     expect(shadow.querySelector('.header-content')).toBeNull();
     expect(shadow.querySelector('.avatar-zone')).toBeNull();
+    document.body.removeChild(card);
+  });
+
+  it('renders the new friendly avatar and does not render legacy totem markup', async () => {
+    card.setConfig({ type: 'custom:minime-card', entity: 'device_tracker.phone' });
+    card.hass = mockHass({ 'device_tracker.phone': { state: 'home', attributes: { area: 'Office' } } });
+    document.body.appendChild(card);
+    await (card as any).updateComplete;
+    (card as any)._presenceState = {
+      phase: PresencePhase.IDLE,
+      currentRoom: 'office',
+      targetRoom: null,
+      avatarX: 35,
+      animation: 'idle',
+      crossfadeProgress: 0,
+      outgoingRoom: null,
+      visible: true,
+    };
+    await (card as any).updateComplete;
+    const shadow = card.shadowRoot!;
+    const avatar = shadow.querySelector('.avatar');
+    expect(avatar).not.toBeNull();
+    expect(avatar!.innerHTML).toContain('friendly-avatar');
+    expect(avatar!.innerHTML).not.toContain('totem-avatar');
     document.body.removeChild(card);
   });
 });

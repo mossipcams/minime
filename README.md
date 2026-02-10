@@ -5,7 +5,7 @@ A custom Home Assistant card that displays a pixel art avatar representing your 
 ## Features
 
 - 🎨 Pixel art room backgrounds (office, kitchen, living room, bedroom)
-- 🚶 Animated avatar character showing your presence
+- 🚶 Rebuilt reusable pixel avatar system showing your presence
 - 🔄 Automatic room switching based on Bermuda BLE detection
 - 📱 Responsive design (works on mobile and desktop)
 - ⚙️ Visual configuration editor

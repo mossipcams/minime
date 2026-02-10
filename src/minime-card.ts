@@ -5,7 +5,7 @@ import type { MiniMeConfig, HomeAssistant } from './types';
 import { lofiRoomBackgrounds } from './animated-presence/lofi-rooms';
 import { PresenceEngine } from './animated-presence/presence-engine';
 import { PresencePhase, type PresenceState } from './animated-presence/presence-states';
-import { getTotemSvg, totemStyles } from './animated-presence/totem-avatar';
+import { getFriendlyAvatarSvg, friendlyAvatarStyles } from './animated-presence/friendly-avatar';
 import { getDogSvg, dogStyles } from './animated-presence/dog-avatar';
 
 export class MiniMeCard extends LitElement {
@@ -171,7 +171,7 @@ export class MiniMeCard extends LitElement {
     const isNotHome = this._entityState === "not_home";
     if (isNotHome) {
       const dogHome = this._config.dog_entity && this._dogEntityState;
-      const notHomeSvg = lofiRoomBackgrounds["not_home"];
+      const notHomeSvg = dogHome ? lofiRoomBackgrounds["not_home_dog"] : lofiRoomBackgrounds["not_home"];
       return html`
         <ha-card>
           <div class="header">
@@ -180,7 +180,7 @@ export class MiniMeCard extends LitElement {
                 ? html`<div class="room-bg">${unsafeHTML(notHomeSvg)}</div>`
                 : html`<div class="room-bg-fallback"></div>`}
             </div>
-            ${dogHome ? html`<div class="dog-avatar-wrap" style="left: 50%">${unsafeHTML(getDogSvg('sleeping'))}</div>` : ""}
+            ${dogHome ? html`<div class="dog-avatar-wrap" style="left: 41%">${unsafeHTML(getDogSvg('sleeping'))}</div>` : ""}
           </div>
         </ha-card>
       `;
@@ -222,7 +222,7 @@ export class MiniMeCard extends LitElement {
           </div>
 
           ${showAvatar
-            ? html`<div class="avatar" style="left: ${avatarX}%">${unsafeHTML(getTotemSvg(activity))}</div>`
+            ? html`<div class="avatar" style="left: ${avatarX}%">${unsafeHTML(getFriendlyAvatarSvg(activity))}</div>`
             : ""}
           ${showDog
             ? html`<div class="dog-avatar-wrap" style="left: ${dogX}%">${unsafeHTML(getDogSvg(dogActivity))}</div>`
@@ -338,7 +338,7 @@ export class MiniMeCard extends LitElement {
       color: var(--minime-error);
     }
 
-    ${unsafeCSS(totemStyles)}
+    ${unsafeCSS(friendlyAvatarStyles)}
     ${unsafeCSS(dogStyles)}
   `;
 }
