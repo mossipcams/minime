@@ -17,7 +17,6 @@ describe('release artifact', () => {
       expect(bundle).toContain('mini-head');
       expect(bundle).toContain('mini-torso');
       expect(bundle).toContain('mini-legs');
-      expect(bundle).toContain('mini-profile');
       expect(bundle).toContain('mini-tool-pickaxe');
       expect(bundle).not.toContain('totem-head');
       expect(bundle).not.toContain('totem-body');

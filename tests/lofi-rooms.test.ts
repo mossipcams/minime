@@ -7,12 +7,13 @@ describe('Lofi Room Backgrounds', () => {
     expect(typeof lofiRoomBackgrounds).toBe('object');
   });
 
-  it('should have all four required rooms plus not_home', () => {
+  it('should have all four required rooms plus not_home and not_home_dog', () => {
     expect(lofiRoomBackgrounds).toHaveProperty('office');
     expect(lofiRoomBackgrounds).toHaveProperty('kitchen');
     expect(lofiRoomBackgrounds).toHaveProperty('living_room');
     expect(lofiRoomBackgrounds).toHaveProperty('bedroom');
     expect(lofiRoomBackgrounds).toHaveProperty('not_home');
+    expect(lofiRoomBackgrounds).toHaveProperty('not_home_dog');
   });
 
   it('should use lofi-prefixed gradient IDs to avoid collision', () => {
@@ -27,10 +28,24 @@ describe('Lofi Room Backgrounds', () => {
 
   it('should have floor line at y=85 for proper avatar alignment', () => {
     for (const [room, svg] of Object.entries(lofiRoomBackgrounds)) {
-      if (room === 'not_home') continue; // not_home is a house silhouette, no floor line
+      if (room === 'not_home' || room === 'not_home_dog') continue; // exterior scenes, no floor line
       const hasFloorAt85 = svg.includes('y="85"') || svg.includes('y1="85"');
       expect(hasFloorAt85, `${room} should have floor at y=85`).toBe(true);
     }
+  });
+
+  it('not_home_dog scene should have warm interior and dog bed', () => {
+    const svg = lofiRoomBackgrounds.not_home_dog;
+    expect(svg).toBeDefined();
+    // Warm interior brown background
+    expect(svg).toContain('#2A1C10');
+    // Dog bed ellipse
+    expect(svg).toContain('dog bed');
+    // Should still have stars and moon (exterior unchanged)
+    expect(svg).toContain('star');
+    // Should NOT have left windows (wall is cut away) — check for window rects at those positions
+    expect(svg).not.toMatch(/rect[^>]*x="148"[^>]*width="20"[^>]*height="15"/);
+    expect(svg).not.toMatch(/rect[^>]*x="178"[^>]*width="20"[^>]*height="15"/);
   });
 
   it('not_home scene should show a dark house silhouette with moon and stars', () => {

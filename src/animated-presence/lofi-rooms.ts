@@ -761,6 +761,207 @@ export const lofiRoomBackgrounds: Record<string, string> = {
   </circle>
 </svg>`,
 
+  not_home_dog: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 100" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="lofiNhdBg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1A2040"/>
+      <stop offset="60%" stop-color="#1E2848"/>
+      <stop offset="100%" stop-color="#162038"/>
+    </linearGradient>
+    <radialGradient id="lofiNhdMoon" cx="0.82" cy="0.15" r="0.35">
+      <stop offset="0%" stop-color="#F0E8D0" stop-opacity="0.4"/>
+      <stop offset="40%" stop-color="#D0C8B0" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#C0B8A0" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="lofiNhdWinGlow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0%" stop-color="#E8C878" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#D0A050" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="lofiNhdInterior" cx="0.41" cy="0.55" r="0.2">
+      <stop offset="0%" stop-color="#FFE0A0" stop-opacity="0.18"/>
+      <stop offset="50%" stop-color="#FFBA60" stop-opacity="0.06"/>
+      <stop offset="100%" stop-color="#FFBA60" stop-opacity="0"/>
+      <animate attributeName="r" values="0.2;0.22;0.2" dur="5s" repeatCount="indefinite"/>
+    </radialGradient>
+  </defs>
+
+  <!-- deep navy sky with moon wash -->
+  <rect width="400" height="100" fill="url(#lofiNhdBg)"/>
+  <rect width="400" height="100" fill="url(#lofiNhdMoon)">
+    <animate attributeName="opacity" values="0.8;1;0.85;0.95;0.8" dur="8s" repeatCount="indefinite"/>
+  </rect>
+
+  <!-- STARS -->
+  <circle class="star" cx="50" cy="12" r="0.9" fill="#FFF">
+    <animate attributeName="opacity" values="0.3;0.85;0.4;0.75;0.3" dur="3s" repeatCount="indefinite"/>
+  </circle>
+  <circle class="star" cx="120" cy="8" r="0.7" fill="#FFF">
+    <animate attributeName="opacity" values="0.25;0.7;0.3;0.6;0.25" dur="4s" repeatCount="indefinite" begin="1s"/>
+  </circle>
+  <circle class="star" cx="180" cy="18" r="0.8" fill="#FFF">
+    <animate attributeName="opacity" values="0.3;0.8;0.35;0.7;0.3" dur="3.5s" repeatCount="indefinite" begin="0.5s"/>
+  </circle>
+  <circle class="star" cx="250" cy="6" r="0.6" fill="#FFF">
+    <animate attributeName="opacity" values="0.25;0.7;0.35;0.6;0.25" dur="4.5s" repeatCount="indefinite" begin="2s"/>
+  </circle>
+  <circle class="star" cx="290" cy="22" r="0.8" fill="#FFF">
+    <animate attributeName="opacity" values="0.2;0.65;0.3;0.55;0.2" dur="5s" repeatCount="indefinite" begin="1.5s"/>
+  </circle>
+  <circle class="star" cx="370" cy="10" r="0.65" fill="#FFF">
+    <animate attributeName="opacity" values="0.2;0.6;0.3;0.5;0.2" dur="3.8s" repeatCount="indefinite" begin="0.8s"/>
+  </circle>
+  <circle class="star" cx="30" cy="24" r="0.5" fill="#FFF">
+    <animate attributeName="opacity" values="0.2;0.55;0.25;0.45;0.2" dur="5.5s" repeatCount="indefinite" begin="1.2s"/>
+  </circle>
+  <circle class="star" cx="155" cy="5" r="0.55" fill="#FFF">
+    <animate attributeName="opacity" values="0.25;0.65;0.3;0.55;0.25" dur="4.2s" repeatCount="indefinite" begin="0.3s"/>
+  </circle>
+
+  <!-- MOON crescent -->
+  <circle cx="330" cy="18" r="9" fill="#F0E8D0" opacity="0.7">
+    <animate attributeName="opacity" values="0.6;0.8;0.65;0.75;0.6" dur="6s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="334" cy="15" r="7.5" fill="#1A2040" opacity="0.95"/>
+
+  <!-- CLOUDS -->
+  <ellipse cx="100" cy="20" rx="22" ry="6" fill="#283050" opacity="0">
+    <animate attributeName="opacity" values="0;0.3;0.4;0.3;0" dur="22s" repeatCount="indefinite"/>
+    <animate attributeName="cx" from="-30" to="430" dur="22s" repeatCount="indefinite"/>
+  </ellipse>
+  <ellipse cx="260" cy="14" rx="18" ry="5" fill="#283050" opacity="0">
+    <animate attributeName="opacity" values="0;0.25;0.35;0.25;0" dur="28s" repeatCount="indefinite" begin="6s"/>
+    <animate attributeName="cx" from="-20" to="420" dur="28s" repeatCount="indefinite" begin="6s"/>
+  </ellipse>
+
+  <!-- ground -->
+  <rect x="0" y="78" width="400" height="22" fill="#121828"/>
+  <rect x="0" y="78" width="400" height="1" fill="#2A3450" opacity="0.5"/>
+
+  <!-- WARM INTERIOR (cutaway left wall, x=130..200, y=38..80) -->
+  <rect x="130" y="38" width="70" height="42" fill="#2A1C10"/>
+  <rect x="130" y="38" width="70" height="42" fill="url(#lofiNhdInterior)">
+    <animate attributeName="opacity" values="0.8;1;0.85;0.95;0.8" dur="5s" repeatCount="indefinite"/>
+  </rect>
+
+  <!-- interior floor -->
+  <rect x="130" y="72" width="70" height="8" fill="#1E1208" opacity="0.7"/>
+  <line x1="130" y1="72" x2="200" y2="72" stroke="#3A2818" stroke-width="0.5" opacity="0.4"/>
+
+  <!-- nightlight at x=145 -->
+  <rect x="144" y="65" width="3" height="7" rx="0.5" fill="#4A3828" opacity="0.7"/>
+  <ellipse cx="145.5" cy="64" rx="2.5" ry="1.8" fill="#FFE0A0" opacity="0.5">
+    <animate attributeName="opacity" values="0.4;0.6;0.42;0.55;0.4" dur="4s" repeatCount="indefinite"/>
+  </ellipse>
+  <circle cx="145.5" cy="64" r="1" fill="#FFF5D0" opacity="0.5">
+    <animate attributeName="opacity" values="0.4;0.6;0.42;0.55;0.4" dur="4s" repeatCount="indefinite"/>
+  </circle>
+  <!-- warm light pool on floor -->
+  <ellipse cx="148" cy="74" rx="10" ry="3" fill="#FFE0A0" opacity="0.06">
+    <animate attributeName="opacity" values="0.04;0.08;0.05;0.07;0.04" dur="4s" repeatCount="indefinite"/>
+  </ellipse>
+
+  <!-- dog bed at cx=165 -->
+  <ellipse cx="165" cy="75" rx="12" ry="3.5" fill="#5A3020" opacity="0.8"/>
+  <ellipse cx="165" cy="74" rx="10" ry="3" fill="#6A3828" opacity="0.7"/>
+  <ellipse cx="165" cy="73.5" rx="8" ry="2.5" fill="#7A4830" opacity="0.6"/>
+
+  <!-- water bowl at cx=186 -->
+  <ellipse cx="186" cy="75" rx="3" ry="1.5" fill="#4A4858" opacity="0.6"/>
+  <ellipse cx="186" cy="74.5" rx="2.5" ry="1" fill="#6A7888" opacity="0.35">
+    <animate attributeName="opacity" values="0.3;0.4;0.32;0.38;0.3" dur="6s" repeatCount="indefinite"/>
+  </ellipse>
+
+  <!-- back wall art -->
+  <rect x="155" y="44" width="10" height="7" rx="0.5" fill="#3A2818" opacity="0.5"/>
+  <rect x="156" y="45" width="8" height="5" fill="#4A3828" opacity="0.35"/>
+
+  <!-- ceiling edge -->
+  <line x1="130" y1="38" x2="198" y2="38" stroke="#3A2818" stroke-width="0.5" opacity="0.4"/>
+  <!-- left wall interior edge -->
+  <line x1="130" y1="38" x2="130" y2="80" stroke="#3A2818" stroke-width="0.5" opacity="0.3"/>
+
+  <!-- CUT EDGE at x=200 (wall cross-section) -->
+  <rect x="198" y="38" width="2.5" height="42" fill="#1A1028"/>
+  <line x1="198" y1="38" x2="198" y2="80" stroke="#2A1C10" stroke-width="0.3" opacity="0.5"/>
+  <line x1="200.5" y1="38" x2="200.5" y2="80" stroke="#0E0818" stroke-width="0.3" opacity="0.6"/>
+
+  <!-- RIGHT WALL (dark silhouette) -->
+  <rect x="200" y="38" width="70" height="42" fill="#141830"/>
+
+  <!-- CHIMNEY + smoke -->
+  <rect x="240" y="10" width="15" height="28" fill="#141830"/>
+  <path d="M247,8 Q245,0 250,-6" fill="none" stroke="#4A506A" stroke-width="1.5" stroke-linecap="round" opacity="0">
+    <animate attributeName="opacity" values="0;0.35;0.25;0.12;0" dur="4s" repeatCount="indefinite"/>
+    <animate attributeName="d" values="M247,8 Q245,0 250,-6;M247,8 Q243,-2 249,-10;M247,8 Q249,-1 245,-8;M247,8 Q245,0 250,-6" dur="4s" repeatCount="indefinite"/>
+  </path>
+  <path d="M250,8 Q252,1 248,-5" fill="none" stroke="#4A506A" stroke-width="1.2" stroke-linecap="round" opacity="0">
+    <animate attributeName="opacity" values="0;0.25;0.18;0.08;0" dur="5s" repeatCount="indefinite" begin="1.5s"/>
+    <animate attributeName="d" values="M250,8 Q252,1 248,-5;M250,8 Q254,-2 249,-9;M250,8 Q248,0 252,-7;M250,8 Q252,1 248,-5" dur="5s" repeatCount="indefinite" begin="1.5s"/>
+  </path>
+
+  <!-- ROOF -->
+  <polygon points="118,38 200,6 282,38" fill="#121628" stroke="#2A3450" stroke-width="0.8"/>
+
+  <!-- attic window -->
+  <rect x="190" y="22" width="14" height="11" rx="1" fill="#D8A840" opacity="0.1"/>
+  <rect x="190" y="22" width="14" height="11" rx="1" fill="none" stroke="#3A4060" stroke-width="0.6"/>
+
+  <!-- right window (dim glow) -->
+  <rect x="235" y="48" width="20" height="15" rx="1" fill="#D8A840" opacity="0.15"/>
+  <rect x="235" y="48" width="20" height="15" rx="1" fill="none" stroke="#3A4060" stroke-width="0.8"/>
+  <line x1="245" y1="48" x2="245" y2="63" stroke="#3A4060" stroke-width="0.5"/>
+  <line x1="235" y1="55.5" x2="255" y2="55.5" stroke="#3A4060" stroke-width="0.5"/>
+
+  <!-- door -->
+  <rect x="205" y="55" width="18" height="25" rx="1" fill="#1A2038" stroke="#3A4060" stroke-width="0.8"/>
+  <circle cx="220" cy="68" r="1.5" fill="#B89840" opacity="0.6"/>
+  <rect x="208" y="80" width="12" height="20" fill="#101828" opacity="0.5"/>
+
+  <!-- fence -->
+  <g opacity="0.35" stroke="#3A4060" stroke-width="0.8">
+    <line x1="78" y1="78" x2="130" y2="78"/>
+    <line x1="270" y1="78" x2="340" y2="78"/>
+    <line x1="83" y1="72" x2="83" y2="78"/>
+    <line x1="98" y1="72" x2="98" y2="78"/>
+    <line x1="113" y1="72" x2="113" y2="78"/>
+    <line x1="280" y1="72" x2="280" y2="78"/>
+    <line x1="300" y1="72" x2="300" y2="78"/>
+    <line x1="320" y1="72" x2="320" y2="78"/>
+  </g>
+
+  <!-- trees -->
+  <ellipse cx="58" cy="54" rx="20" ry="24" fill="#0E1620" opacity="0.8">
+    <animateTransform attributeName="transform" type="rotate" values="-1,58,75;1,58,75;-1,58,75" dur="5s" repeatCount="indefinite"/>
+  </ellipse>
+  <rect x="56" y="72" width="4" height="8" fill="#0E1620" opacity="0.7"/>
+  <ellipse cx="356" cy="56" rx="16" ry="20" fill="#0E1620" opacity="0.7">
+    <animateTransform attributeName="transform" type="rotate" values="0.6,356,74;-0.8,356,74;0.6,356,74" dur="6s" repeatCount="indefinite"/>
+  </ellipse>
+  <rect x="354" y="72" width="4" height="7" fill="#0E1620" opacity="0.6"/>
+
+  <!-- fireflies -->
+  <circle cx="88" cy="72" r="0.9" fill="#C0F060" opacity="0">
+    <animate attributeName="opacity" values="0;0;0.4;0.7;0.4;0;0;0;0" dur="3.5s" repeatCount="indefinite"/>
+    <animate attributeName="cx" values="88;92;86;90;88" dur="3.5s" repeatCount="indefinite"/>
+    <animate attributeName="cy" values="72;69;74;68;72" dur="3.5s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="312" cy="74" r="0.8" fill="#C0F060" opacity="0">
+    <animate attributeName="opacity" values="0;0;0;0.35;0.6;0.3;0;0;0" dur="4.5s" repeatCount="indefinite" begin="1.5s"/>
+    <animate attributeName="cx" values="312;315;309;313;312" dur="4.5s" repeatCount="indefinite" begin="1.5s"/>
+    <animate attributeName="cy" values="74;71;76;70;74" dur="4.5s" repeatCount="indefinite" begin="1.5s"/>
+  </circle>
+  <circle cx="175" cy="76" r="0.7" fill="#C0F060" opacity="0">
+    <animate attributeName="opacity" values="0;0;0;0;0.5;0.3;0;0" dur="5.5s" repeatCount="indefinite" begin="3s"/>
+    <animate attributeName="cx" values="175;178;172;176;175" dur="5.5s" repeatCount="indefinite" begin="3s"/>
+    <animate attributeName="cy" values="76;73;77;72;76" dur="5.5s" repeatCount="indefinite" begin="3s"/>
+  </circle>
+
+  <!-- moonlight pool on ground -->
+  <ellipse cx="332" cy="80" rx="35" ry="10" fill="#D0C8E0" opacity="0.06">
+    <animate attributeName="opacity" values="0.04;0.08;0.05;0.07;0.04" dur="8s" repeatCount="indefinite"/>
+  </ellipse>
+</svg>`,
+
   not_home: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 100" preserveAspectRatio="xMidYMid slice">
   <defs>
     <linearGradient id="lofiNhBg" x1="0" y1="0" x2="0" y2="1">
